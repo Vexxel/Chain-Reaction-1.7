@@ -1,0 +1,59 @@
+# Block localizations -------------------------------------------------------------------
+tile.zedeng:glass.amber.name=Colored Glass (Amber Yellow)
+tile.zedeng:glass.cyan.name=Colored Glass (Cyan)
+tile.zedeng:glass.electric.name=Colored Glass (Electric Blue)
+tile.zedeng:glass.emerald.name=Colored Glass (Emerald Green)
+tile.zedeng:glass.fire.name=Colored Glass (Fire Red)
+tile.zedeng:glass.gold.name=Colored Glass (Gold)
+tile.zedeng:glass.green.name=Colored Glass (Green)
+tile.zedeng:glass.indigo.name=Colored Glass (Indigo)
+tile.zedeng:glass.lime.name=Colored Glass (Lime Green)
+tile.zedeng:glass.magenta.name=Colored Glass (Magenta)
+tile.zedeng:glass.orange.name=Colored Glass (Orange)
+tile.zedeng:glass.ruby.name=Colored Glass (Ruby Red)
+tile.zedeng:glass.sapphire.name=Colored Glass (Sapphire Blue)
+tile.zedeng:glass.spring.name=Colored Glass (Spring Green)
+tile.zedeng:glass.ultramarine.name=Colored Glass (Ultramarine)
+tile.zedeng:glass.violet.name=Colored Glass (Violet)
+
+tile.zedeng:vault.wall.name=Vault Wall
+tile.zedeng:vault.controller.name=Vault Control Mechanism
+tile.zedeng:vault.lock.name=Vault Locking Mechanism
+tile.zedeng:vault.door_closed.name=Vault Hatch (Closed)
+tile.zedeng:vault.door_open.name=Vault Hatch (Open)
+tile.zedeng:vault.container.name=Vault Storage Container
+
+# Item localizations --------------------------------------------------------------------
+item.zedeng:material.dustChroma.name=Chromatic Dye
+
+item.zedeng:key.bedrock.name=Bedrock Skeleton Key
+item.zedeng:key.iron.name=Iron Vault Key
+item.zedeng:key.gold.name=Gold Vault Key
+item.zedeng:key.emerald.name=Emerald Vault Key
+item.zedeng:key.diamond.name=Diamond Vault Key
+
+gui.item.key.bedrock.name=Absolute Vaultcracker
+gui.item.key.nocode.name=This key is blank..
+gui.item.key.remember.name=But I remember what I set this lock to! It was..
+gui.item.key.trespass.name=I can only remember codes that I issued.
+
+gui.info.controller.nokeyhole.name=This vault controller needs a locking mechanism below it.
+
+gui.info.controller.success1.name=The controller's mechanism successfully clicks into place
+gui.info.controller.success2.name=with a deep locking sound.
+
+gui.info.controller.failure1.name=The controller's mechanism makes a loud grinding noise.
+gui.info.controller.failure2.name=Not all blocks are in the correct place.
+
+gui.info.controller.breakable.name=The vault can now be dismantled.
+gui.info.controller.unbreakable.name=The vault clicks and prevents conventional breakage.
+
+gui.info.keyhole.configue.name=Configured this lock's code to match the key.
+gui.info.keyhole.deny.name=The key fits, but it doesn't turn at all.
+gui.info.keyhole.creative.name=The key shifts and twists until it is the correct shape.
+gui.info.keyhole.null.name=This lock has no code. I can set one with a key.
+gui.info.keyhole.trespass.name=This lock isn't mine. I don't know how it was made.
+
+container.vault.name=Vault
+
+itemGroup.zedeng=Zederrian Engineering

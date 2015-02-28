@@ -1,0 +1,20 @@
+{
+    "lock_success": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "lock_success",
+                "stream": false
+            }
+        ]
+    },
+    "lock_failure": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "lock_failure",
+                "stream": false
+            }
+        ]
+    }
+}

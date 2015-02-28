@@ -1,0 +1,22 @@
+[
+{
+  "modid": "ZedEng",
+  "name": "Zederrian Engineering",
+  "description": "Hot glass action",
+  "version": "1.0.0",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "Zerren"
+  ],
+  "credits": "Zerren",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent": "",
+  "dependencies": [
+    "MinecraftForge"
+  ]
+}
+]
