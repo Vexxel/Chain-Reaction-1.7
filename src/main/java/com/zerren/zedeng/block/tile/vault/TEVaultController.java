@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.UUID;
@@ -114,14 +115,14 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         if (!worldObj.isRemote){
             if (checkMultiblock(this.getOwner(), player)) {
                 //success
-                CoreUtility.addColoredChat("gui.info.controller.success1.name", 'e', player);
-                CoreUtility.addColoredChat("gui.info.controller.success2.name", 'e', player);
+                CoreUtility.addColoredChat("gui.info.controller.success1.name", EnumChatFormatting.YELLOW, player);
+                CoreUtility.addColoredChat("gui.info.controller.success2.name", EnumChatFormatting.YELLOW, player);
                 isActive = true;
             }
             else {
                 //failure
-                CoreUtility.addColoredChat("gui.info.controller.failure1.name", 'e', player);
-                CoreUtility.addColoredChat("gui.info.controller.failure2.name", 'e', player);
+                CoreUtility.addColoredChat("gui.info.controller.failure1.name", EnumChatFormatting.YELLOW, player);
+                CoreUtility.addColoredChat("gui.info.controller.failure2.name", EnumChatFormatting.YELLOW, player);
                 isActive = false;
             }
         }
@@ -178,7 +179,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         TEVaultBase lock = (TEVaultBase) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
         if (lock != null && !(lock instanceof TEVaultLock)) {
             if (!worldObj.isRemote)
-                CoreUtility.addColoredChat("gui.info.controller.nokeyhole.name", 'c', player);
+                CoreUtility.addColoredChat("gui.info.controller.nokeyhole.name", EnumChatFormatting.RED, player);
             return false;
         }
         //scan the 5x5 starting with bottom left centered on the middle bottom
@@ -201,8 +202,8 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         if (counter >= 124 && cCounter == 27) {
             allBreakable ^= true;
 
-            if (allBreakable) CoreUtility.addColoredChat("gui.info.controller.breakable.name", 'e', player);
-            else CoreUtility.addColoredChat("gui.info.controller.unbreakable.name", 'e', player);
+            if (allBreakable) CoreUtility.addColoredChat("gui.info.controller.breakable.name", EnumChatFormatting.YELLOW, player);
+            else CoreUtility.addColoredChat("gui.info.controller.unbreakable.name", EnumChatFormatting.YELLOW, player);
 
             for (int x = cX - 2; x < cX + 3; x++) {
                 for (int y = cY; y < cY + 5; y++) {

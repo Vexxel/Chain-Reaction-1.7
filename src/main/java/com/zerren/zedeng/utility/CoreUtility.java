@@ -7,6 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 
@@ -57,16 +58,10 @@ public class CoreUtility {
         return (tileClass.isInstance(t) ? (T)t : null);
     }
 
-    public static void addColoredChat(String message, char color, EntityPlayer player) {
+    public static void addColoredChat(String message, EnumChatFormatting format, EntityPlayer player) {
         if (player == null) return;
 
-        String translated;
-        if (color != 'f') {
-            translated = "§" + color + translate(message);
-        }
-        else {
-            translated = translate(message);
-        }
+        String translated = format + translate(message);
         ChatComponentText comp = new ChatComponentText(translated);
         player.addChatComponentMessage(comp);
     }

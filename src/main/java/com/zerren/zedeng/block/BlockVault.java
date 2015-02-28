@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -111,7 +112,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                             }
                             //lock's owner isn't the key holder
                             else {
-                                CoreUtility.addColoredChat("gui.info.keyhole.trespass.name", 'e', player);
+                                CoreUtility.addColoredChat("gui.info.keyhole.trespass.name", EnumChatFormatting.YELLOW, player);
                             }
                         }
                         //try the key's code on the lock
@@ -124,22 +125,22 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                     else {
                         //lock doesn't have a code
                         if (!lock.hasCode()) {
-                            CoreUtility.addColoredChat("gui.info.keyhole.null.name", 'e', player);
+                            CoreUtility.addColoredChat("gui.info.keyhole.null.name", EnumChatFormatting.YELLOW, player);
                             return true;
                         }
                         //lock does have a code
-                        CoreUtility.addColoredChat("gui.item.key.nocode.name", 'e', player);
+                        CoreUtility.addColoredChat("gui.item.key.nocode.name", EnumChatFormatting.YELLOW, player);
                         //lock's owner matches the key's holder
                         if (lock.getOwner().equals(player.getUniqueID().toString())) {
                             System.out.println("Lock owner matches player");
-                            CoreUtility.addColoredChat("gui.item.key.remember.name", 'e', player);
+                            CoreUtility.addColoredChat("gui.item.key.remember.name", EnumChatFormatting.YELLOW, player);
 
                             ChatComponentText comp = new ChatComponentText("§6..." + lock.getCode() + "!");
                             player.addChatComponentMessage(comp);
                         }
                         //lock's owner doesn't match the key's holder
                         else {
-                            CoreUtility.addColoredChat("gui.item.key.trespass.name", 'e', player);
+                            CoreUtility.addColoredChat("gui.item.key.trespass.name", EnumChatFormatting.YELLOW, player);
                         }
                     }
                 }

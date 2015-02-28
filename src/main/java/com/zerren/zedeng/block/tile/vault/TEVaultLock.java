@@ -4,6 +4,7 @@ import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 
 /**
  * Created by Zerren on 2/23/2015.
@@ -34,7 +35,7 @@ public class TEVaultLock extends TEVaultBase {
     public void tryCode(String keyCode, EntityPlayer player, boolean bedrock) {
         if (bedrock && !worldObj.isRemote) {
             unlockAdjacent(xCoord, yCoord, zCoord, player);
-            CoreUtility.addColoredChat("gui.info.keyhole.creative.name", 'e', player);
+            CoreUtility.addColoredChat("gui.info.keyhole.creative.name", EnumChatFormatting.YELLOW, player);
             worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.MOD_ID.toLowerCase() + ":lock_success", 1F, 1F);
             return;
         }
@@ -49,7 +50,7 @@ public class TEVaultLock extends TEVaultBase {
             }
             else {
                 worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.MOD_ID.toLowerCase() + ":lock_failure", 1F, 1F);
-                CoreUtility.addColoredChat("gui.info.keyhole.deny.name", 'e', player);
+                CoreUtility.addColoredChat("gui.info.keyhole.deny.name", EnumChatFormatting.YELLOW, player);
             }
         }
         this.markDirty();
