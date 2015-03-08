@@ -11,36 +11,21 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Zerren on 2/24/2015.
  */
-public class ContainerVault extends Container {
+public class ContainerVault extends ContainerZE {
 
     private TEVaultController controller;
 
     private int page, selection;
 
     public ContainerVault(InventoryPlayer inv, TEVaultController tile, int p) {
+        super();
         this.controller = tile;
 
         this.page = p;
         this.selection = p;
 
         bindVaultInventory(tile);
-        bindPlayerInventory(inv);
-    }
-
-    private void bindPlayerInventory(InventoryPlayer playerInventory) {
-        int slotplayer = 0;
-
-        // Hotbar
-        for(int x = 0; x < 9; x++) {
-            addSlotToContainer(new Slot(playerInventory, slotplayer, 8 + x * 18, 198));
-            slotplayer++;
-        }
-        // Inventory
-        for(int j = 0; j < 3; j++)
-            for(int k = 0; k < 9; k++) {
-                addSlotToContainer(new Slot(playerInventory, slotplayer, 8 + k * 18, 140 + j * 18));
-                slotplayer++;
-            }
+        bindPlayerInventory(inv, 8, 140);
     }
 
     private void bindVaultInventory(TEVaultController te) {

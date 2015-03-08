@@ -1,7 +1,9 @@
 package com.zerren.zedeng;
 
 import com.zerren.zedeng.core.ModBlocks;
+import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.core.ModItems;
+import com.zerren.zedeng.core.ModPotions;
 import com.zerren.zedeng.core.registry.Recipes;
 import com.zerren.zedeng.core.registry.TileEntities;
 import com.zerren.zedeng.core.registry.ZEDictionary;
@@ -61,8 +63,11 @@ public class ZederrianEngineering {
 
         //ModIntegration.tryLoadingMods();
 
+        ModFluids.init();
         ModBlocks.init();
         ModItems.init();
+        ModPotions.init();
+
         ZEDictionary.init();
         PacketHandler.init();
     }
@@ -72,6 +77,8 @@ public class ZederrianEngineering {
         packetPipeline.initalise();
         //GameRegistry.registerFuelHandler(new PPFuelHandler());
         TileEntities.init();
+
+        proxy.initRenderingAndTextures();
     }
 
     @Mod.EventHandler

@@ -17,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
@@ -45,12 +44,12 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
             if (vault instanceof TEVaultController) {
                 TEVaultController vc = CoreUtility.get(world, x, y, z, TEVaultController.class);
                 CoreUtility.addChat("Page: " + vc.page, player);
-                CoreUtility.addChat("Owner UUID: " + vc.getOwner(), player);
+                CoreUtility.addChat("Owner UUID: " + vc.getOwnerUUID(), player);
                 CoreUtility.addChat("Controller UUID: " + vc.getControllerUUID().toString(), player);
                 CoreUtility.addChat("Breakable: " + vault.isBreakable(), player);
                 return true;
             }
-            CoreUtility.addChat("Owned by: " + vault.getOwner(), player);
+            CoreUtility.addChat("Owned by: " + vault.getOwnerUUID(), player);
             CoreUtility.addChat("Controlled by: " + vault.getControllerID(), player);
             CoreUtility.addChat("Breakable: " + vault.isBreakable(), player);
             return true;
@@ -104,13 +103,13 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                     if (held.stackTagCompound != null && held.stackTagCompound.hasKey("code")) {
                         //if the lock doesn't have a code
                         if (!lock.hasCode()) {
-                            //lock has no owner because it isn't a part of a multiblock
+                            //lock has no ownerName because it isn't a part of a multiblock
                             if (!lock.hasOwner()) return false;
-                            //if the lock's owner equals the key holder
-                            if (lock.getOwner().equals(player.getUniqueID().toString())) {
+                            //if the lock's ownerName equals the key holder
+                            if (lock.getOwnerUUID().equals(player.getPersistentID())) {
                                 lock.setCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player);
                             }
-                            //lock's owner isn't the key holder
+                            //lock's ownerName isn't the key holder
                             else {
                                 CoreUtility.addColoredChat("gui.info.keyhole.trespass.name", EnumChatFormatting.YELLOW, player);
                             }
@@ -130,15 +129,15 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                         }
                         //lock does have a code
                         CoreUtility.addColoredChat("gui.item.key.nocode.name", EnumChatFormatting.YELLOW, player);
-                        //lock's owner matches the key's holder
-                        if (lock.getOwner().equals(player.getUniqueID().toString())) {
-                            System.out.println("Lock owner matches player");
+                        //lock's ownerName matches the key's holder
+                        if (lock.getOwnerUUID().equals(player.getPersistentID())) {
+                            System.out.println("Lock ownerName matches player");
                             CoreUtility.addColoredChat("gui.item.key.remember.name", EnumChatFormatting.YELLOW, player);
 
-                            ChatComponentText comp = new ChatComponentText("§6..." + lock.getCode() + "!");
+                            ChatComponentText comp = new ChatComponentText(EnumChatFormatting.GOLD + ("..." + lock.getCode() + "!"));
                             player.addChatComponentMessage(comp);
                         }
-                        //lock's owner doesn't match the key's holder
+                        //lock's ownerName doesn't match the key's holder
                         else {
                             CoreUtility.addColoredChat("gui.item.key.trespass.name", EnumChatFormatting.YELLOW, player);
                         }
@@ -177,7 +176,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
 
         if (tile instanceof TEVaultController && entity instanceof EntityPlayer) {
             ((TEVaultController) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
-            ((TEVaultController) tile).setOwner(entity.getUniqueID().toString());
+            ((TEVaultController) tile).setOwnerUUID(entity.getPersistentID());
         }
     }
 

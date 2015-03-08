@@ -3,6 +3,7 @@ package com.zerren.zedeng.handler.network.packet;
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.block.tile.vault.TEVaultController;
 import com.zerren.zedeng.reference.GUIs;
+import com.zerren.zedeng.reference.Sounds;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -12,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 /**
  * Created by Zerren on 2/25/2015.
  */
-public class PacketVaultCycle extends PacketTile<TEVaultController> implements IMessageHandler<PacketVaultCycle, IMessage> {
+public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements IMessageHandler<PacketVaultCycle, IMessage> {
 
     int page;
     public PacketVaultCycle() {
@@ -51,7 +52,7 @@ public class PacketVaultCycle extends PacketTile<TEVaultController> implements I
         if (message.page >= 0 && message.page != message.tile.page) {
             message.tile.setPage(message.page);
             message.player.openGui(ZederrianEngineering.instance, GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
-            message.tile.playSFXatCore("tile.piston.out", 0.5F, message.tile.getWorldObj().rand.nextFloat() * 0.25F + 0.6F);
+            message.tile.playSFXatCore(Sounds.PISTON_OUT, 0.5F, message.tile.getWorldObj().rand.nextFloat() * 0.25F + 0.6F);
         }
         //this re-shifts the packet up 100 if it is below 0
         int msgp = message.page;

@@ -16,5 +16,14 @@
                 "stream": false
             }
         ]
-    }
+    },
+    "lock_rattle": {
+            "category": "master",
+            "sounds": [
+                {
+                    "name": "lock_rattle",
+                    "stream": false
+                }
+            ]
+        }
 }

@@ -1,8 +1,8 @@
-package com.zerren.zedeng.gui;
+package com.zerren.zedeng.client.gui;
 
 import com.zerren.zedeng.block.tile.vault.TEVaultController;
-import com.zerren.zedeng.gui.button.GUIButtonWidgets;
-import com.zerren.zedeng.gui.button.GuiButtonVaultCycle;
+import com.zerren.zedeng.client.gui.button.GUIButtonWidgets;
+import com.zerren.zedeng.client.gui.button.GuiButtonVaultCycle;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.packet.PacketVaultCycle;
 import com.zerren.zedeng.inventory.ContainerVault;

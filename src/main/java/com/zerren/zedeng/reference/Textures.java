@@ -13,14 +13,30 @@ public class Textures {
         public static final String GLASS_FOLDER = "glass/";
         public static final String VAULT_FOLDER = "vault/";
         public static final String KEY_FOLDER = "key/";
+        public static final String REACTOR_FOLDER = "reactor/";
+        public static final String FLUID_FOLDER = "fluid/";
     }
 
     public static final class guis {
         public static final String GUI_SHEET_LOCATION = "textures/gui/";
 
         public static final ResourceLocation WIDGETS = getResourceLocation(GUI_SHEET_LOCATION + "widgets.png");
+        public static final ResourceLocation POTIONS = getResourceLocation(GUI_SHEET_LOCATION + "potions.png");
         public static final ResourceLocation KEY = getResourceLocation(GUI_SHEET_LOCATION + "key.png");
         public static final ResourceLocation VAULT = getResourceLocation(GUI_SHEET_LOCATION + "vault.png");
+        public static final ResourceLocation CHEST_BRICK = getResourceLocation(GUI_SHEET_LOCATION + "chest_brick.png");
+        public static final ResourceLocation CHEST_THAUMIUM = getResourceLocation(GUI_SHEET_LOCATION + "chest_thaumium.png");
+        public static final ResourceLocation CHEST_VOID = getResourceLocation(GUI_SHEET_LOCATION + "chest_voidmetal.png");
+
+    }
+
+    public static final class model {
+        public static final String MODEL_LOCATION = "textures/models/";
+        public static final ResourceLocation CHEST_BRICK = getResourceLocation(MODEL_LOCATION + "chest_brick.png");
+        public static final ResourceLocation CHEST_THAUMIUM = getResourceLocation(MODEL_LOCATION + "chest_thaumium.png");
+        public static final ResourceLocation CHEST_VOID = getResourceLocation(MODEL_LOCATION + "chest_voidmetal.png");
+
+        public static final ResourceLocation HEAT_EXCHANGER  = getResourceLocation(MODEL_LOCATION + "exchanger.png");
     }
 
     public static ResourceLocation getResourceLocation(String modId, String path) {

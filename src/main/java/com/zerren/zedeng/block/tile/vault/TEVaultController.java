@@ -1,15 +1,13 @@
 package com.zerren.zedeng.block.tile.vault;
 
 import com.zerren.zedeng.handler.ConfigHandler;
+import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.CoreUtility;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -39,26 +37,8 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         return controllerID;
     }
 
-    public int nextPage() {
-        if (page >= numPages - 1) {
-            page = 0;
-        }
-        else {
-            page++;
-        }
-        this.markDirty();
-        return page;
-    }
-
-    public int previousPage() {
-        if (page <= 0) {
-            page = numPages - 1;
-        }
-        else {
-            page--;
-        }
-        this.markDirty();
-        return page;
+    public boolean hasControllerID() {
+        return controllerID != null;
     }
 
     public void setPage(int pg) {
@@ -104,16 +84,16 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         }
 
         //if the controller has an owner
-        if (getOwner().length() > 0) {
-            //wrong person
-            if (!player.getUniqueID().toString().equals(getOwner())) return;
+        if (getOwnerUUID() != null) {
+            //if the controller's owner isn't the person who activated this
+            if (player.getPersistentID().compareTo(getOwnerUUID()) != 0) return;
         }
-        //else set the owner to the ownerID (block placed)
+        //else set the ownerUUID to the person who placed/activated's UUID
         else {
-            setOwner(player.getUniqueID().toString());
+            setOwnerUUID(player.getPersistentID());
         }
         if (!worldObj.isRemote){
-            if (checkMultiblock(this.getOwner(), player)) {
+            if (checkMultiblock(this.getOwnerUUID(), player)) {
                 //success
                 CoreUtility.addColoredChat("gui.info.controller.success1.name", EnumChatFormatting.YELLOW, player);
                 CoreUtility.addColoredChat("gui.info.controller.success2.name", EnumChatFormatting.YELLOW, player);
@@ -128,7 +108,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         }
     }
 
-    public boolean checkMultiblock(String ownedBy, EntityPlayer player) {
+    public boolean checkMultiblock(UUID ownedBy, EntityPlayer player) {
         ForgeDirection direction = getOrientation();
 
         int cX = 0;
@@ -183,15 +163,18 @@ public class TEVaultController extends TEVaultBase implements IInventory {
             return false;
         }
         //scan the 5x5 starting with bottom left centered on the middle bottom
-        for (int x = cX - 2; x < cX + 3; x++) {
+        vaultCheck : for (int x = cX - 2; x < cX + 3; x++) {
             for (int y = cY; y < cY + 5; y++) {
                 for (int z = cZ - 2; z < cZ + 3; z++) {
                     TileEntity vault = worldObj.getTileEntity(x, y, z);
                     //make sure the block has a vault tile entity, but don't count other controllers
                     if (vault != null && (vault instanceof TEVaultBase) && !(vault instanceof TEVaultController)) {
-                        //check to see if the owner of the vault controller is the same as every vault block, or if those vault blocks have no owner
-                        if (((TEVaultBase) vault).getOwner().equals(ownedBy) || ((TEVaultBase) vault).getOwner().length() < 2 ) {
-                            counter++;
+                        //check to see if the ownerUUID of the vault controller is the same as every vault block, or if those vault blocks have no ownerUUID
+                        if (((TEVaultBase) vault).getOwnerUUID() == null || ((TEVaultBase) vault).getOwnerUUID().compareTo(ownedBy) == 0) {
+                            if (((TEVaultBase) vault).getControllerID() == null || ((TEVaultBase) vault).getControllerID().compareTo(this.getControllerUUID()) == 0) {
+                                counter++;
+                            }
+                            else break vaultCheck;
                         }
                         //container counter--need 27 (3^3)
                         if (vault.getWorldObj().getBlockMetadata(x, y, z) == 5) cCounter++;
@@ -211,11 +194,11 @@ public class TEVaultController extends TEVaultBase implements IInventory {
                         TileEntity vault = worldObj.getTileEntity(x, y, z);
                         //make sure the block has a vault tile entity
                         if (vault != null && (vault instanceof TEVaultBase)) {
-                            //check to see if the owner of the vault controller is the same as every vault block, or if those vault blocks have no owner
-                            if (((TEVaultBase) vault).getOwner().equals(ownedBy) || ((TEVaultBase) vault).getOwner().length() < 2 ) {
-                                //set the vault block's owner to the command block's owner and give each block the coords of the controller
-                                ((TEVaultBase) vault).setController(controllerID.toString(), xCoord, yCoord, zCoord);
-                                ((TEVaultBase) vault).setOwner(ownedBy);
+                            //check to see if the ownerName of the vault controller is the same as every vault block, or if those vault blocks have no ownerName
+                            if (((TEVaultBase) vault).getOwnerUUID() == null || ((TEVaultBase) vault).getOwnerUUID().compareTo(ownedBy) == 0) {
+                                //set the vault block's ownerName to the command block's ownerName and give each block the coords of the controller
+                                ((TEVaultBase) vault).setController(controllerID, xCoord, yCoord, zCoord);
+                                ((TEVaultBase) vault).setOwnerUUID(ownedBy);
                                 ((TEVaultBase) vault).setBreakable(allBreakable);
                                 vault.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
                             }
@@ -241,6 +224,8 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         int cY = yCoord - 2;
         int cZ = 0;
 
+        System.out.println(isActive);
+
         if (!isActive) return;
 
         if (direction == ForgeDirection.NORTH) {
@@ -260,36 +245,44 @@ public class TEVaultController extends TEVaultBase implements IInventory {
             cZ = zCoord;
         }
 
+        int checkcounter = 0;
+
         for (int x = cX - 2; x < cX + 3; x++) {
             for (int y = cY; y < cY + 5; y++) {
                 for (int z = cZ - 2; z < cZ + 3; z++) {
                     TileEntity vault = worldObj.getTileEntity(x, y, z);
                     //make sure the block has a vault tile entity
                     if (vault != null && (vault instanceof TEVaultBase)) {
-                        //check to see if the owner of the vault controller is the same as every vault block, or if those vault blocks have no owner
-                        if (((TEVaultBase) vault).getOwner().equals(this.owner) || ((TEVaultBase) vault).getOwner().length() < 2) {
-                            //set the vault block's owner to the command block's owner and give each block the coords of the controller
+                        //check to see if the ownerName of the vault controller is the same as every vault block, or if those vault blocks have no ownerName
+                        if (((TEVaultBase) vault).getOwnerUUID() == null || ((TEVaultBase) vault).getOwnerUUID().equals(this.ownerUUID)) {
+                            //set the vault block's ownerName to the command block's ownerName and give each block the coords of the controller
                             if (!(vault instanceof TEVaultController)) {
-                                ((TEVaultBase) vault).setOwner("");
+                                ((TEVaultBase) vault).setOwnerUUID(null);
                                 ((TEVaultBase) vault).removeController();
                             }
                             ((TEVaultBase) vault).setBreakable(true);
                             vault.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
+                            checkcounter++;
                         }
                     }
                 }
             }
         }
+        System.out.println(checkcounter);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        tag.setString("controllerID", controllerID.toString());
         tag.setBoolean("allBreakable", allBreakable);
         tag.setBoolean("isActive", isActive);
         tag.setInteger("page", page);
+
+        if (this.hasControllerID()) {
+            tag.setLong("controllerIDMost", controllerID.getMostSignificantBits());
+            tag.setLong("controllerIDLeast", controllerID.getLeastSignificantBits());
+        }
 
         NBTTagList nbttaglist = new NBTTagList();
 
@@ -313,10 +306,13 @@ public class TEVaultController extends TEVaultBase implements IInventory {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
-        controllerID = UUID.fromString(tag.getString("controllerID"));
         allBreakable = tag.getBoolean("allBreakable");
         isActive = tag.getBoolean("isActive");
         page = tag.getInteger("page");
+
+        if (tag.hasKey("controllerIDMost") && tag.hasKey("controllerIDLeast")) {
+            this.controllerID = new UUID(tag.getLong("controllerIDMost"), tag.getLong("controllerIDLeast"));
+        }
 
         NBTTagList nbttaglist = tag.getTagList("Items", 10);
         this.inventory = new ItemStack[this.getSizeInventory()];

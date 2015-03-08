@@ -1,24 +1,31 @@
 package com.zerren.zedeng.block.tile.vault;
 
 import com.zerren.zedeng.block.tile.TileEntityZE;
+import com.zerren.zedeng.handler.PacketHandler;
+import com.zerren.zedeng.handler.network.tileentity.MessageTileChest;
+import com.zerren.zedeng.handler.network.tileentity.MessageTileVault;
+import com.zerren.zedeng.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
+
+import java.util.UUID;
 
 /**
  * Created by Zerren on 2/22/2015.
  */
 public class TEVaultBase extends TileEntityZE {
 
-    private boolean breakable = true;
-    private String masterID = "";
+    private boolean breakable;
+    private UUID masterID;
     private int masterX, masterY, masterZ;
 
     public TEVaultBase() {
         super();
+        masterID = null;
     }
 
     public boolean isBreakable() {
-        if (!hasMaster()) return true;
         return breakable;
     }
 
@@ -34,13 +41,13 @@ public class TEVaultBase extends TileEntityZE {
     }
 
     public TEVaultController getCommandingController() {
-        if (hasMaster() && getControllerID().length() > 0) {
+        if (hasMaster() && getControllerID() != null) {
             return (TEVaultController)worldObj.getTileEntity(masterX, masterY, masterZ);
         }
         return null;
     }
 
-    public void setController(String id, int x, int y, int z) {
+    public void setController(UUID id, int x, int y, int z) {
         masterID = id;
         masterX = x;
         masterY = y;
@@ -55,14 +62,14 @@ public class TEVaultBase extends TileEntityZE {
     }
 
     public void removeController() {
-        masterID = "";
+        masterID = null;
         masterX = 0;
         masterY = 0;
         masterZ = 0;
     }
 
-    public String getControllerID() {
-        if (masterID.length() > 0) {
+    public UUID getControllerID() {
+        if (masterID != null) {
             return masterID;
         }
         return null;
@@ -91,7 +98,7 @@ public class TEVaultBase extends TileEntityZE {
             case 1:
                 TEVaultBase controller = (TEVaultBase) worldObj.getTileEntity(x, y, z);
                 if (controller != null && controller instanceof TEVaultController) {
-                    ((TEVaultController) controller).checkMultiblock(getOwner(), player);
+                    ((TEVaultController) controller).checkMultiblock(getOwnerUUID(), player);
                 }
                 break;
             case 3:
@@ -111,21 +118,33 @@ public class TEVaultBase extends TileEntityZE {
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         breakable = tag.getBoolean("breakable");
-        masterID = tag.getString("masterID");
 
         masterX = tag.getInteger("masterX");
         masterY = tag.getInteger("masterY");
         masterZ = tag.getInteger("masterZ");
+
+        if (tag.hasKey("masterIDMost") && tag.hasKey("masterIDLeast")) {
+            this.masterID = new UUID(tag.getLong("masterIDMost"), tag.getLong("masterIDLeast"));
+        }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
         tag.setBoolean("breakable", breakable);
-        tag.setString("masterID", masterID);
 
         tag.setInteger("masterX", masterX);
         tag.setInteger("masterY", masterY);
         tag.setInteger("masterZ", masterZ);
+
+        if (this.hasMaster()) {
+            tag.setLong("masterIDMost", masterID.getMostSignificantBits());
+            tag.setLong("masterIDLeast", masterID.getLeastSignificantBits());
+        }
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        return PacketHandler.netHandler.getPacketFrom(new MessageTileVault(this, isBreakable()));
     }
 }

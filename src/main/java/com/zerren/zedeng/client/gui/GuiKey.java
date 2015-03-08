@@ -1,8 +1,8 @@
-package com.zerren.zedeng.gui;
+package com.zerren.zedeng.client.gui;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.gui.button.GuiButtonKeyCycle;
-import com.zerren.zedeng.gui.button.GUIButtonWidgets;
+import com.zerren.zedeng.client.gui.button.GuiButtonKeyCycle;
+import com.zerren.zedeng.client.gui.button.GUIButtonWidgets;
 import com.zerren.zedeng.handler.network.packet.AbstractPacket;
 import com.zerren.zedeng.handler.network.packet.PacketKeyConfirm;
 import com.zerren.zedeng.reference.Textures;

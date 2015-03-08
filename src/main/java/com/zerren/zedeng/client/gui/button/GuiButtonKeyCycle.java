@@ -1,4 +1,4 @@
-package com.zerren.zedeng.gui.button;
+package com.zerren.zedeng.client.gui.button;
 
 import com.zerren.zedeng.reference.Textures;
 import cpw.mods.fml.relauncher.Side;
@@ -7,14 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
 /**
- * Created by Zerren on 2/24/2015.
+ * Created by Zerren on 2/21/2015.
  */
 @SideOnly(Side.CLIENT)
-public class GuiButtonVaultCycle extends GuiButton {
+public class GuiButtonKeyCycle extends GuiButton {
 
     boolean previous;
 
-    public GuiButtonVaultCycle(int par1, int par2, int par3, boolean previous) {
+    public GuiButtonKeyCycle(int par1, int par2, int par3, boolean previous) {
         super(par1, par2, par3, 14, 10, "");
         this.previous = previous;
     }
@@ -24,10 +24,10 @@ public class GuiButtonVaultCycle extends GuiButton {
         if(!enabled) {
             return;
         }
-        final int x = 200;
-        final int y = (previous ? 0 : 12);
+        final int x = 136;
+        final int y = (previous ? 1 : 13);
 
-        mc.getTextureManager().bindTexture(Textures.guis.VAULT);
+        mc.getTextureManager().bindTexture(Textures.guis.KEY);
         drawTexturedModalRect(xPosition, yPosition, x, y, 14, 10);
     }
 }

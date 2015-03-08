@@ -1,4 +1,4 @@
-package com.zerren.zedeng.gui.button;
+package com.zerren.zedeng.client.gui.button;
 
 import com.zerren.zedeng.reference.Textures;
 import cpw.mods.fml.relauncher.Side;

@@ -5,5 +5,6 @@ package com.zerren.zedeng.reference;
  */
 public enum GUIs {
     KEY,
-    VAULT
+    VAULT,
+    CHEST
 }

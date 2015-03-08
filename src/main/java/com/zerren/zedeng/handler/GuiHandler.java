@@ -1,8 +1,11 @@
 package com.zerren.zedeng.handler;
 
+import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.vault.TEVaultController;
-import com.zerren.zedeng.gui.GuiKey;
-import com.zerren.zedeng.gui.GuiVault;
+import com.zerren.zedeng.client.gui.GuiChestZE;
+import com.zerren.zedeng.client.gui.GuiKey;
+import com.zerren.zedeng.client.gui.GuiVault;
+import com.zerren.zedeng.inventory.ContainerChestZE;
 import com.zerren.zedeng.inventory.ContainerVault;
 import com.zerren.zedeng.reference.GUIs;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -23,6 +26,12 @@ public class GuiHandler implements IGuiHandler {
 
             if (vault != null) return new ContainerVault(player.inventory, vault, vault.page);
         }
+        if (id == GUIs.CHEST.ordinal()) {
+
+            TEChest chest = (TEChest) world.getTileEntity(x, y, z);
+
+            if (chest != null) return new ContainerChestZE(player.inventory, chest);
+        }
         return null;
     }
 
@@ -37,6 +46,12 @@ public class GuiHandler implements IGuiHandler {
             TEVaultController vault = (TEVaultController) world.getTileEntity(x, y, z);
 
             if (vault != null) return new GuiVault(vault, player.inventory, vault.page);
+        }
+        if (id == GUIs.CHEST.ordinal()) {
+
+            TEChest chest = (TEChest) world.getTileEntity(x, y, z);
+
+            if (chest != null) return new GuiChestZE(player.inventory, chest);
         }
         return null;
     }

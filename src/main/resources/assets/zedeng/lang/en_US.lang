@@ -23,6 +23,14 @@ tile.zedeng:vault.door_closed.name=Vault Hatch (Closed)
 tile.zedeng:vault.door_open.name=Vault Hatch (Open)
 tile.zedeng:vault.container.name=Vault Storage Container
 
+tile.zedeng:vaultChest.brick.name=Secure Iron Chest
+tile.zedeng:vaultChest.thaumium.name=Secure Thaumium Chest
+tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
+
+tile.zedeng.fluid.pressurizedWaterCold.name=Pressurized Water (Cold)
+tile.zedeng.fluid.pressurizedWaterHot.name=Pressurized Water (Hot)
+
+
 # Item localizations --------------------------------------------------------------------
 item.zedeng:material.dustChroma.name=Chromatic Dye
 
@@ -54,6 +62,9 @@ gui.info.keyhole.creative.name=The key shifts and twists until it is the correct
 gui.info.keyhole.null.name=This lock has no code. I can set one with a key.
 gui.info.keyhole.trespass.name=This lock isn't mine. I don't know how it was made.
 
+gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
+
 container.vault.name=Vault
+container.chest.name=Secure Chest
 
 itemGroup.zedeng=Zederrian Engineering

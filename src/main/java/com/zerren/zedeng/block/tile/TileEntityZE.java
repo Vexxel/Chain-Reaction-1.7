@@ -1,10 +1,15 @@
 package com.zerren.zedeng.block.tile;
 
+import com.zerren.zedeng.handler.PacketHandler;
+import com.zerren.zedeng.handler.network.tileentity.MessageTileZE;
 import com.zerren.zedeng.reference.Names;
-import com.zerren.zedeng.utility.CoreUtility;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.UUID;
 
 /**
  * Created by Zerren on 2/20/2015.
@@ -14,14 +19,14 @@ public class TileEntityZE extends TileEntity
     protected ForgeDirection orientation;
     protected byte state;
     protected String customName;
-    protected String owner;
+    protected UUID ownerUUID;
 
     public TileEntityZE()
     {
         orientation = ForgeDirection.SOUTH;
         state = 0;
         customName = "";
-        owner = "";
+        ownerUUID = null;
     }
 
     public void information(TileEntityZE tile) {
@@ -62,14 +67,17 @@ public class TileEntityZE extends TileEntity
         this.customName = customName;
     }
 
-    public String getOwner()
-    {
-        return owner;
+
+    public void setOwnerUUID(UUID id){
+        this.ownerUUID = id;
     }
 
-    public void setOwner(String owner)
-    {
-        this.owner = owner;
+    public UUID getOwnerUUID() {
+        return ownerUUID;
+    }
+
+    public void setOwner(EntityPlayer player) {
+        ownerUUID = player.getPersistentID();
     }
 
     @Override
@@ -92,9 +100,9 @@ public class TileEntityZE extends TileEntity
             this.customName = nbtTagCompound.getString(Names.NBT.CUSTOM_NAME);
         }
 
-        if (nbtTagCompound.hasKey(Names.NBT.OWNER))
+        if (nbtTagCompound.hasKey(Names.NBT.OWNER_UUID_MOST_SIG) && nbtTagCompound.hasKey(Names.NBT.OWNER_UUID_LEAST_SIG))
         {
-            this.owner = nbtTagCompound.getString(Names.NBT.OWNER);
+            this.ownerUUID = new UUID(nbtTagCompound.getLong(Names.NBT.OWNER_UUID_MOST_SIG), nbtTagCompound.getLong(Names.NBT.OWNER_UUID_LEAST_SIG));
         }
     }
 
@@ -113,7 +121,8 @@ public class TileEntityZE extends TileEntity
 
         if (this.hasOwner())
         {
-            nbtTagCompound.setString(Names.NBT.OWNER, owner);
+            nbtTagCompound.setLong(Names.NBT.OWNER_UUID_MOST_SIG, ownerUUID.getMostSignificantBits());
+            nbtTagCompound.setLong(Names.NBT.OWNER_UUID_LEAST_SIG, ownerUUID.getLeastSignificantBits());
         }
     }
 
@@ -124,7 +133,12 @@ public class TileEntityZE extends TileEntity
 
     public boolean hasOwner()
     {
-        return owner != null && owner.length() > 0;
+        return ownerUUID != null;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        return PacketHandler.netHandler.getPacketFrom(new MessageTileZE(this));
     }
 
 

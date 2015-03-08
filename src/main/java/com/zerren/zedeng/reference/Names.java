@@ -36,6 +36,18 @@ public class Names {
                 "door_open",
                 "container"
         };
+
+        public static final String CHEST = "vaultChest";
+        public static final String[] CHEST_SUBTYPES = {
+                "brick",
+                "thaumium",
+                "voidmetal"
+        };
+
+        public static final String EXCHANGER = "exchanger";
+        public static final String[] EXCHANGER_SUBTYPES = {
+                "liquidHeatExchanger"
+        };
     }
 
     public static final class Items {
@@ -56,6 +68,11 @@ public class Names {
         };
     }
 
+    public static final class Fluids {
+        public static final String COOLANT_COLD = "pressurizedWaterCold";
+        public static final String COOLANT_HOT = "pressurizedWaterHot";
+    }
+
     public static final class NBT {
         public static final String ITEMS = "Items";
         public static final String MODE = "mode";
@@ -67,7 +84,7 @@ public class Names {
         public static final String STATE = "teState";
         public static final String CUSTOM_NAME = "CustomName";
         public static final String DIRECTION = "teDirection";
-        public static final String OWNER = "owner";
+        public static final String OWNER = "ownerName";
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
     }
