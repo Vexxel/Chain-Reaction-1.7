@@ -45,11 +45,11 @@ public class CoreUtility {
     }
 
     //ONLY shows messages when the matching dev config is true
-    public static boolean devDebug(String message) {
-        /*if (ConfigHandler.devDebug){
+    public static boolean debug(String message) {
+        if (ConfigHandler.devDebug){
             System.out.println(message);
             return true;
-        }*/
+        }
         return false;
     }
 

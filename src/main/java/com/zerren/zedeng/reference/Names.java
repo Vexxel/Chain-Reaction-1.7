@@ -1,5 +1,7 @@
 package com.zerren.zedeng.reference;
 
+import com.zerren.zedeng.handler.ConfigHandler;
+
 /**
  * Created by Zerren on 2/19/2015.
  */
@@ -71,6 +73,8 @@ public class Names {
     public static final class Fluids {
         public static final String COOLANT_COLD = "pressurizedWaterCold";
         public static final String COOLANT_HOT = "pressurizedWaterHot";
+
+        public static final String STEAM = ConfigHandler.steamName;
     }
 
     public static final class NBT {

@@ -10,6 +10,7 @@ public class Sounds {
     public static final String CHEST_OPEN = "random.chestopen";
     public static final String CHEST_CLOSE = "random.chestclosed";
     public static final String PISTON_OUT = "tile.piston.out";
+    public static final String FIZZ = "random.fizz";
 
     public static final String LOCK_SUCCESS = zedprefix + "lock_success";
     public static final String LOCK_FAILURE = zedprefix + "lock_failure";

@@ -1,7 +1,10 @@
 package com.zerren.zedeng.block.fluid;
 
+import com.zerren.zedeng.core.ModPotions;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
@@ -15,6 +18,11 @@ public class BlockFluidCoolantCold extends BlockFluidZE {
 
     @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+        if (entity instanceof EntityLivingBase) {
+            PotionEffect effect = new PotionEffect(ModPotions.radSickness.getId(), 600, 2);
+            effect.getCurativeItems().clear();
 
+            ((EntityLivingBase) entity).addPotionEffect(effect);
+        }
     }
 }

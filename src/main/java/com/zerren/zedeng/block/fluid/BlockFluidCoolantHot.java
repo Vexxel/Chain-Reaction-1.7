@@ -1,8 +1,13 @@
 package com.zerren.zedeng.block.fluid;
 
 import com.zerren.zedeng.core.DamageSourceZE;
+import com.zerren.zedeng.core.ModPotions;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -17,6 +22,12 @@ public class BlockFluidCoolantHot extends BlockFluidZE {
 
     @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-        entity.attackEntityFrom(DamageSourceZE.thermal, 4.0F);
+        if (entity instanceof EntityLivingBase) {
+            PotionEffect effect = new PotionEffect(ModPotions.radSickness.getId(), 6000, 2);
+            effect.getCurativeItems().clear();
+
+            ((EntityLivingBase) entity).addPotionEffect(effect);
+            entity.attackEntityFrom(DamageSourceZE.thermal, 4.0F);
+        }
     }
 }

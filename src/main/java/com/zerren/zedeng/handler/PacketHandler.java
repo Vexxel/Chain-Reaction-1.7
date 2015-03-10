@@ -1,5 +1,6 @@
 package com.zerren.zedeng.handler;
 
+import com.zerren.zedeng.handler.network.player.MessageShader;
 import com.zerren.zedeng.handler.network.tileentity.MessageTileChest;
 import com.zerren.zedeng.handler.network.tileentity.MessageTileVault;
 import com.zerren.zedeng.handler.network.tileentity.MessageTileZE;
@@ -24,5 +25,7 @@ public class PacketHandler {
         netHandler.registerMessage(MessageTileZE.class, MessageTileZE.class, 1, Side.CLIENT);
         netHandler.registerMessage(MessageTileVault.class, MessageTileVault.class, 2, Side.CLIENT);
         netHandler.registerMessage(MessageTileChest.class, MessageTileChest.class, 3, Side.CLIENT);
+
+        netHandler.registerMessage(MessageShader.class, MessageShader.class, 4, Side.CLIENT);
     }
 }

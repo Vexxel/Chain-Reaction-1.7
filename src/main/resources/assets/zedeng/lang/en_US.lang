@@ -68,3 +68,11 @@ container.vault.name=Vault
 container.chest.name=Secure Chest
 
 itemGroup.zedeng=Zederrian Engineering
+
+zedeng.potion.alpha=Alpha Emission
+zedeng.potion.beta=Beta Emission
+zedeng.potion.gamma=Gamma Emission
+zedeng.potion.neutron=Neutron Emission
+zedeng.potion.sickness=Radiation Sickness
+
+death.attack.thermal=%1$s was boiled alive

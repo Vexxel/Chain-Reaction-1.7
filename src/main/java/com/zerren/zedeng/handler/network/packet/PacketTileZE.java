@@ -125,16 +125,6 @@ public abstract class PacketTileZE<T extends TileEntityZE> implements IMessage {
             }
         }
 
-        TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
-
-        if (tileEntity instanceof TileEntityZE) {
-
-            ((TileEntityZE) tileEntity).setOrientation(message.orientation);
-            ((TileEntityZE) tileEntity).setState(message.state);
-            ((TileEntityZE) tileEntity).setCustomName(message.customName);
-            ((TileEntityZE) tileEntity).setOwnerUUID(message.ownerUUID);
-        }
-
         return null;
     }
 }

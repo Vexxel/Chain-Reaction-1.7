@@ -3,15 +3,22 @@ package com.zerren.zedeng.block.fluid;
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.reference.Textures;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EntityDropParticleFX;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+
+import java.util.Random;
 
 /**
  * Created by Zerren on 3/7/2015.
@@ -48,6 +55,26 @@ public class BlockFluidZE extends BlockFluidClassic {
         this.setTickRate(tickr);
         this.setHardness(hardness);
         this.setLightOpacity(lightOpacity);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+
+        super.randomDisplayTick(world, x, y, z, rand);
+
+        double px = x + rand.nextFloat();
+        double py = y - 1.05D;
+        double pz = z + rand.nextFloat();
+
+        if (density < 0) {
+            py = y + 2.10D;
+        }
+        if (rand.nextInt(20) == 0 && world.isSideSolid(x, y + densityDir, z, densityDir == -1 ? ForgeDirection.UP : ForgeDirection.DOWN)
+                && !world.getBlock(x, y + 2 * densityDir, z).getMaterial().blocksMovement()) {
+            EntityFX fx = new EntityDropParticleFX(world, px, py, pz, this.getMaterial());
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+        }
     }
 
     @Override

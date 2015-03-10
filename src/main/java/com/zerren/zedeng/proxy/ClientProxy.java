@@ -8,10 +8,17 @@ import com.zerren.zedeng.client.render.tileentity.TESRChest;
 import com.zerren.zedeng.client.render.tileentity.TESRHeatExchanger;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.reference.RenderIDs;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -21,7 +28,6 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class ClientProxy extends CommonProxy {
 
-    @Override
     public ClientProxy getClientProxy() {
         return this;
     }
@@ -29,6 +35,14 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerEventHandlers() {
 
+    }
+
+    public static EntityPlayer getPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    public boolean isTheClientPlayer(EntityLivingBase entity) {
+        return entity == Minecraft.getMinecraft().thePlayer;
     }
 
     @Override
@@ -49,7 +63,19 @@ public class ClientProxy extends CommonProxy {
 
     }
 
-    public static EntityPlayer getPlayer() {
-        return Minecraft.getMinecraft().thePlayer;
+    @SideOnly(Side.CLIENT)
+    public void setShader(String shader) {
+        while(FMLClientHandler.instance().getClient().entityRenderer.isShaderActive() ? !(FMLClientHandler.instance().getClient().entityRenderer.getShaderGroup().getShaderGroupName().equals("minecraft:shaders/post/" + shader + ".json")) : true)
+            FMLClientHandler.instance().getClient().entityRenderer.activateNextShader();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void removeShader() {
+        FMLClientHandler.instance().getClient().entityRenderer.deactivateShader();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean isShaderActive() {
+        return FMLClientHandler.instance().getClient().entityRenderer.isShaderActive();
     }
 }

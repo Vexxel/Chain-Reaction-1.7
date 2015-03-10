@@ -15,19 +15,48 @@ public class PotionZE extends Potion {
 
     /**
      *
-     * @param p1 Potion ID
-     * @param p2 Bad Effect?
-     * @param p3 Color
+     * @param id Potion ID
+     * @param isBad Bad Effect?
+     * @param color Color
      */
-    public PotionZE(int p1, String name, boolean p2, int p3, int ssX, int ssY) {
-        super(p1, p2, p3);
-        this.setIconIndex(ssX, ssY);
+    public PotionZE(int id, String name, boolean isBad, int color, int index) {
+        super(id, isBad, color);
         this.setPotionName(Reference.MOD_ID.toLowerCase() + ".potion." + name);
+        this.setIconIndex(index % 8, index / 8);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public int getStatusIconIndex() {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(Textures.guis.POTIONS);
+        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.guis.POTIONS);
         return super.getStatusIconIndex();
+    }
+
+    public boolean hasEffect(EntityLivingBase entity) {
+        return hasEffect(entity, this);
+    }
+
+    public boolean hasEffect(EntityLivingBase entity, Potion potion) {
+        return entity.getActivePotionEffect(potion) != null;
+    }
+
+    public int getEffectLevel(EntityLivingBase entity, Potion potion) {
+        return entity.getActivePotionEffect(potion).getAmplifier();
+    }
+
+    public int getEffectLevel(EntityLivingBase entity) {
+        return entity.getActivePotionEffect(this).getAmplifier();
+    }
+
+    public int getEffectTicks(EntityLivingBase entity) {
+        return entity.getActivePotionEffect(this).getDuration();
+    }
+
+    public int getEffectTicks(EntityLivingBase entity, Potion potion) {
+        return entity.getActivePotionEffect(potion).getDuration();
+    }
+
+    public void performEffect(EntityLivingBase target, int p2) {
+
     }
 }

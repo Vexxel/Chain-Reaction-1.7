@@ -1,19 +1,17 @@
 package com.zerren.zedeng.core.potion;
 
-
 import com.zerren.zedeng.core.ModPotions;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
 /**
  * Created by Zerren on 3/8/2015.
  */
-public class PotionAlphaRadiation extends PotionZE {
+public class PotionNeutronRadiation extends PotionZE {
 
-    public PotionAlphaRadiation(int id) {
-        super(id, "alpha", true, 0x000000, 0);
+    public PotionNeutronRadiation(int id) {
+        super(id, "neutron", true, 0x000000, 3);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
