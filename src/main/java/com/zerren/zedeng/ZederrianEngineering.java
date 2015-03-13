@@ -36,7 +36,7 @@ public class ZederrianEngineering {
     @Mod.Instance(Reference.MOD_ID)
     public static ZederrianEngineering instance;
 
-    @SidedProxy(clientSide = Reference.CLIENTPROXY_CLASS, serverSide = Reference.SERVERPROXY_CLASS)
+    @SidedProxy(modId = Reference.MOD_ID, clientSide = Reference.CLIENTPROXY_CLASS, serverSide = Reference.SERVERPROXY_CLASS)
     public static CommonProxy proxy;
 
     public static final PacketPipeline packetPipeline = new PacketPipeline();

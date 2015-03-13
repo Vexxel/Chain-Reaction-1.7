@@ -35,9 +35,9 @@ public class TESRChest extends TileEntitySpecialRenderer {
             }
 
             switch (chest.getState()) {
-                case 0: this.bindTexture(Textures.model.CHEST_BRICK); break;
-                case 1: this.bindTexture(Textures.model.CHEST_THAUMIUM); break;
-                case 2: this.bindTexture(Textures.model.CHEST_VOID); break;
+                case 0: this.bindTexture(Textures.Models.CHEST_BRICK); break;
+                case 1: this.bindTexture(Textures.Models.CHEST_THAUMIUM); break;
+                case 2: this.bindTexture(Textures.Models.CHEST_VOID); break;
             }
 
             GL11.glPushMatrix();

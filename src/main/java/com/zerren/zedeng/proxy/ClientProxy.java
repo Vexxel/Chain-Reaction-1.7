@@ -2,6 +2,8 @@ package com.zerren.zedeng.proxy;
 
 import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
+import com.zerren.zedeng.client.fx.EntityRadiationFX;
+import com.zerren.zedeng.client.fx.EntitySteamFX;
 import com.zerren.zedeng.client.render.item.ItemRendererHeatExchanger;
 import com.zerren.zedeng.client.render.item.ItemRendererVaultChest;
 import com.zerren.zedeng.client.render.tileentity.TESRChest;
@@ -16,17 +18,24 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 /**
  * Created by Zerren on 2/19/2015.
  */
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
+
+    public static Random rand = new Random();
 
     public ClientProxy getClientProxy() {
         return this;
@@ -59,23 +68,53 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void playSound(String soundName, float xCoord, float yCoord, float zCoord, float volume, float pitch) {
-
+    public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) {
+        world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, soundName, volume, pitch);
     }
 
-    @SideOnly(Side.CLIENT)
+    @Override
     public void setShader(String shader) {
-        while(FMLClientHandler.instance().getClient().entityRenderer.isShaderActive() ? !(FMLClientHandler.instance().getClient().entityRenderer.getShaderGroup().getShaderGroupName().equals("minecraft:shaders/post/" + shader + ".json")) : true)
+        while(!FMLClientHandler.instance().getClient().entityRenderer.isShaderActive() || !(FMLClientHandler.instance().getClient().entityRenderer.getShaderGroup().getShaderGroupName().equals("minecraft:shaders/post/" + shader + ".json")))
             FMLClientHandler.instance().getClient().entityRenderer.activateNextShader();
     }
 
-    @SideOnly(Side.CLIENT)
+    @Override
     public void removeShader() {
         FMLClientHandler.instance().getClient().entityRenderer.deactivateShader();
     }
 
-    @SideOnly(Side.CLIENT)
+    @Override
     public boolean isShaderActive() {
         return FMLClientHandler.instance().getClient().entityRenderer.isShaderActive();
+    }
+
+    @Override
+    public void radiationFX(World world, double x, double y, double z, double velX, double velY, double velZ, int power) {
+
+        if (shouldSpawnParticle()) {
+            EntityRadiationFX fx = new EntityRadiationFX(world, x, y, z, velX, velY, velZ, power);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+        }
+    }
+
+    @Override
+    public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) {
+
+        if (shouldSpawnParticle()) {
+            EntityFX fx = new EntitySteamFX(world, x, y, z, velX, velY, velZ, scale);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+        }
+    }
+
+    private boolean shouldSpawnParticle() {
+        Minecraft mc = FMLClientHandler.instance().getClient();
+
+        int particleSetting = mc.gameSettings.particleSetting;
+
+        if (particleSetting == 1 && rand.nextInt(3) == 0) {
+            particleSetting = 2;
+        }
+
+        return particleSetting <= 1;
     }
 }

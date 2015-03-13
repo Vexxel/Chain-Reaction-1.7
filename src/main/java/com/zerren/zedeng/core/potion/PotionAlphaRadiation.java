@@ -12,14 +12,14 @@ import net.minecraftforge.event.entity.living.LivingEvent;
  */
 public class PotionAlphaRadiation extends PotionZE {
 
-    public PotionAlphaRadiation(int id) {
-        super(id, "alpha", true, 0x000000, 0);
+    public PotionAlphaRadiation(int id, String name) {
+        super(id, name, true, 0x000000, 0);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (event.entityLiving.isPotionActive(ModPotions.alphaRad)) {
+        if (hasEffect(event.entityLiving)) {
 
         }
     }

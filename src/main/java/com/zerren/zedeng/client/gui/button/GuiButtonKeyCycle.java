@@ -27,7 +27,7 @@ public class GuiButtonKeyCycle extends GuiButton {
         final int x = 136;
         final int y = (previous ? 1 : 13);
 
-        mc.getTextureManager().bindTexture(Textures.guis.KEY);
+        mc.getTextureManager().bindTexture(Textures.GUIs.KEY);
         drawTexturedModalRect(xPosition, yPosition, x, y, 14, 10);
     }
 }

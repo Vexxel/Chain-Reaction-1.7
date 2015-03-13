@@ -5,7 +5,6 @@ import com.zerren.zedeng.reference.Textures;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.model.ModelChest;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
@@ -58,7 +57,7 @@ public class ItemRendererHeatExchanger implements IItemRenderer {
 
     private void renderChest(float x, float y, float z, int metaData) {
         if (metaData == 0) {
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.model.HEAT_EXCHANGER);
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.Models.HEAT_EXCHANGER);
         }
 
         GL11.glPushMatrix(); //start

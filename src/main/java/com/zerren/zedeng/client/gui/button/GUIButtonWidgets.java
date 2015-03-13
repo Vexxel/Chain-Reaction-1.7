@@ -35,7 +35,7 @@ public class GUIButtonWidgets extends GuiButton {
             return;
         }
 
-        mc.getTextureManager().bindTexture(Textures.guis.WIDGETS);
+        mc.getTextureManager().bindTexture(Textures.GUIs.WIDGETS);
         drawTexturedModalRect(xPosition, yPosition, u, v, sX, sY);
     }
 }

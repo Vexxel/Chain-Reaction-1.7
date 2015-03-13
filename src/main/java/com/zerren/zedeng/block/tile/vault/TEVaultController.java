@@ -171,7 +171,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
                     if (vault != null && (vault instanceof TEVaultBase) && !(vault instanceof TEVaultController)) {
                         //check to see if the ownerUUID of the vault controller is the same as every vault block, or if those vault blocks have no ownerUUID
                         if (((TEVaultBase) vault).getOwnerUUID() == null || ((TEVaultBase) vault).getOwnerUUID().compareTo(ownedBy) == 0) {
-                            if (((TEVaultBase) vault).getControllerID() == null || ((TEVaultBase) vault).getControllerID().compareTo(this.getControllerUUID()) == 0) {
+                            if (((TEVaultBase) vault).getMasterUUID() == null || ((TEVaultBase) vault).getMasterUUID().compareTo(this.getControllerUUID()) == 0) {
                                 counter++;
                             }
                             else break vaultCheck;

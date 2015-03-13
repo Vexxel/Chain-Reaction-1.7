@@ -57,13 +57,13 @@ public class ItemRendererVaultChest implements IItemRenderer {
 
     private void renderChest(float x, float y, float z, int metaData) {
         if (metaData == 0) {
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.model.CHEST_BRICK);
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.Models.CHEST_BRICK);
         }
         else if (metaData == 1) {
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.model.CHEST_THAUMIUM);
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.Models.CHEST_THAUMIUM);
         }
         else if (metaData == 2) {
-            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.model.CHEST_VOID);
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Textures.Models.CHEST_VOID);
         }
 
         GL11.glPushMatrix(); //start

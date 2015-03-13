@@ -47,11 +47,11 @@ public class GuiChestZE extends GuiContainer {
 
         ResourceLocation texture;
         switch (chest.getState()) {
-            case 0: texture = Textures.guis.CHEST_BRICK; break;
-            case 1: texture = Textures.guis.CHEST_THAUMIUM; break;
-            case 2: texture = Textures.guis.CHEST_VOID; break;
+            case 0: texture = Textures.GUIs.CHEST_BRICK; break;
+            case 1: texture = Textures.GUIs.CHEST_THAUMIUM; break;
+            case 2: texture = Textures.GUIs.CHEST_VOID; break;
 
-            default: texture = Textures.guis.CHEST_BRICK; break;
+            default: texture = Textures.GUIs.CHEST_BRICK; break;
         }
 
         mc.getTextureManager().bindTexture(texture);

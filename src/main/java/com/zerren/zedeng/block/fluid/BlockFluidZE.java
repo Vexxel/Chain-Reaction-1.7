@@ -29,6 +29,7 @@ public class BlockFluidZE extends BlockFluidClassic {
     protected IIcon stillIcon, flowingIcon;
 
     private String folder, name;
+    private boolean hasFlowingIcon;
     protected Fluid fluid;
 
     /**
@@ -40,16 +41,18 @@ public class BlockFluidZE extends BlockFluidClassic {
      * @param tickr Tickrate
      * @param hardness Hardness
      * @param lightOpacity Light decays by how much per block travelled through liquid
+     * @param hasFlowingIcon If this fluid has a flowing icon (mostly used for gases). If false, still icon will be used
      *
      */
-    public BlockFluidZE(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity) {
+    public BlockFluidZE(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity, boolean hasFlowingIcon) {
         super(fluid, material);
         this.setCreativeTab(ZederrianEngineering.cTabZE);
         this.setRenderPass(1);
-        this.folder = Textures.folders.FLUID_FOLDER;
+        this.folder = Textures.Folders.FLUID_FOLDER;
         this.setBlockName(Reference.MOD_ID.toLowerCase() + ".fluid." + name);
         this.name = name;
         this.fluid = fluid;
+        this.hasFlowingIcon = hasFlowingIcon;
 
         this.setQuantaPerBlock(quanta);
         this.setTickRate(tickr);
@@ -89,8 +92,12 @@ public class BlockFluidZE extends BlockFluidClassic {
 
     @Override
     public void registerBlockIcons(IIconRegister icon) {
+
         stillIcon = icon.registerIcon(Textures.RESOURCE_PREFIX + folder + name + "_still");
-        flowingIcon = icon.registerIcon(Textures.RESOURCE_PREFIX + folder + name + "_flow");
+        if (hasFlowingIcon)
+            flowingIcon = icon.registerIcon(Textures.RESOURCE_PREFIX + folder + name + "_flow");
+        else
+            flowingIcon = stillIcon;
 
         fluid.setIcons(stillIcon, flowingIcon);
     }

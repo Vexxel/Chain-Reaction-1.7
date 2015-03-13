@@ -50,7 +50,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                 return true;
             }
             CoreUtility.addChat("Owned by: " + vault.getOwnerUUID(), player);
-            CoreUtility.addChat("Controlled by: " + vault.getControllerID(), player);
+            CoreUtility.addChat("Controlled by: " + vault.getMasterUUID(), player);
             CoreUtility.addChat("Breakable: " + vault.isBreakable(), player);
             return true;
         }

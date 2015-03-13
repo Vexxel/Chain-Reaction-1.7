@@ -25,8 +25,8 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
  */
 public class PotionRadiationSickness extends PotionZE {
 
-    public PotionRadiationSickness(int id) {
-        super(id, "sickness", true, 0x000000, 4);
+    public PotionRadiationSickness(int id, String name) {
+        super(id, name, true, 0x000000, 4);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -46,23 +46,22 @@ public class PotionRadiationSickness extends PotionZE {
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityLivingBase e = event.entityLiving;
 
-        //if (e.worldObj.isRemote) {
-        if (e instanceof EntityPlayerMP) {
+        //WIP shader access
+        /*if (e instanceof EntityPlayerMP) {
             //has radiation sickness level 3+
             if (hasEffect(e) && getEffectLevel(e) >= 2) {
                 //duration is longer than 2 seconds remaining
                 if (getEffectTicks(e) > 40) {
-                    //if no shader is active
+                    //if the entity isn't dead (isDead doesn't work)
                     if (e.getHealth() > 0)
                         PacketHandler.netHandler.sendTo(new MessageShader((byte)1), (EntityPlayerMP)e);
                 }
                 //duration is shorter than 2 seconds remaining
                 else {
-                    //if a shader is active
                     PacketHandler.netHandler.sendTo(new MessageShader((byte)0), (EntityPlayerMP)e);
                 }
             }
-        }
+        }*/
     }
 
     @SubscribeEvent

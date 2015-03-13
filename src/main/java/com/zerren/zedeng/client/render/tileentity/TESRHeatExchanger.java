@@ -30,7 +30,7 @@ public class TESRHeatExchanger extends TileEntitySpecialRenderer {
             }
 
             switch (exchanger.getState()) {
-                case 0: this.bindTexture(Textures.model.HEAT_EXCHANGER); break;
+                case 0: this.bindTexture(Textures.Models.HEAT_EXCHANGER); break;
             }
 
             GL11.glPushMatrix();

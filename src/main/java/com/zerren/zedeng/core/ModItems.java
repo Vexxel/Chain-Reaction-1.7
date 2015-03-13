@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 public class ModItems {
 
     public static Item materials = new ItemZE(Names.Items.MATERIAL, Names.Items.MATERIAL_SUBTYPES, ZederrianEngineering.cTabZE);
-    public static Item keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Textures.folders.KEY_FOLDER, ZederrianEngineering.cTabZE);
+    public static Item keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Textures.Folders.KEY_FOLDER, ZederrianEngineering.cTabZE);
 
     public static void init() {
         GameRegistry.registerItem(materials, Names.Items.MATERIAL);

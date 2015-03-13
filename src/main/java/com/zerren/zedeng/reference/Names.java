@@ -71,10 +71,21 @@ public class Names {
     }
 
     public static final class Fluids {
-        public static final String COOLANT_COLD = "pressurizedWaterCold";
-        public static final String COOLANT_HOT = "pressurizedWaterHot";
+        public static final String COOLANT_COLD = "coolantCold";
+        public static final String COOLANT_HOT = "coolantHot";
+        public static final String UF6 = "UF6";
 
-        public static final String STEAM = ConfigHandler.steamName;
+        public static final String STEAM = "saturatedSteam";
+    }
+
+    public static final class Potions {
+        public static final String[] EFFECTS = {
+                "alphaRad",
+                "betaRad",
+                "gammaRad",
+                "neutronRad",
+                "radSickness"
+        };
     }
 
     public static final class NBT {

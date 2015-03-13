@@ -150,7 +150,7 @@ public class GuiKey extends GuiScreen {
     @Override
     public void drawScreen(int par1, int par2, float par3) {
         GL11.glColor4f(1f, 1f, 1f, 1f);
-        this.mc.getTextureManager().bindTexture(Textures.guis.KEY);
+        this.mc.getTextureManager().bindTexture(Textures.GUIs.KEY);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

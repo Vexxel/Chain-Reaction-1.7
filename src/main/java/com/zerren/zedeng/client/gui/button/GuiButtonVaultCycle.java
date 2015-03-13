@@ -27,7 +27,7 @@ public class GuiButtonVaultCycle extends GuiButton {
         final int x = 200;
         final int y = (previous ? 0 : 12);
 
-        mc.getTextureManager().bindTexture(Textures.guis.VAULT);
+        mc.getTextureManager().bindTexture(Textures.GUIs.VAULT);
         drawTexturedModalRect(xPosition, yPosition, x, y, 14, 10);
     }
 }

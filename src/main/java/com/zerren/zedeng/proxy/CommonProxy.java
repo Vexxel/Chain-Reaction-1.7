@@ -2,6 +2,9 @@ package com.zerren.zedeng.proxy;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
+import java.util.Random;
 
 /**
  * Created by Zerren on 2/19/2015.
@@ -10,7 +13,7 @@ public class CommonProxy {
 
     public void initRenderingAndTextures() { }
 
-    public void playSound(String soundName, float xCoord, float yCoord, float zCoord, float volume, float pitch) { }
+    public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }
 
     public boolean isTheClientPlayer(EntityLivingBase entity) { return false; }
 
@@ -21,5 +24,9 @@ public class CommonProxy {
     public void removeShader() { }
 
     public boolean isShaderActive() { return false;}
+
+    public void radiationFX(World world, double x, double y, double z, double velX, double velY, double velZ, int power) { }
+
+    public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) { }
 
 }

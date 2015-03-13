@@ -28,7 +28,7 @@ public class PotionZE extends Potion {
     @Override
     @SideOnly(Side.CLIENT)
     public int getStatusIconIndex() {
-        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.guis.POTIONS);
+        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.GUIs.POTIONS);
         return super.getStatusIconIndex();
     }
 

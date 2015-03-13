@@ -27,8 +27,10 @@ tile.zedeng:vaultChest.brick.name=Secure Iron Chest
 tile.zedeng:vaultChest.thaumium.name=Secure Thaumium Chest
 tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
 
-tile.zedeng.fluid.pressurizedWaterCold.name=Pressurized Water (Cold)
-tile.zedeng.fluid.pressurizedWaterHot.name=Pressurized Water (Hot)
+tile.zedeng.fluid.coolantCold.name=Pressurized Water (Cold)
+tile.zedeng.fluid.coolantHot.name=Pressurized Water (Hot)
+tile.zedeng.fluid.saturatedSteam.name=Saturated Steam
+tile.zedeng.fluid.uf6.name=Uranium Hexafluoride
 
 
 # Item localizations --------------------------------------------------------------------
@@ -69,10 +71,11 @@ container.chest.name=Secure Chest
 
 itemGroup.zedeng=Zederrian Engineering
 
-zedeng.potion.alpha=Alpha Emission
-zedeng.potion.beta=Beta Emission
-zedeng.potion.gamma=Gamma Emission
-zedeng.potion.neutron=Neutron Emission
-zedeng.potion.sickness=Radiation Sickness
+zedeng.potion.alphaRad=Alpha Emission
+zedeng.potion.betaRad=Beta Emission
+zedeng.potion.gammaRad=Gamma Emission
+zedeng.potion.neutronRad=Neutron Emission
+zedeng.potion.radSickness=Rad. Sickness
 
 death.attack.thermal=%1$s was boiled alive
+death.attack.radiation=%1$s died of radiation
