@@ -14,11 +14,18 @@ public class EntityRadiation extends Entity {
     public EntityRadiation(World world, double x, double y, double z, int power) {
         super(world);
         this.power = power;
+
+        this.renderDistanceWeight = 10.0D;
+        this.setSize(0.25F, 0.25F);
     }
 
     @Override
     protected void entityInit() {
 
+    }
+
+    public int getPower() {
+        return power;
     }
 
     @Override

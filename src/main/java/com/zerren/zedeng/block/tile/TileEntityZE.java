@@ -1,7 +1,7 @@
 package com.zerren.zedeng.block.tile;
 
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileZE;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileZE;
 import com.zerren.zedeng.reference.Names;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

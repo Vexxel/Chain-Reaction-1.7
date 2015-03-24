@@ -3,7 +3,7 @@ package com.zerren.zedeng.block.tile.chest;
 import com.zerren.zedeng.block.tile.TileEntityZE;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileChest;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileChest;
 import com.zerren.zedeng.inventory.ContainerChestZE;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.reference.Sounds;

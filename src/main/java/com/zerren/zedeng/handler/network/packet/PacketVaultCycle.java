@@ -23,7 +23,7 @@ public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements
     public PacketVaultCycle(TEVaultController tile, int pg, EntityPlayer player, boolean accept) {
         super(tile, player);
         this.page = pg;
-        //if this packet was tagged with false, it will shift the value down 100. this prevents the tileentity from changing the page, and the player from opening the new gui
+        //if this packet was tagged with false, it will shift the value down 100. this prevents the clientsync from changing the page, and the player from opening the new gui
         if (!accept) {
             this.page -= 100;
         }
@@ -48,7 +48,7 @@ public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements
             throw new IllegalStateException("received PacketVault " + message + "on client side!");
         }
 
-        //recieves int packet 'page'. If the packet is >=0, (ie not shifted down 100 from previous), then the tileentity will set its page to the packet int and open a new GUI
+        //recieves int packet 'page'. If the packet is >=0, (ie not shifted down 100 from previous), then the clientsync will set its page to the packet int and open a new GUI
         if (message.page >= 0 && message.page != message.tile.page) {
             message.tile.setPage(message.page);
             message.player.openGui(ZederrianEngineering.instance, GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
@@ -59,7 +59,7 @@ public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements
         if (message.page < 0) {
             msgp += 100;
         }
-        //this sets the tileentity's selector to the packet int
+        //this sets the clientsync's selector to the packet int
         message.tile.selection = msgp;
         return null;
     }

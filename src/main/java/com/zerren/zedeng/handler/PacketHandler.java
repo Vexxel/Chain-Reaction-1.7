@@ -1,9 +1,9 @@
 package com.zerren.zedeng.handler;
 
 import com.zerren.zedeng.handler.network.player.MessageShader;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileChest;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileVault;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileZE;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileChest;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileVault;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileZE;
 import com.zerren.zedeng.handler.network.packet.PacketVaultCycle;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.network.NetworkRegistry;

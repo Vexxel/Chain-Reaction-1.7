@@ -1,16 +1,11 @@
 package com.zerren.zedeng.block.tile.vault;
 
 import com.zerren.zedeng.block.tile.TEMultiBlockBase;
-import com.zerren.zedeng.block.tile.TileEntityZE;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileChest;
-import com.zerren.zedeng.handler.network.tileentity.MessageTileVault;
-import com.zerren.zedeng.reference.Names;
+import com.zerren.zedeng.handler.network.clientsync.MessageTileVault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
-
-import java.util.UUID;
 
 /**
  * Created by Zerren on 2/22/2015.

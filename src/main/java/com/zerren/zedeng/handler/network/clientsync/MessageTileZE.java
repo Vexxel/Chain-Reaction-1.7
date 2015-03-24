@@ -1,4 +1,4 @@
-package com.zerren.zedeng.handler.network.tileentity;
+package com.zerren.zedeng.handler.network.clientsync;
 
 import com.zerren.zedeng.block.tile.TileEntityZE;
 import cpw.mods.fml.client.FMLClientHandler;
