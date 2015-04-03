@@ -6,7 +6,7 @@ import com.zerren.zedeng.block.tile.vault.TEVaultController;
 import com.zerren.zedeng.block.tile.vault.TEVaultLock;
 import com.zerren.zedeng.core.IKey;
 import com.zerren.zedeng.handler.ConfigHandler;
-import com.zerren.zedeng.reference.GUIs;
+import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import com.zerren.zedeng.utility.NBTHelper;
 import net.minecraft.block.Block;
@@ -61,7 +61,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                 //vault is a controller tile
                 if (vault instanceof TEVaultController && !world.isRemote) {
                     //vault isn't active (has no commanding blocks)
-                    if (!((TEVaultController) vault).isActive()) {
+                    if (!((TEVaultController) vault).isMaster()) {
                         ((TEVaultController) vault).initiateController(UUID.randomUUID(), player);
                         return true;
                     }
@@ -72,7 +72,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
 
         //door (open)
         if (world.getBlockMetadata(x, y, z) == 4) {
-            if (vault != null && vault.hasMaster()) {
+            if (vault != null && vault.hasValidMaster()) {
                 if (player.isSneaking()) {
                     //Manually close an open door
                     world.setBlockMetadataWithNotify(x, y, z, 3, 2);
@@ -82,7 +82,7 @@ public class BlockVault extends BlockZE implements ITileEntityProvider {
                 //gets an array of this vault's master position
                 if (!world.isRemote) {
                     int[] mPos = vault.getMasterPos();
-                    player.openGui(ZederrianEngineering.instance, GUIs.VAULT.ordinal(), world, mPos[0], mPos[1], mPos[2]);
+                    player.openGui(ZederrianEngineering.instance, Reference.GUIs.VAULT.ordinal(), world, mPos[0], mPos[1], mPos[2]);
                 }
                 return true;
             }

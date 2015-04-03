@@ -10,7 +10,6 @@ import com.zerren.zedeng.core.registry.ZEDictionary;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.handler.GuiHandler;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.packet.PacketPipeline;
 import com.zerren.zedeng.proxy.CommonProxy;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -30,16 +29,14 @@ import org.apache.logging.log4j.Logger;
  * Created by Zerren on 2/19/2015.
  */
 
-@Mod(modid= Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION, guiFactory = Reference.GUIFACTORY_CLASS)
+@Mod(modid= Reference.ModInfo.MOD_ID, name=Reference.ModInfo.MOD_NAME, version=Reference.ModInfo.VERSION, guiFactory = Reference.ModInfo.GUIFACTORY_CLASS)
 public class ZederrianEngineering {
 
-    @Mod.Instance(Reference.MOD_ID)
+    @Mod.Instance(Reference.ModInfo.MOD_ID)
     public static ZederrianEngineering instance;
 
-    @SidedProxy(modId = Reference.MOD_ID, clientSide = Reference.CLIENTPROXY_CLASS, serverSide = Reference.SERVERPROXY_CLASS)
+    @SidedProxy(modId = Reference.ModInfo.MOD_ID, clientSide = Reference.ModInfo.CLIENTPROXY_CLASS, serverSide = Reference.ModInfo.SERVERPROXY_CLASS)
     public static CommonProxy proxy;
-
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
 
     public static Logger log;
 
@@ -72,7 +69,6 @@ public class ZederrianEngineering {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        packetPipeline.initalise();
         //GameRegistry.registerFuelHandler(new PPFuelHandler());
         TileEntities.init();
 

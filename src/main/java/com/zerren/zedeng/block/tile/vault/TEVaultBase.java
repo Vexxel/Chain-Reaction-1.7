@@ -2,7 +2,7 @@ package com.zerren.zedeng.block.tile.vault;
 
 import com.zerren.zedeng.block.tile.TEMultiBlockBase;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.clientsync.MessageTileVault;
+import com.zerren.zedeng.handler.network.client.tile.MessageTileVault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
@@ -83,6 +83,6 @@ public class TEVaultBase extends TEMultiBlockBase {
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.netHandler.getPacketFrom(new MessageTileVault(this, isBreakable()));
+        return PacketHandler.netHandler.getPacketFrom(new MessageTileVault(this, isBreakable(), isMaster));
     }
 }

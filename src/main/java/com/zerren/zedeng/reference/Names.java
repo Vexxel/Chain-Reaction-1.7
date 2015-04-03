@@ -5,7 +5,7 @@ import com.zerren.zedeng.handler.ConfigHandler;
 /**
  * Created by Zerren on 2/19/2015.
  */
-public class Names {
+public final class Names {
     public static final class Blocks {
         public static final String GLASS = "glass";
         public static final String GLASSPANE = "glasspane";
@@ -54,19 +54,32 @@ public class Names {
 
     public static final class Items {
         public static final String MATERIAL = "material";
-
         public static final String[] MATERIAL_SUBTYPES = {
-                "dustChroma"
+                "boltStainlessSteel",
+                "plateStainlessSteel",
+                "tubeStainlessSteel"
+        };
+
+        public static final String DUST = "dust";
+        public static final String[] DUST_SUBTYPES = {
+                "dustChromium",
+                "dustNickel",
+                "dustStainlessSteel",
+                "dustUO2"
         };
 
         public static final String KEY = "key";
-
         public static final String[] KEY_SUBTYPES = {
                 "bedrock",
                 "iron",
                 "gold",
                 "emerald",
                 "diamond"
+        };
+
+        public static final String TOOL = "tool";
+        public static final String[] TOOL_SUBTYPES = {
+                "wrench"
         };
     }
 

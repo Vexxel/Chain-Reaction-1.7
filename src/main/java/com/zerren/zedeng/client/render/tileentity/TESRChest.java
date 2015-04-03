@@ -2,7 +2,7 @@ package com.zerren.zedeng.client.render.tileentity;
 
 import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.client.render.model.ModelVaultChest;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -35,9 +35,9 @@ public class TESRChest extends TileEntitySpecialRenderer {
             }
 
             switch (chest.getState()) {
-                case 0: this.bindTexture(Textures.Models.CHEST_BRICK); break;
-                case 1: this.bindTexture(Textures.Models.CHEST_THAUMIUM); break;
-                case 2: this.bindTexture(Textures.Models.CHEST_VOID); break;
+                case 0: this.bindTexture(Reference.Textures.Models.CHEST_BRICK); break;
+                case 1: this.bindTexture(Reference.Textures.Models.CHEST_THAUMIUM); break;
+                case 2: this.bindTexture(Reference.Textures.Models.CHEST_VOID); break;
             }
 
             GL11.glPushMatrix();

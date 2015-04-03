@@ -2,7 +2,6 @@ package com.zerren.zedeng.block.fluid;
 
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.reference.Reference;
-import com.zerren.zedeng.reference.Textures;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -48,8 +47,8 @@ public class BlockFluidZE extends BlockFluidClassic {
         super(fluid, material);
         this.setCreativeTab(ZederrianEngineering.cTabZE);
         this.setRenderPass(1);
-        this.folder = Textures.Folders.FLUID_FOLDER;
-        this.setBlockName(Reference.MOD_ID.toLowerCase() + ".fluid." + name);
+        this.folder = Reference.Textures.Folders.FLUID_FOLDER;
+        this.setBlockName(Reference.ModInfo.MOD_ID.toLowerCase() + ".fluid." + name);
         this.name = name;
         this.fluid = fluid;
         this.hasFlowingIcon = hasFlowingIcon;
@@ -93,9 +92,9 @@ public class BlockFluidZE extends BlockFluidClassic {
     @Override
     public void registerBlockIcons(IIconRegister icon) {
 
-        stillIcon = icon.registerIcon(Textures.RESOURCE_PREFIX + folder + name + "_still");
+        stillIcon = icon.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + name + "_still");
         if (hasFlowingIcon)
-            flowingIcon = icon.registerIcon(Textures.RESOURCE_PREFIX + folder + name + "_flow");
+            flowingIcon = icon.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + name + "_flow");
         else
             flowingIcon = stillIcon;
 

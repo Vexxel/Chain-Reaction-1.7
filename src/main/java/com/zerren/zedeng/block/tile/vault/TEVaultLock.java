@@ -1,7 +1,6 @@
 package com.zerren.zedeng.block.tile.vault;
 
 import com.zerren.zedeng.reference.Reference;
-import com.zerren.zedeng.reference.Sounds;
 import com.zerren.zedeng.utility.CoreUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,7 +36,7 @@ public class TEVaultLock extends TEVaultBase {
         if (bedrock && !worldObj.isRemote) {
             unlockAdjacent(xCoord, yCoord, zCoord, player);
             CoreUtility.addColoredChat("gui.info.keyhole.creative.name", EnumChatFormatting.YELLOW, player);
-            worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_SUCCESS, 1F, 1F);
+            worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_SUCCESS, 1F, 1F);
             return;
         }
         if (keyCode == null) return;
@@ -46,11 +45,11 @@ public class TEVaultLock extends TEVaultBase {
         //System.out.println("Used " + keyCode + " on lock " + code);
         if (!worldObj.isRemote) {
             if (keyCode.contains(code)) {
-                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_SUCCESS, 1F, 1F);
+                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_SUCCESS, 1F, 1F);
                 unlockAdjacent(xCoord, yCoord, zCoord, player);
             }
             else {
-                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_FAILURE, 1F, 1F);
+                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_FAILURE, 1F, 1F);
                 CoreUtility.addColoredChat("gui.info.keyhole.deny.name", EnumChatFormatting.YELLOW, player);
             }
         }

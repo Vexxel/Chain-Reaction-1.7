@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/20/2015.
  */
-public class NBTHelper
+public final class NBTHelper
 {
     public static void clearStatefulNBTTags(ItemStack itemStack)
     {

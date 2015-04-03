@@ -7,7 +7,7 @@ import com.zerren.zedeng.client.gui.GuiKey;
 import com.zerren.zedeng.client.gui.GuiVault;
 import com.zerren.zedeng.inventory.ContainerChestZE;
 import com.zerren.zedeng.inventory.ContainerVault;
-import com.zerren.zedeng.reference.GUIs;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -20,13 +20,13 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 
-        if (id == GUIs.VAULT.ordinal()) {
+        if (id == Reference.GUIs.VAULT.ordinal()) {
 
             TEVaultController vault = (TEVaultController) world.getTileEntity(x, y, z);
 
             if (vault != null) return new ContainerVault(player.inventory, vault, vault.page);
         }
-        if (id == GUIs.CHEST.ordinal()) {
+        if (id == Reference.GUIs.CHEST.ordinal()) {
 
             TEChest chest = (TEChest) world.getTileEntity(x, y, z);
 
@@ -38,16 +38,16 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z){
 
-        if (id == GUIs.KEY.ordinal()) {
+        if (id == Reference.GUIs.KEY.ordinal()) {
             return new GuiKey(player, world, x, y, z);
         }
-        if (id == GUIs.VAULT.ordinal()) {
+        if (id == Reference.GUIs.VAULT.ordinal()) {
 
             TEVaultController vault = (TEVaultController) world.getTileEntity(x, y, z);
 
             if (vault != null) return new GuiVault(vault, player.inventory, vault.page);
         }
-        if (id == GUIs.CHEST.ordinal()) {
+        if (id == Reference.GUIs.CHEST.ordinal()) {
 
             TEChest chest = (TEChest) world.getTileEntity(x, y, z);
 

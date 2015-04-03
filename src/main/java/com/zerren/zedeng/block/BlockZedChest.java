@@ -5,14 +5,9 @@ import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.chest.TEChestBrick;
 import com.zerren.zedeng.block.tile.chest.TEChestThaumium;
 import com.zerren.zedeng.block.tile.chest.TEChestVoid;
-import com.zerren.zedeng.block.tile.vault.TEVaultBase;
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
 import com.zerren.zedeng.core.IKey;
 import com.zerren.zedeng.handler.ConfigHandler;
-import com.zerren.zedeng.proxy.ClientProxy;
-import com.zerren.zedeng.reference.GUIs;
-import com.zerren.zedeng.reference.RenderIDs;
-import com.zerren.zedeng.reference.Sounds;
+import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import com.zerren.zedeng.utility.NBTHelper;
 import net.minecraft.block.Block;
@@ -41,7 +36,7 @@ public class BlockZedChest extends BlockZE implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return RenderIDs.vaultChest;
+        return -1;
     }
 
     @Override
@@ -133,9 +128,9 @@ public class BlockZedChest extends BlockZE implements ITileEntityProvider {
         else {
             if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TEChest) {
                 if (!chest.getChestLocked())
-                    player.openGui(ZederrianEngineering.instance, GUIs.CHEST.ordinal(), world, x, y, z);
+                    player.openGui(ZederrianEngineering.instance, Reference.GUIs.CHEST.ordinal(), world, x, y, z);
                 else
-                    world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Sounds.LOCK_RATTLE, 0.7F, 1F);
+                    world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Reference.Sounds.LOCK_RATTLE, 0.7F, 1F);
             }
 
             return true;

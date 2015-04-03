@@ -3,10 +3,10 @@ package com.zerren.zedeng.block.tile.chest;
 import com.zerren.zedeng.block.tile.TileEntityZE;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.clientsync.MessageTileChest;
+import com.zerren.zedeng.handler.network.client.tile.MessageTileChest;
 import com.zerren.zedeng.inventory.ContainerChestZE;
 import com.zerren.zedeng.reference.Names;
-import com.zerren.zedeng.reference.Sounds;
+import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,7 +93,7 @@ public class TEChest extends TileEntityZE implements IInventory
             if (!getChestLocked()) setChestLocked(true);
             else setChestLocked(false);
             CoreUtility.addColoredChat("gui.info.keyhole.creative.name", EnumChatFormatting.YELLOW, player);
-            worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_SUCCESS, 1F, 1F);
+            worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_SUCCESS, 1F, 1F);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
@@ -105,7 +105,7 @@ public class TEChest extends TileEntityZE implements IInventory
         //System.out.println("Used " + keyCode + " on lock " + code);
         if (!worldObj.isRemote) {
             if (keyCode.contains(code)) {
-                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_SUCCESS, 1F, 1F);
+                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_SUCCESS, 1F, 1F);
                 if (!getChestLocked()) setChestLocked(true);
                 else setChestLocked(false);
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -114,7 +114,7 @@ public class TEChest extends TileEntityZE implements IInventory
                 return true;
             }
             else {
-                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Sounds.LOCK_FAILURE, 1F, 1F);
+                worldObj.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, Reference.Sounds.LOCK_FAILURE, 1F, 1F);
                 CoreUtility.addColoredChat("gui.info.keyhole.deny.name", EnumChatFormatting.YELLOW, player);
                 return false;
             }
@@ -250,7 +250,7 @@ public class TEChest extends TileEntityZE implements IInventory
         {
             adjustedXCoord = xCoord + 0.5D;
             adjustedZCoord = zCoord + 0.5D;
-            worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Sounds.CHEST_OPEN, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Reference.Sounds.CHEST_OPEN, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
 
         if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
@@ -275,7 +275,7 @@ public class TEChest extends TileEntityZE implements IInventory
             {
                 adjustedXCoord = xCoord + 0.5D;
                 adjustedZCoord = zCoord + 0.5D;
-                worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Sounds.CHEST_CLOSE, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                worldObj.playSoundEffect(adjustedXCoord, yCoord + 0.5D, adjustedZCoord, Reference.Sounds.CHEST_CLOSE, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
             if (lidAngle < 0.0F)

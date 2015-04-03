@@ -15,7 +15,7 @@ public class ZedGuiConfig extends GuiConfig {
     public ZedGuiConfig(GuiScreen guiScreen) {
         super(guiScreen,
                 new ConfigElement(ConfigHandler.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
-                Reference.MOD_ID,
+                Reference.ModInfo.MOD_ID,
                 false,
                 false,
                 GuiConfig.getAbridgedConfigPath(ConfigHandler.config.toString()));

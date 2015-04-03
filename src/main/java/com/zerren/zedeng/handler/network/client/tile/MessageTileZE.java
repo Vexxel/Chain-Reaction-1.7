@@ -1,6 +1,6 @@
-package com.zerren.zedeng.handler.network.clientsync;
+package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.block.tile.vault.TEVaultBase;
+import com.zerren.zedeng.block.tile.TileEntityZE;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,19 +13,18 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/28/2015.
  */
-public class MessageTileVault implements IMessage, IMessageHandler<MessageTileVault, IMessage> {
+public class MessageTileZE implements IMessage, IMessageHandler<MessageTileZE, IMessage> {
 
     public int x, y, z, dim;
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
-    public boolean breakable;
 
-    public MessageTileVault() {
+    public MessageTileZE() {
 
     }
 
-    public MessageTileVault(TEVaultBase tile, boolean breakable) {
+    public MessageTileZE(TileEntityZE tile) {
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
@@ -35,7 +34,6 @@ public class MessageTileVault implements IMessage, IMessageHandler<MessageTileVa
         this.state = (byte) tile.getState();
         this.customName = tile.getCustomName();
         this.ownerUUID = tile.getOwnerUUID();
-        this.breakable = breakable;
     }
 
     @Override
@@ -57,8 +55,6 @@ public class MessageTileVault implements IMessage, IMessageHandler<MessageTileVa
         {
             this.ownerUUID = null;
         }
-
-        this.breakable = buf.readBoolean();
     }
 
     @Override
@@ -82,23 +78,19 @@ public class MessageTileVault implements IMessage, IMessageHandler<MessageTileVa
         {
             buf.writeBoolean(false);
         }
-
-        buf.writeBoolean(breakable);
     }
 
     @Override
-    public IMessage onMessage(MessageTileVault message, MessageContext ctx)
+    public IMessage onMessage(MessageTileZE message, MessageContext ctx)
     {
         TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tileEntity instanceof TEVaultBase) {
+        if (tileEntity instanceof TileEntityZE) {
 
-            ((TEVaultBase) tileEntity).setOrientation(message.orientation);
-            ((TEVaultBase) tileEntity).setState(message.state);
-            ((TEVaultBase) tileEntity).setCustomName(message.customName);
-            ((TEVaultBase) tileEntity).setOwnerUUID(message.ownerUUID);
-
-            ((TEVaultBase) tileEntity).setBreakable(message.breakable);
+            ((TileEntityZE) tileEntity).setOrientation(message.orientation);
+            ((TileEntityZE) tileEntity).setState(message.state);
+            ((TileEntityZE) tileEntity).setCustomName(message.customName);
+            ((TileEntityZE) tileEntity).setOwnerUUID(message.ownerUUID);
         }
 
         return null;

@@ -1,11 +1,10 @@
 package com.zerren.zedeng.client.gui;
 
-import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.client.gui.button.GuiButtonKeyCycle;
 import com.zerren.zedeng.client.gui.button.GUIButtonWidgets;
-import com.zerren.zedeng.handler.network.packet.AbstractPacket;
-import com.zerren.zedeng.handler.network.packet.PacketKeyConfirm;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.client.gui.button.GuiButtonKeyCycle;
+import com.zerren.zedeng.handler.PacketHandler;
+import com.zerren.zedeng.handler.network.server.player.MessageKeyCut;
+import com.zerren.zedeng.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -132,8 +131,7 @@ public class GuiKey extends GuiScreen {
                 stack.stackTagCompound = new NBTTagCompound();
                 stack.stackTagCompound.setString("code", codeBuilder(keyTier));
 
-                AbstractPacket packet = new PacketKeyConfirm(codeBuilder(keyTier));
-                ZederrianEngineering.packetPipeline.sendToServer(packet);
+                PacketHandler.netHandler.sendToServer(new MessageKeyCut(codeBuilder(keyTier), player, stack));
                 Minecraft.getMinecraft().displayGuiScreen(null);
                 return;
         }
@@ -150,7 +148,7 @@ public class GuiKey extends GuiScreen {
     @Override
     public void drawScreen(int par1, int par2, float par3) {
         GL11.glColor4f(1f, 1f, 1f, 1f);
-        this.mc.getTextureManager().bindTexture(Textures.GUIs.KEY);
+        this.mc.getTextureManager().bindTexture(Reference.Textures.GUIs.KEY);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

@@ -1,7 +1,6 @@
 package com.zerren.zedeng.core.potion;
 
 import com.zerren.zedeng.reference.Reference;
-import com.zerren.zedeng.reference.Textures;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -21,14 +20,14 @@ public class PotionZE extends Potion {
      */
     public PotionZE(int id, String name, boolean isBad, int color, int index) {
         super(id, isBad, color);
-        this.setPotionName(Reference.MOD_ID.toLowerCase() + ".potion." + name);
+        this.setPotionName(Reference.ModInfo.MOD_ID.toLowerCase() + ".potion." + name);
         this.setIconIndex(index % 8, index / 8);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getStatusIconIndex() {
-        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.GUIs.POTIONS);
+        Minecraft.getMinecraft().renderEngine.bindTexture(Reference.Textures.GUIs.POTIONS);
         return super.getStatusIconIndex();
     }
 

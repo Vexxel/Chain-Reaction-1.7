@@ -1,7 +1,6 @@
 package com.zerren.zedeng.item;
 
-import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,11 +18,11 @@ import java.util.List;
 public class ItemZE extends Item {
 
     @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
+    protected IIcon[] icons;
 
-    private String itemName;
-    private String[] itemSubtypes;
-    private String texFolder;
+    protected String itemName;
+    protected String[] itemSubtypes;
+    protected String texFolder;
 
     public ItemZE(String name, String[] subtypes, int stacksize, String folder, CreativeTabs tab) {
         super();
@@ -68,12 +67,12 @@ public class ItemZE extends Item {
 
     @Override
     public String getUnlocalizedName() {
-        return String.format("item.%s%s", Textures.RESOURCE_PREFIX, itemName);
+        return String.format("item.%s%s", Reference.Textures.RESOURCE_PREFIX, itemName);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        return String.format("item.%s%s.%s", Textures.RESOURCE_PREFIX, itemName, itemSubtypes[MathHelper.clamp_int(itemStack.getItemDamage(), 0, itemSubtypes.length - 1)]);
+        return String.format("item.%s%s.%s", Reference.Textures.RESOURCE_PREFIX, itemName, itemSubtypes[MathHelper.clamp_int(itemStack.getItemDamage(), 0, itemSubtypes.length - 1)]);
     }
 
     protected String unwrapName(String unlocalizedName) {
@@ -101,10 +100,10 @@ public class ItemZE extends Item {
 
         for (int i = 0; i < itemSubtypes.length; i++) {
             if (texFolder != null) {
-                icons[i] = iconRegister.registerIcon(Textures.RESOURCE_PREFIX + texFolder + itemSubtypes[i]);
+                icons[i] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + texFolder + itemSubtypes[i]);
             }
             else {
-                icons[i] = iconRegister.registerIcon(Textures.RESOURCE_PREFIX + itemSubtypes[i]);
+                icons[i] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + itemSubtypes[i]);
             }
         }
     }

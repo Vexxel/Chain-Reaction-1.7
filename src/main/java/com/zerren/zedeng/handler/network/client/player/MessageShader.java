@@ -1,16 +1,12 @@
-package com.zerren.zedeng.handler.network.player;
+package com.zerren.zedeng.handler.network.client.player;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.block.tile.chest.TEChest;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by Zerren on 3/9/2015.

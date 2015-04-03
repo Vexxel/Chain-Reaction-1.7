@@ -1,6 +1,6 @@
-package com.zerren.zedeng.handler.network.clientsync;
+package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.block.tile.TileEntityZE;
+import com.zerren.zedeng.block.tile.chest.TEChest;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,18 +13,19 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/28/2015.
  */
-public class MessageTileZE implements IMessage, IMessageHandler<MessageTileZE, IMessage> {
+public class MessageTileChest implements IMessage, IMessageHandler<MessageTileChest, IMessage> {
 
     public int x, y, z, dim;
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
+    public boolean locked;
 
-    public MessageTileZE() {
+    public MessageTileChest() {
 
     }
 
-    public MessageTileZE(TileEntityZE tile) {
+    public MessageTileChest(TEChest tile, boolean locked) {
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
@@ -34,6 +35,7 @@ public class MessageTileZE implements IMessage, IMessageHandler<MessageTileZE, I
         this.state = (byte) tile.getState();
         this.customName = tile.getCustomName();
         this.ownerUUID = tile.getOwnerUUID();
+        this.locked = locked;
     }
 
     @Override
@@ -55,6 +57,8 @@ public class MessageTileZE implements IMessage, IMessageHandler<MessageTileZE, I
         {
             this.ownerUUID = null;
         }
+
+        this.locked = buf.readBoolean();
     }
 
     @Override
@@ -78,19 +82,23 @@ public class MessageTileZE implements IMessage, IMessageHandler<MessageTileZE, I
         {
             buf.writeBoolean(false);
         }
+
+        buf.writeBoolean(locked);
     }
 
     @Override
-    public IMessage onMessage(MessageTileZE message, MessageContext ctx)
+    public IMessage onMessage(MessageTileChest message, MessageContext ctx)
     {
         TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tileEntity instanceof TileEntityZE) {
+        if (tileEntity instanceof TEChest) {
 
-            ((TileEntityZE) tileEntity).setOrientation(message.orientation);
-            ((TileEntityZE) tileEntity).setState(message.state);
-            ((TileEntityZE) tileEntity).setCustomName(message.customName);
-            ((TileEntityZE) tileEntity).setOwnerUUID(message.ownerUUID);
+            ((TEChest) tileEntity).setOrientation(message.orientation);
+            ((TEChest) tileEntity).setState(message.state);
+            ((TEChest) tileEntity).setCustomName(message.customName);
+            ((TEChest) tileEntity).setOwnerUUID(message.ownerUUID);
+
+            ((TEChest) tileEntity).setChestLocked(message.locked);
         }
 
         return null;

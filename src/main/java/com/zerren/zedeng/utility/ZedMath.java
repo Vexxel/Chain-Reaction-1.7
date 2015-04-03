@@ -3,7 +3,7 @@ package com.zerren.zedeng.utility;
 /**
  * Created by Zerren on 3/9/2015.
  */
-public class ZedMath {
+public final class ZedMath {
 
     //All values are assumed at standard pressure(in Pascal PA) and temperature C
     public static final class water {

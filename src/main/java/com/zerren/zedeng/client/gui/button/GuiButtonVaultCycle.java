@@ -1,6 +1,6 @@
 package com.zerren.zedeng.client.gui.button;
 
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class GuiButtonVaultCycle extends GuiButton {
         final int x = 200;
         final int y = (previous ? 0 : 12);
 
-        mc.getTextureManager().bindTexture(Textures.GUIs.VAULT);
+        mc.getTextureManager().bindTexture(Reference.Textures.GUIs.VAULT);
         drawTexturedModalRect(xPosition, yPosition, x, y, 14, 10);
     }
 }

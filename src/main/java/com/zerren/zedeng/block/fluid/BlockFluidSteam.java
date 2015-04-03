@@ -2,7 +2,7 @@ package com.zerren.zedeng.block.fluid;
 
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.core.DamageSourceZE;
-import com.zerren.zedeng.reference.Sounds;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -69,7 +69,7 @@ public class BlockFluidSteam extends BlockFluidZE {
         if (rand.nextInt(2) == 0)
             world.setBlockToAir(x, y, z);
         if (rand.nextInt(80) == 0)
-            ZederrianEngineering.proxy.playSound(world, x, y, z, Sounds.FIZZ, 1F, 1.3F);
+            ZederrianEngineering.proxy.playSound(world, x, y, z, Reference.Sounds.FIZZ, 1F, 1.3F);
     }
 
     private void disperse(World world, int x, int y, int z) {

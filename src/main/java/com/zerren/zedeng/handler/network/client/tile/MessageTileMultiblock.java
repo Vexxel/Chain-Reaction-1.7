@@ -1,6 +1,6 @@
-package com.zerren.zedeng.handler.network.clientsync;
+package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
+import com.zerren.zedeng.block.tile.TEMultiBlockBase;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,19 +13,19 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/28/2015.
  */
-public class MessageTileChest implements IMessage, IMessageHandler<MessageTileChest, IMessage> {
+public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageTileMultiblock, IMessage> {
 
     public int x, y, z, dim;
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
-    public boolean locked;
+    public boolean isMaster, hasMaster;
 
-    public MessageTileChest() {
+    public MessageTileMultiblock() {
 
     }
 
-    public MessageTileChest(TEChest tile, boolean locked) {
+    public MessageTileMultiblock(TEMultiBlockBase tile, boolean isMaster, boolean hasMaster) {
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
@@ -35,7 +35,8 @@ public class MessageTileChest implements IMessage, IMessageHandler<MessageTileCh
         this.state = (byte) tile.getState();
         this.customName = tile.getCustomName();
         this.ownerUUID = tile.getOwnerUUID();
-        this.locked = locked;
+        this.isMaster = isMaster;
+        this.hasMaster = hasMaster;
     }
 
     @Override
@@ -49,16 +50,16 @@ public class MessageTileChest implements IMessage, IMessageHandler<MessageTileCh
         this.state = buf.readByte();
         int customNameLength = buf.readInt();
         this.customName = new String(buf.readBytes(customNameLength).array());
-        if (buf.readBoolean())
-        {
+        //owner UUID
+        if (buf.readBoolean()) {
             this.ownerUUID = new UUID(buf.readLong(), buf.readLong());
         }
-        else
-        {
+        else {
             this.ownerUUID = null;
         }
 
-        this.locked = buf.readBoolean();
+        this.isMaster = buf.readBoolean();
+        this.hasMaster = buf.readBoolean();
     }
 
     @Override
@@ -72,33 +73,34 @@ public class MessageTileChest implements IMessage, IMessageHandler<MessageTileCh
         buf.writeByte(state);
         buf.writeInt(customName.length());
         buf.writeBytes(customName.getBytes());
-        if (ownerUUID != null)
-        {
+        //owner UUID
+        if (ownerUUID != null) {
             buf.writeBoolean(true);
             buf.writeLong(ownerUUID.getMostSignificantBits());
             buf.writeLong(ownerUUID.getLeastSignificantBits());
         }
-        else
-        {
+        else {
             buf.writeBoolean(false);
         }
 
-        buf.writeBoolean(locked);
+        buf.writeBoolean(isMaster);
+        buf.writeBoolean(hasMaster);
     }
 
     @Override
-    public IMessage onMessage(MessageTileChest message, MessageContext ctx)
+    public IMessage onMessage(MessageTileMultiblock message, MessageContext ctx)
     {
-        TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
+        TileEntity tile = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tileEntity instanceof TEChest) {
+        if (tile instanceof TEMultiBlockBase) {
 
-            ((TEChest) tileEntity).setOrientation(message.orientation);
-            ((TEChest) tileEntity).setState(message.state);
-            ((TEChest) tileEntity).setCustomName(message.customName);
-            ((TEChest) tileEntity).setOwnerUUID(message.ownerUUID);
+            ((TEMultiBlockBase) tile).setOrientation(message.orientation);
+            ((TEMultiBlockBase) tile).setState(message.state);
+            ((TEMultiBlockBase) tile).setCustomName(message.customName);
+            ((TEMultiBlockBase) tile).setOwnerUUID(message.ownerUUID);
+            ((TEMultiBlockBase) tile).hasMaster = message.hasMaster;
 
-            ((TEChest) tileEntity).setChestLocked(message.locked);
+            ((TEMultiBlockBase) tile).setAsMaster(message.isMaster);
         }
 
         return null;

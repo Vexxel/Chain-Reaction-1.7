@@ -24,7 +24,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
     private ItemStack[] inventory = new ItemStack[54 * ConfigHandler.vaultPages];
 
     private boolean allBreakable = true;
-    private boolean isActive = false;
     public int page = 0;
     public int selection;
     public final int numPages = ConfigHandler.vaultPages;
@@ -43,10 +42,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
 
     public void setPage(int pg) {
         this.page = pg;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     public void playSFXatCore(String sfx, float volume, float pitch) {
@@ -97,13 +92,13 @@ public class TEVaultController extends TEVaultBase implements IInventory {
                 //success
                 CoreUtility.addColoredChat("gui.info.controller.success1.name", EnumChatFormatting.YELLOW, player);
                 CoreUtility.addColoredChat("gui.info.controller.success2.name", EnumChatFormatting.YELLOW, player);
-                isActive = true;
+                isMaster = true;
             }
             else {
                 //failure
                 CoreUtility.addColoredChat("gui.info.controller.failure1.name", EnumChatFormatting.YELLOW, player);
                 CoreUtility.addColoredChat("gui.info.controller.failure2.name", EnumChatFormatting.YELLOW, player);
-                isActive = false;
+                isMaster = false;
             }
         }
     }
@@ -209,11 +204,11 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         }
         //total count of the 5^3 (125) - controller, and if exactly 3^3 (27) of them are container blocks
         if (counter >= 124 && cCounter == 27) {
-            isActive = true;
+            isMaster = true;
             return true;
         }
         else {
-            isActive = false;
+            isMaster = false;
             return false;
         }
     }
@@ -224,9 +219,9 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         int cY = yCoord - 2;
         int cZ = 0;
 
-        System.out.println(isActive);
+        System.out.println(isMaster);
 
-        if (!isActive) return;
+        if (!isMaster) return;
 
         if (direction == ForgeDirection.NORTH) {
             cX = xCoord;
@@ -276,7 +271,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         super.writeToNBT(tag);
 
         tag.setBoolean("allBreakable", allBreakable);
-        tag.setBoolean("isActive", isActive);
         tag.setInteger("page", page);
 
         if (this.hasControllerID()) {
@@ -307,7 +301,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         super.readFromNBT(tag);
 
         allBreakable = tag.getBoolean("allBreakable");
-        isActive = tag.getBoolean("isActive");
         page = tag.getInteger("page");
 
         if (tag.hasKey("controllerIDMost") && tag.hasKey("controllerIDLeast")) {

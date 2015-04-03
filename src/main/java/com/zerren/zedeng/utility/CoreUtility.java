@@ -1,8 +1,12 @@
 package com.zerren.zedeng.utility;
 
 import com.zerren.zedeng.ZederrianEngineering;
+import com.zerren.zedeng.block.BlockExchanger;
 import com.zerren.zedeng.handler.ConfigHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
@@ -10,13 +14,15 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
+import org.lwjgl.input.Keyboard;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by Zerren on 2/21/2015.
  */
-public class CoreUtility {
+public final class CoreUtility {
 
     public static String translate(String key) {
         String result = StatCollector.translateToLocal(key);

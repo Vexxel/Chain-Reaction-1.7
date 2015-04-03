@@ -1,18 +1,9 @@
 package com.zerren.zedeng.core.potion;
 
-import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.player.MessageShader;
-import com.zerren.zedeng.proxy.ClientProxy;
-import com.zerren.zedeng.proxy.CommonProxy;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.Event;
+import com.zerren.zedeng.handler.network.client.player.MessageShader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;

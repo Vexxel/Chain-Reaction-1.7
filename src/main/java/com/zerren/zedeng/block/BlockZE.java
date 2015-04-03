@@ -1,8 +1,7 @@
 package com.zerren.zedeng.block;
 
-import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.block.tile.TileEntityZE;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -71,7 +70,7 @@ public class BlockZE extends Block {
 
     @Override
     public String getUnlocalizedName() {
-        return String.format("tile.%s%s", Textures.RESOURCE_PREFIX, unwrapName(super.getUnlocalizedName()));
+        return String.format("tile.%s%s", Reference.Textures.RESOURCE_PREFIX, unwrapName(super.getUnlocalizedName()));
     }
 
     @Override
@@ -80,7 +79,7 @@ public class BlockZE extends Block {
         this.icon = new IIcon[subtypes.length];
 
         for (int i = 0; i < subtypes.length; i++) {
-            icon[i] = iconRegister.registerIcon(Textures.RESOURCE_PREFIX + folder + subtypes[i]);
+            icon[i] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + subtypes[i]);
         }
     }
 

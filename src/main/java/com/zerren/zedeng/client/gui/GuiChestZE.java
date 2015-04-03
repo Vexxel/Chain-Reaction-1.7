@@ -2,7 +2,7 @@ package com.zerren.zedeng.client.gui;
 
 import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.inventory.ContainerChestZE;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -47,11 +47,11 @@ public class GuiChestZE extends GuiContainer {
 
         ResourceLocation texture;
         switch (chest.getState()) {
-            case 0: texture = Textures.GUIs.CHEST_BRICK; break;
-            case 1: texture = Textures.GUIs.CHEST_THAUMIUM; break;
-            case 2: texture = Textures.GUIs.CHEST_VOID; break;
+            case 0: texture = Reference.Textures.GUIs.CHEST_BRICK; break;
+            case 1: texture = Reference.Textures.GUIs.CHEST_THAUMIUM; break;
+            case 2: texture = Reference.Textures.GUIs.CHEST_VOID; break;
 
-            default: texture = Textures.GUIs.CHEST_BRICK; break;
+            default: texture = Reference.Textures.GUIs.CHEST_BRICK; break;
         }
 
         mc.getTextureManager().bindTexture(texture);

@@ -4,9 +4,9 @@ import com.zerren.zedeng.block.tile.vault.TEVaultController;
 import com.zerren.zedeng.client.gui.button.GUIButtonWidgets;
 import com.zerren.zedeng.client.gui.button.GuiButtonVaultCycle;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.handler.network.packet.PacketVaultCycle;
+import com.zerren.zedeng.handler.network.server.tile.PacketVaultCycle;
 import com.zerren.zedeng.inventory.ContainerVault;
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
@@ -78,7 +78,7 @@ public class GuiVault extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
         GL11.glColor4f(1f, 1f, 1f, 1f);
-        this.mc.getTextureManager().bindTexture(Textures.GUIs.VAULT);
+        this.mc.getTextureManager().bindTexture(Reference.Textures.GUIs.VAULT);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         //background

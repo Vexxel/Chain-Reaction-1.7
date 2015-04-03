@@ -4,28 +4,22 @@ import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
 import com.zerren.zedeng.client.fx.EntityRadiationFX;
 import com.zerren.zedeng.client.fx.EntitySteamFX;
-import com.zerren.zedeng.client.render.item.ItemRendererHeatExchanger;
+import com.zerren.zedeng.client.render.item.ItemRendererTubes;
 import com.zerren.zedeng.client.render.item.ItemRendererVaultChest;
 import com.zerren.zedeng.client.render.tileentity.TESRChest;
 import com.zerren.zedeng.client.render.tileentity.TESRHeatExchanger;
 import com.zerren.zedeng.core.ModBlocks;
-import com.zerren.zedeng.reference.RenderIDs;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Random;
 
@@ -56,20 +50,17 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initRenderingAndTextures() {
-        RenderIDs.vaultChest = RenderingRegistry.getNextAvailableRenderId();
-        RenderIDs.exchanger = RenderingRegistry.getNextAvailableRenderId();
-
         //Vault Chest
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.chest), new ItemRendererVaultChest());
         ClientRegistry.bindTileEntitySpecialRenderer(TEChest.class, new TESRChest());
         //Heat Exchanger
-        //MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.exchanger), new ItemRendererHeatExchanger());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.exchanger), new ItemRendererTubes());
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
     }
 
     @Override
-    public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) {
-        world.playSoundEffect(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, soundName, volume, pitch);
+    public void playSound(World world, float x, float y, float z, String soundName, float volume, float pitch) {
+        world.playSoundEffect(Math.floor(x) + 0.5, Math.floor(y) + 0.5, Math.floor(z) + 0.5, soundName, volume, pitch);
     }
 
     @Override

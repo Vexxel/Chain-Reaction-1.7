@@ -27,6 +27,8 @@ tile.zedeng:vaultChest.brick.name=Secure Iron Chest
 tile.zedeng:vaultChest.thaumium.name=Secure Thaumium Chest
 tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
 
+tile.zedeng:exchanger.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
+
 tile.zedeng.fluid.coolantCold.name=Pressurized Water (Cold)
 tile.zedeng.fluid.coolantHot.name=Pressurized Water (Hot)
 tile.zedeng.fluid.saturatedSteam.name=Saturated Steam
@@ -34,13 +36,29 @@ tile.zedeng.fluid.uf6.name=Uranium Hexafluoride
 
 
 # Item localizations --------------------------------------------------------------------
-item.zedeng:material.dustChroma.name=Chromatic Dye
+item.zedeng:material.boltStainlessSteel.name=Stainless Steel Bolt
+item.zedeng:material.plateStainlessSteel.name=Stainless Steel Plate
+item.zedeng:material.tubeStainlessSteel.name=Stainless Steel Tube
+
+item.zedeng:dust.dustChromium.name=Chromium Dust
+item.zedeng:dust.dustNickel.name=Nickel Dust
+item.zedeng:dust.dustStainlessSteel.name=Stainless Steel Dust
+item.zedeng:dust.dustUO2.name=Uranium Dioxide Dust
 
 item.zedeng:key.bedrock.name=Bedrock Skeleton Key
 item.zedeng:key.iron.name=Iron Vault Key
 item.zedeng:key.gold.name=Gold Vault Key
 item.zedeng:key.emerald.name=Emerald Vault Key
 item.zedeng:key.diamond.name=Diamond Vault Key
+
+item.zedeng:tool.wrench.name=Nucleus Wrench
+
+# GUI localizations ---------------------------------------------------------------------
+
+gui.multiblock.size.name=• Multiblock Size:
+gui.multiblock.wrench.center.name=• Wrench center block to complete
+gui.multiblock.requirement.name=• Completion Materials:
+gui.shift.name=<Hold Shift>
 
 gui.item.key.bedrock.name=Absolute Vaultcracker
 gui.item.key.nocode.name=This key is blank..

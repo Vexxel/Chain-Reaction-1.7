@@ -1,6 +1,6 @@
 package com.zerren.zedeng.client.fx;
 
-import com.zerren.zedeng.reference.Textures;
+import com.zerren.zedeng.reference.Reference;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ import net.minecraft.world.World;
  */
 public class EntityRadiationFX extends EntityFX {
 
-    public static final ResourceLocation particles = Textures.Misc.PARTICLES;
+    public static final ResourceLocation particles = Reference.Textures.Misc.PARTICLES;
 
     public EntityRadiationFX(World world, double x, double y, double z) {
         this(world, x, y, z, 0D, 0D, 0D, 10);

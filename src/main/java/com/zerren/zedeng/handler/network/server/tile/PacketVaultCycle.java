@@ -1,9 +1,8 @@
-package com.zerren.zedeng.handler.network.packet;
+package com.zerren.zedeng.handler.network.server.tile;
 
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.block.tile.vault.TEVaultController;
-import com.zerren.zedeng.reference.GUIs;
-import com.zerren.zedeng.reference.Sounds;
+import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -23,7 +22,7 @@ public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements
     public PacketVaultCycle(TEVaultController tile, int pg, EntityPlayer player, boolean accept) {
         super(tile, player);
         this.page = pg;
-        //if this packet was tagged with false, it will shift the value down 100. this prevents the clientsync from changing the page, and the player from opening the new gui
+        //if this packet was tagged with false, it will shift the value down 100. this prevents the client from changing the page, and the player from opening the new gui
         if (!accept) {
             this.page -= 100;
         }
@@ -48,18 +47,18 @@ public class PacketVaultCycle extends PacketTileZE<TEVaultController> implements
             throw new IllegalStateException("received PacketVault " + message + "on client side!");
         }
 
-        //recieves int packet 'page'. If the packet is >=0, (ie not shifted down 100 from previous), then the clientsync will set its page to the packet int and open a new GUI
+        //recieves int packet 'page'. If the packet is >=0, (ie not shifted down 100 from previous), then the client will set its page to the packet int and open a new GUI
         if (message.page >= 0 && message.page != message.tile.page) {
             message.tile.setPage(message.page);
-            message.player.openGui(ZederrianEngineering.instance, GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
-            message.tile.playSFXatCore(Sounds.PISTON_OUT, 0.5F, message.tile.getWorldObj().rand.nextFloat() * 0.25F + 0.6F);
+            message.player.openGui(ZederrianEngineering.instance, Reference.GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
+            message.tile.playSFXatCore(Reference.Sounds.PISTON_OUT, 0.5F, message.tile.getWorldObj().rand.nextFloat() * 0.25F + 0.6F);
         }
         //this re-shifts the packet up 100 if it is below 0
         int msgp = message.page;
         if (message.page < 0) {
             msgp += 100;
         }
-        //this sets the clientsync's selector to the packet int
+        //this sets the client's selector to the packet int
         message.tile.selection = msgp;
         return null;
     }
