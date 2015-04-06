@@ -15,6 +15,11 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public final class TooltipHelper {
 
+    /**
+     * Adds tooltip information describing the required materials for the multiblock to form on wrenching
+     * @param list the list to add to--for use with item tooltips (addInformation)
+     * @param reqMats the ItemStack array containing the required materials
+     */
     public static void addMaterialCostInfo(List list, ItemStack[] reqMats) {
         String materials = CoreUtility.translate("gui.multiblock.requirement.name");
 

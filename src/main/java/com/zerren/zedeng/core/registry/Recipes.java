@@ -1,9 +1,14 @@
 package com.zerren.zedeng.core.registry;
 
+import com.zerren.zedeng.api.recipe.HeatingFluid;
+import com.zerren.zedeng.api.recipe.WorkingFluid;
+import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.utility.ItemRetriever;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 /**
@@ -16,6 +21,7 @@ public class Recipes {
     public static void init() {
         shapedRecipes();
         shapelessRecipes();
+        fluidExchanger();
     }
 
     private static void shapedRecipes() {
@@ -85,5 +91,11 @@ public class Recipes {
 
     private static void shapelessRecipes() {
 
+    }
+
+    private static void fluidExchanger() {
+        HeatingFluid.addHeatingFluid(new FluidStack(ModFluids.coolantHotFluid, 100), new FluidStack(ModFluids.coolantColdFluid, 100), 1.0F);
+
+        WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.WATER, 10), new FluidStack(ModFluids.steam, 1600));
     }
 }

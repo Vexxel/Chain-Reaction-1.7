@@ -60,34 +60,7 @@ public class TEMultiBlockBase extends TileEntityZE {
     /**
      * Break the multiblock that this tile entity is a part of (gets the commander and sets its master status as false)
      */
-    public void invalidateMultiblock() {
-        TEMultiBlockBase commander = getCommandingController();
-
-        if (commander != null) {
-            commander.setAsMaster(false);
-            ForgeDirection dir = commander.getOrientation();
-            if (dir == ForgeDirection.NORTH || dir == ForgeDirection.SOUTH) {
-                for (int i = 0; i < 5; i++) {
-                    TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(commander.xCoord - 2 + i, commander.yCoord, commander.zCoord);
-                    if (tile != null) {
-                        tile.removeController();
-                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false),
-                                new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32D));
-                    }
-                }
-            }
-            else {
-                for (int i = 0; i < 5; i++) {
-                    TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(commander.xCoord, commander.yCoord, commander.zCoord - 2 + i);
-                    if (tile != null) {
-                        tile.removeController();
-                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false),
-                                new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32D));
-                    }
-                }
-            }
-        }
-    }
+    public void invalidateMultiblock() { }
 
     /**
      * Returns the UUID of this tile entities' master

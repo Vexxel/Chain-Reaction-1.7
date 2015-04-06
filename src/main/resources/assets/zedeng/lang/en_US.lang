@@ -31,6 +31,7 @@ tile.zedeng:exchanger.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
 
 tile.zedeng.fluid.coolantCold.name=Pressurized Water (Cold)
 tile.zedeng.fluid.coolantHot.name=Pressurized Water (Hot)
+tile.zedeng.fluid.distilledWater.name=Distilled Water
 tile.zedeng.fluid.saturatedSteam.name=Saturated Steam
 tile.zedeng.fluid.uf6.name=Uranium Hexafluoride
 

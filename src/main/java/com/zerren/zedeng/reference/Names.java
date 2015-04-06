@@ -87,6 +87,7 @@ public final class Names {
         public static final String COOLANT_COLD = "coolantCold";
         public static final String COOLANT_HOT = "coolantHot";
         public static final String UF6 = "UF6";
+        public static final String DISTILLED_WATER = "distilledWater";
 
         public static final String STEAM = "saturatedSteam";
     }

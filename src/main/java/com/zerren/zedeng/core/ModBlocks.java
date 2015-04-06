@@ -28,6 +28,7 @@ public class ModBlocks {
 
     public static BlockFluidZE coolantCold = new BlockFluidCoolantCold(ModFluids.coolantColdFluid, Material.water, Names.Fluids.COOLANT_COLD, 7, 5, 100F, 3);
     public static BlockFluidZE coolantHot = new BlockFluidCoolantHot(ModFluids.coolantHotFluid, Material.water, Names.Fluids.COOLANT_HOT, 8, 5, 100F, 3);
+    public static BlockFluidZE distilledWater = new BlockFluidZE(ModFluids.distilledWater, Material.water, Names.Fluids.DISTILLED_WATER, 8, 5, 100F, 3, true);
     public static BlockFluidZE steam = new BlockFluidSteam(ModFluids.steam, new MaterialLiquid(MapColor.silverColor), Names.Fluids.STEAM, 5, 2, 1F, 1);
     public static BlockFluidZE uf6 = new BlockFluidUF6(ModFluids.uf6, new MaterialLiquid(MapColor.greenColor), Names.Fluids.UF6, 4, 20, 1F, 4);
 
@@ -40,6 +41,7 @@ public class ModBlocks {
 
         GameRegistry.registerBlock(coolantCold, Names.Fluids.COOLANT_COLD);
         GameRegistry.registerBlock(coolantHot, Names.Fluids.COOLANT_HOT);
+        GameRegistry.registerBlock(distilledWater, Names.Fluids.DISTILLED_WATER);
         GameRegistry.registerBlock(uf6, Names.Fluids.UF6);
         if (!ConfigHandler.uniSteam)
             GameRegistry.registerBlock(steam, Names.Fluids.STEAM);

@@ -55,6 +55,8 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
             CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
             CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
             CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
+            CoreUtility.addChat("Slave Location: " + tile.getSlaveLocation(), player);
+            CoreUtility.addChat("Tank Contains: " + tile.coolantInletTank.getFluid().getLocalizedName() + tile.coolantInletTank.getFluidAmount(), player);
             return true;
         }
         return false;
