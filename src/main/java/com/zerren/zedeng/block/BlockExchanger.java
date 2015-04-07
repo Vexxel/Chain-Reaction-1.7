@@ -39,6 +39,8 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+        if (world.isRemote) return false;
+
         TEHeatExchanger tile = CoreUtility.get(world, x, y, z, TEHeatExchanger.class);
 
         ItemStack held = player.inventory.getCurrentItem();
@@ -51,13 +53,26 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
             }
         }
 
-        if (tile != null && held != null && held.getItem() == Items.ghast_tear && !world.isRemote) {
-            CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
-            CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
-            CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
-            CoreUtility.addChat("Slave Location: " + tile.getSlaveLocation(), player);
-            CoreUtility.addChat("Tank Contains: " + tile.coolantInletTank.getFluid().getLocalizedName() + tile.coolantInletTank.getFluidAmount(), player);
-            return true;
+        if (tile != null && held != null && !world.isRemote) {
+            if (held.getItem() == Items.ghast_tear){
+                CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
+                CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
+                CoreUtility.addChat("Slave Location: " + tile.getSlaveLocation(), player);
+                return true;
+            }
+            if (held.getItem() == Items.arrow) {
+                if (tile.coolantInletTank.getFluid() != null)
+                    CoreUtility.addChat("Inlet tank: " + tile.coolantInletTank.getFluid().getLocalizedName() + " " + tile.coolantInletTank.getFluidAmount(), player);
+                if (tile.waterTank.getFluid() != null)
+                    CoreUtility.addChat("Water tank: " + tile.waterTank.getFluid().getLocalizedName() + " " + tile.waterTank.getFluidAmount(), player);
+                if (tile.steamTank.getFluid() != null)
+                    CoreUtility.addChat("Steam tank: " + tile.steamTank.getFluid().getLocalizedName() + " " + tile.steamTank.getFluidAmount(), player);
+                if (tile.coolantOutputTank.getFluid() != null)
+                    CoreUtility.addChat("Outlet tank: " + tile.coolantOutputTank.getFluid().getLocalizedName() + " " + tile.coolantOutputTank.getFluidAmount(), player);
+
+                CoreUtility.addChat("Thermal Units: " + tile.thermalUnits, player);
+            }
         }
         return false;
     }

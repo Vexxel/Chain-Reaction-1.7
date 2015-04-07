@@ -23,11 +23,6 @@ public class TEVaultBase extends TEMultiBlockBase {
         return breakable;
     }
 
-    @Override
-    public boolean canUpdate() {
-        return false;
-    }
-
     public void setBreakable(boolean b) {
         breakable = b;
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);

@@ -1,5 +1,6 @@
 package com.zerren.zedeng.reference;
 
+import com.zerren.zedeng.handler.ConfigHandler;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -64,7 +65,7 @@ public final class Reference {
         }
     }
 
-    public static class Sounds {
+    public static final class Sounds {
 
         private static final String zedprefix = Reference.ModInfo.MOD_ID.toLowerCase() + ":";
 
@@ -78,7 +79,11 @@ public final class Reference {
         public static final String LOCK_RATTLE = zedprefix + "lock_rattle";
     }
 
-    public static enum GUIs {
+    public static final class Tweaks {
+        public static final double TILE_PACKET_RANGE = ConfigHandler.packetRange;
+    }
+
+    public enum GUIs {
         KEY,
         VAULT,
         CHEST

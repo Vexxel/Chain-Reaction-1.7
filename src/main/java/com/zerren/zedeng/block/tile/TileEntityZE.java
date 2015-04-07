@@ -21,12 +21,20 @@ public class TileEntityZE extends TileEntity
     protected String customName;
     protected UUID ownerUUID;
 
-    public TileEntityZE()
-    {
+    public TileEntityZE() {
         orientation = ForgeDirection.SOUTH;
         state = 0;
         customName = "";
         ownerUUID = null;
+    }
+
+    @Override
+    public void updateEntity() {}
+
+    @Override
+    public boolean canUpdate()
+    {
+        return false;
     }
 
     public void information(TileEntityZE tile) {
@@ -35,6 +43,27 @@ public class TileEntityZE extends TileEntity
 
     public ForgeDirection getOrientation() {
         return orientation;
+    }
+
+    public ForgeDirection spinLeft(ForgeDirection dir, boolean doSpin) {
+        ForgeDirection newDir;
+        switch (dir) {
+            case NORTH: newDir = ForgeDirection.WEST; break;
+            case EAST: newDir = ForgeDirection.NORTH; break;
+            case SOUTH: newDir = ForgeDirection.EAST; break;
+            case WEST: newDir = ForgeDirection.SOUTH; break;
+            default: newDir = getOrientation();
+        }
+        if (doSpin)
+            setOrientation(newDir);
+        return newDir;
+    }
+
+    public ForgeDirection spinRight(ForgeDirection dir, boolean doSpin) {
+        ForgeDirection newDir = spinLeft(dir, false).getOpposite();
+        if (doSpin)
+            setOrientation(newDir);
+        return newDir;
     }
 
     public void setOrientation(ForgeDirection orientation)

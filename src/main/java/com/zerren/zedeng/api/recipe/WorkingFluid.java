@@ -1,44 +1,51 @@
 package com.zerren.zedeng.api.recipe;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Zerren on 4/2/2015.
+ * Created by Zerren on 4/3/2015.
  */
 public class WorkingFluid {
 
     public static List<WorkingFluid> workingFluid = new ArrayList<WorkingFluid>();
 
-    public final FluidStack input;
-    public final FluidStack output;
+    public final Fluid input;
+    public final Fluid output;
 
-    public WorkingFluid(FluidStack input, FluidStack output) {
+    public WorkingFluid(Fluid input, Fluid output){
         this.input = input;
         this.output = output;
     }
 
-    public FluidStack getInput(){
+    private Fluid getInput(){
         return input;
     }
 
-    public FluidStack getOutput(FluidStack input){
+    public static Fluid getOutput(Fluid input){
         for(WorkingFluid fluid : WorkingFluid.workingFluid) {
-            if (input.getFluid() == fluid.getInput().getFluid()) {
+            if (input == fluid.getInput()) {
                 return fluid.output;
             }
         }
         return null;
     }
 
-    /**
-     * Adds a fluid to the heat exchanger's registry to be heated. Example is water-steam 1->160
-     * @param input
-     * @param output
-     */
-    public static void addWorkingFluid(FluidStack input, FluidStack output) {
+    public static boolean validWorkingFluid(Fluid input) {
+        for (WorkingFluid fluid : WorkingFluid.workingFluid) {
+            if (input == fluid.getInput()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static void addWorkingFluid(Fluid input, Fluid output) {
         workingFluid.add(new WorkingFluid(input, output));
     }
 }
