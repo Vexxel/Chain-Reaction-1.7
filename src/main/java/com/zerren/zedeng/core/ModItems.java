@@ -1,6 +1,7 @@
 package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
+import com.zerren.zedeng.api.materials.ZedItems;
 import com.zerren.zedeng.item.ItemKey;
 import com.zerren.zedeng.item.ItemZE;
 import com.zerren.zedeng.item.tool.ItemZedTool;
@@ -14,13 +15,19 @@ import net.minecraft.item.Item;
  */
 public class ModItems {
 
-    public static Item materials = new ItemZE(Names.Items.MATERIAL, Names.Items.MATERIAL_SUBTYPES, ZederrianEngineering.cTabZE);
-    public static Item keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Reference.Textures.Folders.KEY_FOLDER, ZederrianEngineering.cTabZE);
-    public static Item tools = new ItemZedTool(Names.Items.TOOL, Names.Items.TOOL_SUBTYPES, 1, Reference.Textures.Folders.TOOL_FOLDER, ZederrianEngineering.cTabZE);
-
     public static void init() {
-        GameRegistry.registerItem(materials, Names.Items.MATERIAL);
-        GameRegistry.registerItem(keys, Names.Items.KEY);
-        GameRegistry.registerItem(tools, Names.Items.TOOL);
+        ZedItems.materials = new ItemZE(Names.Items.MATERIAL, Names.Items.MATERIAL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
+        ZedItems.ingots = new ItemZE(Names.Items.INGOT, Names.Items.INGOT_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
+        ZedItems.keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Reference.Textures.Folders.KEY_FOLDER, ZederrianEngineering.cTabZE);
+        ZedItems.tools = new ItemZedTool(Names.Items.TOOL, Names.Items.TOOL_SUBTYPES, 1, Reference.Textures.Folders.TOOL_FOLDER, ZederrianEngineering.cTabZE);
+
+        register();
+    }
+
+    private static void register() {
+        GameRegistry.registerItem(ZedItems.materials, Names.Items.MATERIAL);
+        GameRegistry.registerItem(ZedItems.ingots, Names.Items.INGOT);
+        GameRegistry.registerItem(ZedItems.keys, Names.Items.KEY);
+        GameRegistry.registerItem(ZedItems.tools, Names.Items.TOOL);
     }
 }

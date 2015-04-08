@@ -94,10 +94,9 @@ public class Recipes {
     }
 
     private static void fluidExchanger() {
-        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 1.0F);
-        HeatingFluid.addHeatingFluid(ModFluids.coolantColdFluid, ModFluids.coolantColdFluid, 1.0F);
+        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 20);
 
-        WorkingFluid.addWorkingFluid(FluidRegistry.WATER, ModFluids.steam);
-        WorkingFluid.addWorkingFluid(ModFluids.distilledWater, ModFluids.steam);
+        WorkingFluid.addWorkingFluid(FluidRegistry.WATER, ModFluids.steam, 160);
+        WorkingFluid.addWorkingFluid(ModFluids.distilledWater, ModFluids.steam, 160);
     }
 }

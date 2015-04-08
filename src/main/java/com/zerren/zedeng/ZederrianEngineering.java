@@ -1,5 +1,6 @@
 package com.zerren.zedeng;
 
+import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.core.ModItems;
@@ -44,7 +45,7 @@ public class ZederrianEngineering {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {
-            return Item.getItemFromBlock(ModBlocks.glass);
+            return Item.getItemFromBlock(ZedBlocks.exchanger);
         }
     };
 

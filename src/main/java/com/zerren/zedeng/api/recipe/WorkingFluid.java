@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,20 +13,23 @@ import java.util.List;
  */
 public class WorkingFluid {
 
-    public static List<WorkingFluid> workingFluid = new ArrayList<WorkingFluid>();
+    private static List<WorkingFluid> workingFluid = new ArrayList<WorkingFluid>();
 
     public final Fluid input;
     public final Fluid output;
+    public final int expansionFactor;
 
-    public WorkingFluid(Fluid input, Fluid output){
+    private WorkingFluid(Fluid input, Fluid output, int expansionFactor){
         this.input = input;
         this.output = output;
+        this.expansionFactor = expansionFactor;
     }
 
     private Fluid getInput(){
         return input;
     }
 
+    @Nullable
     public static Fluid getOutput(Fluid input){
         for(WorkingFluid fluid : WorkingFluid.workingFluid) {
             if (input == fluid.getInput()) {
@@ -35,17 +39,21 @@ public class WorkingFluid {
         return null;
     }
 
-    public static boolean validWorkingFluid(Fluid input) {
-        for (WorkingFluid fluid : WorkingFluid.workingFluid) {
+    public static int getExpansionFactor(Fluid input) {
+        for(WorkingFluid fluid : WorkingFluid.workingFluid) {
             if (input == fluid.getInput()) {
-                return true;
+                return fluid.expansionFactor;
             }
         }
-        return false;
+        return 0;
+    }
+
+    public static boolean validWorkingFluid(Fluid input) {
+        return getOutput(input) != null;
     }
 
 
-    public static void addWorkingFluid(Fluid input, Fluid output) {
-        workingFluid.add(new WorkingFluid(input, output));
+    public static void addWorkingFluid(Fluid input, Fluid output, int expansionFactor) {
+        workingFluid.add(new WorkingFluid(input, output, expansionFactor));
     }
 }

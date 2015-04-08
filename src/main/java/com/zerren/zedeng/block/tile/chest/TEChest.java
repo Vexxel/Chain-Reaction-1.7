@@ -1,5 +1,6 @@
 package com.zerren.zedeng.block.tile.chest;
 
+import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.block.tile.TileEntityZE;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.handler.PacketHandler;
@@ -214,13 +215,13 @@ public class TEChest extends TileEntityZE implements IInventory
     @Override
     public void openInventory() {
         ++numUsingPlayers;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.chest, 1, numUsingPlayers);
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ZedBlocks.chest, 1, numUsingPlayers);
     }
 
     @Override
     public void closeInventory() {
         --numUsingPlayers;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.chest, 1, numUsingPlayers);
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ZedBlocks.chest, 1, numUsingPlayers);
     }
 
     @Override
@@ -239,7 +240,7 @@ public class TEChest extends TileEntityZE implements IInventory
 
         if (++ticksSinceSync % 20 * 4 == 0)
         {
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.chest, 1, numUsingPlayers);
+            worldObj.addBlockEvent(xCoord, yCoord, zCoord, ZedBlocks.chest, 1, numUsingPlayers);
         }
 
         prevLidAngle = lidAngle;

@@ -1,13 +1,11 @@
 package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
+import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.block.*;
 import com.zerren.zedeng.block.fluid.*;
 import com.zerren.zedeng.handler.ConfigHandler;
-import com.zerren.zedeng.item.itemblock.ItemBlockChest;
-import com.zerren.zedeng.item.itemblock.ItemBlockExchanger;
-import com.zerren.zedeng.item.itemblock.ItemBlockGlass;
-import com.zerren.zedeng.item.itemblock.ItemBlockVault;
+import com.zerren.zedeng.item.itemblock.*;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -15,35 +13,88 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
+import net.minecraftforge.fluids.Fluid;
 
 /**
  * Created by Zerren on 2/19/2015.
  */
 public class ModBlocks {
 
-    public static BlockZE glass = new BlockGlass(Names.Blocks.GLASS, Names.Blocks.GLASS_SUBTYPES, Material.glass, 0.4F, 2F, Block.soundTypeGlass, Reference.Textures.Folders.GLASS_FOLDER, ZederrianEngineering.cTabZE);
-    public static BlockZE vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
-    public static BlockZE chest = new BlockZedChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
-    public static BlockZE exchanger = new BlockExchanger(Names.Blocks.EXCHANGER, Names.Blocks.EXCHANGER_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ZederrianEngineering.cTabZE);
-
-    public static BlockFluidZE coolantCold = new BlockFluidCoolantCold(ModFluids.coolantColdFluid, Material.water, Names.Fluids.COOLANT_COLD, 7, 5, 100F, 3);
-    public static BlockFluidZE coolantHot = new BlockFluidCoolantHot(ModFluids.coolantHotFluid, Material.water, Names.Fluids.COOLANT_HOT, 8, 5, 100F, 3);
-    public static BlockFluidZE distilledWater = new BlockFluidZE(ModFluids.distilledWater, Material.water, Names.Fluids.DISTILLED_WATER, 8, 5, 100F, 3, true);
-    public static BlockFluidZE steam = new BlockFluidSteam(ModFluids.steam, new MaterialLiquid(MapColor.silverColor), Names.Fluids.STEAM, 5, 2, 1F, 1);
-    public static BlockFluidZE uf6 = new BlockFluidUF6(ModFluids.uf6, new MaterialLiquid(MapColor.greenColor), Names.Fluids.UF6, 4, 20, 1F, 4);
+    private static Block temp;
 
     public static void init() {
+        ZedBlocks.ores = new BlockZE(Names.Blocks.ORE, Names.Blocks.ORE_SUBTYPES, Material.rock, 3F, 5F, Block.soundTypeStone, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.metals = new BlockZE(Names.Blocks.METAL, Names.Blocks.METAL_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.chest = new BlockZedChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.exchanger = new BlockExchanger(Names.Blocks.EXCHANGER, Names.Blocks.EXCHANGER_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ZederrianEngineering.cTabZE);
 
-        GameRegistry.registerBlock(glass, ItemBlockGlass.class, Names.Blocks.GLASS);
-        GameRegistry.registerBlock(vault, ItemBlockVault.class, Names.Blocks.VAULT);
-        GameRegistry.registerBlock(chest, ItemBlockChest.class, Names.Blocks.CHEST);
-        GameRegistry.registerBlock(exchanger, ItemBlockExchanger.class, Names.Blocks.EXCHANGER);
+        register();
+    }
+    
+    private static void register() {
 
-        GameRegistry.registerBlock(coolantCold, Names.Fluids.COOLANT_COLD);
-        GameRegistry.registerBlock(coolantHot, Names.Fluids.COOLANT_HOT);
-        GameRegistry.registerBlock(distilledWater, Names.Fluids.DISTILLED_WATER);
-        GameRegistry.registerBlock(uf6, Names.Fluids.UF6);
+        GameRegistry.registerBlock(ZedBlocks.ores, ItemBlockStoneMaterial.class, Names.Blocks.ORE);
+        GameRegistry.registerBlock(ZedBlocks.metals, ItemBlockMetalMaterial.class, Names.Blocks.METAL);
+
+        GameRegistry.registerBlock(ZedBlocks.vault, ItemBlockVault.class, Names.Blocks.VAULT);
+        GameRegistry.registerBlock(ZedBlocks.chest, ItemBlockChest.class, Names.Blocks.CHEST);
+        GameRegistry.registerBlock(ZedBlocks.exchanger, ItemBlockExchanger.class, Names.Blocks.EXCHANGER);
+
+        fluidBlocks();
+
+        /*GameRegistry.registerBlock(ZedBlocks.coolantCold, Names.Fluids.COOLANT_COLD);
+        GameRegistry.registerBlock(ZedBlocks.coolantHot, Names.Fluids.COOLANT_HOT);
+        GameRegistry.registerBlock(ZedBlocks.distilledWater, Names.Fluids.DISTILLED_WATER);
+        GameRegistry.registerBlock(ZedBlocks.uf6, Names.Fluids.UF6);
         if (!ConfigHandler.uniSteam)
-            GameRegistry.registerBlock(steam, Names.Fluids.STEAM);
+            GameRegistry.registerBlock(ZedBlocks.steam, Names.Fluids.STEAM);*/
+    }
+
+    private static void fluidBlocks() {
+        if (ModFluids.coolantColdFluid.getBlock() == null) {
+            ZedBlocks.coolantCold = new BlockFluidCoolantCold(ModFluids.coolantColdFluid, Material.water, Names.Fluids.COOLANT_COLD, 7, 5, 100F, 3);
+            GameRegistry.registerBlock(ZedBlocks.coolantCold, Names.Fluids.COOLANT_COLD);
+            ModFluids.coolantColdFluid.setBlock(ZedBlocks.coolantCold);
+        }
+        else {
+            ZedBlocks.coolantCold = ModFluids.coolantColdFluid.getBlock();
+        }
+
+        if (ModFluids.coolantHotFluid.getBlock() == null) {
+            ZedBlocks.coolantHot = new BlockFluidCoolantHot(ModFluids.coolantHotFluid, Material.water, Names.Fluids.COOLANT_HOT, 8, 5, 100F, 3);
+            GameRegistry.registerBlock(ZedBlocks.coolantHot, Names.Fluids.COOLANT_HOT);
+            ModFluids.coolantHotFluid.setBlock(ZedBlocks.coolantHot);
+        }
+        else {
+            ZedBlocks.coolantHot = ModFluids.coolantHotFluid.getBlock();
+        }
+
+        if (ModFluids.distilledWater.getBlock() == null) {
+            ZedBlocks.distilledWater = new BlockFluidZE(ModFluids.distilledWater, Material.water, Names.Fluids.DISTILLED_WATER, 8, 5, 100F, 3, true);
+            GameRegistry.registerBlock(ZedBlocks.distilledWater, Names.Fluids.DISTILLED_WATER);
+            ModFluids.distilledWater.setBlock(ZedBlocks.distilledWater);
+        }
+        else {
+            ZedBlocks.distilledWater = ModFluids.distilledWater.getBlock();
+        }
+
+        if (ModFluids.steam.getBlock() == null) {
+            ZedBlocks.steam = new BlockFluidSteam(ModFluids.steam, new MaterialLiquid(MapColor.silverColor), Names.Fluids.STEAM, 5, 2, 1F, 1);
+            GameRegistry.registerBlock(ZedBlocks.steam, Names.Fluids.STEAM);
+            ModFluids.steam.setBlock(ZedBlocks.steam);
+        }
+        else {
+            ZedBlocks.steam = ModFluids.steam.getBlock();
+        }
+
+        if (ModFluids.uf6.getBlock() == null) {
+            ZedBlocks.uf6 = new BlockFluidUF6(ModFluids.uf6, new MaterialLiquid(MapColor.greenColor), Names.Fluids.UF6, 4, 20, 1F, 4);
+            GameRegistry.registerBlock(ZedBlocks.uf6, Names.Fluids.UF6);
+            ModFluids.uf6.setBlock(ZedBlocks.uf6);
+        }
+        else {
+            ZedBlocks.uf6 = ModFluids.uf6.getBlock();
+        }
     }
 }

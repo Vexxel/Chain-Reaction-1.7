@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Created by Zerren on 4/2/2015.
  */
-@SideOnly(Side.CLIENT)
 public final class TooltipHelper {
 
     /**

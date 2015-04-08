@@ -1,5 +1,6 @@
 package com.zerren.zedeng.item.itemblock;
 
+import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.block.BlockExchanger;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.reference.Names;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class ItemBlockExchanger extends ItemMultiTexture {
     public ItemBlockExchanger(Block block) {
-        super(ModBlocks.exchanger, ModBlocks.exchanger, Names.Blocks.EXCHANGER_SUBTYPES);
+        super(ZedBlocks.exchanger, ZedBlocks.exchanger, Names.Blocks.EXCHANGER_SUBTYPES);
     }
 
     @Override

@@ -26,10 +26,10 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
     public static ItemStack[] exchangerRequirements = {
             //16 bolts
             ItemRetriever.Items.material(16, "boltStainlessSteel"),
-            //4 Tubes
-            ItemRetriever.Items.material(4, "tubeStainlessSteel"),
-            //4 Plates
+            //4 SS Plates
             ItemRetriever.Items.material(4, "plateStainlessSteel"),
+            //4 Inconel Tubes
+            //ItemRetriever.Items.material(4, "tubeInconel")
     };
 
     public BlockExchanger(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {

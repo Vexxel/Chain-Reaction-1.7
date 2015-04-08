@@ -7,26 +7,22 @@ import com.zerren.zedeng.handler.ConfigHandler;
  */
 public final class Names {
     public static final class Blocks {
-        public static final String GLASS = "glass";
-        public static final String GLASSPANE = "glasspane";
 
-        public static final String[] GLASS_SUBTYPES = {
-                "ruby",
-                "fire",
-                "orange",
-                "amber",
-                "gold",
-                "lime", //5
-                "green",
-                "spring",
-                "emerald",
-                "cyan",
-                "electric", //10
-                "sapphire",
-                "ultramarine",
-                "indigo",
-                "violet",
-                "magenta" //15
+        public static final String ORE = "ore";
+        public static final String[] ORE_SUBTYPES = {
+                "oreChromium",
+                "oreNickel",
+                "oreUranium"
+        };
+
+        public static final String METAL = "metal";
+        public static final String[] METAL_SUBTYPES = {
+                "blockChromium",
+                "blockNickel",
+                "blockDepletedUranium",
+                "blockGraphite",
+                "blockStainlessSteel",
+                "blockInconel"
         };
 
         public static final String VAULT = "vault";
@@ -57,7 +53,19 @@ public final class Names {
         public static final String[] MATERIAL_SUBTYPES = {
                 "boltStainlessSteel",
                 "plateStainlessSteel",
-                "tubeStainlessSteel"
+                "tubeStainlessSteel",
+                "plateInconel",
+                "tubeInconel"
+        };
+
+        public static final String INGOT = "ingot";
+        public static final String[] INGOT_SUBTYPES = {
+                "ingotChromium",
+                "ingotNickel",
+                "ingotStainlessSteel",
+                "ingotInconel",
+                "ingotGraphite",
+                "ingotDepletedUranium"
         };
 
         public static final String DUST = "dust";
@@ -65,6 +73,8 @@ public final class Names {
                 "dustChromium",
                 "dustNickel",
                 "dustStainlessSteel",
+                "dustInconel",
+                "dustGraphite",
                 "dustUO2"
         };
 
@@ -84,12 +94,12 @@ public final class Names {
     }
 
     public static final class Fluids {
-        public static final String COOLANT_COLD = "coolantCold";
-        public static final String COOLANT_HOT = "coolantHot";
-        public static final String UF6 = "UF6";
-        public static final String DISTILLED_WATER = "distilledWater";
+        public static final String COOLANT_COLD = "coolantcold";
+        public static final String COOLANT_HOT = "coolanthot";
+        public static final String UF6 = "uf6";
+        public static final String DISTILLED_WATER = "distilledwater";
 
-        public static final String STEAM = "saturatedSteam";
+        public static final String STEAM = ConfigHandler.uniSteam ? "steam" : "saturatedsteam";
     }
 
     public static final class Potions {

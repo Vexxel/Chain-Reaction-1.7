@@ -3,7 +3,6 @@ package com.zerren.zedeng.block.tile.reactor;
 import com.zerren.zedeng.api.recipe.HeatingFluid;
 import com.zerren.zedeng.api.recipe.WorkingFluid;
 import com.zerren.zedeng.block.tile.TEMultiBlockBase;
-import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileMultiblock;
 import com.zerren.zedeng.reference.Reference;
@@ -20,7 +19,7 @@ import net.minecraftforge.fluids.*;
 import java.util.UUID;
 
 /**
- * Created by Zerren on 3/7/2015.
+ * Created by Zerren on 3/7/2015. There be hot fluids here!
  */
 public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
 
@@ -37,8 +36,8 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
     public byte slaveLocation;
 
     /**
-     * Arbitrary thermal storage used to heat a fluid--1 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 320 RF.
-     * 50mb of hot coolant = 1TU = 20TU per 1000mb--Exchanger at peak performance produces 2TU/t = 640RF/t = 320Steam/t.
+     * Arbitrary thermal storage used to heat a fluid--10 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 32 RF.
+     * 5mb of hot coolant = 1TU = 200TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 20TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
      */
     public int thermalUnits;
@@ -56,21 +55,25 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         super.updateEntity();
 
         if (!worldObj.isRemote && isMaster()) {
-            processCoolant();
-            heatFluid();
-
+            if (coolantInletTank.getFluidAmount() >= 100)
+                processCoolant();
+            if (waterTank.getFluidAmount() > 0)
+                heatFluid();
             if (steamTank.getFluidAmount() > 0) {
                 float amount = steamTank.getFluidAmount();
-                float toPush = 500 + (amount * (amount / 64000));
+                float toPush = 500 + (amount * (amount / steamTank.getCapacity()));
 
                 pushFluids(steamTank, (int)toPush);
             }
 
-            pushFluids(coolantOutputTank, 1600);
+            if (coolantOutputTank.getFluidAmount() > 0)
+                pushFluids(coolantOutputTank, 1600);
 
             updateCounter++;
-            if (updateCounter >= 100) {
-                //if (thermalUnits > 0) thermalUnits--;
+            if (updateCounter >= 40) {
+                int toLose = (int)Math.sqrt(thermalUnits) / 20;
+                if (thermalUnits > toLose) thermalUnits -= toLose;
+
                 updateCounter = 0;
             }
         }
@@ -80,7 +83,9 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         if (coolantInletTank.getFluid() == null) return;
         int amount = coolantInletTank.getFluid().amount;
         Fluid output = HeatingFluid.getOutput(coolantInletTank.getFluid().getFluid());
-        //2 TU/t at peak performance
+        int heat = HeatingFluid.getHeat(coolantInletTank.getFluid().getFluid());
+
+        //20 TU/t at peak performance (for hot coolant)--exchanger can take up to 100mb/t maximum. Any faster and the fluids wouldn't have a chance to liberate their energy!
         int amountToDrain = 100;
 
         if (amount < amountToDrain) return;
@@ -98,14 +103,17 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         coolantOutputTank.fill(new FluidStack(output, amountToDrain), true);
         coolantInletTank.drain(amountToDrain, true);
 
-        if ((thermalUnits += 2) > 1000)
-            thermalUnits = 1000;
+        if ((thermalUnits += heat) > 10000)
+            thermalUnits = 10000;
     }
 
     private void heatFluid() {
         if (waterTank.getFluid() == null || waterTank.getFluidAmount() <= 0) return;
         Fluid output = WorkingFluid.getOutput(waterTank.getFluid().getFluid());
-        int eff = (int)(1.0F + ((thermalUnits + 10) * 0.01F));
+        int expansion = WorkingFluid.getExpansionFactor(waterTank.getFluid().getFluid());
+        //max the efficiency at 10--too much and the tank wouldn't be large enough for some fluids
+        int speed = Math.min((int)(0.5F + ((thermalUnits + 1) * 0.001F)), 10);
+        if (speed <= 0) return;
 
         if (output == null) {
             System.out.println("Output fluid is null for exchanger!");
@@ -113,17 +121,17 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         }
 
         int outputSpace = steamTank.getCapacity() - steamTank.getFluidAmount();
-        if (outputSpace < 160 * eff || thermalUnits <= 0) return;
+        if (outputSpace < expansion * speed || thermalUnits < (speed * 10)) return;
 
-        thermalUnits -= eff;
-        steamTank.fill(new FluidStack(output, 160 * eff), true);
-        waterTank.drain(eff, true);
+        thermalUnits -= (speed * 10);
+        steamTank.fill(new FluidStack(output, expansion * speed), true);
+        waterTank.drain(speed, true);
     }
 
     private void pushFluids(IFluidTank tank, int flowCap) {
         ForgeDirection dir = getOrientation();
         TileEntity receiver = null;
-        int amount = flowCap;
+        //int amount = flowCap;
 
         //steam tank
         if (tank == steamTank) {
@@ -143,7 +151,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                 case WEST: receiver = worldObj.getTileEntity(xCoord, yCoord, zCoord + 3); break;
             }
         }
-        FluidStack fluid = tank.drain(amount, false);
+        FluidStack fluid = tank.drain(flowCap, false);
         if (fluid != null && fluid.amount > 0 && receiver instanceof IFluidHandler) {
             int used;
             if (tank == steamTank) {
@@ -153,7 +161,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                 used = ((IFluidHandler) receiver).fill(spinRight(dir, false), fluid, true);
             }
             if (used > 0) {
-                amount -= used;
+                //amount -= used;
                 tank.drain(used, true);
             }
         }
@@ -168,11 +176,12 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         if (controllerID == null) {
             controllerID = id;
         }
+        if (ownerUUID == null) {
+            setOwner(player);
+        }
 
         if (!worldObj.isRemote){
-            if (checkMultiblock()) {
-
-            }
+            checkMultiblock();
         }
     }
 
@@ -353,7 +362,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         ForgeDirection dir = master.getOrientation();
 
         //slave 0 (coolant inlet) and is a valid coolant fluid from the left side when facing the exchanger
-        if (slaveLocation == 0 && HeatingFluid.validCoolant(fluid)) {
+        if (slaveLocation == 0 && HeatingFluid.validHeatingFluid(fluid)) {
             switch (dir) {
                 case NORTH: return from == ForgeDirection.EAST;
                 case EAST: return from == ForgeDirection.SOUTH;

@@ -24,7 +24,7 @@ public final class Reference {
         public static final String RESOURCE_PREFIX = ModInfo.MOD_ID.toLowerCase() + ":";
 
         public static final class Folders {
-            public static final String GLASS_FOLDER = "glass/";
+            public static final String MATERIAL_FOLDER = "material/";
             public static final String VAULT_FOLDER = "vault/";
             public static final String KEY_FOLDER = "key/";
             public static final String TOOL_FOLDER = "tool/";

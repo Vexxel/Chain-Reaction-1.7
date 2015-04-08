@@ -1,20 +1,14 @@
 # Block localizations -------------------------------------------------------------------
-tile.zedeng:glass.amber.name=Colored Glass (Amber Yellow)
-tile.zedeng:glass.cyan.name=Colored Glass (Cyan)
-tile.zedeng:glass.electric.name=Colored Glass (Electric Blue)
-tile.zedeng:glass.emerald.name=Colored Glass (Emerald Green)
-tile.zedeng:glass.fire.name=Colored Glass (Fire Red)
-tile.zedeng:glass.gold.name=Colored Glass (Gold)
-tile.zedeng:glass.green.name=Colored Glass (Green)
-tile.zedeng:glass.indigo.name=Colored Glass (Indigo)
-tile.zedeng:glass.lime.name=Colored Glass (Lime Green)
-tile.zedeng:glass.magenta.name=Colored Glass (Magenta)
-tile.zedeng:glass.orange.name=Colored Glass (Orange)
-tile.zedeng:glass.ruby.name=Colored Glass (Ruby Red)
-tile.zedeng:glass.sapphire.name=Colored Glass (Sapphire Blue)
-tile.zedeng:glass.spring.name=Colored Glass (Spring Green)
-tile.zedeng:glass.ultramarine.name=Colored Glass (Ultramarine)
-tile.zedeng:glass.violet.name=Colored Glass (Violet)
+tile.zedeng:ore.oreChromium.name=Chromium Ore
+tile.zedeng:ore.oreNickel.name=Nickel Ore
+tile.zedeng:ore.oreUranium.name=Uranium Ore
+
+tile.zedeng:metal.blockChromium.name=Block of Chromium
+tile.zedeng:metal.blockNickel.name=Block of Nickel
+tile.zedeng:metal.blockDepletedUranium.name=Block of Depleted Uranium
+tile.zedeng:metal.blockGraphite.name=Block of Graphite
+tile.zedeng:metal.blockStainlessSteel.name=Block of Stainless Steel
+tile.zedeng:metal.blockInconel.name=Block of Inconel
 
 tile.zedeng:vault.wall.name=Vault Wall
 tile.zedeng:vault.controller.name=Vault Control Mechanism
@@ -29,10 +23,10 @@ tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
 
 tile.zedeng:exchanger.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
 
-tile.zedeng.fluid.coolantCold.name=Pressurized Water (Cold)
-tile.zedeng.fluid.coolantHot.name=Pressurized Water (Hot)
-tile.zedeng.fluid.distilledWater.name=Distilled Water
-tile.zedeng.fluid.saturatedSteam.name=Saturated Steam
+tile.zedeng.fluid.coolantcold.name=Pressurized Water (Cold)
+tile.zedeng.fluid.coolanthot.name=Pressurized Water (Hot)
+tile.zedeng.fluid.distilledwater.name=Distilled Water
+tile.zedeng.fluid.saturatedsteam.name=Saturated Steam
 tile.zedeng.fluid.uf6.name=Uranium Hexafluoride
 
 
@@ -40,10 +34,13 @@ tile.zedeng.fluid.uf6.name=Uranium Hexafluoride
 item.zedeng:material.boltStainlessSteel.name=Stainless Steel Bolt
 item.zedeng:material.plateStainlessSteel.name=Stainless Steel Plate
 item.zedeng:material.tubeStainlessSteel.name=Stainless Steel Tube
+item.zedeng:material.plateInconel.name=Inconel Plate
+item.zedeng:material.tubeInconel.name=Inconel Tube
 
 item.zedeng:dust.dustChromium.name=Chromium Dust
 item.zedeng:dust.dustNickel.name=Nickel Dust
 item.zedeng:dust.dustStainlessSteel.name=Stainless Steel Dust
+item.zedeng:dust.dustInconel.name=Inconel Dust
 item.zedeng:dust.dustUO2.name=Uranium Dioxide Dust
 
 item.zedeng:key.bedrock.name=Bedrock Skeleton Key

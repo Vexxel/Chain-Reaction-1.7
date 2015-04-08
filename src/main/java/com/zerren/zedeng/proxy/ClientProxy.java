@@ -1,5 +1,6 @@
 package com.zerren.zedeng.proxy;
 
+import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
 import com.zerren.zedeng.client.fx.EntityRadiationFX;
@@ -51,10 +52,10 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void initRenderingAndTextures() {
         //Vault Chest
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.chest), new ItemRendererVaultChest());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.chest), new ItemRendererVaultChest());
         ClientRegistry.bindTileEntitySpecialRenderer(TEChest.class, new TESRChest());
         //Heat Exchanger
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.exchanger), new ItemRendererTubes());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.exchanger), new ItemRendererTubes());
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
     }
 

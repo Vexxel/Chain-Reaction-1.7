@@ -7,10 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemMultiTexture;
 
 /**
- * Created by Zerren on 2/28/2015.
+ * Created by Zerren on 2/19/2015.
  */
-public class ItemBlockChest extends ItemMultiTexture {
-    public ItemBlockChest(Block block) {
-        super(ZedBlocks.chest, ZedBlocks.chest, Names.Blocks.CHEST_SUBTYPES);
+public class ItemBlockMetalMaterial extends ItemMultiTexture {
+    public ItemBlockMetalMaterial(Block block) {
+        super(ZedBlocks.metals, ZedBlocks.metals, Names.Blocks.METAL_SUBTYPES);
     }
 }
