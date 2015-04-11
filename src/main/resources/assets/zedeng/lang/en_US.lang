@@ -21,7 +21,9 @@ tile.zedeng:vaultChest.brick.name=Secure Iron Chest
 tile.zedeng:vaultChest.thaumium.name=Secure Thaumium Chest
 tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
 
-tile.zedeng:exchanger.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
+tile.zedeng:plumbing.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
+tile.zedeng:plumbing.distributionChamber.name=Fluid Distribution Chamber
+tile.zedeng:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
 
 tile.zedeng.fluid.coolantcold.name=Pressurized Water (Cold)
 tile.zedeng.fluid.coolanthot.name=Pressurized Water (Hot)
@@ -37,11 +39,20 @@ item.zedeng:material.tubeStainlessSteel.name=Stainless Steel Tube
 item.zedeng:material.plateInconel.name=Inconel Plate
 item.zedeng:material.tubeInconel.name=Inconel Tube
 
+item.zedeng:dust.dustIron.name=Iron Dust
 item.zedeng:dust.dustChromium.name=Chromium Dust
 item.zedeng:dust.dustNickel.name=Nickel Dust
 item.zedeng:dust.dustStainlessSteel.name=Stainless Steel Dust
 item.zedeng:dust.dustInconel.name=Inconel Dust
-item.zedeng:dust.dustUO2.name=Uranium Dioxide Dust
+item.zedeng:dust.dustGraphite.name=Graphite Dust
+item.zedeng:dust.dustUraniumDioxide.name=Uranium Dioxide Dust
+
+item.zedeng:ingot.ingotChromium.name=Chromium Ingot
+item.zedeng:ingot.ingotNickel.name=Nickel Ingot
+item.zedeng:ingot.ingotStainlessSteel.name=Stainless Steel Ingot
+item.zedeng:ingot.ingotInconel.name=Inconel Ingot
+item.zedeng:ingot.ingotGraphite.name=Graphite Ingot
+item.zedeng:ingot.ingotDepletedUranium.name=Depleted Uranium Ingot
 
 item.zedeng:key.bedrock.name=Bedrock Skeleton Key
 item.zedeng:key.iron.name=Iron Vault Key

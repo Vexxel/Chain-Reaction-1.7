@@ -19,6 +19,7 @@ public class ModFluids {
     public static Fluid steam;
     public static Fluid uf6;
 
+    //pretty hacky way of making a single method for the fluid register, but it works lol
     private static Fluid temp;
 
     public static void init() {

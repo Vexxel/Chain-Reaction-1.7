@@ -42,9 +42,11 @@ public final class Names {
                 "voidmetal"
         };
 
-        public static final String EXCHANGER = "exchanger";
-        public static final String[] EXCHANGER_SUBTYPES = {
-                "liquidHeatExchanger"
+        public static final String PLUMBING = "plumbing";
+        public static final String[] PLUMBING_SUBTYPES = {
+                "liquidHeatExchanger",
+                "distributionChamber",
+                "stainlessPipe"
         };
     }
 
@@ -70,12 +72,13 @@ public final class Names {
 
         public static final String DUST = "dust";
         public static final String[] DUST_SUBTYPES = {
+                "dustIron",
                 "dustChromium",
                 "dustNickel",
                 "dustStainlessSteel",
                 "dustInconel",
                 "dustGraphite",
-                "dustUO2"
+                "dustUraniumDioxide"
         };
 
         public static final String KEY = "key";
@@ -96,7 +99,7 @@ public final class Names {
     public static final class Fluids {
         public static final String COOLANT_COLD = "coolantcold";
         public static final String COOLANT_HOT = "coolanthot";
-        public static final String UF6 = "uf6";
+        public static final String UF6 = "uraniumhexafluoride";
         public static final String DISTILLED_WATER = "distilledwater";
 
         public static final String STEAM = ConfigHandler.uniSteam ? "steam" : "saturatedsteam";
@@ -114,16 +117,11 @@ public final class Names {
 
     public static final class NBT {
         public static final String ITEMS = "Items";
-        public static final String MODE = "mode";
-        public static final String CRAFTING_GUI_OPEN = "craftingGuiOpen";
         public static final String UUID_MOST_SIG = "UUIDMostSig";
         public static final String UUID_LEAST_SIG = "UUIDLeastSig";
-        public static final String DISPLAY = "display";
-        public static final String COLOR = "color";
         public static final String STATE = "teState";
         public static final String CUSTOM_NAME = "CustomName";
         public static final String DIRECTION = "teDirection";
-        public static final String OWNER = "ownerName";
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
     }

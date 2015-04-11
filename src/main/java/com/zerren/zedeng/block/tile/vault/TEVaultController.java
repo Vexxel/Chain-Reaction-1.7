@@ -19,8 +19,6 @@ import java.util.UUID;
  */
 public class TEVaultController extends TEVaultBase implements IInventory {
 
-    private UUID controllerID;
-
     private ItemStack[] inventory = new ItemStack[54 * ConfigHandler.vaultPages];
 
     private boolean allBreakable = true;
@@ -85,7 +83,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         }
         //else set the ownerUUID to the person who placed/activated's UUID
         else {
-            setOwnerUUID(player.getPersistentID());
+            setOwner(player);
         }
         if (!worldObj.isRemote){
             if (checkMultiblock(this.getOwnerUUID(), player)) {
@@ -273,11 +271,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         tag.setBoolean("allBreakable", allBreakable);
         tag.setInteger("page", page);
 
-        if (this.hasControllerID()) {
-            tag.setLong("controllerIDMost", controllerID.getMostSignificantBits());
-            tag.setLong("controllerIDLeast", controllerID.getLeastSignificantBits());
-        }
-
         NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < this.inventory.length; ++i) {
@@ -302,10 +295,6 @@ public class TEVaultController extends TEVaultBase implements IInventory {
 
         allBreakable = tag.getBoolean("allBreakable");
         page = tag.getInteger("page");
-
-        if (tag.hasKey("controllerIDMost") && tag.hasKey("controllerIDLeast")) {
-            this.controllerID = new UUID(tag.getLong("controllerIDMost"), tag.getLong("controllerIDLeast"));
-        }
 
         NBTTagList nbttaglist = tag.getTagList("Items", 10);
         this.inventory = new ItemStack[this.getSizeInventory()];

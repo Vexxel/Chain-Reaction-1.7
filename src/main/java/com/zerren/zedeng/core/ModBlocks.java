@@ -2,9 +2,11 @@ package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.api.materials.ZedBlocks;
-import com.zerren.zedeng.block.*;
+import com.zerren.zedeng.block.BlockPlumbing;
+import com.zerren.zedeng.block.BlockVault;
+import com.zerren.zedeng.block.BlockZE;
+import com.zerren.zedeng.block.BlockZedChest;
 import com.zerren.zedeng.block.fluid.*;
-import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.item.itemblock.*;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.reference.Reference;
@@ -13,21 +15,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
-import net.minecraftforge.fluids.Fluid;
 
 /**
  * Created by Zerren on 2/19/2015.
  */
 public class ModBlocks {
 
-    private static Block temp;
-
     public static void init() {
         ZedBlocks.ores = new BlockZE(Names.Blocks.ORE, Names.Blocks.ORE_SUBTYPES, Material.rock, 3F, 5F, Block.soundTypeStone, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
         ZedBlocks.metals = new BlockZE(Names.Blocks.METAL, Names.Blocks.METAL_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
         ZedBlocks.vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
         ZedBlocks.chest = new BlockZedChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
-        ZedBlocks.exchanger = new BlockExchanger(Names.Blocks.EXCHANGER, Names.Blocks.EXCHANGER_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.ITEM_BLOCK_FOLDER, ZederrianEngineering.cTabZE);
 
         register();
     }
@@ -39,16 +38,9 @@ public class ModBlocks {
 
         GameRegistry.registerBlock(ZedBlocks.vault, ItemBlockVault.class, Names.Blocks.VAULT);
         GameRegistry.registerBlock(ZedBlocks.chest, ItemBlockChest.class, Names.Blocks.CHEST);
-        GameRegistry.registerBlock(ZedBlocks.exchanger, ItemBlockExchanger.class, Names.Blocks.EXCHANGER);
+        GameRegistry.registerBlock(ZedBlocks.plumbing, ItemBlockExchanger.class, Names.Blocks.PLUMBING);
 
         fluidBlocks();
-
-        /*GameRegistry.registerBlock(ZedBlocks.coolantCold, Names.Fluids.COOLANT_COLD);
-        GameRegistry.registerBlock(ZedBlocks.coolantHot, Names.Fluids.COOLANT_HOT);
-        GameRegistry.registerBlock(ZedBlocks.distilledWater, Names.Fluids.DISTILLED_WATER);
-        GameRegistry.registerBlock(ZedBlocks.uf6, Names.Fluids.UF6);
-        if (!ConfigHandler.uniSteam)
-            GameRegistry.registerBlock(ZedBlocks.steam, Names.Fluids.STEAM);*/
     }
 
     private static void fluidBlocks() {

@@ -19,14 +19,14 @@ public final class TooltipHelper {
      * @param list the list to add to--for use with item tooltips (addInformation)
      * @param reqMats the ItemStack array containing the required materials
      */
-    public static void addMaterialCostInfo(List list, ItemStack[] reqMats) {
+    public static void addMaterialCostInfo(List<String> list, ItemStack[] reqMats) {
         String materials = CoreUtility.translate("gui.multiblock.requirement.name");
 
         if (showShiftInformation()) {
             list.add(EnumChatFormatting.AQUA + materials);
 
             for (ItemStack i : reqMats) {
-                list.add("- " + i.stackSize + "x " + i.getDisplayName());
+                list.add("- " + EnumChatFormatting.GREEN + i.stackSize + "x " + EnumChatFormatting.GRAY + i.getDisplayName());
             }
         }
         else {

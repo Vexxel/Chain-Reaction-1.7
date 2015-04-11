@@ -85,4 +85,9 @@ public class ItemKey extends ItemZE implements IKey {
     public IIcon getIconFromDamage(int meta) {
         return icons[MathHelper.clamp_int(meta, 0, itemSubtypes.length - 1)];
     }
+
+    @Override
+    public boolean hasCode(ItemStack stack) {
+        return NBTHelper.hasTag(stack, "code");
+    }
 }

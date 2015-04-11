@@ -1,5 +1,6 @@
-package com.zerren.zedeng.block.tile.reactor;
+package com.zerren.zedeng.block.tile.plumbing;
 
+import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.api.recipe.HeatingFluid;
 import com.zerren.zedeng.api.recipe.WorkingFluid;
 import com.zerren.zedeng.block.tile.TEMultiBlockBase;
@@ -85,14 +86,16 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         Fluid output = HeatingFluid.getOutput(coolantInletTank.getFluid().getFluid());
         int heat = HeatingFluid.getHeat(coolantInletTank.getFluid().getFluid());
 
-        //20 TU/t at peak performance (for hot coolant)--exchanger can take up to 100mb/t maximum. Any faster and the fluids wouldn't have a chance to liberate their energy!
+        //20 TU/t at peak performance (for hot coolant)--plumbing can take up to 100mb/t maximum. Any faster and the fluids wouldn't have a chance to liberate their energy!
         int amountToDrain = 100;
 
         if (amount < amountToDrain) return;
 
         if (amount <= 0) return;
         if (output == null) {
-            System.out.println("Output fluid is null for exchanger!");
+            ZederrianEngineering.log.warn("Input heating fluid has no output in plumbing at " + getStringLocale() + "!");
+            ZederrianEngineering.log.warn("How did that fluid get there anyway? I'll purge that tank.");
+            coolantInletTank.setFluid(null);
             return;
         }
 
@@ -109,23 +112,29 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
 
     private void heatFluid() {
         if (waterTank.getFluid() == null || waterTank.getFluidAmount() <= 0) return;
-        Fluid output = WorkingFluid.getOutput(waterTank.getFluid().getFluid());
-        int expansion = WorkingFluid.getExpansionFactor(waterTank.getFluid().getFluid());
+        int inputAmount = WorkingFluid.getInputRequiredAmount(waterTank.getFluid().getFluid());
+        FluidStack output = WorkingFluid.getOutput(waterTank.getFluid().getFluid());
+        if (inputAmount <= 0) return;
+
         //max the efficiency at 10--too much and the tank wouldn't be large enough for some fluids
         int speed = Math.min((int)(0.5F + ((thermalUnits + 1) * 0.001F)), 10);
         if (speed <= 0) return;
 
         if (output == null) {
-            System.out.println("Output fluid is null for exchanger!");
+            ZederrianEngineering.log.warn("Input working fluid has no output in plumbing at " + getStringLocale() + "!");
+            ZederrianEngineering.log.warn("How did that fluid get there anyway? I'll purge that tank.");
+            waterTank.setFluid(null);
             return;
         }
 
         int outputSpace = steamTank.getCapacity() - steamTank.getFluidAmount();
-        if (outputSpace < expansion * speed || thermalUnits < (speed * 10)) return;
+        if (outputSpace < output.amount * speed || thermalUnits < (speed * 10)) return;
+
+        if (waterTank.getFluidAmount() < speed * inputAmount) return;
 
         thermalUnits -= (speed * 10);
-        steamTank.fill(new FluidStack(output, expansion * speed), true);
-        waterTank.drain(speed, true);
+        steamTank.fill(new FluidStack(output.getFluid(), output.amount * speed), true);
+        waterTank.drain(speed * inputAmount, true);
     }
 
     private void pushFluids(IFluidTank tank, int flowCap) {
@@ -225,7 +234,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH) {
             for (int i = 0; i < 5; i++) {
                 TileEntity tile = worldObj.getTileEntity(xCoord - 2 + i, yCoord, zCoord);
-                //tile exists and is a heat exchanger
+                //tile exists and is a heat plumbing
                 if (tile != null && tile instanceof TEHeatExchanger) {
                     //tile has no master
                     if (!((TEHeatExchanger) tile).hasValidMaster() || ((TEHeatExchanger) tile).getMasterUUID().compareTo(this.getControllerUUID()) == 0) {
@@ -238,7 +247,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         else {
             for (int i = 0; i < 5; i++) {
                 TileEntity tile = worldObj.getTileEntity(xCoord, yCoord, zCoord - 2 + i);
-                //tile exists and is a heat exchanger
+                //tile exists and is a heat plumbing
                 if (tile != null && tile instanceof TEHeatExchanger) {
                     //tile has no master
                     if (!((TEHeatExchanger) tile).hasValidMaster() || ((TEHeatExchanger) tile).getMasterUUID().compareTo(this.getControllerUUID()) == 0) {
@@ -319,7 +328,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
     //Fluid output from tile
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
+        /*TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
 
         if (slaveLocation != -1 && !this.isMaster) {
             //steam tank
@@ -333,7 +342,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                     return master.coolantOutputTank.drain(resource.amount, doDrain);
                 }
             }
-        }
+        }*/
 
         return null;
     }
@@ -341,17 +350,17 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
     //Fluid output from tile, not specific
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
+        /*TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
 
         if (slaveLocation != -1 && !this.isMaster) {
             //steam tank
-            if (slaveLocation == 3) {
+            if (slaveLocation == 3 && from == ForgeDirection.UP) {
                 return master.steamTank.drain(maxDrain, doDrain);
             }
-            if (slaveLocation == 4) {
+            if (slaveLocation == 4 && from == spinRight(getOrientation(), false)) {
                 return master.coolantOutputTank.drain(maxDrain, doDrain);
             }
-        }
+        }*/
 
         return null;
     }
@@ -361,7 +370,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
         ForgeDirection dir = master.getOrientation();
 
-        //slave 0 (coolant inlet) and is a valid coolant fluid from the left side when facing the exchanger
+        //slave 0 (coolant inlet) and is a valid coolant fluid from the left side when facing the plumbing
         if (slaveLocation == 0 && HeatingFluid.validHeatingFluid(fluid)) {
             switch (dir) {
                 case NORTH: return from == ForgeDirection.EAST;
@@ -372,12 +381,12 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         }
 
         //From above, valid working fluid, and slave 1 (water inlet)
-        return from == ForgeDirection.UP && slaveLocation == 1 && WorkingFluid.validWorkingFluid(fluid);
+        return (from == ForgeDirection.UP) && slaveLocation == 1 && WorkingFluid.validWorkingFluid(fluid);
     }
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
+        /*TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
         ForgeDirection dir = master.getOrientation();
 
         //coolant outlet
@@ -393,17 +402,29 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         }
 
         //steam outlet
-        return slaveLocation == 3 && from == ForgeDirection.UP && master.steamTank.getFluid() != null && master.steamTank.getFluidAmount() > 0;
+        return slaveLocation == 3 && from == ForgeDirection.UP && master.steamTank.getFluid() != null && master.steamTank.getFluidAmount() > 0;*/
+
+        return false;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         FluidTankInfo[] info = new FluidTankInfo[] {};
-        switch (slaveLocation) {
-            case 0: info = new FluidTankInfo[] { new FluidTankInfo(this.coolantInletTank) }; break;
-            case 1: info = new FluidTankInfo[] { new FluidTankInfo(this.waterTank) }; break;
-            case 3: info = new FluidTankInfo[] { new FluidTankInfo(this.steamTank) }; break;
-            case 4: info = new FluidTankInfo[] { new FluidTankInfo(this.coolantOutputTank) }; break;
+        TEHeatExchanger commander = (TEHeatExchanger)this.getCommandingController();
+
+        if (commander == null) return info;
+
+        if (slaveLocation == 0 && from == spinLeft(getOrientation(), false)) {
+            info = new FluidTankInfo[] {commander.coolantInletTank.getInfo()};
+        }
+        else if (slaveLocation == 1 && from == ForgeDirection.UP) {
+            info = new FluidTankInfo[] {commander.waterTank.getInfo()};
+        }
+        else if (slaveLocation == 3 && from == ForgeDirection.UP) {
+            info = new FluidTankInfo[] {commander.steamTank.getInfo()};
+        }
+        else if (slaveLocation == 4 && from == spinRight(getOrientation(), false)) {
+            info = new FluidTankInfo[] {commander.coolantOutputTank.getInfo()};
         }
 
         return info;

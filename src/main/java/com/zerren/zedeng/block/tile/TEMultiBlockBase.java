@@ -1,14 +1,9 @@
 package com.zerren.zedeng.block.tile;
 
-import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileMultiblock;
-import com.zerren.zedeng.handler.network.client.tile.MessageTileZE;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.UUID;
 
@@ -16,10 +11,16 @@ import java.util.UUID;
  * Created by Zerren on 3/11/2015.
  */
 public class TEMultiBlockBase extends TileEntityZE {
+    /**
+     * The UUID of this tile entitie's master (if it has one)
+     */
     protected UUID masterID;
     protected int masterX, masterY, masterZ;
     protected boolean isMaster;
     public boolean hasMaster;
+    /**
+     * The UUID of this tile entity that it gives to its slaves
+     */
     protected UUID controllerID;
 
     public TEMultiBlockBase() {
@@ -131,7 +132,7 @@ public class TEMultiBlockBase extends TileEntityZE {
      * @return
      */
     public boolean hasControllerID() {
-        return controllerID != null;
+        return getControllerUUID() != null;
     }
 
     /**
@@ -139,7 +140,7 @@ public class TEMultiBlockBase extends TileEntityZE {
      * @return UUID of master
      */
     public UUID getControllerUUID() {
-        return controllerID;
+        return this.controllerID;
     }
 
     @Override

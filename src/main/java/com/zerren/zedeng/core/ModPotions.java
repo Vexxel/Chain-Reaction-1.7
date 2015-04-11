@@ -1,5 +1,6 @@
 package com.zerren.zedeng.core;
 
+import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.core.potion.*;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.reference.Names;
@@ -46,7 +47,7 @@ public class ModPotions {
                     final Potion[] newPotionTypes = new Potion[256];
                     System.arraycopy(potionTypes, 0, newPotionTypes, 0, potionTypes.length);
                     f.set(null, newPotionTypes);
-                    System.out.println("Reflection Success");
+                    ZederrianEngineering.log.info("Potion array reflection success--new size: " + newPotionTypes.length);
                 }
             } catch (Exception e) {
                 System.err.println("Severe error, please report this to the mod author:");

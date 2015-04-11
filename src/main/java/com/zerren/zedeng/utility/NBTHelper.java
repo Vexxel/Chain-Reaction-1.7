@@ -8,18 +8,10 @@ import net.minecraft.nbt.NBTTagList;
 import java.util.UUID;
 
 /**
- * Created by Zerren on 2/20/2015.
+ * Pahimar's NBTHelper class
  */
 public final class NBTHelper
 {
-    public static void clearStatefulNBTTags(ItemStack itemStack)
-    {
-        if (NBTHelper.hasTag(itemStack, Names.NBT.CRAFTING_GUI_OPEN))
-        {
-            NBTHelper.removeTag(itemStack, Names.NBT.CRAFTING_GUI_OPEN);
-        }
-    }
-
     public static boolean hasTag(ItemStack itemStack, String keyName)
     {
         return itemStack != null && itemStack.stackTagCompound != null && itemStack.stackTagCompound.hasKey(keyName);
@@ -42,7 +34,6 @@ public final class NBTHelper
     {
         initNBTTagCompound(itemStack);
 
-        // Set a UUID on the Alchemical Bag, if one doesn't exist already
         if (!hasTag(itemStack, Names.NBT.UUID_MOST_SIG) && !hasTag(itemStack, Names.NBT.UUID_LEAST_SIG))
         {
             UUID itemUUID = UUID.randomUUID();
@@ -62,13 +53,6 @@ public final class NBTHelper
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
-    }
-
-    public static void setLong(ItemStack itemStack, String keyName, long keyValue)
-    {
-        initNBTTagCompound(itemStack);
-
-        itemStack.stackTagCompound.setLong(keyName, keyValue);
     }
 
     // String
@@ -158,13 +142,13 @@ public final class NBTHelper
 
         if (!itemStack.stackTagCompound.hasKey(keyName))
         {
-            setInteger(itemStack, keyName, 0);
+            setInt(itemStack, keyName, 0);
         }
 
         return itemStack.stackTagCompound.getInteger(keyName);
     }
 
-    public static void setInteger(ItemStack itemStack, String keyName, int keyValue)
+    public static void setInt(ItemStack itemStack, String keyName, int keyValue)
     {
         initNBTTagCompound(itemStack);
 
@@ -182,6 +166,13 @@ public final class NBTHelper
         }
 
         return itemStack.stackTagCompound.getLong(keyName);
+    }
+
+    public static void setLong(ItemStack itemStack, String keyName, long keyValue)
+    {
+        initNBTTagCompound(itemStack);
+
+        itemStack.stackTagCompound.setLong(keyName, keyValue);
     }
 
     // float

@@ -1,23 +1,18 @@
 package com.zerren.zedeng.utility;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.block.BlockExchanger;
 import com.zerren.zedeng.handler.ConfigHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
-import org.lwjgl.input.Keyboard;
-
-import java.util.List;
-import java.util.UUID;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 /**
  * Created by Zerren on 2/21/2015.
@@ -62,6 +57,13 @@ public final class CoreUtility {
     public static <T> T get(IBlockAccess world, int x, int y, int z, Class<T> tileClass) {
         TileEntity t = world.getTileEntity(x, y, z);
         return (tileClass.isInstance(t) ? (T)t : null);
+    }
+
+    public static TileEntity getTileEntity(World world, int x, int y, int z) {
+        if (world.blockExists(x, y, z)) {
+            return world.getChunkFromBlockCoords(x, z).getTileEntityUnsafe(x & 15, y, z & 15);
+        }
+        return null;
     }
 
     public static void addColoredChat(String message, EnumChatFormatting format, EntityPlayer player) {

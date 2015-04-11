@@ -13,11 +13,11 @@ import org.lwjgl.opengl.GL11;
  * Created by Zerren on 3/7/2015.
  */
 @SideOnly(Side.CLIENT)
-public class ItemRendererTubes implements IItemRenderer {
+public class ItemRendererExchanger implements IItemRenderer {
 
     private final ModelExchangerTubes modelTubes;
 
-    public ItemRendererTubes() {
+    public ItemRendererExchanger() {
         modelTubes = new ModelExchangerTubes();
     }
 
@@ -28,7 +28,7 @@ public class ItemRendererTubes implements IItemRenderer {
 
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType itemRenderType, ItemStack itemStack, ItemRendererHelper itemRendererHelper) {
-        return true;
+        return itemStack.getItemDamage() == 0;
     }
 
     @Override
@@ -58,13 +58,16 @@ public class ItemRendererTubes implements IItemRenderer {
     private void render(float x, float y, float z, int metaData) {
         if (metaData == 0) {
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.TUBES);
-        }
 
-        GL11.glPushMatrix(); //start
-        GL11.glTranslatef(x, y, z); //size
-        GL11.glRotatef(180, 1, 0, 0);
-        GL11.glRotatef(-90, 0, 1, 0);
-        modelTubes.renderAll();
-        GL11.glPopMatrix(); //end
+            GL11.glPushMatrix(); //start
+            GL11.glTranslatef(x, y, z); //size
+            GL11.glRotatef(180, 1, 0, 0);
+            GL11.glRotatef(-90, 0, 1, 0);
+            modelTubes.renderAll();
+            GL11.glPopMatrix(); //end
+        }
+        else if (metaData == 1) {
+
+        }
     }
 }

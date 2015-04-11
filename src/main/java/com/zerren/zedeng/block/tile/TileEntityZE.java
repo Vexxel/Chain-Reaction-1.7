@@ -3,6 +3,7 @@ package com.zerren.zedeng.block.tile;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileZE;
 import com.zerren.zedeng.reference.Names;
+import com.zerren.zedeng.utility.TileCache;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
@@ -20,12 +21,14 @@ public class TileEntityZE extends TileEntity
     protected byte state;
     protected String customName;
     protected UUID ownerUUID;
+    protected TileCache[] tileCache;
 
     public TileEntityZE() {
         orientation = ForgeDirection.SOUTH;
         state = 0;
         customName = "";
         ownerUUID = null;
+        tileCache = null;
     }
 
     @Override
@@ -35,6 +38,10 @@ public class TileEntityZE extends TileEntity
     public boolean canUpdate()
     {
         return false;
+    }
+
+    public void updateCache() {
+        tileCache = TileCache.buildCache(worldObj, xCoord, yCoord, zCoord);
     }
 
     public void information(TileEntityZE tile) {
@@ -107,6 +114,10 @@ public class TileEntityZE extends TileEntity
 
     public void setOwner(EntityPlayer player) {
         ownerUUID = player.getPersistentID();
+    }
+
+    protected String getStringLocale() {
+        return "X:" + xCoord + " Y:" + yCoord + " Z:" + zCoord;
     }
 
     @Override

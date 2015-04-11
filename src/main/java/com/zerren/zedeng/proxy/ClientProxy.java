@@ -2,16 +2,16 @@ package com.zerren.zedeng.proxy;
 
 import com.zerren.zedeng.api.materials.ZedBlocks;
 import com.zerren.zedeng.block.tile.chest.TEChest;
-import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
+import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
 import com.zerren.zedeng.client.fx.EntityRadiationFX;
 import com.zerren.zedeng.client.fx.EntitySteamFX;
-import com.zerren.zedeng.client.render.item.ItemRendererTubes;
+import com.zerren.zedeng.client.render.block.ISBRHPlumbing;
 import com.zerren.zedeng.client.render.item.ItemRendererVaultChest;
 import com.zerren.zedeng.client.render.tileentity.TESRChest;
 import com.zerren.zedeng.client.render.tileentity.TESRHeatExchanger;
-import com.zerren.zedeng.core.ModBlocks;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -50,13 +50,25 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void initRenderingAndTextures() {
+    public void initTESR() {
         //Vault Chest
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.chest), new ItemRendererVaultChest());
         ClientRegistry.bindTileEntitySpecialRenderer(TEChest.class, new TESRChest());
         //Heat Exchanger
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.exchanger), new ItemRendererTubes());
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
+    }
+
+    @Override
+    public void initISBRH() {
+        //Heat Exchanger
+        RenderingRegistry.registerBlockHandler(ISBRHPlumbing.exchangerModel, new ISBRHPlumbing());
+    }
+
+    @Override
+    public void initItemRender() {
+        //Vault Chest
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.chest), new ItemRendererVaultChest());
+        //Heat Exchanger
+        //MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.plumbing), new ItemRendererExchanger());
     }
 
     @Override

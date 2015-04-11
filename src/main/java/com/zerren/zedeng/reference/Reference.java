@@ -29,6 +29,7 @@ public final class Reference {
             public static final String KEY_FOLDER = "key/";
             public static final String TOOL_FOLDER = "tool/";
             public static final String REACTOR_FOLDER = "reactor/";
+            public static final String ITEM_BLOCK_FOLDER = "itemblock/";
             public static final String FLUID_FOLDER = "fluid/";
         }
 
@@ -87,12 +88,5 @@ public final class Reference {
         KEY,
         VAULT,
         CHEST
-    }
-
-    public static class RenderIDs {
-        public static int
-                vaultChest,
-                exchanger,
-                tubes;
     }
 }

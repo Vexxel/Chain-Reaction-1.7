@@ -1,19 +1,28 @@
 package com.zerren.zedeng.block;
 
 import buildcraft.api.tools.IToolWrench;
-import com.zerren.zedeng.block.tile.reactor.TEHeatExchanger;
-import com.zerren.zedeng.core.ModItems;
+import com.zerren.zedeng.block.tile.TileEntityZE;
+import com.zerren.zedeng.block.tile.plumbing.TEDistroChamber;
+import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
+import com.zerren.zedeng.block.tile.plumbing.TEPressurePipe;
+import com.zerren.zedeng.client.render.block.ISBRHPlumbing;
+import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
-import com.zerren.zedeng.utility.ItemRetriever;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -21,18 +30,16 @@ import java.util.UUID;
 /**
  * Created by Zerren on 3/6/2015.
  */
-public class BlockExchanger extends BlockZE implements ITileEntityProvider {
+public class BlockPlumbing extends BlockZE implements ITileEntityProvider {
 
-    public static ItemStack[] exchangerRequirements = {
-            //16 bolts
-            ItemRetriever.Items.material(16, "boltStainlessSteel"),
-            //4 SS Plates
-            ItemRetriever.Items.material(4, "plateStainlessSteel"),
-            //4 Inconel Tubes
-            //ItemRetriever.Items.material(4, "tubeInconel")
-    };
+    @SideOnly(Side.CLIENT)
+    public IIcon distroInput;
+    @SideOnly(Side.CLIENT)
+    private IIcon[] tubes = new IIcon[2];
+    @SideOnly(Side.CLIENT)
+    public static IIcon pipeMouth;
 
-    public BlockExchanger(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
+    public BlockPlumbing(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
         super(name, subtypes, material, hardness, resistance, sound, folder, tab);
     }
 
@@ -41,10 +48,18 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
         if (world.isRemote) return false;
 
-        TEHeatExchanger tile = CoreUtility.get(world, x, y, z, TEHeatExchanger.class);
+        TileEntityZE tile = CoreUtility.get(world, x, y, z, TileEntityZE.class);
 
+        if (tile == null) return false;
+        if (tile instanceof TEHeatExchanger) return activateExchanger(world, x, y, z, player, (TEHeatExchanger)tile);
+        if (tile instanceof TEDistroChamber) return activateDistroChamber(world, x, y, z, player, (TEDistroChamber)tile);
+
+        return false;
+    }
+
+    private boolean activateExchanger(World world, int x, int y, int z, EntityPlayer player, TEHeatExchanger tile) {
         ItemStack held = player.inventory.getCurrentItem();
-        if (tile != null && held != null && held.getItem() instanceof IToolWrench) {
+        if (tile != null  && held != null && held.getItem() instanceof IToolWrench) {
 
             if (((IToolWrench) held.getItem()).canWrench(player, x, y, z) && !tile.hasValidMaster()) {
                 tile.initiateController(UUID.randomUUID(), player);
@@ -77,9 +92,55 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
         return false;
     }
 
+    private boolean activateDistroChamber(World world, int x, int y, int z, EntityPlayer player, TEDistroChamber tile) {
+        ItemStack held = player.inventory.getCurrentItem();
+
+        if (tile != null && held != null && !world.isRemote) {
+            if (held.getItem() == Items.arrow) {
+                if (tile.tank.getFluid() != null)
+                    CoreUtility.addChat("Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
+            }
+        }
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        super.registerBlockIcons(iconRegister);
+
+        distroInput = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "distributionChamber_input");
+        tubes[0] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "tubes_front");
+        tubes[1] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "tubes_side");
+        pipeMouth = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "pipe_mouth");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int metaData) {
+        if (metaData == 0) {
+            switch (side) {
+                case 2:case 4: return tubes[0];
+                default: return tubes[1];
+            }
+        }
+        else if (metaData == 1) {
+            switch (side) {
+                case 0: return distroInput;
+            }
+        }
+        metaData = MathHelper.clamp_int(metaData, 0, subtypes.length - 1);
+        return icon[metaData];
+    }
+
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-        TEHeatExchanger exchanger = (TEHeatExchanger)world.getTileEntity(x, y, z);
+        TEHeatExchanger exchanger = CoreUtility.get(world, x, y, z, TEHeatExchanger.class);
 
         if (exchanger != null && (exchanger.hasValidMaster() || exchanger.isMaster())) {
             exchanger.invalidateMultiblock();
@@ -94,7 +155,7 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
 
         TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile instanceof TEHeatExchanger && entity instanceof EntityPlayer) {
+        if (tile != null && tile instanceof TEHeatExchanger && entity instanceof EntityPlayer) {
             ((TEHeatExchanger) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
             ((TEHeatExchanger) tile).setOwnerUUID(entity.getPersistentID());
         }
@@ -105,6 +166,10 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
         switch(meta) {
             case 0:
                 return new TEHeatExchanger();
+            case 1:
+                return new TEDistroChamber();
+            case 2:
+                return new TEPressurePipe();
             default:
                 return null;
         }
@@ -122,6 +187,6 @@ public class BlockExchanger extends BlockZE implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return -1;
+        return ISBRHPlumbing.exchangerModel;
     }
 }

@@ -12,6 +12,7 @@ import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.handler.GuiHandler;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.proxy.CommonProxy;
+import com.zerren.zedeng.reference.MultiblockCost;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -45,7 +46,7 @@ public class ZederrianEngineering {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {
-            return Item.getItemFromBlock(ZedBlocks.exchanger);
+            return Item.getItemFromBlock(ZedBlocks.plumbing);
         }
     };
 
@@ -73,11 +74,15 @@ public class ZederrianEngineering {
         //GameRegistry.registerFuelHandler(new PPFuelHandler());
         TileEntities.init();
 
-        proxy.initRenderingAndTextures();
+        proxy.initTESR();
+        proxy.initItemRender();
+        proxy.initISBRH();
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         Recipes.init();
+
+        MultiblockCost.init();
     }
 }

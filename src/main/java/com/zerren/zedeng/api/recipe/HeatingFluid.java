@@ -53,10 +53,11 @@ public class HeatingFluid {
     }
 
     /**
-     * Adds a fluid to the heating registry and its output, as well as how many TUs each 100mb will generate (Hot->Cold coolant is 20)
+     * Adds a fluid to the heating registry and its output, as well as how many TUs each 100mb will generate (Hot->Cold coolant is 20).
+     * The liquid heat plumbing can process up to 100mb/t of this liquid--no more.
      * @param input Input fluid
      * @param output Output fluid
-     * @param heat TUs per 100mb input fluid
+     * @param heat TUs per 100mb input fluid (1/10 of a bucket)
      */
     public static void addHeatingFluid(Fluid input, Fluid output, int heat) {
         heatingFluid.add(new HeatingFluid(input, output, heat));

@@ -39,30 +39,11 @@ public class ItemZE extends Item {
     }
 
     public ItemZE(String name, String[] subtypes, String folder, CreativeTabs tab) {
-        super();
-
-        this.setHasSubtypes(true);
-        this.maxStackSize = 64;
-        this.setCreativeTab(tab);
-        this.setNoRepair();
-        this.setUnlocalizedName(name);
-
-        this.itemName = name;
-        this.itemSubtypes = subtypes;
-        this.texFolder = folder;
+        this(name, subtypes, 64, folder, tab);
     }
 
     public ItemZE(String name, String[] subtypes, CreativeTabs tab) {
-        super();
-
-        this.setHasSubtypes(true);
-        this.maxStackSize = 64;
-        this.setCreativeTab(tab);
-        this.setNoRepair();
-        this.setUnlocalizedName(name);
-
-        this.itemName = name;
-        this.itemSubtypes = subtypes;
+        this(name, subtypes, 64, null, tab);
     }
 
     @Override

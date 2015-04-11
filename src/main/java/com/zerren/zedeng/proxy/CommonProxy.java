@@ -11,7 +11,11 @@ import java.util.Random;
  */
 public class CommonProxy {
 
-    public void initRenderingAndTextures() { }
+    public void initTESR() { }
+
+    public void initISBRH() { }
+
+    public void initItemRender() { }
 
     public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }
 

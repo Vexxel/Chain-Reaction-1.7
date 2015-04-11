@@ -29,21 +29,10 @@ import java.util.Random;
 public class BlockZE extends Block {
 
     @SideOnly(Side.CLIENT)
-    private IIcon[] icon;
+    protected IIcon[] icon;
 
-    private String[] subtypes;
-    private String folder;
-
-    public BlockZE(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
-        super(material);
-        this.setBlockName(name);
-        this.subtypes = subtypes;
-        this.setHardness(hardness);
-        this.setResistance(resistance);
-        this.setStepSound(sound);
-        this.folder = folder;
-        this.setCreativeTab(tab);
-    }
+    protected String[] subtypes;
+    protected String folder;
 
     public BlockZE(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder) {
         super(material);
@@ -53,6 +42,11 @@ public class BlockZE extends Block {
         this.setResistance(resistance);
         this.setStepSound(sound);
         this.folder = folder;
+    }
+
+    public BlockZE(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
+        this(name, subtypes, material, hardness, resistance, sound, folder);
+        this.setCreativeTab(tab);
     }
 
     @Override

@@ -3,13 +3,20 @@ package com.zerren.zedeng.core.registry;
 import com.zerren.zedeng.api.recipe.HeatingFluid;
 import com.zerren.zedeng.api.recipe.WorkingFluid;
 import com.zerren.zedeng.core.ModFluids;
+import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.utility.ItemRetriever;
+import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 /**
  * Created by Zerren on 2/26/2015.
@@ -17,11 +24,30 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 public class Recipes {
 
     private static final short any = Short.MAX_VALUE;
+    private static ItemStack ingotChromium;
+    private static ItemStack ingotNickel;
+    private static ItemStack ingotSS;
+    private static ItemStack ingotInconel;
+    private static ItemStack ingotGraphite;
+    private static ItemStack ingotDepletedUranium;
+
 
     public static void init() {
+        assignOreDict();
+
         shapedRecipes();
         shapelessRecipes();
+        smeltingRecipes();
         fluidExchanger();
+    }
+
+    private static void assignOreDict() {
+        ingotChromium = OreDictionary.getOres("ingotChromium").get(0);
+        ingotNickel = OreDictionary.getOres("ingotNickel").get(0);
+        ingotSS = OreDictionary.getOres("ingotStainlessSteel").get(0);
+        ingotInconel = OreDictionary.getOres("ingotInconel").get(0);
+        ingotGraphite = OreDictionary.getOres("ingotGraphite").get(0);
+        ingotDepletedUranium = OreDictionary.getOres("ingotDepletedUranium").get(0);
     }
 
     private static void shapedRecipes() {
@@ -87,16 +113,71 @@ public class Recipes {
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Items.key(1, "bedrock"),
                 "III",
                 "IIS", 'I', Blocks.bedrock, 'S', Items.nether_star));
+
+        //Block of Chrome
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockChromium"),
+                "III",
+                "III",
+                "III", 'I', "ingotChromium"));
+
+        //Block of Nickel
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockNickel"),
+                "III",
+                "III",
+                "III", 'I', "ingotNickel"));
+
+        //Block of DU
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockDepletedUranium"),
+                "III",
+                "III",
+                "III", 'I', "ingotDepletedUranium"));
+
+        //Block of Graphite
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockGraphite"),
+                "III",
+                "III",
+                "III", 'I', "ingotGraphite"));
+
+        //Block of SS
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockStainlessSteel"),
+                "III",
+                "III",
+                "III", 'I', "ingotStainlessSteel"));
+
+        //Block of Inconel
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemRetriever.Blocks.metal(1, "blockInconel"),
+                "III",
+                "III",
+                "III", 'I', "ingotInconel"));
     }
 
     private static void shapelessRecipes() {
+        //9 SS dust = 2Cr + 1Ni + 6Fe
+        String dust = ConfigHandler.harderStainless ? "dustSteel" : "dustIron";
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemRetriever.Items.dust(9, "dustStainlessSteel"),
+                "dustChromium", "dustChromium", "dustNickel", dust, dust, dust, dust, dust, dust));
 
+        //9 Inconel dust = 3Cr + 5Ni + 1SS
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ItemRetriever.Items.dust(9, "dustInconel"),
+                "dustChromium", "dustChromium", "dustChromium", "dustNickel", "dustNickel", "dustNickel", "dustNickel", "dustNickel", "dustStainlessSteel"));
+    }
+
+    private static void smeltingRecipes() {
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustChromium"), ingotChromium, 0.5F);
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustNickel"), ingotNickel, 0.5F);
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustStainlessSteel"), ingotSS, 0.5F);
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustInconel"), ingotInconel, 0.5F);
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustGraphite"), ingotGraphite, 0.5F);
+
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Blocks.ore(1, "oreChromium"), ingotChromium, 1F);
+        FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Blocks.ore(1, "oreNickel"), ingotNickel, 1F);
+        //FurnaceRecipes.smelting().func_151394_a(ItemRetriever.Items.dust(1, "dustDepletedUranium"), ingotDepletedUranium, 0.8F);
     }
 
     private static void fluidExchanger() {
         HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 20);
 
-        WorkingFluid.addWorkingFluid(FluidRegistry.WATER, ModFluids.steam, 160);
-        WorkingFluid.addWorkingFluid(ModFluids.distilledWater, ModFluids.steam, 160);
+        WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.WATER, 1), new FluidStack(ModFluids.steam, 160));
+        WorkingFluid.addWorkingFluid(new FluidStack(ModFluids.distilledWater, 1), new FluidStack(ModFluids.steam, 160));
     }
 }
