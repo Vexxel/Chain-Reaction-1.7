@@ -3,11 +3,11 @@ package com.zerren.zedeng.block.tile.plumbing;
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.api.recipe.HeatingFluid;
 import com.zerren.zedeng.api.recipe.WorkingFluid;
+import com.zerren.zedeng.block.tile.IThermalTile;
 import com.zerren.zedeng.block.tile.TEMultiBlockBase;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileMultiblock;
-import com.zerren.zedeng.reference.Reference;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import com.zerren.zedeng.utility.NetworkUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * Created by Zerren on 3/7/2015. There be hot fluids here!
  */
-public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
+public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, IThermalTile {
 
     private final int tankCapacity = 2000;
 
@@ -41,7 +41,13 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
      * 5mb of hot coolant = 1TU = 200TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 20TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
      */
-    public int thermalUnits;
+    private int thermalUnits;
+
+    /**
+     * Arbitrary thermal waste heat storage that is the 'leftover' of a energy conversion--this tile entity does not have a loss in efficiency, because it deals in
+     * entirely thermal units.
+     */
+    private int wasteHeatUnits;
 
     private short updateCounter;
 
@@ -71,7 +77,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                 pushFluids(coolantOutputTank, 1600);
 
             updateCounter++;
-            if (updateCounter >= 40) {
+            if (updateCounter >= 60) {
                 int toLose = (int)Math.sqrt(thermalUnits) / 20;
                 if (thermalUnits > toLose) thermalUnits -= toLose;
 
@@ -177,6 +183,23 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
     }
 
     @Override
+    public int getThermalUnits() {
+        return thermalUnits;
+    }
+    @Override
+    public void setThermalUnits(int units) {
+        this.thermalUnits = units;
+    }
+    @Override
+    public int getWasteHeat() {
+        return wasteHeatUnits;
+    }
+    @Override
+    public void setWasteHeat(int units) {
+        this.wasteHeatUnits = units;
+    }
+
+    @Override
     public boolean canUpdate() {
         return true;
     }
@@ -207,8 +230,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                     if (tile != null) {
                         tile.removeController();
                         tile.setSlaveLocation((byte)-1);
-                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false),
-                                new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, Reference.Tweaks.TILE_PACKET_RANGE));
+                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
                     }
                 }
             }
@@ -218,8 +240,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                     if (tile != null) {
                         tile.removeController();
                         tile.setSlaveLocation((byte)-1);
-                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false),
-                                new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, Reference.Tweaks.TILE_PACKET_RANGE));
+                        PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
                     }
                 }
             }
@@ -270,7 +291,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                     tile.setOrientation(this.getOrientation());
 
                     setAsMaster(i == 2);
-                    PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32D));
+                    PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), NetworkUtility.makeTargetPoint(this));
                 }
             }
             else {
@@ -285,7 +306,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
                     tile.setOrientation(this.getOrientation());
 
                     setAsMaster(i == 2);
-                    PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 32D));
+                    PacketHandler.netHandler.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), NetworkUtility.makeTargetPoint(this));
                 }
             }
         }
@@ -436,10 +457,6 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
 
         this.slaveLocation = tag.getByte("slaveLocation");
 
-        if (tag.hasKey("controllerIDMost") && tag.hasKey("controllerIDLeast")) {
-            this.controllerID = new UUID(tag.getLong("controllerIDMost"), tag.getLong("controllerIDLeast"));
-        }
-
         if (slaveLocation != -1 && isMaster) {
             this.coolantInletTank.readFromNBT(tag.getCompoundTag("coolantInletTank"));
             this.waterTank.readFromNBT(tag.getCompoundTag("waterTank"));
@@ -455,11 +472,6 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler {
         super.writeToNBT(tag);
 
         tag.setByte("slaveLocation", slaveLocation);
-
-        if (this.hasControllerID()) {
-            tag.setLong("controllerIDMost", controllerID.getMostSignificantBits());
-            tag.setLong("controllerIDLeast", controllerID.getLeastSignificantBits());
-        }
 
         if (slaveLocation != -1 && isMaster) {
             tag.setTag("coolantInletTank", coolantInletTank.writeToNBT(new NBTTagCompound()));

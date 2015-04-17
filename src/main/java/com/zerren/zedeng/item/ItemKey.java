@@ -1,7 +1,7 @@
 package com.zerren.zedeng.item;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.core.IKey;
+import com.zerren.zedeng.api.item.IKey;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import com.zerren.zedeng.utility.NBTHelper;
@@ -89,5 +89,13 @@ public class ItemKey extends ItemZE implements IKey {
     @Override
     public boolean hasCode(ItemStack stack) {
         return NBTHelper.hasTag(stack, "code");
+    }
+
+    @Override
+    public String getCode(ItemStack stack) {
+        if(hasCode(stack)) {
+            return NBTHelper.getString(stack, "code");
+        }
+        return null;
     }
 }

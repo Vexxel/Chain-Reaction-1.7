@@ -1,12 +1,11 @@
-package com.zerren.zedeng.api.materials;
+package com.zerren.zedeng.api.block;
 
 import net.minecraft.block.Block;
-import net.minecraftforge.fluids.BlockFluidClassic;
 
 /**
  * Created by Zerren on 4/8/2015.
  */
-public class ZedBlocks {
+public final class ZedBlocks {
 
     //Regular Blocks
     public static Block ores;

@@ -15,13 +15,14 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/20/2015.
  */
-public class TileEntityZE extends TileEntity
-{
+public class TileEntityZE extends TileEntity {
+
     protected ForgeDirection orientation;
     protected byte state;
     protected String customName;
     protected UUID ownerUUID;
     protected TileCache[] tileCache;
+    protected boolean canFaceUpDown;
 
     public TileEntityZE() {
         orientation = ForgeDirection.SOUTH;
@@ -29,14 +30,14 @@ public class TileEntityZE extends TileEntity
         customName = "";
         ownerUUID = null;
         tileCache = null;
+        canFaceUpDown = false;
     }
 
     @Override
     public void updateEntity() {}
 
     @Override
-    public boolean canUpdate()
-    {
+    public boolean canUpdate() {
         return false;
     }
 
@@ -46,6 +47,10 @@ public class TileEntityZE extends TileEntity
 
     public void information(TileEntityZE tile) {
         System.out.println("Made it this far, Mr " + tile);
+    }
+
+    public boolean canFaceUpDown() {
+        return canFaceUpDown;
     }
 
     public ForgeDirection getOrientation() {
@@ -73,36 +78,29 @@ public class TileEntityZE extends TileEntity
         return newDir;
     }
 
-    public void setOrientation(ForgeDirection orientation)
-    {
+    public void setOrientation(ForgeDirection orientation) {
         this.orientation = orientation;
     }
 
-    public void setOrientation(int orientation)
-    {
+    public void setOrientation(int orientation) {
         this.orientation = ForgeDirection.getOrientation(orientation);
     }
 
-    public short getState()
-    {
+    public short getState() {
         return state;
     }
 
-    public void setState(byte state)
-    {
+    public void setState(byte state) {
         this.state = state;
     }
 
-    public String getCustomName()
-    {
+    public String getCustomName() {
         return customName;
     }
 
-    public void setCustomName(String customName)
-    {
+    public void setCustomName(String customName) {
         this.customName = customName;
     }
-
 
     public void setOwnerUUID(UUID id){
         this.ownerUUID = id;
@@ -121,58 +119,44 @@ public class TileEntityZE extends TileEntity
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTagCompound)
-    {
-        super.readFromNBT(nbtTagCompound);
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
 
-        if (nbtTagCompound.hasKey(Names.NBT.DIRECTION))
-        {
-            this.orientation = ForgeDirection.getOrientation(nbtTagCompound.getByte(Names.NBT.DIRECTION));
+        if (tag.hasKey(Names.NBT.DIRECTION)) {
+            this.orientation = ForgeDirection.getOrientation(tag.getByte(Names.NBT.DIRECTION));
         }
-
-        if (nbtTagCompound.hasKey(Names.NBT.STATE))
-        {
-            this.state = nbtTagCompound.getByte(Names.NBT.STATE);
+        if (tag.hasKey(Names.NBT.STATE)) {
+            this.state = tag.getByte(Names.NBT.STATE);
         }
-
-        if (nbtTagCompound.hasKey(Names.NBT.CUSTOM_NAME))
-        {
-            this.customName = nbtTagCompound.getString(Names.NBT.CUSTOM_NAME);
+        if (tag.hasKey(Names.NBT.CUSTOM_NAME)) {
+            this.customName = tag.getString(Names.NBT.CUSTOM_NAME);
         }
-
-        if (nbtTagCompound.hasKey(Names.NBT.OWNER_UUID_MOST_SIG) && nbtTagCompound.hasKey(Names.NBT.OWNER_UUID_LEAST_SIG))
-        {
-            this.ownerUUID = new UUID(nbtTagCompound.getLong(Names.NBT.OWNER_UUID_MOST_SIG), nbtTagCompound.getLong(Names.NBT.OWNER_UUID_LEAST_SIG));
+        if (tag.hasKey(Names.NBT.OWNER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.OWNER_UUID_LEAST_SIG)) {
+            this.ownerUUID = new UUID(tag.getLong(Names.NBT.OWNER_UUID_MOST_SIG), tag.getLong(Names.NBT.OWNER_UUID_LEAST_SIG));
         }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound)
-    {
-        super.writeToNBT(nbtTagCompound);
+    public void writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
 
-        nbtTagCompound.setByte(Names.NBT.DIRECTION, (byte) orientation.ordinal());
-        nbtTagCompound.setByte(Names.NBT.STATE, state);
+        tag.setByte(Names.NBT.DIRECTION, (byte) orientation.ordinal());
+        tag.setByte(Names.NBT.STATE, state);
 
-        if (this.hasCustomName())
-        {
-            nbtTagCompound.setString(Names.NBT.CUSTOM_NAME, customName);
+        if (this.hasCustomName()) {
+            tag.setString(Names.NBT.CUSTOM_NAME, customName);
         }
-
-        if (this.hasOwner())
-        {
-            nbtTagCompound.setLong(Names.NBT.OWNER_UUID_MOST_SIG, ownerUUID.getMostSignificantBits());
-            nbtTagCompound.setLong(Names.NBT.OWNER_UUID_LEAST_SIG, ownerUUID.getLeastSignificantBits());
+        if (this.hasOwner()) {
+            tag.setLong(Names.NBT.OWNER_UUID_MOST_SIG, ownerUUID.getMostSignificantBits());
+            tag.setLong(Names.NBT.OWNER_UUID_LEAST_SIG, ownerUUID.getLeastSignificantBits());
         }
     }
 
-    public boolean hasCustomName()
-    {
+    public boolean hasCustomName() {
         return customName != null && customName.length() > 0;
     }
 
-    public boolean hasOwner()
-    {
+    public boolean hasOwner() {
         return ownerUUID != null;
     }
 
@@ -180,6 +164,4 @@ public class TileEntityZE extends TileEntity
     public Packet getDescriptionPacket() {
         return PacketHandler.netHandler.getPacketFrom(new MessageTileZE(this));
     }
-
-
 }

@@ -4,6 +4,7 @@ import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.chest.TEChestThaumium;
 import com.zerren.zedeng.block.tile.chest.TEChestVoid;
 import com.zerren.zedeng.block.tile.plumbing.TEDistroChamber;
+import com.zerren.zedeng.block.tile.plumbing.TEGasTank;
 import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
 import com.zerren.zedeng.block.tile.plumbing.TEPressurePipe;
 import com.zerren.zedeng.block.tile.vault.TEVaultBase;
@@ -28,5 +29,7 @@ public final class TileEntities {
         GameRegistry.registerTileEntityWithAlternatives(TEHeatExchanger.class, Names.Blocks.PLUMBING, "tile." + Names.Blocks.PLUMBING);
         GameRegistry.registerTileEntityWithAlternatives(TEDistroChamber.class, Names.Blocks.PLUMBING + "DistroChamber", "tile." + Names.Blocks.PLUMBING + "DistroChamber");
         GameRegistry.registerTileEntityWithAlternatives(TEPressurePipe.class, Names.Blocks.PLUMBING + "PressurePipe", "tile." + Names.Blocks.PLUMBING + "PressurePipe");
+        GameRegistry.registerTileEntityWithAlternatives(TEGasTank.class, Names.Blocks.PLUMBING + "GasTank", "tile." + Names.Blocks.PLUMBING + "GasTank");
+
     }
 }

@@ -24,6 +24,7 @@ tile.zedeng:vaultChest.voidmetal.name=Secure Voidmetal Chest
 tile.zedeng:plumbing.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
 tile.zedeng:plumbing.distributionChamber.name=Fluid Distribution Chamber
 tile.zedeng:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
+tile.zedeng:plumbing.gasTank.name=High Pressure Gas Tank
 
 tile.zedeng.fluid.coolantcold.name=Pressurized Water (Cold)
 tile.zedeng.fluid.coolanthot.name=Pressurized Water (Hot)

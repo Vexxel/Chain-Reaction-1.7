@@ -1,13 +1,16 @@
 package com.zerren.zedeng.proxy;
 
-import com.zerren.zedeng.api.materials.ZedBlocks;
+import com.zerren.zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.block.tile.chest.TEChest;
+import com.zerren.zedeng.block.tile.plumbing.TEGasTank;
 import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
 import com.zerren.zedeng.client.fx.EntityRadiationFX;
 import com.zerren.zedeng.client.fx.EntitySteamFX;
 import com.zerren.zedeng.client.render.block.ISBRHPlumbing;
+import com.zerren.zedeng.client.render.item.ItemRendererExchanger;
 import com.zerren.zedeng.client.render.item.ItemRendererVaultChest;
 import com.zerren.zedeng.client.render.tileentity.TESRChest;
+import com.zerren.zedeng.client.render.tileentity.TESRGasTank;
 import com.zerren.zedeng.client.render.tileentity.TESRHeatExchanger;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -55,6 +58,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEChest.class, new TESRChest());
         //Heat Exchanger
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
+        //Gas Tank
+        ClientRegistry.bindTileEntitySpecialRenderer(TEGasTank.class, new TESRGasTank());
     }
 
     @Override
@@ -67,8 +72,8 @@ public class ClientProxy extends CommonProxy {
     public void initItemRender() {
         //Vault Chest
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.chest), new ItemRendererVaultChest());
-        //Heat Exchanger
-        //MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.plumbing), new ItemRendererExchanger());
+        //Plumbing
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ZedBlocks.plumbing), new ItemRendererExchanger());
     }
 
     @Override

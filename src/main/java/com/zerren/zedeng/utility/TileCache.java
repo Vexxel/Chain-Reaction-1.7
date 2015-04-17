@@ -64,8 +64,8 @@ public final class TileCache {
             ForgeDirection dir = ForgeDirection.getOrientation(i);
             cache[i] = new TileCache(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ, dir);
 
-            ZederrianEngineering.log.info("Added cache tile @ " + (x + dir.offsetX) + " " + (y + dir.offsetY) + " " + (z + dir.offsetZ) + " " + dir);
-            ZederrianEngineering.log.info("Tile = " + cache[i].getTile());
+            /*ZederrianEngineering.log.info("Added cache tile @ " + (x + dir.offsetX) + " " + (y + dir.offsetY) + " " + (z + dir.offsetZ) + " " + dir);
+            ZederrianEngineering.log.info("Tile = " + cache[i].getTile());*/
         }
         return cache;
     }

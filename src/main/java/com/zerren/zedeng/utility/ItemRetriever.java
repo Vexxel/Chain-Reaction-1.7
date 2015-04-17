@@ -1,9 +1,7 @@
 package com.zerren.zedeng.utility;
 
-import com.zerren.zedeng.api.materials.ZedBlocks;
-import com.zerren.zedeng.api.materials.ZedItems;
-import com.zerren.zedeng.core.ModBlocks;
-import com.zerren.zedeng.core.ModItems;
+import com.zerren.zedeng.api.block.ZedBlocks;
+import com.zerren.zedeng.api.item.ZedItems;
 import com.zerren.zedeng.reference.Names;
 import net.minecraft.item.ItemStack;
 

@@ -1,10 +1,7 @@
 package com.zerren.zedeng.handler;
 
 import com.zerren.zedeng.handler.network.client.player.MessageShader;
-import com.zerren.zedeng.handler.network.client.tile.MessageTileChest;
-import com.zerren.zedeng.handler.network.client.tile.MessageTileMultiblock;
-import com.zerren.zedeng.handler.network.client.tile.MessageTileVault;
-import com.zerren.zedeng.handler.network.client.tile.MessageTileZE;
+import com.zerren.zedeng.handler.network.client.tile.*;
 import com.zerren.zedeng.handler.network.server.player.MessageKeyCut;
 import com.zerren.zedeng.handler.network.server.tile.PacketVaultCycle;
 import com.zerren.zedeng.reference.Reference;
@@ -28,8 +25,9 @@ public class PacketHandler {
         netHandler.registerMessage(MessageTileVault.class, MessageTileVault.class, 2, Side.CLIENT);
         netHandler.registerMessage(MessageTileChest.class, MessageTileChest.class, 3, Side.CLIENT);
         netHandler.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, 4, Side.CLIENT);
+        netHandler.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, 5, Side.CLIENT);
 
-        netHandler.registerMessage(MessageShader.class, MessageShader.class, 5, Side.CLIENT);
-        netHandler.registerMessage(MessageKeyCut.class, MessageKeyCut.class, 6, Side.SERVER);
+        netHandler.registerMessage(MessageShader.class, MessageShader.class, 6, Side.CLIENT);
+        netHandler.registerMessage(MessageKeyCut.class, MessageKeyCut.class, 7, Side.SERVER);
     }
 }

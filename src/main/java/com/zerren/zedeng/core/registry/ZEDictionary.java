@@ -1,9 +1,7 @@
 package com.zerren.zedeng.core.registry;
 
-import com.zerren.zedeng.api.materials.ZedBlocks;
-import com.zerren.zedeng.api.materials.ZedItems;
-import com.zerren.zedeng.core.ModItems;
-import com.zerren.zedeng.handler.ConfigHandler;
+import com.zerren.zedeng.api.block.ZedBlocks;
+import com.zerren.zedeng.api.item.ZedItems;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.ItemRetriever;
 import net.minecraft.block.Block;
@@ -33,7 +31,7 @@ public final class ZEDictionary {
     }
 
     private static void registerItems() {
-        //materials
+        //block
         register(Names.Items.MATERIAL_SUBTYPES, ZedItems.materials);
         //ingots
         register(Names.Items.INGOT_SUBTYPES, ZedItems.ingots);

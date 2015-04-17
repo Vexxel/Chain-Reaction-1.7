@@ -28,8 +28,6 @@ public class ISBRHBase {
     protected final float s15 = 15f/16f;
     protected final float s16 = 1f;
 
-    protected final float sN1 = -1F/16F;
-
     public boolean shouldRender3DInInventory(int modelId) {
         return true;
     }

@@ -5,7 +5,7 @@ import com.zerren.zedeng.block.tile.chest.TEChest;
 import com.zerren.zedeng.block.tile.chest.TEChestBrick;
 import com.zerren.zedeng.block.tile.chest.TEChestThaumium;
 import com.zerren.zedeng.block.tile.chest.TEChestVoid;
-import com.zerren.zedeng.core.IKey;
+import com.zerren.zedeng.api.item.IKey;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;

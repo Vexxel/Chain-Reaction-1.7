@@ -2,6 +2,7 @@ package com.zerren.zedeng.block;
 
 import com.zerren.zedeng.block.tile.TileEntityZE;
 import com.zerren.zedeng.reference.Reference;
+import com.zerren.zedeng.utility.CoreUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -103,36 +104,15 @@ public class BlockZE extends Block {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack itemStack)
-    {
-        if (world.getTileEntity(x, y, z) instanceof TileEntityZE)
-        {
-            int direction = 0;
-            int facing = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 
-            if (facing == 0)
-            {
-                direction = ForgeDirection.NORTH.ordinal();
-            }
-            else if (facing == 1)
-            {
-                direction = ForgeDirection.EAST.ordinal();
-            }
-            else if (facing == 2)
-            {
-                direction = ForgeDirection.SOUTH.ordinal();
-            }
-            else if (facing == 3)
-            {
-                direction = ForgeDirection.WEST.ordinal();
-            }
-
-            if (itemStack.hasDisplayName())
-            {
+        if (world.getTileEntity(x, y, z) instanceof TileEntityZE) {
+            TileEntityZE tile = (TileEntityZE)world.getTileEntity(x, y, z);
+            if (itemStack.hasDisplayName()) {
                 ((TileEntityZE) world.getTileEntity(x, y, z)).setCustomName(itemStack.getDisplayName());
             }
 
-            ((TileEntityZE) world.getTileEntity(x, y, z)).setOrientation(direction);
+            ((TileEntityZE) world.getTileEntity(x, y, z)).setOrientation(CoreUtility.getLookingDirection(entity, tile.canFaceUpDown()).getOpposite());
         }
     }
 

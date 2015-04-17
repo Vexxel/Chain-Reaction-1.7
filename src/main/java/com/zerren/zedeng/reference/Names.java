@@ -46,7 +46,8 @@ public final class Names {
         public static final String[] PLUMBING_SUBTYPES = {
                 "liquidHeatExchanger",
                 "distributionChamber",
-                "stainlessPipe"
+                "stainlessPipe",
+                "gasTank"
         };
     }
 
@@ -94,15 +95,29 @@ public final class Names {
         public static final String[] TOOL_SUBTYPES = {
                 "wrench"
         };
+
+        public static final String FUEL = "fuel";
+        public static final String[] FUEL_SUBTYPES = {
+                "fuelPelletUO2",
+                "fuelRodUO2",
+                "fuelAssemblyUO2"
+        };
     }
 
     public static final class Fluids {
-        public static final String COOLANT_COLD = "coolantcold";
-        public static final String COOLANT_HOT = "coolanthot";
-        public static final String UF6 = "uraniumhexafluoride";
-        public static final String DISTILLED_WATER = "distilledwater";
+        public static String COOLANT_COLD;
+        public static String COOLANT_HOT;
+        public static String UF6;
+        public static String DISTILLED_WATER;
+        public static String STEAM;
 
-        public static final String STEAM = ConfigHandler.uniSteam ? "steam" : "saturatedsteam";
+        public static void initConfigValues() {
+            COOLANT_COLD = ConfigHandler.fluidNameCoolantCold;
+            COOLANT_HOT = ConfigHandler.fluidNameCoolantHot;
+            UF6 = ConfigHandler.fluidNameUF6;
+            DISTILLED_WATER = ConfigHandler.fluidNameDistilledWater;
+            STEAM = ConfigHandler.fluidNameSteam;
+        }
     }
 
     public static final class Potions {
@@ -116,13 +131,22 @@ public final class Names {
     }
 
     public static final class NBT {
-        public static final String ITEMS = "Items";
+        public static final String ITEMS = "items";
+        public static final String TANK = "tank";
         public static final String UUID_MOST_SIG = "UUIDMostSig";
         public static final String UUID_LEAST_SIG = "UUIDLeastSig";
         public static final String STATE = "teState";
-        public static final String CUSTOM_NAME = "CustomName";
-        public static final String DIRECTION = "teDirection";
+        public static final String CUSTOM_NAME = "customName";
+        public static final String DIRECTION = "orientation";
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
+
+        public static final String MASTER_UUID_MOST_SIG = "masterUUIDMostSig";
+        public static final String MASTER_UUID_LEAST_SIG = "masterUUIDLeastSig";
+
+        public static final String CONTROLLER_UUID_MOST_SIG = "controllerUUIDMostSig";
+        public static final String CONTROLLER_UUID_LEAST_SIG = "controllerUUIDLeastSig";
+
+        public static final String FUEL_TEMPERATURE = "temperature";
     }
 }

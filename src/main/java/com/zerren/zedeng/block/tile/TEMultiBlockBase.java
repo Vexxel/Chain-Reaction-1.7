@@ -2,6 +2,7 @@ package com.zerren.zedeng.block.tile;
 
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileMultiblock;
+import com.zerren.zedeng.reference.Names;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 
@@ -152,12 +153,12 @@ public class TEMultiBlockBase extends TileEntityZE {
         masterZ = tag.getInteger("masterZ");
         isMaster = tag.getBoolean("isMaster");
 
-        if (tag.hasKey("masterIDMost") && tag.hasKey("masterIDLeast")) {
-            this.masterID = new UUID(tag.getLong("masterIDMost"), tag.getLong("masterIDLeast"));
+        if (tag.hasKey(Names.NBT.MASTER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.MASTER_UUID_LEAST_SIG)) {
+            this.masterID = new UUID(tag.getLong(Names.NBT.MASTER_UUID_MOST_SIG), tag.getLong(Names.NBT.MASTER_UUID_LEAST_SIG));
         }
 
-        if (tag.hasKey("controllerIDMost") && tag.hasKey("controllerIDLeast")) {
-            this.controllerID = new UUID(tag.getLong("controllerIDMost"), tag.getLong("controllerIDLeast"));
+        if (tag.hasKey(Names.NBT.CONTROLLER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.CONTROLLER_UUID_LEAST_SIG)) {
+            this.controllerID = new UUID(tag.getLong(Names.NBT.CONTROLLER_UUID_MOST_SIG), tag.getLong(Names.NBT.CONTROLLER_UUID_LEAST_SIG));
         }
     }
 
@@ -171,13 +172,13 @@ public class TEMultiBlockBase extends TileEntityZE {
         tag.setBoolean("isMaster", isMaster);
 
         if (this.hasValidMaster()) {
-            tag.setLong("masterIDMost", masterID.getMostSignificantBits());
-            tag.setLong("masterIDLeast", masterID.getLeastSignificantBits());
+            tag.setLong(Names.NBT.MASTER_UUID_MOST_SIG, masterID.getMostSignificantBits());
+            tag.setLong(Names.NBT.MASTER_UUID_LEAST_SIG, masterID.getLeastSignificantBits());
         }
 
         if (this.hasControllerID()) {
-            tag.setLong("controllerIDMost", controllerID.getMostSignificantBits());
-            tag.setLong("controllerIDLeast", controllerID.getLeastSignificantBits());
+            tag.setLong(Names.NBT.CONTROLLER_UUID_MOST_SIG, controllerID.getMostSignificantBits());
+            tag.setLong(Names.NBT.CONTROLLER_UUID_LEAST_SIG, controllerID.getLeastSignificantBits());
         }
     }
 

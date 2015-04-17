@@ -8,7 +8,9 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 
 /**
@@ -76,18 +78,38 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
 
             //distribution chamber
             if (meta == 1) {
+                ForgeDirection dir = tile.getOrientation();
+                IIcon newicon = BlockPlumbing.overrides[1];
+
+                //core
                 renderer.setRenderBounds(s1, s1, s1, s15, s15, s15);
                 renderer.renderStandardBlock(block, x, y, z);
-
-                renderer.setRenderBounds(s3, s3, s0, s13, s13, s16);
+                //y
+                doOverride(ForgeDirection.DOWN, dir, renderer, newicon);
+                renderer.setRenderBounds(s3, s0, s3, s13, s1, s13);
                 renderer.renderStandardBlock(block, x, y, z);
 
-                renderer.setRenderBounds(s0, s3, s3, s16, s13, s13);
+                doOverride(ForgeDirection.UP, dir, renderer, newicon);
+                renderer.setRenderBounds(s3, s15, s3, s13, s16, s13);
+                renderer.renderStandardBlock(block, x, y, z);
+                //z
+                doOverride(ForgeDirection.NORTH, dir, renderer, newicon);
+                renderer.setRenderBounds(s3, s3, s0, s13, s13, s1);
                 renderer.renderStandardBlock(block, x, y, z);
 
-                renderer.setRenderBounds(s3, s0, s3, s13, s16, s13);
+                doOverride(ForgeDirection.SOUTH, dir, renderer, newicon);
+                renderer.setRenderBounds(s3, s3, s15, s13, s13, s16);
+                renderer.renderStandardBlock(block, x, y, z);
+                //x
+                doOverride(ForgeDirection.WEST, dir, renderer, newicon);
+                renderer.setRenderBounds(s0, s3, s3, s1, s13, s13);
                 renderer.renderStandardBlock(block, x, y, z);
 
+                doOverride(ForgeDirection.EAST, dir, renderer, newicon);
+                renderer.setRenderBounds(s15, s3, s3, s16, s13, s13);
+                renderer.renderStandardBlock(block, x, y, z);
+
+                renderer.clearOverrideBlockTexture();
                 return false;
             }
 
@@ -96,7 +118,7 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
                 //if the small 6x6x6 core should render (a standalone pipe)
                 byte renderCore = 0;
 
-                renderer.setOverrideBlockTexture(BlockPlumbing.pipeMouth);
+                renderer.setOverrideBlockTexture(BlockPlumbing.overrides[0]);
 
                 //x axis
                 if (world.getTileEntity(x - 1, y, z) instanceof IFluidHandler) {
@@ -146,6 +168,13 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
             }
         }
         return false;
+    }
+
+    private void doOverride(ForgeDirection dirCheck, ForgeDirection tileDir, RenderBlocks renderer, IIcon icon) {
+        if (dirCheck == tileDir) {
+            renderer.setOverrideBlockTexture(icon);
+        }
+        else if (renderer.hasOverrideBlockTexture()) renderer.clearOverrideBlockTexture();
     }
 
     @Override

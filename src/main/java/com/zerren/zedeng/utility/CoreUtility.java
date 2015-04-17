@@ -3,16 +3,19 @@ package com.zerren.zedeng.utility;
 import com.zerren.zedeng.ZederrianEngineering;
 import com.zerren.zedeng.handler.ConfigHandler;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Created by Zerren on 2/21/2015.
@@ -79,5 +82,25 @@ public final class CoreUtility {
         String translated = translate(message);
         ChatComponentText comp = new ChatComponentText(translated);
         player.addChatComponentMessage(comp);
+    }
+
+    public static ForgeDirection getLookingDirection(EntityLivingBase entity, boolean shouldY) {
+        int yawFacing = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int pitchFacing = MathHelper.floor_double(entity.rotationPitch * 4.0F / 360.0F + 0.5D) & 3;
+
+        ForgeDirection direction = ForgeDirection.UNKNOWN;
+        switch (yawFacing) {
+            case 0: direction = ForgeDirection.SOUTH; break;
+            case 1: direction = ForgeDirection.WEST; break;
+            case 2: direction = ForgeDirection.NORTH; break;
+            case 3: direction = ForgeDirection.EAST; break;
+        }
+        if (shouldY)
+            switch (pitchFacing) {
+                case 1: direction = ForgeDirection.DOWN; break;
+                case 3: direction = ForgeDirection.UP; break;
+            }
+
+        return direction;
     }
 }

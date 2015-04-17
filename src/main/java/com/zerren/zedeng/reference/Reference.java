@@ -1,6 +1,7 @@
 package com.zerren.zedeng.reference;
 
 import com.zerren.zedeng.handler.ConfigHandler;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -29,7 +30,7 @@ public final class Reference {
             public static final String KEY_FOLDER = "key/";
             public static final String TOOL_FOLDER = "tool/";
             public static final String REACTOR_FOLDER = "reactor/";
-            public static final String ITEM_BLOCK_FOLDER = "itemblock/";
+            public static final String ITEM_BLOCK_FOLDER = "plumbing/";
             public static final String FLUID_FOLDER = "fluid/";
         }
 
@@ -53,12 +54,14 @@ public final class Reference {
             public static final ResourceLocation CHEST_VOID = getResourceLocation(MODEL_LOCATION + "chest_voidmetal.png");
             public static final ResourceLocation HEAT_EXCHANGER  = getResourceLocation(MODEL_LOCATION + "exchanger.png");
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
+            public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
         }
 
         public static final class Misc {
             public static final String MISC_LOCATION = "textures/misc/";
 
             public static final ResourceLocation PARTICLES = getResourceLocation(MISC_LOCATION + "particles.png");
+            public static final ResourceLocation DEFAULT_BLOCK_TEXTURES = TextureMap.locationBlocksTexture;
         }
 
         public static ResourceLocation getResourceLocation(String path) {

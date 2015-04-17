@@ -31,7 +31,7 @@ public class HeatingFluid {
 
     @Nullable
     public static Fluid getOutput(Fluid input){
-        for(HeatingFluid fluid : HeatingFluid.heatingFluid) {
+        for(HeatingFluid fluid : heatingFluid) {
             if (input == fluid.getInput()) {
                 return fluid.output;
             }
@@ -40,7 +40,7 @@ public class HeatingFluid {
     }
 
     public static int getHeat(Fluid input) {
-        for(HeatingFluid fluid : HeatingFluid.heatingFluid) {
+        for(HeatingFluid fluid : heatingFluid) {
             if (input == fluid.getInput()) {
                 return fluid.heat;
             }

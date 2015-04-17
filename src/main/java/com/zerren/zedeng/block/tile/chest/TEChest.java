@@ -1,15 +1,13 @@
 package com.zerren.zedeng.block.tile.chest;
 
-import com.zerren.zedeng.api.materials.ZedBlocks;
+import com.zerren.zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.block.tile.TileEntityZE;
-import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.client.tile.MessageTileChest;
 import com.zerren.zedeng.inventory.ContainerChestZE;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -125,9 +123,6 @@ public class TEChest extends TileEntityZE implements IInventory
         return false;
     }
 
-    public void informPlayers() {
-        PacketHandler.netHandler.sendToAllAround(new MessageTileChest(this, getChestLocked()), new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128d));
-    }
     @Override
     public ItemStack getStackInSlot(int slotIndex)
     {

@@ -1,4 +1,4 @@
-package com.zerren.zedeng.core;
+package com.zerren.zedeng.api.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 

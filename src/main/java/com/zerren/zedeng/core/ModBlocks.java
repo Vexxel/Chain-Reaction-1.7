@@ -1,7 +1,7 @@
 package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.api.materials.ZedBlocks;
+import com.zerren.zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.block.BlockPlumbing;
 import com.zerren.zedeng.block.BlockVault;
 import com.zerren.zedeng.block.BlockZE;

@@ -1,6 +1,6 @@
 package com.zerren.zedeng.item.itemblock;
 
-import com.zerren.zedeng.api.materials.ZedBlocks;
+import com.zerren.zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.reference.MultiblockCost;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.TooltipHelper;

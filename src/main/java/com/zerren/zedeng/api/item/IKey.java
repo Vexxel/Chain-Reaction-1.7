@@ -1,4 +1,4 @@
-package com.zerren.zedeng.core;
+package com.zerren.zedeng.api.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -8,5 +8,7 @@ import net.minecraft.item.ItemStack;
  */
 public interface IKey {
 
-    public boolean hasCode(ItemStack stack);
+    boolean hasCode(ItemStack stack);
+
+    String getCode(ItemStack stack);
 }
