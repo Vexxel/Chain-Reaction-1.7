@@ -13,10 +13,9 @@ public final class Reference {
         public static final String MOD_ID = "ZedEng";
         public static final String MOD_NAME = "Zederrian Engineering";
         public static final String VERSION = "1.7.10-1.0.0";
-        public static final String CLIENTPROXY_CLASS = "com.zerren.zedeng.proxy.ClientProxy";
-        public static final String SERVERPROXY_CLASS = "com.zerren.zedeng.proxy.CommonProxy";
+        public static final String CLIENTPROXY_CLASS = "com.zerren.zedeng.core.proxy.ClientProxy";
+        public static final String COMMONPROXY_CLASS = "com.zerren.zedeng.core.proxy.CommonProxy";
         public static final String GUIFACTORY_CLASS = "com.zerren.zedeng.client.gui.GuiFactory";
-        public static final String MOD_CHANNEL_MAIN = "zedeng";
         public static final String MOD_CHANNEL_SIMPLE = "zedengsimple";
     }
 
@@ -30,7 +29,7 @@ public final class Reference {
             public static final String KEY_FOLDER = "key/";
             public static final String TOOL_FOLDER = "tool/";
             public static final String REACTOR_FOLDER = "reactor/";
-            public static final String ITEM_BLOCK_FOLDER = "plumbing/";
+            public static final String PLUMBING_FOLDER = "plumbing/";
             public static final String FLUID_FOLDER = "fluid/";
         }
 

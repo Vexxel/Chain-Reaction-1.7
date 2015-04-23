@@ -1,7 +1,7 @@
 package com.zerren.zedeng.core.registry;
 
-import com.zerren.zedeng.api.block.ZedBlocks;
-import com.zerren.zedeng.api.item.ZedItems;
+import zedeng.api.block.ZedBlocks;
+import zedeng.api.item.ZedItems;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.ItemRetriever;
 import net.minecraft.block.Block;

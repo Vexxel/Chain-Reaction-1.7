@@ -67,6 +67,7 @@ item.zedeng:tool.wrench.name=Nucleus Wrench
 
 gui.multiblock.size.name=• Multiblock Size:
 gui.multiblock.wrench.center.name=• Wrench center block to complete
+gui.multiblock.wrench.center_top.name=• Wrench top center block to complete
 gui.multiblock.requirement.name=• Completion Materials:
 gui.shift.name=<Hold Shift>
 
@@ -97,7 +98,7 @@ gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
 container.vault.name=Vault
 container.chest.name=Secure Chest
 
-itemGroup.zedeng=Zederrian Engineering
+itemGroup.ZedEng=Zederrian Engineering
 
 zedeng.potion.alphaRad=Alpha Emission
 zedeng.potion.betaRad=Beta Emission
@@ -105,5 +106,8 @@ zedeng.potion.gammaRad=Gamma Emission
 zedeng.potion.neutronRad=Neutron Emission
 zedeng.potion.radSickness=Rad. Sickness
 
-death.attack.thermal=%1$s was boiled alive
-death.attack.radiation=%1$s died of radiation
+death.attack.thermal_low=%1$s was boiled alive
+death.attack.thermal_high=%1$s was instantly vaporized
+death.attack.rad_low=%1$s died of radiation sickness
+death.attack.rad_high=%1$s was ripped apart by pure energy
+death.attack.annihilation=%1$s was the unfortunate demonstration of the power of E=MC^2

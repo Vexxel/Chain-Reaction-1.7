@@ -1,7 +1,7 @@
 package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.api.item.ZedItems;
+import zedeng.api.item.ZedItems;
 import com.zerren.zedeng.item.ItemKey;
 import com.zerren.zedeng.item.ItemZE;
 import com.zerren.zedeng.item.ItemZedFuel;

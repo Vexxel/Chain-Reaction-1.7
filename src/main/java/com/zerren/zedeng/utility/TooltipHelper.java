@@ -43,12 +43,12 @@ public final class TooltipHelper {
      * Adds tooltip information describing how large the multiblock needs to be and where to wrench it
      * @param list the list to add to--for use with item tooltips (addInformation)
      * @param size the size of this multiblock: format is 1x1x1
+     * @param location the block that should be wrenched to complete the multiblock: check the en_US.lang file for examples
      */
-    public static void addSizeInfo(List list, String size) {
+    public static void addSizeInfo(List<String> list, String size, String location) {
         String sizeName = CoreUtility.translate("gui.multiblock.size.name");
         list.add(EnumChatFormatting.YELLOW + sizeName + " " + size);
 
-        String center = CoreUtility.translate("gui.multiblock.wrench.center.name");
-        list.add(center);
+        list.add(CoreUtility.translate(location));
     }
 }

@@ -1,8 +1,7 @@
 package com.zerren.zedeng.client.render.block;
 
 import com.zerren.zedeng.block.BlockPlumbing;
-import com.zerren.zedeng.block.tile.TileEntityZE;
-import com.zerren.zedeng.block.tile.plumbing.TEDistroChamber;
+import com.zerren.zedeng.tile.TileEntityZE;
 import com.zerren.zedeng.utility.CoreUtility;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;

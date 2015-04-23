@@ -14,20 +14,21 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class PacketHandler {
 
-    public static final SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.ModInfo.MOD_CHANNEL_SIMPLE);
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.ModInfo.MOD_CHANNEL_SIMPLE);
 
     public static void init() {
+        byte i = -1;
         //gui to tile
-        netHandler.registerMessage(PacketVaultCycle.class, PacketVaultCycle.class, 0, Side.SERVER);
-
+        INSTANCE.registerMessage(PacketVaultCycle.class, PacketVaultCycle.class, i++, Side.SERVER);
+        //gui to player
+        INSTANCE.registerMessage(MessageKeyCut.class, MessageKeyCut.class, i++, Side.SERVER);
         //client TE updates
-        netHandler.registerMessage(MessageTileZE.class, MessageTileZE.class, 1, Side.CLIENT);
-        netHandler.registerMessage(MessageTileVault.class, MessageTileVault.class, 2, Side.CLIENT);
-        netHandler.registerMessage(MessageTileChest.class, MessageTileChest.class, 3, Side.CLIENT);
-        netHandler.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, 4, Side.CLIENT);
-        netHandler.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, 5, Side.CLIENT);
-
-        netHandler.registerMessage(MessageShader.class, MessageShader.class, 6, Side.CLIENT);
-        netHandler.registerMessage(MessageKeyCut.class, MessageKeyCut.class, 7, Side.SERVER);
+        INSTANCE.registerMessage(MessageTileZE.class, MessageTileZE.class, i++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileVault.class, MessageTileVault.class, i++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileChest.class, MessageTileChest.class, i++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, i++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, i++, Side.CLIENT);
+        //server to player
+        //INSTANCE.registerMessage(MessageShader.class, MessageShader.class, i++, Side.CLIENT);
     }
 }

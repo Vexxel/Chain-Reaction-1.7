@@ -1,6 +1,5 @@
 package com.zerren.zedeng;
 
-import com.zerren.zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.core.ModBlocks;
 import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.core.ModItems;
@@ -11,9 +10,10 @@ import com.zerren.zedeng.core.registry.ZEDictionary;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.handler.GuiHandler;
 import com.zerren.zedeng.handler.PacketHandler;
-import com.zerren.zedeng.proxy.CommonProxy;
+import com.zerren.zedeng.core.proxy.CommonProxy;
 import com.zerren.zedeng.reference.MultiblockCost;
 import com.zerren.zedeng.reference.Reference;
+import com.zerren.zedeng.utility.ItemRetriever;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -25,6 +25,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -37,16 +38,20 @@ public class ZederrianEngineering {
     @Mod.Instance(Reference.ModInfo.MOD_ID)
     public static ZederrianEngineering instance;
 
-    @SidedProxy(modId = Reference.ModInfo.MOD_ID, clientSide = Reference.ModInfo.CLIENTPROXY_CLASS, serverSide = Reference.ModInfo.SERVERPROXY_CLASS)
+    @SidedProxy(modId = Reference.ModInfo.MOD_ID, clientSide = Reference.ModInfo.CLIENTPROXY_CLASS, serverSide = Reference.ModInfo.COMMONPROXY_CLASS)
     public static CommonProxy proxy;
 
     public static Logger log;
 
-    public static CreativeTabs cTabZE = new CreativeTabs("zedeng") {
+    public static CreativeTabs cTabZE = new CreativeTabs(Reference.ModInfo.MOD_ID) {
         @Override
         @SideOnly(Side.CLIENT)
-        public Item getTabIconItem() {
-            return Item.getItemFromBlock(ZedBlocks.plumbing);
+        public Item getTabIconItem() { return null; }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public ItemStack getIconItemStack() {
+            return ItemRetriever.Blocks.plumbing(1, "liquidHeatExchanger");
         }
     };
 
@@ -71,7 +76,7 @@ public class ZederrianEngineering {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        //GameRegistry.registerFuelHandler(new PPFuelHandler());
+        //GameRegistry.registerFuelHandler(new ZEDFuelHandler());
         TileEntities.init();
 
         proxy.initTESR();
@@ -82,7 +87,6 @@ public class ZederrianEngineering {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         Recipes.init();
-
         MultiblockCost.init();
     }
 }

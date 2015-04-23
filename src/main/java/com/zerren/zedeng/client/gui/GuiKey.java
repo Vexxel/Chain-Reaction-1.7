@@ -131,7 +131,7 @@ public class GuiKey extends GuiScreen {
                 stack.stackTagCompound = new NBTTagCompound();
                 stack.stackTagCompound.setString("code", codeBuilder(keyTier));
 
-                PacketHandler.netHandler.sendToServer(new MessageKeyCut(codeBuilder(keyTier), player, stack));
+                PacketHandler.INSTANCE.sendToServer(new MessageKeyCut(codeBuilder(keyTier), player, stack));
                 Minecraft.getMinecraft().displayGuiScreen(null);
                 return;
         }

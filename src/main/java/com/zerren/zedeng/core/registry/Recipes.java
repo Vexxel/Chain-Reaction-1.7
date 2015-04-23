@@ -1,13 +1,11 @@
 package com.zerren.zedeng.core.registry;
 
-import com.zerren.zedeng.api.recipe.HeatingFluid;
-import com.zerren.zedeng.api.recipe.WorkingFluid;
+import zedeng.api.recipe.HeatingFluid;
+import zedeng.api.recipe.WorkingFluid;
 import com.zerren.zedeng.core.ModFluids;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.utility.ItemRetriever;
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

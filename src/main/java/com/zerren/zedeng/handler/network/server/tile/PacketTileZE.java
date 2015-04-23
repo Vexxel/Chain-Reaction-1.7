@@ -1,7 +1,7 @@
 package com.zerren.zedeng.handler.network.server.tile;
 
-import com.zerren.zedeng.block.tile.TileEntityZE;
-import com.zerren.zedeng.proxy.ClientProxy;
+import com.zerren.zedeng.tile.TileEntityZE;
+import com.zerren.zedeng.core.proxy.ClientProxy;
 import com.zerren.zedeng.utility.CoreUtility;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

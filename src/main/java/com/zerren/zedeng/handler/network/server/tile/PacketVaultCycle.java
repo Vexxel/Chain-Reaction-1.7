@@ -1,7 +1,7 @@
 package com.zerren.zedeng.handler.network.server.tile;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
+import com.zerren.zedeng.tile.vault.TEVaultController;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

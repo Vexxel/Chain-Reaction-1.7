@@ -1,10 +1,10 @@
 package com.zerren.zedeng.block;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.block.tile.vault.TEVaultBase;
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
-import com.zerren.zedeng.block.tile.vault.TEVaultLock;
-import com.zerren.zedeng.api.item.IKey;
+import com.zerren.zedeng.tile.vault.TEVaultBase;
+import com.zerren.zedeng.tile.vault.TEVaultController;
+import com.zerren.zedeng.tile.vault.TEVaultLock;
+import zedeng.api.item.IKey;
 import com.zerren.zedeng.handler.ConfigHandler;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;

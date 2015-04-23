@@ -1,6 +1,6 @@
 package com.zerren.zedeng.item.itemblock;
 
-import com.zerren.zedeng.api.block.ZedBlocks;
+import zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.reference.MultiblockCost;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.TooltipHelper;
@@ -25,7 +25,7 @@ public class ItemBlockExchanger extends ItemMultiTexture {
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4) {
         if (stack.getItemDamage() == 0) {
-            TooltipHelper.addSizeInfo(list, "5x1x1");
+            TooltipHelper.addSizeInfo(list, "5x1x1", "gui.multiblock.wrench.center.name");
             TooltipHelper.addMaterialCostInfo(list, MultiblockCost.LIQUID_HEAT_EXCHANGER);
         }
     }

@@ -1,11 +1,11 @@
 package com.zerren.zedeng.block;
 
 import buildcraft.api.tools.IToolWrench;
-import com.zerren.zedeng.block.tile.TileEntityZE;
-import com.zerren.zedeng.block.tile.plumbing.TEDistroChamber;
-import com.zerren.zedeng.block.tile.plumbing.TEGasTank;
-import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
-import com.zerren.zedeng.block.tile.plumbing.TEPressurePipe;
+import com.zerren.zedeng.tile.TileEntityZE;
+import com.zerren.zedeng.tile.plumbing.TEDistroChamber;
+import com.zerren.zedeng.tile.plumbing.TEGasTank;
+import com.zerren.zedeng.tile.plumbing.TEHeatExchanger;
+import com.zerren.zedeng.tile.plumbing.TEPressurePipe;
 import com.zerren.zedeng.client.render.block.ISBRHPlumbing;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
@@ -35,9 +35,6 @@ public class BlockPlumbing extends BlockZE implements ITileEntityProvider {
 
     @SideOnly(Side.CLIENT)
     private final IIcon[] tubes = new IIcon[2];
-
-    @SideOnly(Side.CLIENT)
-    private IIcon tank;
 
     /**
      * pipeMouth 0, distroInput 1
@@ -161,8 +158,6 @@ public class BlockPlumbing extends BlockZE implements ITileEntityProvider {
 
         tubes[0] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "tubes_front");
         tubes[1] = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "tubes_side");
-
-        tank = iconRegister.registerIcon(Reference.Textures.RESOURCE_PREFIX + folder + "gasTank_top");
     }
 
     @Override
@@ -173,12 +168,6 @@ public class BlockPlumbing extends BlockZE implements ITileEntityProvider {
             switch (side) {
                 case 2:case 4: return tubes[0];
                 default: return tubes[1];
-            }
-        }
-        //Gas Tank
-        if (metaData == 3) {
-            switch (side) {
-                case 0:case 1: return tank;
             }
         }
         metaData = MathHelper.clamp_int(metaData, 0, subtypes.length - 1);
@@ -203,7 +192,7 @@ public class BlockPlumbing extends BlockZE implements ITileEntityProvider {
         TileEntity tile = world.getTileEntity(x, y, z);
 
         if (tile != null && tile instanceof TEHeatExchanger && entity instanceof EntityPlayer) {
-            ((TEHeatExchanger) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
+            //((TEHeatExchanger) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
             ((TEHeatExchanger) tile).setOwnerUUID(entity.getPersistentID());
         }
     }

@@ -1,15 +1,15 @@
 package com.zerren.zedeng.core.registry;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
-import com.zerren.zedeng.block.tile.chest.TEChestThaumium;
-import com.zerren.zedeng.block.tile.chest.TEChestVoid;
-import com.zerren.zedeng.block.tile.plumbing.TEDistroChamber;
-import com.zerren.zedeng.block.tile.plumbing.TEGasTank;
-import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
-import com.zerren.zedeng.block.tile.plumbing.TEPressurePipe;
-import com.zerren.zedeng.block.tile.vault.TEVaultBase;
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
-import com.zerren.zedeng.block.tile.vault.TEVaultLock;
+import com.zerren.zedeng.tile.chest.TEChest;
+import com.zerren.zedeng.tile.chest.TEChestThaumium;
+import com.zerren.zedeng.tile.chest.TEChestVoid;
+import com.zerren.zedeng.tile.plumbing.TEDistroChamber;
+import com.zerren.zedeng.tile.plumbing.TEGasTank;
+import com.zerren.zedeng.tile.plumbing.TEHeatExchanger;
+import com.zerren.zedeng.tile.plumbing.TEPressurePipe;
+import com.zerren.zedeng.tile.vault.TEVaultBase;
+import com.zerren.zedeng.tile.vault.TEVaultController;
+import com.zerren.zedeng.tile.vault.TEVaultLock;
 import com.zerren.zedeng.reference.Names;
 import cpw.mods.fml.common.registry.GameRegistry;
 

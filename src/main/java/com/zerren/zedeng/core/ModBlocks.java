@@ -1,11 +1,8 @@
 package com.zerren.zedeng.core;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.api.block.ZedBlocks;
-import com.zerren.zedeng.block.BlockPlumbing;
-import com.zerren.zedeng.block.BlockVault;
-import com.zerren.zedeng.block.BlockZE;
-import com.zerren.zedeng.block.BlockZedChest;
+import zedeng.api.block.ZedBlocks;
+import com.zerren.zedeng.block.*;
 import com.zerren.zedeng.block.fluid.*;
 import com.zerren.zedeng.item.itemblock.*;
 import com.zerren.zedeng.reference.Names;
@@ -26,7 +23,8 @@ public class ModBlocks {
         ZedBlocks.metals = new BlockZE(Names.Blocks.METAL, Names.Blocks.METAL_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.MATERIAL_FOLDER, ZederrianEngineering.cTabZE);
         ZedBlocks.vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
         ZedBlocks.chest = new BlockZedChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ZederrianEngineering.cTabZE);
-        ZedBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.ITEM_BLOCK_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.PLUMBING_FOLDER, ZederrianEngineering.cTabZE);
+        ZedBlocks.reactor = new BlockReactor(Names.Blocks.REACTOR, Names.Blocks.REACTOR_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ZederrianEngineering.cTabZE);
 
         register();
     }
@@ -35,10 +33,11 @@ public class ModBlocks {
 
         GameRegistry.registerBlock(ZedBlocks.ores, ItemBlockStoneMaterial.class, Names.Blocks.ORE);
         GameRegistry.registerBlock(ZedBlocks.metals, ItemBlockMetalMaterial.class, Names.Blocks.METAL);
-
         GameRegistry.registerBlock(ZedBlocks.vault, ItemBlockVault.class, Names.Blocks.VAULT);
         GameRegistry.registerBlock(ZedBlocks.chest, ItemBlockChest.class, Names.Blocks.CHEST);
         GameRegistry.registerBlock(ZedBlocks.plumbing, ItemBlockExchanger.class, Names.Blocks.PLUMBING);
+        GameRegistry.registerBlock(ZedBlocks.reactor, ItemBlockReactor.class, Names.Blocks.REACTOR);
+
 
         fluidBlocks();
     }

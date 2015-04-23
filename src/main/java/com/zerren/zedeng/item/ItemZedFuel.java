@@ -1,6 +1,6 @@
 package com.zerren.zedeng.item;
 
-import com.zerren.zedeng.api.item.IReactorFuel;
+import zedeng.api.item.IReactorFuel;
 import com.zerren.zedeng.reference.Names;
 import com.zerren.zedeng.utility.NBTHelper;
 import net.minecraft.creativetab.CreativeTabs;

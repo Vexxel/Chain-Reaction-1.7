@@ -1,7 +1,7 @@
 package com.zerren.zedeng.utility;
 
-import com.zerren.zedeng.api.block.ZedBlocks;
-import com.zerren.zedeng.api.item.ZedItems;
+import zedeng.api.block.ZedBlocks;
+import zedeng.api.item.ZedItems;
 import com.zerren.zedeng.reference.Names;
 import net.minecraft.item.ItemStack;
 
@@ -22,6 +22,10 @@ public final class ItemRetriever {
 
         public static ItemStack metal(int count, String name) {
             return new ItemStack(ZedBlocks.metals, count, Arrays.asList(Names.Blocks.METAL_SUBTYPES).indexOf(name));
+        }
+
+        public static ItemStack plumbing(int count, String name) {
+            return new ItemStack(ZedBlocks.plumbing, count, Arrays.asList(Names.Blocks.PLUMBING_SUBTYPES).indexOf(name));
         }
     }
 

@@ -1,6 +1,6 @@
 package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
+import com.zerren.zedeng.tile.chest.TEChest;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -49,12 +49,10 @@ public class MessageTileChest implements IMessage, IMessageHandler<MessageTileCh
         this.state = buf.readByte();
         int customNameLength = buf.readInt();
         this.customName = new String(buf.readBytes(customNameLength).array());
-        if (buf.readBoolean())
-        {
+        if (buf.readBoolean()) {
             this.ownerUUID = new UUID(buf.readLong(), buf.readLong());
         }
-        else
-        {
+        else {
             this.ownerUUID = null;
         }
 

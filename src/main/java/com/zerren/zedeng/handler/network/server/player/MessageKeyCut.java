@@ -1,6 +1,6 @@
 package com.zerren.zedeng.handler.network.server.player;
 
-import com.zerren.zedeng.proxy.ClientProxy;
+import com.zerren.zedeng.core.proxy.ClientProxy;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

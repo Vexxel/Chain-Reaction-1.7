@@ -1,12 +1,12 @@
 package com.zerren.zedeng.handler;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
+import com.zerren.zedeng.tile.chest.TEChest;
+import com.zerren.zedeng.tile.vault.TEVaultController;
 import com.zerren.zedeng.client.gui.GuiChestZE;
 import com.zerren.zedeng.client.gui.GuiKey;
 import com.zerren.zedeng.client.gui.GuiVault;
-import com.zerren.zedeng.inventory.ContainerChestZE;
-import com.zerren.zedeng.inventory.ContainerVault;
+import com.zerren.zedeng.tile.container.ContainerChestZE;
+import com.zerren.zedeng.tile.container.ContainerVault;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;

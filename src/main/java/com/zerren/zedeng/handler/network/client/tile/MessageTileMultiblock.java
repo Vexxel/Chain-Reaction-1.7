@@ -1,6 +1,6 @@
 package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.block.tile.TEMultiBlockBase;
+import com.zerren.zedeng.tile.TEMultiBlockBase;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

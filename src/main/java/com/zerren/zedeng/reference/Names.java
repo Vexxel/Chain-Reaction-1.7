@@ -49,6 +49,11 @@ public final class Names {
                 "stainlessPipe",
                 "gasTank"
         };
+
+        public static final String REACTOR = "reactor";
+        public static final String[] REACTOR_SUBTYPES = {
+                "pressurizedWaterReactor"
+        };
     }
 
     public static final class Items {
@@ -146,6 +151,10 @@ public final class Names {
 
         public static final String CONTROLLER_UUID_MOST_SIG = "controllerUUIDMostSig";
         public static final String CONTROLLER_UUID_LEAST_SIG = "controllerUUIDLeastSig";
+
+        public static final String THERMAL_UNITS = "thermalUnits";
+        public static final String WASTEHEAT_UNITS = "wasteHeatUnits";
+        public static final String SLAVE_LOCATION = "slaveLocation";
 
         public static final String FUEL_TEMPERATURE = "temperature";
     }

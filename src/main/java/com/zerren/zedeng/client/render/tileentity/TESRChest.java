@@ -1,6 +1,6 @@
 package com.zerren.zedeng.client.render.tileentity;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
+import com.zerren.zedeng.tile.chest.TEChest;
 import com.zerren.zedeng.client.render.model.ModelVaultChest;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;

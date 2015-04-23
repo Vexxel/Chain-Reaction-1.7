@@ -1,7 +1,7 @@
 package com.zerren.zedeng.item;
 
 import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.api.item.IKey;
+import zedeng.api.item.IKey;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import com.zerren.zedeng.utility.NBTHelper;

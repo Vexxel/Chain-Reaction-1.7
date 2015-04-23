@@ -1,6 +1,6 @@
 package com.zerren.zedeng.block;
 
-import com.zerren.zedeng.block.tile.TileEntityZE;
+import com.zerren.zedeng.tile.TileEntityZE;
 import com.zerren.zedeng.reference.Reference;
 import com.zerren.zedeng.utility.CoreUtility;
 import cpw.mods.fml.relauncher.Side;
@@ -19,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 import java.util.Random;

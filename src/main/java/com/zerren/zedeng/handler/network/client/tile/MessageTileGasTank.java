@@ -1,16 +1,12 @@
 package com.zerren.zedeng.handler.network.client.tile;
 
-import com.zerren.zedeng.ZederrianEngineering;
-import com.zerren.zedeng.block.tile.chest.TEChest;
-import com.zerren.zedeng.block.tile.plumbing.TEGasTank;
+import com.zerren.zedeng.tile.plumbing.TEGasTank;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
-
-import java.util.UUID;
 
 /**
  * Created by Zerren on 2/28/2015.
@@ -73,7 +69,6 @@ public class MessageTileGasTank implements IMessage, IMessageHandler<MessageTile
             ((TEGasTank) tileEntity).setState(message.state);
 
             ((TEGasTank) tileEntity).fluidAmount = message.fluidAmount;
-            ZederrianEngineering.log.info("Client fluid amount: " + message.fluidAmount + " of tile @ " + message.x + " " + message.y + " " + message.z);
         }
 
         return null;

@@ -32,7 +32,7 @@ public class BlockFluidSteam extends BlockFluidZE {
     @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
         if (entity instanceof EntityLivingBase) {
-            entity.attackEntityFrom(DamageSourceZE.THERMAL, 4.0F);
+            entity.attackEntityFrom(DamageSourceZE.THERMAL_LOW, 4.0F);
         }
     }
 
@@ -112,7 +112,7 @@ public class BlockFluidSteam extends BlockFluidZE {
         for (EntityLivingBase entity : entities) {
             if (entity == null) return;
 
-            entity.attackEntityFrom(DamageSourceZE.THERMAL, 2.0F);
+            entity.attackEntityFrom(DamageSourceZE.THERMAL_LOW, 2.0F);
         }
     }
 

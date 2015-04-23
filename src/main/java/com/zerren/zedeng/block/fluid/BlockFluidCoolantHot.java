@@ -37,7 +37,7 @@ public class BlockFluidCoolantHot extends BlockFluidZE {
             effect.getCurativeItems().clear();
 
             ((EntityLivingBase) entity).addPotionEffect(effect);
-            entity.attackEntityFrom(DamageSourceZE.THERMAL, 4.0F);
+            entity.attackEntityFrom(DamageSourceZE.THERMAL_LOW, 4.0F);
         }
     }
 

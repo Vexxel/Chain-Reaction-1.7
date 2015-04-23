@@ -1,11 +1,11 @@
 package com.zerren.zedeng.client.gui;
 
-import com.zerren.zedeng.block.tile.vault.TEVaultController;
+import com.zerren.zedeng.tile.vault.TEVaultController;
 import com.zerren.zedeng.client.gui.button.GUIButtonWidgets;
 import com.zerren.zedeng.client.gui.button.GuiButtonVaultCycle;
 import com.zerren.zedeng.handler.PacketHandler;
 import com.zerren.zedeng.handler.network.server.tile.PacketVaultCycle;
-import com.zerren.zedeng.inventory.ContainerVault;
+import com.zerren.zedeng.tile.container.ContainerVault;
 import com.zerren.zedeng.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -63,15 +63,15 @@ public class GuiVault extends GuiContainer {
         if (guibutton.id == 0) { //previous
             if (selection <= 0) selection = controller.numPages - 1;
             else selection--;
-            PacketHandler.netHandler.sendToServer(new PacketVaultCycle(controller, selection, player, false));
+            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, false));
         }
         if (guibutton.id == 1) { //next
             if (selection >= controller.numPages - 1) selection = 0;
             else selection++;
-            PacketHandler.netHandler.sendToServer(new PacketVaultCycle(controller, selection, player, false));
+            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, false));
         }
         if (guibutton.id == 2) { //confirm
-            PacketHandler.netHandler.sendToServer(new PacketVaultCycle(controller, selection, player, true));
+            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, true));
         }
     }
 

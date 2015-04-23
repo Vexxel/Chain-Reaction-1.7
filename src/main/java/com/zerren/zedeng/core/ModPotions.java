@@ -18,8 +18,10 @@ public class ModPotions {
 
     public static void init() {
 
-        if(Potion.potionTypes.length < 256)
+        if(Potion.potionTypes.length < 256) {
+            ZederrianEngineering.log.info("Potion array is default size--extending since no other mod has done this yet");
             extendPotionArray();
+        }
 
         potion[0] = new PotionAlphaRadiation(ConfigHandler.potionIDs[0], Names.Potions.EFFECTS[0]);
         potion[1] = new PotionBetaRadiation(ConfigHandler.potionIDs[1], Names.Potions.EFFECTS[1]);
@@ -33,7 +35,7 @@ public class ModPotions {
     }
 
     private static void extendPotionArray() {
-        Potion[] potionTypes = null;
+        Potion[] potionTypes;
 
         for (Field f : Potion.class.getDeclaredFields()) {
             f.setAccessible(true);
@@ -49,9 +51,10 @@ public class ModPotions {
                     f.set(null, newPotionTypes);
                     ZederrianEngineering.log.info("Potion array reflection success--new size: " + newPotionTypes.length);
                 }
-            } catch (Exception e) {
-                System.err.println("Severe error, please report this to the mod author:");
-                System.err.println(e);
+            }
+            catch (Exception e) {
+                ZederrianEngineering.log.error("Severe error, please report this to the mod author:");
+                ZederrianEngineering.log.error(e);
             }
         }
     }

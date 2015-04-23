@@ -1,7 +1,7 @@
 package com.zerren.zedeng.item.tool;
 
 import buildcraft.api.tools.IToolWrench;
-import com.zerren.zedeng.api.item.IThermometer;
+import zedeng.api.item.IThermometer;
 import com.zerren.zedeng.item.ItemZE;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;

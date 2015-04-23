@@ -1,6 +1,6 @@
 package com.zerren.zedeng.client.render.tileentity;
 
-import com.zerren.zedeng.block.tile.plumbing.TEHeatExchanger;
+import com.zerren.zedeng.tile.plumbing.TEHeatExchanger;
 import com.zerren.zedeng.client.render.model.ModelExchangerTubes;
 import com.zerren.zedeng.client.render.model.ModelHeatExchanger;
 import com.zerren.zedeng.reference.Reference;

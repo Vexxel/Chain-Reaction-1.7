@@ -1,7 +1,7 @@
 package com.zerren.zedeng.client.gui;
 
-import com.zerren.zedeng.block.tile.chest.TEChest;
-import com.zerren.zedeng.inventory.ContainerChestZE;
+import com.zerren.zedeng.tile.chest.TEChest;
+import com.zerren.zedeng.tile.container.ContainerChestZE;
 import com.zerren.zedeng.reference.Reference;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
