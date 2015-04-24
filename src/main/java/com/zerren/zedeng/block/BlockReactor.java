@@ -1,5 +1,6 @@
 package com.zerren.zedeng.block;
 
+import com.zerren.zedeng.client.render.block.ISBRHPlumbing;
 import com.zerren.zedeng.tile.reactor.TEPressurizedWaterReactor;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -21,5 +22,20 @@ public class BlockReactor extends BlockZE implements ITileEntityProvider {
             case 0: return new TEPressurizedWaterReactor();
         }
         return null;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return 0;
     }
 }

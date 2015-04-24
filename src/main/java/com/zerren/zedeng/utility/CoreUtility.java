@@ -58,8 +58,8 @@ public final class CoreUtility {
     }
 
     public static <T> T get(IBlockAccess world, int x, int y, int z, Class<T> tileClass) {
-        TileEntity t = world.getTileEntity(x, y, z);
-        return (tileClass.isInstance(t) ? (T)t : null);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        return (tileClass.isInstance(tile) ? (T)tile : null);
     }
 
     public static TileEntity getTileEntity(World world, int x, int y, int z) {
@@ -76,6 +76,7 @@ public final class CoreUtility {
         ChatComponentText comp = new ChatComponentText(translated);
         player.addChatComponentMessage(comp);
     }
+
     public static void addChat(String message, EntityPlayer player) {
         if (player == null) return;
 

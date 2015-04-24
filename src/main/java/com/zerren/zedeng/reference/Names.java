@@ -157,5 +157,7 @@ public final class Names {
         public static final String SLAVE_LOCATION = "slaveLocation";
 
         public static final String FUEL_TEMPERATURE = "temperature";
+        public static final String FUEL_REMAINING = "fuelRemaining";
+        public static final String RADIOACTIVITY = "radioactivity";
     }
 }

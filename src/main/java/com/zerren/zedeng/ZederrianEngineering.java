@@ -76,7 +76,6 @@ public class ZederrianEngineering {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        //GameRegistry.registerFuelHandler(new ZEDFuelHandler());
         TileEntities.init();
 
         proxy.initTESR();

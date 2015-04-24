@@ -54,6 +54,7 @@ public final class Reference {
             public static final ResourceLocation HEAT_EXCHANGER  = getResourceLocation(MODEL_LOCATION + "exchanger.png");
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
+            public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
         }
 
         public static final class Misc {

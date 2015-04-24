@@ -30,6 +30,8 @@ public class ConfigHandler {
     public static String fluidNameDistilledWater;
     public static String fluidNameSteam;
 
+    public static int temperature;
+
     public static double packetRange;
 
     public static int[] potionIDs = {66, 67, 68, 69, 70};
@@ -62,6 +64,7 @@ public class ConfigHandler {
         vaultResistance = config.getFloat("vaultResistance", "general", 100F, 10F, 600F, "Blast resistance of a player owned and locked vault");
         bedrockVault = config.getBoolean("bedrockVault", "general", false, "If true, player owned and locked vaults are 100% immune to explosions--overwrites vaultResistance");
         vaultPages = config.getInt("vaultPages", "general", 10, 1, 20, "How many pages of 54 slots the vault will have. (1 page = double chest, default is 540 slots)");
+        temperature = config.getInt("temperature", "general", 0, 0, 2, "What to display temperature as: 0 for Kelvin, 1 for Celsius, 2 for Fahrenheit");
 
         harderStainless = config.getBoolean("harderStainless", "general", false, "If true, the recipe for stainless steel dust requires steel dust in place of iron dust. For use with mods that add steel dust");
         steamFactor = config.getFloat("steamFactor", "general", 1F, 0.1F, 5F, "Multiplier on steam produced--(this is always a 1:160 water:steam ratio though)--best if used with 'uniSteam'");

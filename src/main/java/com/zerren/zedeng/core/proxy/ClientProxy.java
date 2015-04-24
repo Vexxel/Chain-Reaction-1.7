@@ -1,5 +1,7 @@
 package com.zerren.zedeng.core.proxy;
 
+import com.zerren.zedeng.client.render.tileentity.TESRPressurizedWaterReactor;
+import com.zerren.zedeng.tile.reactor.TEPressurizedWaterReactor;
 import zedeng.api.block.ZedBlocks;
 import com.zerren.zedeng.tile.chest.TEChest;
 import com.zerren.zedeng.tile.plumbing.TEGasTank;
@@ -60,6 +62,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
         //Gas Tank
         ClientRegistry.bindTileEntitySpecialRenderer(TEGasTank.class, new TESRGasTank());
+        //PWR
+        ClientRegistry.bindTileEntitySpecialRenderer(TEPressurizedWaterReactor.class, new TESRPressurizedWaterReactor());
     }
 
     @Override

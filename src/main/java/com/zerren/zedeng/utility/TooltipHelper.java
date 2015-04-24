@@ -51,4 +51,42 @@ public final class TooltipHelper {
 
         list.add(CoreUtility.translate(location));
     }
+
+    public static void addTemperatureInfoKelvin(List<String> list, float temp) {
+        String tempTranslate = CoreUtility.translate("gui.item.temperature.name");
+        list.add(EnumChatFormatting.GOLD + tempTranslate + " " + Math.round(temp) + " K");
+    }
+
+    public static void addTemperatureInfoCelcius(List<String> list, float temp) {
+        String tempTranslate = CoreUtility.translate("gui.item.temperature.name");
+        list.add(EnumChatFormatting.GOLD + tempTranslate + " " + Math.round(ZedMath.kelvinToCelsius(temp)) + " C");
+    }
+
+    public static void addTemperatureInfoFahrenheit(List<String> list, float temp) {
+        String tempTranslate = CoreUtility.translate("gui.item.temperature.name");
+        list.add(EnumChatFormatting.GOLD + tempTranslate + " " + Math.round(ZedMath.kelvinToFahrenheit(temp)) + " F");
+    }
+
+    public static void addRadiationInfo(List<String> list, float radiation) {
+        String rad = CoreUtility.translate("gui.item.radioactivity.name");
+        String safety;
+        if (ZedMath.isWithin(radiation, 1F, 10.0F)) {
+            safety = EnumChatFormatting.YELLOW + CoreUtility.translate("gui.item.radioactivity.moderate.name");
+        }
+        else if (ZedMath.isWithin(radiation, 10.0F, 33.0F)) {
+            safety = EnumChatFormatting.GOLD + CoreUtility.translate("gui.item.radioactivity.dangerous.name");
+        }
+        else if (ZedMath.isWithin(radiation, 33.0F, 100F)) {
+            safety = EnumChatFormatting.RED + CoreUtility.translate("gui.item.radioactivity.fatal.name");
+        }
+        else safety = EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.radioactivity.minimal.name");
+
+        list.add(EnumChatFormatting.AQUA + rad + " " + safety);
+    }
+
+    public static void addFuelLevelInfo(List<String> list, float fuelLevel) {
+        String s1 = EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.fuel.name");
+        String s2 = " " + Math.round((fuelLevel * 100)) + "%";
+        list.add(s1 + s2);
+    }
 }

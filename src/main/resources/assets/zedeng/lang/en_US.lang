@@ -26,6 +26,8 @@ tile.zedeng:plumbing.distributionChamber.name=Fluid Distribution Chamber
 tile.zedeng:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
 tile.zedeng:plumbing.gasTank.name=High Pressure Gas Tank
 
+tile.zedeng:reactor.pressurizedWaterReactor.name=Pressurized Water Reactor Assembly
+
 tile.zedeng.fluid.coolantcold.name=Pressurized Water (Cold)
 tile.zedeng.fluid.coolanthot.name=Pressurized Water (Hot)
 tile.zedeng.fluid.distilledwater.name=Distilled Water
@@ -63,6 +65,10 @@ item.zedeng:key.diamond.name=Diamond Vault Key
 
 item.zedeng:tool.wrench.name=Nucleus Wrench
 
+item.zedeng:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
+item.zedeng:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
+item.zedeng:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
+
 # GUI localizations ---------------------------------------------------------------------
 
 gui.multiblock.size.name=• Multiblock Size:
@@ -75,6 +81,14 @@ gui.item.key.bedrock.name=Absolute Vaultcracker
 gui.item.key.nocode.name=This key is blank..
 gui.item.key.remember.name=But I remember what I set this lock to! It was..
 gui.item.key.trespass.name=I can only remember codes that I issued.
+
+gui.item.temperature.name=Temperature:
+gui.item.fuel.name=Fuel Status:
+gui.item.radioactivity.name=Radioactivity:
+gui.item.radioactivity.minimal.name=Minimal
+gui.item.radioactivity.moderate.name=Moderate
+gui.item.radioactivity.dangerous.name=Dangerous
+gui.item.radioactivity.fatal.name=Fatal
 
 gui.info.controller.nokeyhole.name=This vault controller needs a locking mechanism below it.
 

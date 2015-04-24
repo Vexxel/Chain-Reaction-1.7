@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
+import zedeng.api.reactor.ReactorType;
 
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import java.util.UUID;
  */
 public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IThermalTile, IFluidHandler {
 
-    private final int tankCapacity = 2000;
+    private final int tankCapacity = 32000;
     public final FluidTank coolantInput = new FluidTank(this.tankCapacity);
     public final FluidTank coolantOutput = new FluidTank(this.tankCapacity);
 
@@ -42,10 +43,13 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
 
     private short updateCounter;
 
+    private final ReactorType reactorType;
+
     public TEPressurizedWaterReactor() {
         super();
         slaveLocation = -1;
         thermalUnits = 0;
+        this.reactorType = ReactorType.WATER_COOLED;
     }
 
     public void initiateController(UUID id, EntityPlayer player) {
@@ -63,6 +67,10 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
 
     private void checkMultiblock() {
         
+    }
+
+    public ReactorType getReactorType() {
+        return this.reactorType;
     }
 
     @Override
