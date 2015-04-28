@@ -50,3 +50,4 @@ the next 30 days, decays into U-233, the actual fuel.
 TODO: finish this complicated part
 
 ##### Fusion Reactors
+TODO: More fusion
