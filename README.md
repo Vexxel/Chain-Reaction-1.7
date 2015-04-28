@@ -1,4 +1,4 @@
-# Zederrian-Engineering
+# Chain-Reaction
 This is an up and coming (heavy tech) mod for Minecraft that aims to add nuclear physics, systems, and interactions to the game for power 
 or matter creation. Heat transfer, nuclear decay, fission, fusion, annihilation, transmutation, and the associated dangers will be found 
 within.
