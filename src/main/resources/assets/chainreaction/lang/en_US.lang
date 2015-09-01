@@ -1,0 +1,127 @@
+# Block localizations -------------------------------------------------------------------
+tile.chainreaction:ore.oreChromium.name=Chromium Ore
+tile.chainreaction:ore.oreNickel.name=Nickel Ore
+tile.chainreaction:ore.oreUranium.name=Uranium Ore
+
+tile.chainreaction:metal.blockChromium.name=Block of Chromium
+tile.chainreaction:metal.blockNickel.name=Block of Nickel
+tile.chainreaction:metal.blockDepletedUranium.name=Block of Depleted Uranium
+tile.chainreaction:metal.blockGraphite.name=Block of Graphite
+tile.chainreaction:metal.blockStainlessSteel.name=Block of Stainless Steel
+tile.chainreaction:metal.blockInconel.name=Block of Inconel
+
+tile.chainreaction:vault.wall.name=Vault Wall
+tile.chainreaction:vault.controller.name=Vault Control Mechanism
+tile.chainreaction:vault.lock.name=Vault Locking Mechanism
+tile.chainreaction:vault.door_closed.name=Vault Hatch (Closed)
+tile.chainreaction:vault.door_open.name=Vault Hatch (Open)
+tile.chainreaction:vault.container.name=Vault Storage Container
+
+tile.chainreaction:vaultChest.brick.name=Secure Iron Chest
+tile.chainreaction:vaultChest.thaumium.name=Secure Thaumium Chest
+tile.chainreaction:vaultChest.voidmetal.name=Secure Voidmetal Chest
+
+tile.chainreaction:plumbing.liquidHeatExchanger.name=Heat Exchanger Tube Assembly
+tile.chainreaction:plumbing.distributionChamber.name=Fluid Distribution Chamber
+tile.chainreaction:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
+tile.chainreaction:plumbing.gasTank.name=High Pressure Gas Tank
+
+tile.chainreaction:reactor.pressurizedWaterReactor.name=Pressurized Water Reactor Assembly
+
+tile.chainreaction.fluid.coolantcold.name=Pressurized Water (Cold)
+tile.chainreaction.fluid.coolanthot.name=Pressurized Water (Hot)
+tile.chainreaction.fluid.distilledwater.name=Distilled Water
+tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
+tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
+
+
+# Item localizations --------------------------------------------------------------------
+item.chainreaction:material.boltStainlessSteel.name=Stainless Steel Bolt
+item.chainreaction:material.plateStainlessSteel.name=Stainless Steel Plate
+item.chainreaction:material.tubeStainlessSteel.name=Stainless Steel Tube
+item.chainreaction:material.plateInconel.name=Inconel Plate
+item.chainreaction:material.tubeInconel.name=Inconel Tube
+
+item.chainreaction:dust.dustIron.name=Iron Dust
+item.chainreaction:dust.dustChromium.name=Chromium Dust
+item.chainreaction:dust.dustNickel.name=Nickel Dust
+item.chainreaction:dust.dustStainlessSteel.name=Stainless Steel Dust
+item.chainreaction:dust.dustInconel.name=Inconel Dust
+item.chainreaction:dust.dustGraphite.name=Graphite Dust
+item.chainreaction:dust.dustUraniumDioxide.name=Uranium Dioxide Dust
+
+item.chainreaction:ingot.ingotChromium.name=Chromium Ingot
+item.chainreaction:ingot.ingotNickel.name=Nickel Ingot
+item.chainreaction:ingot.ingotStainlessSteel.name=Stainless Steel Ingot
+item.chainreaction:ingot.ingotInconel.name=Inconel Ingot
+item.chainreaction:ingot.ingotGraphite.name=Graphite Ingot
+item.chainreaction:ingot.ingotDepletedUranium.name=Depleted Uranium Ingot
+
+item.chainreaction:key.bedrock.name=Bedrock Skeleton Key
+item.chainreaction:key.iron.name=Iron Vault Key
+item.chainreaction:key.gold.name=Gold Vault Key
+item.chainreaction:key.emerald.name=Emerald Vault Key
+item.chainreaction:key.diamond.name=Diamond Vault Key
+
+item.chainreaction:tool.wrench.name=Nucleus Wrench
+
+item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
+item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
+item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
+
+# GUI localizations ---------------------------------------------------------------------
+
+gui.multiblock.size.name=• Multiblock Size:
+gui.multiblock.wrench.center.name=• Wrench center block to complete
+gui.multiblock.wrench.center_top.name=• Wrench top center block to complete
+gui.multiblock.requirement.name=• Completion Materials:
+gui.shift.name=<Hold Shift>
+
+gui.item.key.bedrock.name=Absolute Vaultcracker
+gui.item.key.nocode.name=This key is blank..
+gui.item.key.remember.name=But I remember what I set this lock to! It was..
+gui.item.key.trespass.name=I can only remember codes that I issued.
+
+gui.item.temperature.name=Temperature:
+gui.item.fuel.name=Fuel Status:
+gui.item.radioactivity.name=Radioactivity:
+gui.item.radioactivity.minimal.name=Minimal
+gui.item.radioactivity.moderate.name=Moderate
+gui.item.radioactivity.dangerous.name=Dangerous
+gui.item.radioactivity.fatal.name=Fatal
+
+gui.info.controller.nokeyhole.name=This vault controller needs a locking mechanism below it.
+
+gui.info.controller.success1.name=The controller's mechanism successfully clicks into place
+gui.info.controller.success2.name=with a deep locking sound.
+
+gui.info.controller.failure1.name=The controller's mechanism makes a loud grinding noise.
+gui.info.controller.failure2.name=Not all blocks are in the correct place.
+
+gui.info.controller.breakable.name=The vault can now be dismantled.
+gui.info.controller.unbreakable.name=The vault clicks and prevents conventional breakage.
+
+gui.info.keyhole.configue.name=Configured this lock's code to match the key.
+gui.info.keyhole.deny.name=The key fits, but it doesn't turn at all.
+gui.info.keyhole.creative.name=The key shifts and twists until it is the correct shape.
+gui.info.keyhole.null.name=This lock has no code. I can set one with a key.
+gui.info.keyhole.trespass.name=This lock isn't mine. I don't know how it was made.
+
+gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
+
+container.vault.name=Vault
+container.chest.name=Secure Chest
+
+itemGroup.ChainReaction=Chain Reaction
+
+chainreaction.potion.alphaRad=Alpha Emission
+chainreaction.potion.betaRad=Beta Emission
+chainreaction.potion.gammaRad=Gamma Emission
+chainreaction.potion.neutronRad=Neutron Emission
+chainreaction.potion.radSickness=Rad. Sickness
+
+death.attack.thermal_low=%1$s was boiled alive
+death.attack.thermal_high=%1$s was instantly vaporized
+death.attack.rad_low=%1$s died of radiation sickness
+death.attack.rad_high=%1$s was ripped apart by pure energy
+death.attack.annihilation=%1$s was the unfortunate demonstration of the power of E=MC^2
