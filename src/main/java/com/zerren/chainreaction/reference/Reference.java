@@ -29,6 +29,7 @@ public final class Reference {
             public static final String VAULT_FOLDER = "vault/";
             public static final String KEY_FOLDER = "key/";
             public static final String TOOL_FOLDER = "tool/";
+            public static final String ARMOR_FOLDER = "armor/";
             public static final String REACTOR_FOLDER = "reactor/";
             public static final String PLUMBING_FOLDER = "plumbing/";
             public static final String FLUID_FOLDER = "fluid/";
@@ -48,6 +49,7 @@ public final class Reference {
 
         public static final class Models {
             public static final String MODEL_LOCATION = "textures/models/";
+            public static final String ARMOR_LOCATION = MODEL_LOCATION + "armor/";
 
             public static final ResourceLocation CHEST_BRICK = getResourceLocation(MODEL_LOCATION + "chest_brick.png");
             public static final ResourceLocation CHEST_THAUMIUM = getResourceLocation(MODEL_LOCATION + "chest_thaumium.png");
@@ -56,6 +58,9 @@ public final class Reference {
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
+
+            //Armor
+            public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");
         }
 
         public static final class Misc {

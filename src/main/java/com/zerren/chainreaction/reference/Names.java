@@ -107,6 +107,8 @@ public final class Names {
                 "fuelRodUO2",
                 "fuelAssemblyUO2"
         };
+
+        public static final String O2_MASK = "o2mask";
     }
 
     public static final class Fluids {

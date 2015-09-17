@@ -1,6 +1,9 @@
 package com.zerren.chainreaction.core.proxy;
 
+import chainreaction.api.item.CRItems;
+import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.tileentity.TESRPressurizedWaterReactor;
+import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import chainreaction.api.block.CRBlocks;
 import com.zerren.chainreaction.tile.chest.TEChest;
@@ -20,13 +23,18 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -36,6 +44,11 @@ import java.util.Random;
 public class ClientProxy extends CommonProxy {
 
     public static Random rand = new Random();
+
+    public static final Map<Item, ModelBiped> armorModels = new HashMap<Item, ModelBiped>();
+
+    @SideOnly(Side.CLIENT)
+    public static final IIcon[] tex_replacements = new IIcon[2];
 
     public ClientProxy getClientProxy() {
         return this;
@@ -52,6 +65,11 @@ public class ClientProxy extends CommonProxy {
 
     public boolean isTheClientPlayer(EntityLivingBase entity) {
         return entity == Minecraft.getMinecraft().thePlayer;
+    }
+
+    public void registerTexReplacements(IIconRegister registry, String folder) {
+        tex_replacements[0] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "pipe_mouth");
+        tex_replacements[1] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "distributionChamber_input");
     }
 
     @Override
@@ -81,8 +99,20 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void playSound(World world, float x, float y, float z, String soundName, float volume, float pitch) {
+    public void initArmorRender() {
+        ModelO2Mask gas_mask = new ModelO2Mask();
+
+        armorModels.put(CRItems.o2mask, gas_mask);
+    }
+
+    @Override
+    public void playSoundCentered(World world, float x, float y, float z, String soundName, float volume, float pitch) {
         world.playSoundEffect(Math.floor(x) + 0.5, Math.floor(y) + 0.5, Math.floor(z) + 0.5, soundName, volume, pitch);
+    }
+
+    @Override
+    public void playSound(World world, float x, float y, float z, String soundName, float volume, float pitch) {
+        world.playSoundEffect(x, y, z, soundName, volume, pitch);
     }
 
     @Override

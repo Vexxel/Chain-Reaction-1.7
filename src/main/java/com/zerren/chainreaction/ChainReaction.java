@@ -7,6 +7,7 @@ import com.zerren.chainreaction.core.ModPotions;
 import com.zerren.chainreaction.core.registry.Recipes;
 import com.zerren.chainreaction.core.registry.TileEntities;
 import com.zerren.chainreaction.core.registry.CRDictionary;
+import com.zerren.chainreaction.core.tick.ArmorTickHandler;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.handler.GuiHandler;
 import com.zerren.chainreaction.handler.PacketHandler;
@@ -81,11 +82,14 @@ public class ChainReaction {
         proxy.initTESR();
         proxy.initItemRender();
         proxy.initISBRH();
+        proxy.initArmorRender();
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         Recipes.init();
         MultiblockCost.init();
+
+        FMLCommonHandler.instance().bus().register(new ArmorTickHandler());
     }
 }

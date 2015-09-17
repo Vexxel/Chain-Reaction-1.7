@@ -69,6 +69,8 @@ item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
 item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
 item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
 
+item.chainreaction:o2mask.name=O2 Mask
+
 # GUI localizations ---------------------------------------------------------------------
 
 gui.multiblock.size.name=• Multiblock Size:

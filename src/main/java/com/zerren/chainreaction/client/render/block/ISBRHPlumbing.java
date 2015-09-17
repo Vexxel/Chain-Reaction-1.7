@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.client.render.block;
 
 import com.zerren.chainreaction.block.BlockPlumbing;
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -78,7 +79,7 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
             //distribution chamber
             if (meta == 1) {
                 ForgeDirection dir = tile.getOrientation();
-                IIcon newicon = BlockPlumbing.overrides[1];
+                IIcon newicon = ClientProxy.tex_replacements[0];
 
                 //core
                 renderer.setRenderBounds(s1, s1, s1, s15, s15, s15);
@@ -117,7 +118,7 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
                 //if the small 6x6x6 core should render (a standalone pipe)
                 byte renderCore = 0;
 
-                renderer.setOverrideBlockTexture(BlockPlumbing.overrides[0]);
+                renderer.setOverrideBlockTexture(ClientProxy.tex_replacements[0]);
 
                 //x axis
                 if (world.getTileEntity(x - 1, y, z) instanceof IFluidHandler) {

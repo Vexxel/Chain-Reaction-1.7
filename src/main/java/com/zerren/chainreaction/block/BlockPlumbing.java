@@ -1,6 +1,8 @@
 package com.zerren.chainreaction.block;
 
 import buildcraft.api.tools.IToolWrench;
+import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
@@ -34,13 +36,11 @@ import java.util.UUID;
 public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
     @SideOnly(Side.CLIENT)
-    private final IIcon[] tubes = new IIcon[2];
+    private IIcon[] tubes;
 
     /**
      * pipeMouth 0, distroInput 1
      */
-    @SideOnly(Side.CLIENT)
-    public static final IIcon[] overrides = new IIcon[2];
 
     public BlockPlumbing(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
         super(name, subtypes, material, hardness, resistance, sound, folder, tab);
@@ -153,8 +153,10 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
         super.registerBlockIcons(iconRegister);
-        overrides[0] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "pipe_mouth");
-        overrides[1] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "distributionChamber_input");
+
+        tubes = new IIcon[2];
+
+        ChainReaction.proxy.registerTexReplacements(iconRegister, folder);
 
         tubes[0] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_front");
         tubes[1] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_side");
