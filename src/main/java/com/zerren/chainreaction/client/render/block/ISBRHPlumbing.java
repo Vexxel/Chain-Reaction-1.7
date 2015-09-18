@@ -79,7 +79,7 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
             //distribution chamber
             if (meta == 1) {
                 ForgeDirection dir = tile.getOrientation();
-                IIcon newicon = ClientProxy.tex_replacements[0];
+                IIcon newicon = ClientProxy.tex_replacements[1];
 
                 //core
                 renderer.setRenderBounds(s1, s1, s1, s15, s15, s15);

@@ -83,6 +83,7 @@ public class ModelO2Mask extends ModelBiped
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
         bipedHead.cubeList.clear();
+
         float s = 1/14F;
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         CRRenderHelper.blendOn();

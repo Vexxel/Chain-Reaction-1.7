@@ -23,7 +23,7 @@ public class ModItems {
         CRItems.keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Reference.Textures.Folders.KEY_FOLDER, ChainReaction.cTabZE);
         CRItems.tools = new ItemToolCR(Names.Items.TOOL, Names.Items.TOOL_SUBTYPES, 1, Reference.Textures.Folders.TOOL_FOLDER, ChainReaction.cTabZE);
         CRItems.fuel = new ItemFuel(Names.Items.FUEL, Names.Items.FUEL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRItems.o2mask = new ItemOxygenMask(Names.Items.O2_MASK, Reference.Textures.Folders.ARMOR_FOLDER, ItemOxygenMask.material, 0, 0);
+        CRItems.o2mask = new ItemOxygenMask(Names.Items.O2_MASK, Reference.Textures.Folders.ARMOR_FOLDER, ItemOxygenMask.material, 0, 0, 250000);
 
         register();
     }

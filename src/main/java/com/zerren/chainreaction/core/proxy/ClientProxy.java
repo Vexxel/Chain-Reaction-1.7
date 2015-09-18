@@ -24,8 +24,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.particle.EntityBubbleFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -100,9 +102,9 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initArmorRender() {
-        ModelO2Mask gas_mask = new ModelO2Mask();
+        ModelO2Mask mask = new ModelO2Mask();
 
-        armorModels.put(CRItems.o2mask, gas_mask);
+        armorModels.put(CRItems.o2mask, mask);
     }
 
     @Override
@@ -145,6 +147,15 @@ public class ClientProxy extends CommonProxy {
 
         if (shouldSpawnParticle()) {
             EntityFX fx = new EntitySteamFX(world, x, y, z, velX, velY, velZ, scale);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+        }
+    }
+
+    @Override
+    public void bubbleFX(Entity entity, double velX, double velY, double velZ) {
+
+        if (shouldSpawnParticle() && entity.isInWater()) {
+            EntityFX fx = new EntityBubbleFX(entity.worldObj, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ, velX, velY, velZ);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
         }
     }

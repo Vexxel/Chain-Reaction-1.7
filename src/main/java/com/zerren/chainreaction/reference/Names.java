@@ -143,6 +143,7 @@ public final class Names {
         public static final String DIRECTION = "orientation";
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
+        public static final String ENERGY_LEVEL = "energyLevel";
 
         public static final String MASTER_UUID_MOST_SIG = "masterUUIDMostSig";
         public static final String MASTER_UUID_LEAST_SIG = "masterUUIDLeastSig";

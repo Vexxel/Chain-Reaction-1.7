@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.core.proxy;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
@@ -35,5 +36,7 @@ public class CommonProxy {
     public void radiationFX(World world, double x, double y, double z, double velX, double velY, double velZ, int power) { }
 
     public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) { }
+
+    public void bubbleFX(Entity entity, double velX, double velY, double velZ) { }
 
 }
