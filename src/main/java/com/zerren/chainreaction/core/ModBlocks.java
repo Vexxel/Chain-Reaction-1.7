@@ -25,6 +25,7 @@ public class ModBlocks {
         CRBlocks.chest = new BlockCRChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabZE);
         CRBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.PLUMBING_FOLDER, ChainReaction.cTabZE);
         CRBlocks.reactor = new BlockReactor(Names.Blocks.REACTOR, Names.Blocks.REACTOR_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ChainReaction.cTabZE);
+        CRBlocks.mechanism = new BlockMechanism(Names.Blocks.MECHANISM, Names.Blocks.MECHANISM_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.MECHANISM_FOLDER, ChainReaction.cTabZE);
 
         register();
     }
@@ -37,7 +38,7 @@ public class ModBlocks {
         GameRegistry.registerBlock(CRBlocks.chest, ItemBlockChest.class, Names.Blocks.CHEST);
         GameRegistry.registerBlock(CRBlocks.plumbing, ItemBlockExchanger.class, Names.Blocks.PLUMBING);
         GameRegistry.registerBlock(CRBlocks.reactor, ItemBlockReactor.class, Names.Blocks.REACTOR);
-
+        GameRegistry.registerBlock(CRBlocks.mechanism, ItemBlockMechanism.class, Names.Blocks.MECHANISM);
 
         fluidBlocks();
     }
@@ -62,7 +63,7 @@ public class ModBlocks {
         }
 
         if (ModFluids.distilledWater.getBlock() == null) {
-            CRBlocks.distilledWater = new BlockFluidCR(ModFluids.distilledWater, Material.water, Names.Fluids.DISTILLED_WATER, 8, 5, 100F, 3, true);
+            CRBlocks.distilledWater = new BlockFluidCR(ModFluids.distilledWater, Material.water, Names.Fluids.DISTILLED_WATER, 8, 5, 100F, 3);
             GameRegistry.registerBlock(CRBlocks.distilledWater, Names.Fluids.DISTILLED_WATER);
             ModFluids.distilledWater.setBlock(CRBlocks.distilledWater);
         }

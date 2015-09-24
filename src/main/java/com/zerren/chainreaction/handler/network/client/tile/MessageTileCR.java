@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 public class MessageTileCR implements IMessage, IMessageHandler<MessageTileCR, IMessage> {
 
-    public int x, y, z, dim;
+    public int x, y, z;
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
@@ -28,8 +28,6 @@ public class MessageTileCR implements IMessage, IMessageHandler<MessageTileCR, I
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
-        dim = tile.getWorldObj().provider.dimensionId;
-
         this.orientation = (byte) tile.getOrientation().ordinal();
         this.state = (byte) tile.getState();
         this.customName = tile.getCustomName();
@@ -42,7 +40,7 @@ public class MessageTileCR implements IMessage, IMessageHandler<MessageTileCR, I
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
-        this.dim = buf.readInt();
+
         this.orientation = buf.readByte();
         this.state = buf.readByte();
         int customNameLength = buf.readInt();
@@ -63,7 +61,6 @@ public class MessageTileCR implements IMessage, IMessageHandler<MessageTileCR, I
         buf.writeInt(x);
         buf.writeInt(y);
         buf.writeInt(z);
-        buf.writeInt(dim);
         buf.writeByte(orientation);
         buf.writeByte(state);
         buf.writeInt(customName.length());

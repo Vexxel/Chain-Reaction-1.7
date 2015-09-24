@@ -1,10 +1,10 @@
 package com.zerren.chainreaction.client.gui;
 
+import com.zerren.chainreaction.handler.network.server.tile.MessageVaultCycle;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.client.gui.button.GUIButtonWidgets;
 import com.zerren.chainreaction.client.gui.button.GuiButtonVaultCycle;
 import com.zerren.chainreaction.handler.PacketHandler;
-import com.zerren.chainreaction.handler.network.server.tile.PacketVaultCycle;
 import com.zerren.chainreaction.tile.container.ContainerVault;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
@@ -63,15 +63,15 @@ public class GuiVault extends GuiContainer {
         if (guibutton.id == 0) { //previous
             if (selection <= 0) selection = controller.numPages - 1;
             else selection--;
-            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, false));
+            PacketHandler.INSTANCE.sendToServer(new MessageVaultCycle(controller, selection, player, false));
         }
         if (guibutton.id == 1) { //next
             if (selection >= controller.numPages - 1) selection = 0;
             else selection++;
-            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, false));
+            PacketHandler.INSTANCE.sendToServer(new MessageVaultCycle(controller, selection, player, false));
         }
         if (guibutton.id == 2) { //confirm
-            PacketHandler.INSTANCE.sendToServer(new PacketVaultCycle(controller, selection, player, true));
+            PacketHandler.INSTANCE.sendToServer(new MessageVaultCycle(controller, selection, player, true));
         }
     }
 

@@ -28,7 +28,7 @@ public class PotionRadiationSickness extends PotionCR {
 
         if (e != null) {
             if (e instanceof EntityPlayerMP) {
-                PacketHandler.INSTANCE.sendTo(new MessageShader((byte)0), (EntityPlayerMP)e);
+                //PacketHandler.INSTANCE.sendTo(new MessageShader((byte)0), (EntityPlayerMP)e);
             }
         }
     }

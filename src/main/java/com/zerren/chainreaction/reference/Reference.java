@@ -16,7 +16,6 @@ public final class Reference {
         public static final String CLIENTPROXY_CLASS = "com.zerren.chainreaction.core.proxy.ClientProxy";
         public static final String COMMONPROXY_CLASS = "com.zerren.chainreaction.core.proxy.CommonProxy";
         public static final String GUIFACTORY_CLASS = "com.zerren.chainreaction.client.gui.GuiFactory";
-        public static final String MOD_CHANNEL_SIMPLE = "chainreaction_simple";
 
         public static final String CR_RESOURCE_PREFIX = Reference.ModInfo.MOD_ID.toLowerCase() + ":";
     }
@@ -33,6 +32,7 @@ public final class Reference {
             public static final String REACTOR_FOLDER = "reactor/";
             public static final String PLUMBING_FOLDER = "plumbing/";
             public static final String FLUID_FOLDER = "fluid/";
+            public static final String MECHANISM_FOLDER = "mechanism/";
         }
 
         public static final class GUIs {
@@ -58,6 +58,7 @@ public final class Reference {
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
+            public static final ResourceLocation TELEPORTER  = getResourceLocation(MODEL_LOCATION + "teleporter.png");
 
             //Armor
             public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");

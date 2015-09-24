@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.handler.network.server.player;
 
+import chainreaction.api.item.IKey;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,39 +15,31 @@ import net.minecraft.item.ItemStack;
 public class MessageKeyCut implements IMessage, IMessageHandler<MessageKeyCut, IMessage> {
 
     private String code;
-    protected transient EntityPlayer player;
-    protected transient ItemStack item;
 
     public MessageKeyCut() { }
 
-    public MessageKeyCut(String code, EntityPlayer player, ItemStack item) {
+    public MessageKeyCut(String code) {
         this.code = code;
-        this.player = player;
-        this.item = item;
     }
     @Override
     public void fromBytes(ByteBuf buf) {
-        int codeLength = buf.readInt();
+        int codeLength = buf.readByte();
         this.code = new String(buf.readBytes(codeLength).array());
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(code.length());
+        buf.writeByte(code.length());
         buf.writeBytes(code.getBytes());
     }
 
     @Override
     public IMessage onMessage(MessageKeyCut message, MessageContext ctx) {
 
-        if (ctx.side.isClient())
-            message.player = ClientProxy.getPlayer();
-        else {
-            message.player = ctx.getServerHandler().playerEntity;
-        }
+        EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-        if (message.code != null) {
-            message.player.inventory.getCurrentItem().stackTagCompound.setString("code", message.code);
+        if (player != null && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof IKey && message.code != null) {
+            player.inventory.getCurrentItem().stackTagCompound.setString("code", message.code);
         }
         return null;
     }

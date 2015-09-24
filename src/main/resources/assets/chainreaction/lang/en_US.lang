@@ -34,6 +34,8 @@ tile.chainreaction.fluid.distilledwater.name=Distilled Water
 tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
 tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
 
+tile.chainreaction:mechanism.teleporter.name=Teleporter
+
 
 # Item localizations --------------------------------------------------------------------
 item.chainreaction:material.boltStainlessSteel.name=Stainless Steel Bolt

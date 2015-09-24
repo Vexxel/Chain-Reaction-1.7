@@ -1,10 +1,8 @@
 package com.zerren.chainreaction.client.render.block;
 
-import com.zerren.chainreaction.block.BlockPlumbing;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -16,13 +14,13 @@ import net.minecraftforge.fluids.IFluidHandler;
 /**
  * Created by Zerren on 4/9/2015.
  */
-public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHandler {
+public class ISBRHPlumbing extends ISBRHBase {
 
-    public static int exchangerModel = RenderingRegistry.getNextAvailableRenderId();
+    public static int plumbingModel = RenderingRegistry.getNextAvailableRenderId();
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-        if (modelId == exchangerModel) {
+        if (modelId == plumbingModel) {
             //tubes
             if (metadata == 0) {
                 renderer.setRenderBounds(s1, s0, s0, s2, s16, s16);
@@ -72,7 +70,7 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
-        if (modelId == exchangerModel) {
+        if (modelId == plumbingModel) {
             int meta = world.getBlockMetadata(x, y, z);
             TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
 
@@ -179,6 +177,6 @@ public class ISBRHPlumbing extends ISBRHBase implements ISimpleBlockRenderingHan
 
     @Override
     public int getRenderId() {
-        return exchangerModel;
+        return plumbingModel;
     }
 }

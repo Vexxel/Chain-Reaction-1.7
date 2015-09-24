@@ -14,6 +14,7 @@ public final class CRBlocks {
     public static Block chest;
     public static Block plumbing;
     public static Block reactor;
+    public static Block mechanism;
 
     //Fluid blocks
     public static Block coolantCold;

@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.Fluid;
 public class BlockFluidUF6 extends BlockFluidCR {
 
     public BlockFluidUF6(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity) {
-        super(fluid, material, name, quanta, tickr, hardness, lightOpacity, true);
+        super(fluid, material, name, quanta, tickr, hardness, lightOpacity);
     }
 
     @Override

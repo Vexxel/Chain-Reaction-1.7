@@ -1,9 +1,11 @@
 package com.zerren.chainreaction.core.proxy;
 
 import chainreaction.api.item.CRItems;
+import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
 import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
-import com.zerren.chainreaction.client.render.tileentity.TESRPressurizedWaterReactor;
+import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import chainreaction.api.block.CRBlocks;
 import com.zerren.chainreaction.tile.chest.TEChest;
@@ -14,9 +16,6 @@ import com.zerren.chainreaction.client.fx.EntitySteamFX;
 import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
 import com.zerren.chainreaction.client.render.item.ItemRendererExchanger;
 import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
-import com.zerren.chainreaction.client.render.tileentity.TESRChest;
-import com.zerren.chainreaction.client.render.tileentity.TESRGasTank;
-import com.zerren.chainreaction.client.render.tileentity.TESRHeatExchanger;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -84,12 +83,16 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEGasTank.class, new TESRGasTank());
         //PWR
         ClientRegistry.bindTileEntitySpecialRenderer(TEPressurizedWaterReactor.class, new TESRPressurizedWaterReactor());
+        //Teleporter
+        ClientRegistry.bindTileEntitySpecialRenderer(TETeleporter.class, new TESRTeleporter());
     }
 
     @Override
     public void initISBRH() {
         //Heat Exchanger
-        RenderingRegistry.registerBlockHandler(ISBRHPlumbing.exchangerModel, new ISBRHPlumbing());
+        RenderingRegistry.registerBlockHandler(ISBRHPlumbing.plumbingModel, new ISBRHPlumbing());
+        //Mechanism
+        RenderingRegistry.registerBlockHandler(ISBRHMechanism.mechModel, new ISBRHMechanism());
     }
 
     @Override
@@ -102,9 +105,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initArmorRender() {
-        ModelO2Mask mask = new ModelO2Mask();
-
-        armorModels.put(CRItems.o2mask, mask);
+        armorModels.put(CRItems.o2mask, new ModelO2Mask());
     }
 
     @Override

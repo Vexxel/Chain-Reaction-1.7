@@ -1,7 +1,7 @@
 package com.zerren.chainreaction.handler.network.server.tile;
 
-import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
+import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 /**
- * Created by Zerren on 2/25/2015.
+ * Created by Zerren on 9/23/2015.
  */
 public abstract class PacketTileCR<T extends TileEntityCRBase> implements IMessage {
 

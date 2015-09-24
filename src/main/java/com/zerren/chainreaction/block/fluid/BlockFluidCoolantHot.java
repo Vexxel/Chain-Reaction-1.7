@@ -19,7 +19,7 @@ import java.util.Random;
  */
 public class BlockFluidCoolantHot extends BlockFluidCR {
     public BlockFluidCoolantHot(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity) {
-        super(fluid, material, name, quanta, tickr, hardness, lightOpacity, true);
+        super(fluid, material, name, quanta, tickr, hardness, lightOpacity);
     }
 
     @Override

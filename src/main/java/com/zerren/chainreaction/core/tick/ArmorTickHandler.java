@@ -21,8 +21,6 @@ public class ArmorTickHandler {
 
     Random random = new Random();
 
-    @SubscribeEvent
-    @Optional.Method(modid = "IC2")
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.side == Side.SERVER) {
             EntityPlayer player = event.player;

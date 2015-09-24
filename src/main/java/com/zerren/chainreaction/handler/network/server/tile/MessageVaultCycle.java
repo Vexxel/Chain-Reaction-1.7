@@ -1,8 +1,8 @@
 package com.zerren.chainreaction.handler.network.server.tile;
 
 import com.zerren.chainreaction.ChainReaction;
-import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.tile.vault.TEVaultController;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -10,16 +10,16 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 
 /**
- * Created by Zerren on 2/25/2015.
+ * Created by Zerren on 9/23/2015.
  */
-public class PacketVaultCycle extends PacketTileCR<TEVaultController> implements IMessageHandler<PacketVaultCycle, IMessage> {
+public class MessageVaultCycle extends PacketTileCR<TEVaultController> implements IMessageHandler<MessageVaultCycle, IMessage> {
 
     int page;
-    public PacketVaultCycle() {
+    public MessageVaultCycle() {
         super();
     }
 
-    public PacketVaultCycle(TEVaultController tile, int pg, EntityPlayer player, boolean accept) {
+    public MessageVaultCycle(TEVaultController tile, int pg, EntityPlayer player, boolean accept) {
         super(tile, player);
         this.page = pg;
         //if this packet was tagged with false, it will shift the value down 100. this prevents the client from changing the page, and the player from opening the new gui
@@ -41,7 +41,7 @@ public class PacketVaultCycle extends PacketTileCR<TEVaultController> implements
     }
 
     @Override
-    public IMessage onMessage(PacketVaultCycle message, MessageContext ctx) {
+    public IMessage onMessage(MessageVaultCycle message, MessageContext ctx) {
         super.onMessage(message, ctx);
         if (!ctx.side.isServer()) {
             throw new IllegalStateException("received PacketVault " + message + "on client side!");

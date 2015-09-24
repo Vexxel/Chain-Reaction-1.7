@@ -174,6 +174,7 @@ public class Recipes {
 
     private static void fluidExchanger() {
         HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 20);
+        HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 20);
 
         WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.WATER, 1), new FluidStack(ModFluids.steam, 160));
         WorkingFluid.addWorkingFluid(new FluidStack(ModFluids.distilledWater, 1), new FluidStack(ModFluids.steam, 160));

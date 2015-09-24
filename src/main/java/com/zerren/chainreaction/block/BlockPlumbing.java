@@ -2,7 +2,6 @@ package com.zerren.chainreaction.block;
 
 import buildcraft.api.tools.IToolWrench;
 import com.zerren.chainreaction.ChainReaction;
-import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
@@ -227,6 +226,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return ISBRHPlumbing.exchangerModel;
+        return ISBRHPlumbing.plumbingModel;
     }
 }

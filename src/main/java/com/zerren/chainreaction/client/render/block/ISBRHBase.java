@@ -1,14 +1,16 @@
 package com.zerren.chainreaction.client.render.block;
 
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Zerren on 4/9/2015.
  */
-public class ISBRHBase {
+public class ISBRHBase implements ISimpleBlockRenderingHandler {
 
     protected final float s0 = 0f;
     protected final float s1 = 1f/16f;
@@ -28,8 +30,23 @@ public class ISBRHBase {
     protected final float s15 = 15f/16f;
     protected final float s16 = 1f;
 
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
+
+    }
+
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        return false;
+    }
+
     public boolean shouldRender3DInInventory(int modelId) {
         return true;
+    }
+
+    @Override
+    public int getRenderId() {
+        return 0;
     }
 
     protected static void renderInvBlock(Block block, int m,  RenderBlocks renderer) {

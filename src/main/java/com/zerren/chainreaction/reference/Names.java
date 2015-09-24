@@ -54,6 +54,11 @@ public final class Names {
         public static final String[] REACTOR_SUBTYPES = {
                 "pressurizedWaterReactor"
         };
+
+        public static final String MECHANISM = "mechanism";
+        public static final String[] MECHANISM_SUBTYPES = {
+                "teleporter"
+        };
     }
 
     public static final class Items {

@@ -28,7 +28,6 @@ public class BlockFluidCR extends BlockFluidClassic {
     protected IIcon stillIcon, flowingIcon;
 
     private String folder, name;
-    private boolean hasFlowingIcon;
     protected Fluid fluid;
 
     /**
@@ -40,10 +39,9 @@ public class BlockFluidCR extends BlockFluidClassic {
      * @param tickr Tickrate
      * @param hardness Hardness
      * @param lightOpacity Light decays by how much per block travelled through liquid
-     * @param hasFlowingIcon If this fluid has a flowing icon (mostly used for gases). If false, still icon will be used
      *
      */
-    public BlockFluidCR(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity, boolean hasFlowingIcon) {
+    public BlockFluidCR(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity) {
         super(fluid, material);
         this.setCreativeTab(ChainReaction.cTabZE);
         this.setRenderPass(1);
@@ -51,7 +49,6 @@ public class BlockFluidCR extends BlockFluidClassic {
         this.name = name;
         this.setBlockName(Reference.ModInfo.MOD_ID.toLowerCase() + ".fluid." + name);
         this.fluid = fluid;
-        this.hasFlowingIcon = hasFlowingIcon;
 
         this.setQuantaPerBlock(quanta);
         this.setTickRate(tickr);
@@ -93,10 +90,7 @@ public class BlockFluidCR extends BlockFluidClassic {
     public void registerBlockIcons(IIconRegister icon) {
 
         stillIcon = icon.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + name + "_still");
-        if (hasFlowingIcon)
-            flowingIcon = icon.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + name + "_flow");
-        else
-            flowingIcon = stillIcon;
+        flowingIcon = icon.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + name + "_flow");
 
         fluid.setIcons(stillIcon, flowingIcon);
     }
