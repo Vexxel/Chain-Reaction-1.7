@@ -32,4 +32,5 @@ public final class CRItems {
     public static Item fuel;
 
     public static Item o2mask;
+    public static Item thrustPack;
 }

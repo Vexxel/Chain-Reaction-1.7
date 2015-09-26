@@ -1,16 +1,23 @@
 package com.zerren.chainreaction.core.tick;
 
-import com.sun.net.httpserver.Filter;
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
+import com.zerren.chainreaction.handler.network.server.player.MessageKeyCut;
 import com.zerren.chainreaction.item.armor.ItemOxygenMask;
+import com.zerren.chainreaction.item.armor.ItemThrustPack;
+import com.zerren.chainreaction.utility.CRHotkey;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.Random;
 
@@ -21,6 +28,7 @@ public class ArmorTickHandler {
 
     Random random = new Random();
 
+    @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.side == Side.SERVER) {
             EntityPlayer player = event.player;
@@ -40,6 +48,34 @@ public class ArmorTickHandler {
                             ChainReaction.proxy.bubbleFX(event.player, (random.nextFloat() - 0.5), 0, (random.nextFloat() - 0.5));
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onJump(LivingEvent.LivingJumpEvent event) {
+        if (event.entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)event.entity;
+            ItemStack chestslot = player.inventory.armorInventory[2];
+
+            if (chestslot != null && chestslot.getItem() instanceof ItemThrustPack) {
+                player.motionY += 0.5D;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+
+        if (CRHotkey.boost.isPressed()) {
+            //ChainReaction.log.info("pressed");
+            EntityPlayer player = FMLClientHandler.instance().getClient().thePlayer;
+            ItemStack chestslot = player.inventory.armorInventory[2];
+
+            if (chestslot != null && chestslot.getItem() instanceof ItemThrustPack) {
+                ((ItemThrustPack) chestslot.getItem()).thrust(player);
+                PacketHandler.INSTANCE.sendToServer(new MessageHotkey(MessageHotkey.Key.BOOST));
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.handler;
 
 import com.zerren.chainreaction.handler.network.client.tile.*;
+import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.handler.network.server.player.MessageKeyCut;
 import com.zerren.chainreaction.handler.network.server.tile.MessageVaultCycle;
 import com.zerren.chainreaction.reference.Reference;
@@ -27,6 +28,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageTileChest.class, MessageTileChest.class, 4, Side.CLIENT);
         INSTANCE.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, 5, Side.CLIENT);
         INSTANCE.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, 6, Side.CLIENT);
+        INSTANCE.registerMessage(MessageHotkey.class, MessageHotkey.class, 7, Side.SERVER);
         //server to player
         //INSTANCE.registerMessage(MessageShader.class, MessageShader.class, i++, Side.CLIENT);
     }

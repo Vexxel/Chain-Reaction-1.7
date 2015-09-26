@@ -9,13 +9,13 @@ public interface IThermalTile {
      * Gets the arbitrary thermal 'units' that are stored in this tile entity: this is usable heat, unlike wasteHeatUnits
      * @return thermalUnits
      */
-    int getThermalUnits();
+    float getThermalUnits();
 
     /**
      * Sets thermal 'units' that are stored in this tile entity: this is usable heat, unlike wasteHeatUnits
      * @param units thermalUnits
      */
-    void setThermalUnits(int units);
+    void setThermalUnits(float units);
 
     /**
      * Gets the arbitrary waste heat 'units' that are stored in this tile entity: this is usually heat on the 'cold' side of a system, and as such to maintain maximum

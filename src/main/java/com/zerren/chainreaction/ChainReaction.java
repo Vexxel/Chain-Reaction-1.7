@@ -14,7 +14,9 @@ import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.core.proxy.CommonProxy;
 import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.utility.CRHotkey;
 import com.zerren.chainreaction.utility.ItemRetriever;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -24,10 +26,15 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.input.Keyboard;
+
+import javax.swing.text.JTextComponent;
 
 /**
  * Created by Zerren on 2/19/2015.
@@ -64,8 +71,6 @@ public class ChainReaction {
 
         log = event.getModLog();
 
-        //ModIntegration.tryLoadingMods();
-
         ModFluids.init();
         ModBlocks.init();
         ModItems.init();
@@ -91,5 +96,10 @@ public class ChainReaction {
         MultiblockCost.init();
 
         FMLCommonHandler.instance().bus().register(new ArmorTickHandler());
+        MinecraftForge.EVENT_BUS.register(new ArmorTickHandler());
+
+        if(event.getSide() == Side.CLIENT) {
+            CRHotkey.init();
+        }
     }
 }

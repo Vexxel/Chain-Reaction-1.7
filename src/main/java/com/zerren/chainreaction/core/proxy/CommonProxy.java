@@ -1,8 +1,10 @@
 package com.zerren.chainreaction.core.proxy;
 
+import com.zerren.chainreaction.utility.CoreUtility;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 /**
@@ -29,6 +31,8 @@ public class CommonProxy {
 
     public void setShader(String shader) { }
 
+    public static void setGamma(float gamma) { }
+
     public void removeShader() { }
 
     public boolean isShaderActive() { return false;}
@@ -38,5 +42,4 @@ public class CommonProxy {
     public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) { }
 
     public void bubbleFX(Entity entity, double velX, double velY, double velZ) { }
-
 }

@@ -46,4 +46,8 @@ public final class ItemRetriever {
             return new ItemStack(CRItems.dusts, count, Arrays.asList(Names.Items.DUST_SUBTYPES).indexOf(name));
         }
     }
+
+    public ItemStack getOredictItem(String oredict) {
+        return null;
+    }
 }

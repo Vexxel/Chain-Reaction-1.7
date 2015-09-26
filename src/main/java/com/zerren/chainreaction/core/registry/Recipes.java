@@ -5,6 +5,7 @@ import chainreaction.api.recipe.WorkingFluid;
 import com.zerren.chainreaction.core.ModFluids;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.utility.ItemRetriever;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -173,10 +174,14 @@ public class Recipes {
     }
 
     private static void fluidExchanger() {
-        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 20);
-        HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 20);
+        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 62.5F);
 
         WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.WATER, 1), new FluidStack(ModFluids.steam, 160));
         WorkingFluid.addWorkingFluid(new FluidStack(ModFluids.distilledWater, 1), new FluidStack(ModFluids.steam, 160));
+
+        if (Loader.isModLoaded("IC2")) {
+            HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 62.5F);
+            WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.getFluid("ic2distilledwater"), 1), new FluidStack(ModFluids.steam, 160));
+        }
     }
 }

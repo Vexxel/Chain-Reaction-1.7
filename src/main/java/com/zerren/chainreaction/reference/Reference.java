@@ -62,6 +62,7 @@ public final class Reference {
 
             //Armor
             public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");
+            public static final ResourceLocation THRUST_PACK  = getResourceLocation(ARMOR_LOCATION + "thrustpack.png");
         }
 
         public static final class Misc {

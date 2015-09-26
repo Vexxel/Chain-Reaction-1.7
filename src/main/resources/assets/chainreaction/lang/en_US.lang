@@ -118,6 +118,9 @@ container.chest.name=Secure Chest
 
 itemGroup.ChainReaction=Chain Reaction
 
+key.categories.chainreaction=Chain Reaction
+key.boost=Thruster Boost
+
 chainreaction.potion.alphaRad=Alpha Emission
 chainreaction.potion.betaRad=Beta Emission
 chainreaction.potion.gammaRad=Gamma Emission

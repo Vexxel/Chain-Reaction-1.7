@@ -42,7 +42,6 @@ public class TESRChest extends TileEntitySpecialRenderer {
 
             GL11.glPushMatrix();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-            GL11.glEnable(GL11.GL_BLEND);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
             GL11.glScalef(1.0F, -1.0F, -1.0F);
@@ -89,7 +88,6 @@ public class TESRChest extends TileEntitySpecialRenderer {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glPopMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glDisable(GL11.GL_BLEND);
         }
     }
 }

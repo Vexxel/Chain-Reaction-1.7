@@ -3,6 +3,7 @@ package com.zerren.chainreaction.core.proxy;
 import chainreaction.api.item.CRItems;
 import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
 import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
+import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
@@ -16,6 +17,7 @@ import com.zerren.chainreaction.client.fx.EntitySteamFX;
 import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
 import com.zerren.chainreaction.client.render.item.ItemRendererExchanger;
 import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
+import com.zerren.chainreaction.utility.CoreUtility;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -26,6 +28,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.EntityBubbleFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -106,6 +109,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void initArmorRender() {
         armorModels.put(CRItems.o2mask, new ModelO2Mask());
+        armorModels.put(CRItems.thrustPack, new ModelThrustPack());
     }
 
     @Override

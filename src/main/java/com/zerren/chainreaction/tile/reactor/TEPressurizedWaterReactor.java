@@ -33,7 +33,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
      * 5mb of hot coolant = 1TU = 200TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 20TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
      */
-    private int thermalUnits;
+    private float thermalUnits;
 
     /**
      * Arbitrary thermal waste heat storage that is the 'leftover' of a energy conversion--this tile entity does not have a loss in efficiency, because it deals in
@@ -74,11 +74,11 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
     }
 
     @Override
-    public int getThermalUnits() {
+    public float getThermalUnits() {
         return thermalUnits;
     }
     @Override
-    public void setThermalUnits(int units) {
+    public void setThermalUnits(float units) {
         this.thermalUnits = units;
     }
     @Override
@@ -135,7 +135,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
             this.coolantInput.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantInput"));
             this.coolantOutput.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantOutput"));
 
-            this.thermalUnits = tag.getInteger(Names.NBT.THERMAL_UNITS);
+            this.thermalUnits = tag.getFloat(Names.NBT.THERMAL_UNITS);
         }
     }
 
@@ -149,7 +149,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
             tag.setTag(Names.NBT.TANK + "CoolantInput", coolantInput.writeToNBT(new NBTTagCompound()));
             tag.setTag(Names.NBT.TANK + "CoolantOutput", coolantOutput.writeToNBT(new NBTTagCompound()));
 
-            tag.setInteger(Names.NBT.THERMAL_UNITS, thermalUnits);
+            tag.setFloat(Names.NBT.THERMAL_UNITS, thermalUnits);
         }
     }
 

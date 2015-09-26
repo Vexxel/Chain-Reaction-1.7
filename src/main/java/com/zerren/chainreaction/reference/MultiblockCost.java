@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Random;
 
@@ -52,13 +53,17 @@ public final class MultiblockCost {
             //iterates through the player's inventory and adds to the matCounter if it finds a matching stack and enough items in said stack
             for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
                 //found a matching itemstack
-                if (player.inventory.mainInventory[i] != null && player.inventory.mainInventory[i].isItemEqual(mat)) {
-                    //and a matching or more amount of said items
-                    if (player.inventory.mainInventory[i].stackSize >= countRequired) {
-                        //sets the slot number containing this material
-                        invSlotContaining[matCount] = i;
-                        matCount++;
-                        break;
+                if (player.inventory.mainInventory[i] != null) {
+                    //the inventory slot's item has a matching required material's ore dictionary entry
+                    if (isEqualOre(player.inventory.mainInventory[i], mat)) {
+
+                        //and a matching or more amount of said items
+                        if (player.inventory.mainInventory[i].stackSize >= countRequired) {
+                            //sets the slot number containing this material
+                            invSlotContaining[matCount] = i;
+                            matCount++;
+                            break;
+                        }
                     }
                 }
             }
@@ -69,11 +74,37 @@ public final class MultiblockCost {
             for (ItemStack mat : materials) {
                 if (consume)
                     player.inventory.decrStackSize(invSlotContaining[i], mat.stackSize);
+
                 i++;
             }
             return true;
         }
 
+        return false;
+    }
+
+    public static boolean isEqualOre(ItemStack item, ItemStack target) {
+        //gets the IDs of the item in the oredict thinger
+        int[] itemIDs = OreDictionary.getOreIDs(item);
+        String[] itemNames = new String[itemIDs.length];
+
+        int[] targetIDs = OreDictionary.getOreIDs(target);
+        String[] targetNames = new String[targetIDs.length];
+
+        //populates the string array
+        for (int i = 0; i < itemIDs.length; i++) {
+            itemNames[i] = OreDictionary.getOreName(itemIDs[i]);
+        }
+
+        for (int i = 0; i < targetIDs.length; i++) {
+            targetNames[i] = OreDictionary.getOreName(targetIDs[i]);
+        }
+
+        for (String name : itemNames) {
+            for (String name2 : targetNames) {
+                if (name.equals(name2)) return true;
+            }
+        }
         return false;
     }
 

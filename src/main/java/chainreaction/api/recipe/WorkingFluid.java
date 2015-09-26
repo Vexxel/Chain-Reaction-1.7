@@ -49,7 +49,7 @@ public class WorkingFluid {
     }
 
     /**
-     *  FluidStack amounts MUST be divisible or weird things will happen! The exchange happens for every 10TU the plumbing has.
+     *  FluidStack amounts MUST be divisible or weird things will happen! The exchange happens for every 10TU the exchanger has.
      *  Ex: water -- 1:160 -- for every 10 TU, 1mb water becomes 160mb steam
      * @param input FluidStack of fluid to be heated
      * @param output FluidStack of what the input turns into once heated

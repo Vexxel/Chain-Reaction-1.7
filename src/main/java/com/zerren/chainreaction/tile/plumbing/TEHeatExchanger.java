@@ -27,11 +27,11 @@ import java.util.UUID;
  */
 public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, IThermalTile {
 
-    private final int tankCapacity = 2000;
+    private final int tankCapacity = 4000;
 
     public FluidTank coolantInletTank = new FluidTank(this.tankCapacity);
     public FluidTank waterTank = new FluidTank(this.tankCapacity);
-    public FluidTank steamTank = new FluidTank(this.tankCapacity * 32);
+    public FluidTank steamTank = new FluidTank(this.tankCapacity * 16);
     public FluidTank coolantOutputTank = new FluidTank(this.tankCapacity);
 
     /**
@@ -40,11 +40,11 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
     public byte slaveLocation;
 
     /**
-     * Arbitrary thermal storage used to heat a fluid--10 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 32 RF.
-     * 5mb of hot coolant = 1TU = 200TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 20TU/t = 640RF/t = 320Steam/t.
+     * Arbitrary thermal storage used to heat a fluid--10 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 16 RF.
+     * 16mb of hot coolant = 10TU--62.5TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 62TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
      */
-    private int thermalUnits;
+    private float thermalUnits;
 
     /**
      * Arbitrary thermal waste heat storage that is the 'leftover' of a energy conversion--this tile entity does not have a loss in efficiency, because it deals in
@@ -62,7 +62,6 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
 
     @Override
     public void updateEntity() {
-        super.updateEntity();
 
         if (!worldObj.isRemote && isMaster()) {
             if (coolantInletTank.getFluidAmount() >= 100)
@@ -77,7 +76,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
             }
 
             if (coolantOutputTank.getFluidAmount() > 0)
-                pushFluids(coolantOutputTank, 1600);
+                pushFluids(coolantOutputTank, 200);
 
             updateCounter++;
             if (updateCounter >= 60) {
@@ -93,9 +92,9 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         if (coolantInletTank.getFluid() == null) return;
         int amount = coolantInletTank.getFluid().amount;
         Fluid output = HeatingFluid.getOutput(coolantInletTank.getFluid().getFluid());
-        int heat = HeatingFluid.getHeat(coolantInletTank.getFluid().getFluid());
+        float heat = HeatingFluid.getHeat(coolantInletTank.getFluid().getFluid());
 
-        //20 TU/t at peak performance (for hot coolant)--plumbing can take up to 100mb/t maximum. Any faster and the fluids wouldn't have a chance to liberate their energy!
+        //62 TU/t at peak performance (for hot coolant)--plumbing can take up to 100mb/t maximum
         int amountToDrain = 100;
 
         if (amount < amountToDrain) return;
@@ -115,8 +114,8 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         coolantOutputTank.fill(new FluidStack(output, amountToDrain), true);
         coolantInletTank.drain(amountToDrain, true);
 
-        if ((thermalUnits += heat) > 10000)
-            thermalUnits = 10000;
+        if ((thermalUnits += heat) > 10000F)
+            thermalUnits = 10000F;
     }
 
     private void heatFluid() {
@@ -188,11 +187,11 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
     }
 
     @Override
-    public int getThermalUnits() {
+    public float getThermalUnits() {
         return thermalUnits;
     }
     @Override
-    public void setThermalUnits(int units) {
+    public void setThermalUnits(float units) {
         this.thermalUnits = units;
     }
     @Override
@@ -472,7 +471,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
             this.steamTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "WorkingOutput"));
             this.coolantOutputTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantOutput"));
 
-            this.thermalUnits = tag.getInteger(Names.NBT.THERMAL_UNITS);
+            this.thermalUnits = tag.getFloat(Names.NBT.THERMAL_UNITS);
         }
     }
 
@@ -488,7 +487,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
             tag.setTag(Names.NBT.TANK + "WorkingOutput", steamTank.writeToNBT(new NBTTagCompound()));
             tag.setTag(Names.NBT.TANK + "CoolantOutput", coolantOutputTank.writeToNBT(new NBTTagCompound()));
 
-            tag.setInteger(Names.NBT.THERMAL_UNITS, thermalUnits);
+            tag.setFloat(Names.NBT.THERMAL_UNITS, thermalUnits);
         }
 
     }

@@ -114,6 +114,7 @@ public final class Names {
         };
 
         public static final String O2_MASK = "o2mask";
+        public static final String THRUST_PACK = "thrustpack";
     }
 
     public static final class Fluids {
