@@ -72,6 +72,7 @@ item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
 item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
 
 item.chainreaction:o2mask.name=O2 Mask
+item.chainreaction:thrustpack.name=Thruster Pack
 
 # GUI localizations ---------------------------------------------------------------------
 

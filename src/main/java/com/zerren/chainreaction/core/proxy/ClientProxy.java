@@ -1,34 +1,35 @@
 package com.zerren.chainreaction.core.proxy;
 
+import chainreaction.api.block.CRBlocks;
 import chainreaction.api.item.CRItems;
+import com.zerren.chainreaction.client.fx.EntityRadiationFX;
+import com.zerren.chainreaction.client.fx.EntitySteamFX;
 import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
+import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
+import com.zerren.chainreaction.client.render.block.ISBRHReactor;
+import com.zerren.chainreaction.client.render.item.ItemRendererExchanger;
+import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
 import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.mechanism.TETeleporter;
-import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
-import chainreaction.api.block.CRBlocks;
 import com.zerren.chainreaction.tile.chest.TEChest;
+import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
-import com.zerren.chainreaction.client.fx.EntityRadiationFX;
-import com.zerren.chainreaction.client.fx.EntitySteamFX;
-import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
-import com.zerren.chainreaction.client.render.item.ItemRendererExchanger;
-import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
-import com.zerren.chainreaction.utility.CoreUtility;
+import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.EntityBubbleFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,9 +95,11 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void initISBRH() {
         //Heat Exchanger
-        RenderingRegistry.registerBlockHandler(ISBRHPlumbing.plumbingModel, new ISBRHPlumbing());
+        RenderingRegistry.registerBlockHandler(ISBRHPlumbing.model, new ISBRHPlumbing());
         //Mechanism
-        RenderingRegistry.registerBlockHandler(ISBRHMechanism.mechModel, new ISBRHMechanism());
+        RenderingRegistry.registerBlockHandler(ISBRHMechanism.model, new ISBRHMechanism());
+        //Reactor
+        RenderingRegistry.registerBlockHandler(ISBRHReactor.model, new ISBRHReactor());
     }
 
     @Override
@@ -175,5 +179,11 @@ public class ClientProxy extends CommonProxy {
         }
 
         return particleSetting <= 1;
+    }
+
+    @SubscribeEvent
+    public void onPostRender(RenderPlayerEvent.Specials.Post event) {
+        AbstractClientPlayer player = (AbstractClientPlayer) event.entityPlayer;
+        boolean flag = (event.entityPlayer.getCommandSenderName().equals("Zerren"));
     }
 }

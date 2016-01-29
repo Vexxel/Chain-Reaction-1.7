@@ -19,13 +19,13 @@ import net.minecraft.block.material.MaterialLiquid;
 public class ModBlocks {
 
     public static void init() {
-        CRBlocks.ores = new BlockCR(Names.Blocks.ORE, Names.Blocks.ORE_SUBTYPES, Material.rock, 3F, 5F, Block.soundTypeStone, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.metals = new BlockCR(Names.Blocks.METAL, Names.Blocks.METAL_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.chest = new BlockCRChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.PLUMBING_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.reactor = new BlockReactor(Names.Blocks.REACTOR, Names.Blocks.REACTOR_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ChainReaction.cTabZE);
-        CRBlocks.mechanism = new BlockMechanism(Names.Blocks.MECHANISM, Names.Blocks.MECHANISM_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.MECHANISM_FOLDER, ChainReaction.cTabZE);
+        CRBlocks.ores = new BlockCR(Names.Blocks.ORE, Names.Blocks.ORE_SUBTYPES, Material.rock, 3F, 5F, Block.soundTypeStone, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.metals = new BlockCR(Names.Blocks.METAL, Names.Blocks.METAL_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.vault = new BlockVault(Names.Blocks.VAULT, Names.Blocks.VAULT_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.chest = new BlockCRChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.PLUMBING_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.reactor = new BlockReactor(Names.Blocks.REACTOR, Names.Blocks.REACTOR_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.mechanism = new BlockMechanism(Names.Blocks.MECHANISM, Names.Blocks.MECHANISM_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.MECHANISM_FOLDER, ChainReaction.cTabCR);
 
         register();
     }

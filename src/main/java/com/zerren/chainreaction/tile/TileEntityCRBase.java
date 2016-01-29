@@ -45,10 +45,6 @@ public class TileEntityCRBase extends TileEntity {
         tileCache = TileCache.buildCache(worldObj, xCoord, yCoord, zCoord);
     }
 
-    public void information(TileEntityCRBase tile) {
-        System.out.println("Made it this far, Mr " + tile);
-    }
-
     public boolean canFaceUpDown() {
         return canFaceUpDown;
     }

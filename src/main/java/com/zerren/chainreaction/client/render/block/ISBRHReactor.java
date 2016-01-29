@@ -16,14 +16,14 @@ import java.util.Arrays;
 /**
  * Created by Zerren on 4/9/2015.
  */
-public class ISBRHPlumbing extends ISBRHBase {
+public class ISBRHReactor extends ISBRHBase {
 
     public static int model = RenderingRegistry.getNextAvailableRenderId();
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
         if (modelId == model) {
-            //tubes
+            //PWR assembly
             if (metadata == 0) {
                 renderer.setRenderBounds(s1, s0, s0, s2, s16, s16);
                 renderInvBlock(block, metadata, renderer);
@@ -46,26 +46,7 @@ public class ISBRHPlumbing extends ISBRHBase {
                 renderer.setRenderBounds(s0, s14, s14, s16, s15, s15);
                 renderInvBlock(block, metadata, renderer);
             }
-            //distribution chamber
-            else if (metadata == 1) {
-                renderer.setRenderBounds(s1, s1, s1, s15, s15, s15);
-                renderInvBlock(block, metadata, renderer);
 
-                renderer.setRenderBounds(s3, s3, s0, s13, s13, s16);
-                renderInvBlock(block, metadata, renderer);
-
-                renderer.setRenderBounds(s0, s3, s3, s16, s13, s13);
-                renderInvBlock(block, metadata, renderer);
-
-                renderer.setRenderBounds(s3, s0, s3, s13, s16, s13);
-                renderInvBlock(block, metadata, renderer);
-            }
-            //pipe
-            else if (metadata == 2) {
-
-                renderer.setRenderBounds(s4, s0, s4, s12, s16, s12);
-                renderInvBlock(block, metadata, renderer);
-            }
         }
     }
 

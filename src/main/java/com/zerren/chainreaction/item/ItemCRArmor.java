@@ -21,7 +21,7 @@ public class ItemCRArmor extends ItemArmor {
     public ItemCRArmor(String name, String folder, ArmorMaterial material, int renderslot, int slot) {
         super(material, renderslot, slot);
 
-        setCreativeTab(ChainReaction.cTabZE);
+        setCreativeTab(ChainReaction.cTabCR);
         this.setUnlocalizedName(name);
         this.itemName = name;
         this.texFolder = folder;

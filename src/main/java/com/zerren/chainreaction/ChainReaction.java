@@ -4,10 +4,11 @@ import com.zerren.chainreaction.core.ModBlocks;
 import com.zerren.chainreaction.core.ModFluids;
 import com.zerren.chainreaction.core.ModItems;
 import com.zerren.chainreaction.core.ModPotions;
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.core.registry.Recipes;
 import com.zerren.chainreaction.core.registry.TileEntities;
 import com.zerren.chainreaction.core.registry.CRDictionary;
-import com.zerren.chainreaction.core.tick.ArmorTickHandler;
+import com.zerren.chainreaction.core.tick.CRTickHandler;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.handler.GuiHandler;
 import com.zerren.chainreaction.handler.PacketHandler;
@@ -16,7 +17,6 @@ import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.CRHotkey;
 import com.zerren.chainreaction.utility.ItemRetriever;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -26,15 +26,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.input.Keyboard;
-
-import javax.swing.text.JTextComponent;
 
 /**
  * Created by Zerren on 2/19/2015.
@@ -51,7 +47,7 @@ public class ChainReaction {
 
     public static Logger log;
 
-    public static CreativeTabs cTabZE = new CreativeTabs(Reference.ModInfo.MOD_ID) {
+    public static CreativeTabs cTabCR = new CreativeTabs(Reference.ModInfo.MOD_ID) {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() { return null; }
@@ -95,11 +91,12 @@ public class ChainReaction {
         Recipes.init();
         MultiblockCost.init();
 
-        FMLCommonHandler.instance().bus().register(new ArmorTickHandler());
-        MinecraftForge.EVENT_BUS.register(new ArmorTickHandler());
+        FMLCommonHandler.instance().bus().register(new CRTickHandler());
+        MinecraftForge.EVENT_BUS.register(new CRTickHandler());
 
         if(event.getSide() == Side.CLIENT) {
             CRHotkey.init();
+            FMLCommonHandler.instance().bus().register(new ClientProxy());
         }
     }
 }

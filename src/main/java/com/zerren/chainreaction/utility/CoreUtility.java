@@ -2,6 +2,8 @@ package com.zerren.chainreaction.utility;
 
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.ConfigHandler;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -100,5 +102,19 @@ public final class CoreUtility {
             }
 
         return direction;
+    }
+
+    public static ForgeDirection getClickedFaceDirection(float x, float y, float z) {
+
+        if (x == 0) return ForgeDirection.WEST;
+        if (x == 1) return ForgeDirection.EAST;
+
+        if (y == 0) return ForgeDirection.DOWN;
+        if (y == 1) return ForgeDirection.UP;
+
+        if (z == 0) return ForgeDirection.NORTH;
+        if (z == 1) return ForgeDirection.SOUTH;
+
+        return ForgeDirection.UNKNOWN;
     }
 }

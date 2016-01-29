@@ -24,7 +24,7 @@ import java.util.Random;
 /**
  * Created by Zerren on 9/16/2015.
  */
-public class ArmorTickHandler {
+public class CRTickHandler {
 
     Random random = new Random();
 
@@ -48,18 +48,6 @@ public class ArmorTickHandler {
                             ChainReaction.proxy.bubbleFX(event.player, (random.nextFloat() - 0.5), 0, (random.nextFloat() - 0.5));
                     }
                 }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onJump(LivingEvent.LivingJumpEvent event) {
-        if (event.entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer)event.entity;
-            ItemStack chestslot = player.inventory.armorInventory[2];
-
-            if (chestslot != null && chestslot.getItem() instanceof ItemThrustPack) {
-                player.motionY += 0.5D;
             }
         }
     }

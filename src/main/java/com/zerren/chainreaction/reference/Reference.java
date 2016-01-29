@@ -58,6 +58,7 @@ public final class Reference {
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
+            public static final ResourceLocation PRESSURIZED_WATER_REACTOR_ASSEMBLY  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor_assembly.png");
             public static final ResourceLocation TELEPORTER  = getResourceLocation(MODEL_LOCATION + "teleporter.png");
 
             //Armor

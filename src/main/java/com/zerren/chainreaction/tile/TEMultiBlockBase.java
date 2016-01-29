@@ -5,6 +5,7 @@ import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultibloc
 import com.zerren.chainreaction.reference.Names;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.UUID;
 
@@ -18,6 +19,11 @@ public class TEMultiBlockBase extends TileEntityCRBase {
     protected UUID masterID;
     protected int masterX, masterY, masterZ;
     protected boolean isMaster;
+
+    /**
+     * The byte, from left to right (when facing the complete multiblock), of this block's ID in the multiblock
+     */
+    protected byte multiblockPartNumber;
     public boolean hasMaster;
     /**
      * The UUID of this tile entity that it gives to its slaves
@@ -26,6 +32,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
 
     public TEMultiBlockBase() {
         super();
+        multiblockPartNumber = -1;
         masterID = null;
         isMaster = false;
         controllerID = null;
@@ -48,15 +55,47 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         isMaster = b;
     }
 
+    public void setMultiblockPartNumber(byte loc) {
+        this.multiblockPartNumber = loc;
+    }
+
+    public byte getMultiblockPartNumber() {
+        return multiblockPartNumber;
+    }
+
     /**
      * Returns the TEMultiBlockBase that controls this tile entity or null if there is no master
-     * @return
+     * @return TEMultiBlockBase
      */
     public TEMultiBlockBase getCommandingController() {
         if (hasValidMaster() && getMasterUUID() != null) {
             return (TEMultiBlockBase)worldObj.getTileEntity(masterX, masterY, masterZ);
         }
         return null;
+    }
+
+    protected int[] getCoreBlock(int depth) {
+        ForgeDirection direction = getOrientation();
+        int cX = 0, cZ = 0;
+
+        if (direction == ForgeDirection.NORTH) {
+            cX = xCoord;
+            cZ = zCoord + depth;
+        }
+        if (direction == ForgeDirection.EAST) {
+            cX = xCoord - depth;
+            cZ = zCoord;
+        }
+        if (direction == ForgeDirection.SOUTH) {
+            cX = xCoord;
+            cZ = zCoord - depth;
+        }
+        if (direction == ForgeDirection.WEST) {
+            cX = xCoord + depth;
+            cZ = zCoord;
+        }
+
+        return new int[] {cX, yCoord, cZ};
     }
 
     /**
@@ -154,6 +193,8 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         masterZ = tag.getInteger("masterZ");
         isMaster = tag.getBoolean("isMaster");
 
+        this.multiblockPartNumber = tag.getByte(Names.NBT.MULTIBLOCK_LOCATION);
+
         if (tag.hasKey(Names.NBT.MASTER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.MASTER_UUID_LEAST_SIG)) {
             this.masterID = new UUID(tag.getLong(Names.NBT.MASTER_UUID_MOST_SIG), tag.getLong(Names.NBT.MASTER_UUID_LEAST_SIG));
         }
@@ -171,6 +212,8 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         tag.setInteger("masterY", masterY);
         tag.setInteger("masterZ", masterZ);
         tag.setBoolean("isMaster", isMaster);
+
+        tag.setByte(Names.NBT.MULTIBLOCK_LOCATION, multiblockPartNumber);
 
         if (this.hasValidMaster()) {
             tag.setLong(Names.NBT.MASTER_UUID_MOST_SIG, masterID.getMostSignificantBits());

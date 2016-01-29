@@ -42,32 +42,8 @@ public class TEVaultController extends TEVaultBase implements IInventory {
     }
 
     public void playSFXatCore(String sfx, float volume, float pitch) {
-        int[] cPos = getCoreBlock();
+        int[] cPos = getCoreBlock(2);
         worldObj.playSoundEffect((double)cPos[0] + 0.5D, (double)cPos[1] + 0.5D, (double)cPos[2] + 0.5D, sfx, volume, pitch);
-    }
-
-    public int[] getCoreBlock() {
-        ForgeDirection direction = getOrientation();
-        int cX = 0, cZ = 0;
-
-        if (direction == ForgeDirection.NORTH) {
-            cX = xCoord;
-            cZ = zCoord + 2;
-        }
-        if (direction == ForgeDirection.EAST) {
-            cX = xCoord - 2;
-            cZ = zCoord;
-        }
-        if (direction == ForgeDirection.SOUTH) {
-            cX = xCoord;
-            cZ = zCoord - 2;
-        }
-        if (direction == ForgeDirection.WEST) {
-            cX = xCoord + 2;
-            cZ = zCoord;
-        }
-
-        return new int[] {cX, yCoord, cZ};
     }
 
     public void initiateController(UUID id, EntityPlayer player) {

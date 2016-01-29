@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.block;
 
+import com.zerren.chainreaction.client.render.block.ISBRHReactor;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -35,6 +36,6 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return 0;
+        return ISBRHReactor.model;
     }
 }

@@ -35,11 +35,6 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
     public FluidTank coolantOutputTank = new FluidTank(this.tankCapacity);
 
     /**
-     * The byte, from left to right (when facing the complete multiblock), of this block's ID in the multiblock
-     */
-    public byte slaveLocation;
-
-    /**
      * Arbitrary thermal storage used to heat a fluid--10 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 16 RF.
      * 16mb of hot coolant = 10TU--62.5TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 62TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
@@ -56,8 +51,12 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
 
     public TEHeatExchanger() {
         super();
-        slaveLocation = -1;
         thermalUnits = 0;
+    }
+
+    @Override
+    public boolean canUpdate() {
+        return true;
     }
 
     @Override
@@ -203,11 +202,6 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         this.wasteHeatUnits = units;
     }
 
-    @Override
-    public boolean canUpdate() {
-        return true;
-    }
-
     public void initiateController(UUID id, EntityPlayer player) {
         if (controllerID == null) {
             setControllerUUID(id);
@@ -219,6 +213,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         if (!this.isMaster && !this.hasValidMaster())
             if (checkMultiblock(player))  {
                 MultiblockCost.takeMaterials(player, MultiblockCost.LIQUID_HEAT_EXCHANGER, true);
+                PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(this, true, true), NetworkUtility.makeTargetPoint(this));
                 ChainReaction.proxy.playSound(this.worldObj, xCoord, yCoord, zCoord, Reference.Sounds.LOCK_SUCCESS, 1.0F, 1.0F);
             }
     }
@@ -235,7 +230,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                 TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(commander.xCoord - 2 + i, commander.yCoord, commander.zCoord);
                 if (tile != null) {
                     tile.removeController();
-                    tile.setSlaveLocation((byte)-1);
+                    tile.setMultiblockPartNumber((byte) -1);
                     PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
@@ -245,7 +240,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                 TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(commander.xCoord, commander.yCoord, commander.zCoord - 2 + i);
                 if (tile != null) {
                     tile.removeController();
-                    tile.setSlaveLocation((byte)-1);
+                    tile.setMultiblockPartNumber((byte) -1);
                     PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
@@ -292,9 +287,9 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                     TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(xCoord - 2 + i, yCoord, zCoord);
                     tile.setController(controllerID, xCoord, yCoord, zCoord);
                     if (direction == ForgeDirection.SOUTH)
-                        tile.setSlaveLocation((byte)i);
+                        tile.setMultiblockPartNumber((byte) i);
                     else
-                        tile.setSlaveLocation((byte) (-i + 4));
+                        tile.setMultiblockPartNumber((byte) (-i + 4));
                     tile.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
                     tile.setOrientation(this.getOrientation());
 
@@ -307,9 +302,9 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                     TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(xCoord, yCoord, zCoord - 2 + i);
                     tile.setController(controllerID, xCoord, yCoord, zCoord);
                     if (direction == ForgeDirection.WEST)
-                        tile.setSlaveLocation((byte)i);
+                        tile.setMultiblockPartNumber((byte) i);
                     else
-                        tile.setSlaveLocation((byte)(-i + 4));
+                        tile.setMultiblockPartNumber((byte) (-i + 4));
                     tile.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
                     tile.setOrientation(this.getOrientation());
 
@@ -323,28 +318,20 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         return counter == 5;
     }
 
-    public void setSlaveLocation(byte loc) {
-        this.slaveLocation = loc;
-    }
-
-    public byte getSlaveLocation() {
-        return slaveLocation;
-    }
-
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         int used = 0;
         FluidStack filling = resource.copy();
         TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
 
-        if (slaveLocation != -1 && !this.isMaster){
-            if (slaveLocation == 0) {
+        if (multiblockPartNumber != -1 && !this.isMaster){
+            if (multiblockPartNumber == 0) {
                 if (canFill(from, resource.getFluid())) {
                     used += master.coolantInletTank.fill(filling, doFill);
                     filling.amount -= used;
                 }
             }
-            if (slaveLocation == 1) {
+            if (multiblockPartNumber == 1) {
                 if (canFill(from, resource.getFluid())) {
                     used += master.waterTank.fill(filling, doFill);
                     filling.amount -= used;
@@ -400,7 +387,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         ForgeDirection dir = master.getOrientation();
 
         //slave 0 (coolant inlet) and is a valid coolant fluid from the left side when facing the plumbing
-        if (slaveLocation == 0 && HeatingFluid.validHeatingFluid(fluid)) {
+        if (multiblockPartNumber == 0 && HeatingFluid.validHeatingFluid(fluid)) {
             switch (dir) {
                 case NORTH: return from == ForgeDirection.EAST;
                 case EAST: return from == ForgeDirection.SOUTH;
@@ -410,7 +397,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         }
 
         //From above, valid working fluid, and slave 1 (water inlet)
-        return (from == ForgeDirection.UP) && slaveLocation == 1 && WorkingFluid.validWorkingFluid(fluid);
+        return (from == ForgeDirection.UP) && multiblockPartNumber == 1 && WorkingFluid.validWorkingFluid(fluid);
     }
 
     @Override
@@ -443,16 +430,16 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
 
         if (commander == null) return info;
 
-        if (slaveLocation == 0 && from == spinLeft(getOrientation(), false)) {
+        if (multiblockPartNumber == 0 && from == spinLeft(getOrientation(), false)) {
             info = new FluidTankInfo[] {commander.coolantInletTank.getInfo()};
         }
-        else if (slaveLocation == 1 && from == ForgeDirection.UP) {
+        else if (multiblockPartNumber == 1 && from == ForgeDirection.UP) {
             info = new FluidTankInfo[] {commander.waterTank.getInfo()};
         }
-        else if (slaveLocation == 3 && from == ForgeDirection.UP) {
+        else if (multiblockPartNumber == 3 && from == ForgeDirection.UP) {
             info = new FluidTankInfo[] {commander.steamTank.getInfo()};
         }
-        else if (slaveLocation == 4 && from == spinRight(getOrientation(), false)) {
+        else if (multiblockPartNumber == 4 && from == spinRight(getOrientation(), false)) {
             info = new FluidTankInfo[] {commander.coolantOutputTank.getInfo()};
         }
 
@@ -463,9 +450,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
-        this.slaveLocation = tag.getByte(Names.NBT.SLAVE_LOCATION);
-
-        if (slaveLocation != -1 && isMaster) {
+        if (multiblockPartNumber != -1 && isMaster) {
             this.coolantInletTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantInput"));
             this.waterTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "WorkingInput"));
             this.steamTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "WorkingOutput"));
@@ -479,9 +464,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        tag.setByte(Names.NBT.SLAVE_LOCATION, slaveLocation);
-
-        if (slaveLocation != -1 && isMaster) {
+        if (multiblockPartNumber != -1 && isMaster) {
             tag.setTag(Names.NBT.TANK + "CoolantInput", coolantInletTank.writeToNBT(new NBTTagCompound()));
             tag.setTag(Names.NBT.TANK + "WorkingInput", waterTank.writeToNBT(new NBTTagCompound()));
             tag.setTag(Names.NBT.TANK + "WorkingOutput", steamTank.writeToNBT(new NBTTagCompound()));

@@ -18,12 +18,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModItems {
 
     public static void init() {
-        CRItems.materials = new ItemCRBase(Names.Items.MATERIAL, Names.Items.MATERIAL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRItems.ingots = new ItemCRBase(Names.Items.INGOT, Names.Items.INGOT_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRItems.dusts = new ItemCRBase(Names.Items.DUST, Names.Items.DUST_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
-        CRItems.keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Reference.Textures.Folders.KEY_FOLDER, ChainReaction.cTabZE);
-        CRItems.tools = new ItemToolCR(Names.Items.TOOL, Names.Items.TOOL_SUBTYPES, 1, Reference.Textures.Folders.TOOL_FOLDER, ChainReaction.cTabZE);
-        CRItems.fuel = new ItemFuel(Names.Items.FUEL, Names.Items.FUEL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabZE);
+        CRItems.materials = new ItemCRBase(Names.Items.MATERIAL, Names.Items.MATERIAL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
+        CRItems.ingots = new ItemCRBase(Names.Items.INGOT, Names.Items.INGOT_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
+        CRItems.dusts = new ItemCRBase(Names.Items.DUST, Names.Items.DUST_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
+        CRItems.keys = new ItemKey(Names.Items.KEY, Names.Items.KEY_SUBTYPES, 1, Reference.Textures.Folders.KEY_FOLDER, ChainReaction.cTabCR);
+        CRItems.tools = new ItemToolCR(Names.Items.TOOL, Names.Items.TOOL_SUBTYPES, 1, Reference.Textures.Folders.TOOL_FOLDER, ChainReaction.cTabCR);
+        CRItems.fuel = new ItemFuel(Names.Items.FUEL, Names.Items.FUEL_SUBTYPES, Reference.Textures.Folders.MATERIAL_FOLDER, ChainReaction.cTabCR);
         CRItems.o2mask = new ItemOxygenMask(Names.Items.O2_MASK, Reference.Textures.Folders.ARMOR_FOLDER, ItemOxygenMask.material, 0, 0, 250000);
         CRItems.thrustPack = new ItemThrustPack(Names.Items.THRUST_PACK, Reference.Textures.Folders.ARMOR_FOLDER, ItemThrustPack.material, 0, 1, 0);
 

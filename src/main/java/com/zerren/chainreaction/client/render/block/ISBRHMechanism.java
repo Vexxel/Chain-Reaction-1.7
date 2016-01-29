@@ -13,12 +13,12 @@ import net.minecraft.world.IBlockAccess;
  */
 public class ISBRHMechanism extends ISBRHBase {
 
-    public static int mechModel = RenderingRegistry.getNextAvailableRenderId();
+    public static int model = RenderingRegistry.getNextAvailableRenderId();
 
     @Override
     public void renderInventoryBlock(Block block, int meta, int modelId, RenderBlocks renderer) {
         //teleporter
-        if (modelId == mechModel) {
+        if (modelId == model) {
             if (meta == 0) {
                 renderer.setRenderBounds(s0, s0, s0, s16, s16, s16);
                 renderInvBlock(block, meta, renderer);
@@ -29,7 +29,7 @@ public class ISBRHMechanism extends ISBRHBase {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 
-        if (modelId == mechModel) {
+        if (modelId == model) {
             int meta = world.getBlockMetadata(x, y, z);
             TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
 

@@ -43,7 +43,7 @@ public class BlockFluidCR extends BlockFluidClassic {
      */
     public BlockFluidCR(Fluid fluid, Material material, String name, int quanta, int tickr, float hardness, int lightOpacity) {
         super(fluid, material);
-        this.setCreativeTab(ChainReaction.cTabZE);
+        this.setCreativeTab(ChainReaction.cTabCR);
         this.setRenderPass(1);
         this.folder = Reference.Textures.Folders.FLUID_FOLDER;
         this.name = name;

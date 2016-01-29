@@ -42,7 +42,7 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return ISBRHMechanism.mechModel;
+        return ISBRHMechanism.model;
     }
 
     @SideOnly(Side.CLIENT)

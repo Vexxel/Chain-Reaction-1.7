@@ -159,7 +159,7 @@ public final class Names {
 
         public static final String THERMAL_UNITS = "thermalUnits";
         public static final String WASTEHEAT_UNITS = "wasteHeatUnits";
-        public static final String SLAVE_LOCATION = "slaveLocation";
+        public static final String MULTIBLOCK_LOCATION = "multiblockLocation";
 
         public static final String FUEL_TEMPERATURE = "temperature";
         public static final String FUEL_REMAINING = "fuelRemaining";

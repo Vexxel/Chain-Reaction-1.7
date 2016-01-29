@@ -4,7 +4,7 @@ package chainreaction.api.reactor;
  * Created by Zerren on 4/23/2015.
  */
 public enum ReactorType {
-    WATER_COOLED(FuelType.FISSION_ROD),
+    PWR(FuelType.FISSION_ROD),
     PEBBLE_BED(FuelType.FISSION_PEBBLE),
     GAS_CORE(FuelType.FISSION_GAS),
     MOLTEN_SALT(FuelType.FISSION_LIQUID),

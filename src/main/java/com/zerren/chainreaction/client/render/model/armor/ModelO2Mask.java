@@ -98,8 +98,9 @@ public class ModelO2Mask extends ModelBiped
         model.rotateAngleZ = z;
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    @Override
+    public void setRotationAngles(float v1, float v2, float v3, float v4, float v5, float v6, Entity entity) {
+        isSneak = ((entity != null) && entity.isSneaking());
+        super.setRotationAngles(v1, v2, v3, v4, v5, v6, entity);
     }
-
 }

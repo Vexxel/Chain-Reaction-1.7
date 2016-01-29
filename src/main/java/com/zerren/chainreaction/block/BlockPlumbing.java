@@ -47,14 +47,12 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-        if (player.isSneaking()) return false;
-
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float sideX, float sideY, float sideZ) {
         TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
 
         if (tile == null) return false;
         if (tile instanceof TEHeatExchanger) return activateExchanger(world, x, y, z, player, (TEHeatExchanger)tile);
-        if (tile instanceof TEDistroChamber) return activateDistroChamber(world, x, y, z, player, (TEDistroChamber) tile);
+        if (tile instanceof TEDistroChamber) return activateDistroChamber(world, x, y, z, player, (TEDistroChamber) tile, sideX, sideY, sideZ);
         if (tile instanceof TEGasTank) return activateGasTank(world, x, y, z, player, (TEGasTank) tile);
 
         return false;
@@ -100,7 +98,7 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                 CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
                 CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
                 CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
-                CoreUtility.addChat("Slave Location: " + tile.getSlaveLocation(), player);
+                CoreUtility.addChat("Slave Location: " + tile.getMultiblockPartNumber(), player);
                 return true;
             }
             if (held.getItem() == Items.arrow) {
@@ -119,7 +117,7 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         return false;
     }
 
-    private boolean activateDistroChamber(World world, int x, int y, int z, EntityPlayer player, TEDistroChamber tile) {
+    private boolean activateDistroChamber(World world, int x, int y, int z, EntityPlayer player, TEDistroChamber tile, float sideX, float sideY, float sideZ) {
         ItemStack held = player.inventory.getCurrentItem();
 
         if (tile != null && held != null) {
@@ -133,7 +131,11 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                     CoreUtility.addChat("Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
             }
             else if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z)) {
-                tile.setOrientation(CoreUtility.getLookingDirection(player, true));
+                if (player.isSneaking())
+                    tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ).getOpposite());
+                else {
+                    tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ));
+                }
                 world.markBlockForUpdate(x, y, z);
 
                 ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
@@ -226,6 +228,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return ISBRHPlumbing.plumbingModel;
+        return ISBRHPlumbing.model;
     }
 }

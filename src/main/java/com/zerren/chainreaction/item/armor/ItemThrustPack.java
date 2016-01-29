@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.EnumHelper;
 
 /**
@@ -50,12 +51,15 @@ public class ItemThrustPack extends ItemCRArmor {
     }
 
     public void thrust(EntityPlayer player) {
-        if (player.isSneaking()) {
-            player.motionY += 1D;
+        //Sneaking, not falling, not rising
+        if (player.isSneaking() && player.onGround) {
+            player.motionY += 1.05D;
             player.fallDistance = 0;
         }
-        if (player.isSprinting()) {
-
+        //sprinting on ground
+        if (player.isSprinting() && player.onGround) {
+            int i = 4;
+            player.addVelocity((double)(-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * (float)i * 0.5F), 0.5D, (double)(MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
         }
     }
 }

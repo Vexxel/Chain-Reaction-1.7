@@ -1,8 +1,12 @@
 package com.zerren.chainreaction.tile.reactor;
 
 import chainreaction.api.block.IThermalTile;
+import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultiblock;
+import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.reference.Names;
+import com.zerren.chainreaction.utility.NetworkUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,11 +28,6 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
     public final FluidTank coolantOutput = new FluidTank(this.tankCapacity);
 
     /**
-     * The short, built from this tile's x, y, and z of the completed multiblock (so the leftmost x, middle y, and back z would be 143 NOT using 0 as a value)
-     */
-    public short slaveLocation;
-
-    /**
      * Arbitrary thermal storage used to heat a fluid--10 TU can turn 1mb water to 160mb steam (RF:Steam :: 2:1), 1TU = 32 RF.
      * 5mb of hot coolant = 1TU = 200TU per 1000mb--Exchanger at peak performance consuming hot coolant produces 20TU/t = 640RF/t = 320Steam/t.
      * Each bucket of hot coolant can make 6400RF
@@ -47,9 +46,8 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
 
     public TEPressurizedWaterReactor() {
         super();
-        slaveLocation = -1;
         thermalUnits = 0;
-        this.reactorType = ReactorType.WATER_COOLED;
+        this.reactorType = ReactorType.PWR;
     }
 
     public void initiateController(UUID id, EntityPlayer player) {
@@ -60,13 +58,44 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
             setOwner(player);
         }
 
-        if (!worldObj.isRemote){
-            checkMultiblock();
+        if (!this.isMaster && !this.hasValidMaster()){
+            checkMultiblock(player);
+            MultiblockCost.takeMaterials(player, MultiblockCost.PRESSURIZED_WATER_REACTOR, true);
+            PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(this, true, true), NetworkUtility.makeTargetPoint(this));
         }
     }
 
-    private void checkMultiblock() {
+    private void checkMultiblock(EntityPlayer player) {
         
+    }
+
+    public int[] getCoreBlock() {
+        ForgeDirection direction = getOrientation();
+        int cX = 0, cZ = 0;
+
+        if (direction == ForgeDirection.NORTH) {
+            cX = xCoord;
+            cZ = zCoord + 1;
+        }
+        if (direction == ForgeDirection.EAST) {
+            cX = xCoord - 1;
+            cZ = zCoord;
+        }
+        if (direction == ForgeDirection.SOUTH) {
+            cX = xCoord;
+            cZ = zCoord - 1;
+        }
+        if (direction == ForgeDirection.WEST) {
+            cX = xCoord + 1;
+            cZ = zCoord;
+        }
+
+        return new int[] {cX, yCoord, cZ};
+    }
+
+    @Override
+    public boolean canUpdate() {
+        return true;
     }
 
     public ReactorType getReactorType() {
@@ -88,11 +117,6 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
     @Override
     public void setWasteHeat(int units) {
         this.wasteHeatUnits = units;
-    }
-
-    @Override
-    public boolean canUpdate() {
-        return true;
     }
 
     @Override
@@ -129,9 +153,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
-        this.slaveLocation = tag.getShort(Names.NBT.SLAVE_LOCATION);
-
-        if (slaveLocation != -1 && isMaster) {
+        if (multiblockPartNumber != -1 && isMaster) {
             this.coolantInput.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantInput"));
             this.coolantOutput.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "CoolantOutput"));
 
@@ -143,9 +165,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements ITher
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        tag.setShort(Names.NBT.SLAVE_LOCATION, slaveLocation);
-
-        if (slaveLocation != -1 && isMaster) {
+        if (multiblockPartNumber != -1 && isMaster) {
             tag.setTag(Names.NBT.TANK + "CoolantInput", coolantInput.writeToNBT(new NBTTagCompound()));
             tag.setTag(Names.NBT.TANK + "CoolantOutput", coolantOutput.writeToNBT(new NBTTagCompound()));
 
