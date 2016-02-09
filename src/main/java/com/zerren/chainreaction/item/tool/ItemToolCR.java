@@ -1,8 +1,10 @@
 package com.zerren.chainreaction.item.tool;
 
 import buildcraft.api.tools.IToolWrench;
-import chainreaction.api.item.IThermometer;
+import chainreaction.api.item.IScanner;
 import com.zerren.chainreaction.item.ItemCRBase;
+import com.zerren.chainreaction.reference.Names;
+import com.zerren.chainreaction.utility.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +15,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Zerren on 4/1/2015.
  */
-public class ItemToolCR extends ItemCRBase implements IToolWrench, IThermometer {
+public class ItemToolCR extends ItemCRBase implements IToolWrench, IScanner {
     public ItemToolCR(String name, String[] subtypes, int stacksize, String folder, CreativeTabs tab) {
         super(name, subtypes, stacksize, folder, tab);
         setFull3D();
@@ -31,6 +33,12 @@ public class ItemToolCR extends ItemCRBase implements IToolWrench, IThermometer 
         if (!world.isRemote) {
             if (canWrench(player, x, y, z) && block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
                 wrenchUsed(player, x, y, z);
+                return true;
+            }
+
+            if (player.isSneaking() && canScan(player, x, y, z)) {
+                byte next = (byte)(NBTHelper.getByte(stack, Names.NBT.SCANNER_MODE) + 1);
+                setMode(stack, next <= 2 ? next : 0);
                 return true;
             }
         }
@@ -53,12 +61,22 @@ public class ItemToolCR extends ItemCRBase implements IToolWrench, IThermometer 
     }
 
     @Override
-    public boolean canReadTemperature(EntityPlayer player, int x, int y, int z) {
+    public boolean canScan(EntityPlayer player, int x, int y, int z) {
         return player.inventory.getCurrentItem().getItemDamage() == 1;
     }
 
     @Override
-    public void readTemperature(EntityPlayer player, int x, int y, int z) {
+    public void scan(EntityPlayer player, int x, int y, int z) {
         player.swingItem();
+    }
+
+    @Override
+    public byte getMode(ItemStack stack) {
+        return NBTHelper.getByte(stack, Names.NBT.SCANNER_MODE);
+    }
+
+    @Override
+    public void setMode(ItemStack stack, byte mode) {
+        NBTHelper.setByte(stack, Names.NBT.SCANNER_MODE, mode);
     }
 }

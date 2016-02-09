@@ -246,18 +246,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         tag.setBoolean("allBreakable", allBreakable);
         tag.setInteger("page", page);
 
-        NBTTagList nbttaglist = new NBTTagList();
-
-        for (int i = 0; i < this.inventory.length; ++i) {
-            if (this.inventory[i] != null) {
-                NBTTagCompound itemtag = new NBTTagCompound();
-                itemtag.setShort("Slot", (short) i);
-                this.inventory[i].writeToNBT(itemtag);
-                nbttaglist.appendTag(itemtag);
-            }
-        }
-
-        tag.setTag("Items", nbttaglist);
+        writeNBTItems(tag, inventory);
 
         if (this.hasCustomInventoryName()) {
             tag.setString("CustomName", this.customName);
@@ -271,24 +260,11 @@ public class TEVaultController extends TEVaultBase implements IInventory {
         allBreakable = tag.getBoolean("allBreakable");
         page = tag.getInteger("page");
 
-        NBTTagList nbttaglist = tag.getTagList("Items", 10);
-        this.inventory = new ItemStack[this.getSizeInventory()];
-
-        if (tag.hasKey("CustomName", 8))
-        {
+        if (tag.hasKey("CustomName", 8)) {
             this.customName = tag.getString("CustomName");
         }
 
-        for (int i = 0; i < nbttaglist.tagCount(); ++i)
-        {
-            NBTTagCompound itemtag = nbttaglist.getCompoundTagAt(i);
-            int slot = itemtag.getShort("Slot");
-
-            if (slot >= 0 && slot < this.inventory.length)
-            {
-                this.inventory[slot] = ItemStack.loadItemStackFromNBT(itemtag);
-            }
-        }
+        this.inventory = readNBTItems(tag, this);
     }
 
     public int getSizeInventory() {
@@ -359,7 +335,7 @@ public class TEVaultController extends TEVaultBase implements IInventory {
     }
 
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : p_70300_1_.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && p_70300_1_.getDistanceSq((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D) <= 64.0D;
     }
 
     @Override

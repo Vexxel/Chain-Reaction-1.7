@@ -117,4 +117,17 @@ public final class CoreUtility {
 
         return ForgeDirection.UNKNOWN;
     }
+
+    public static TileEntity getTileOnOppositeFace(World world, int x, int y, int z, ForgeDirection faceClicked) {
+
+        switch (faceClicked) {
+            case EAST: return world.getTileEntity(x + ForgeDirection.WEST.offsetX, y + ForgeDirection.WEST.offsetY, z + ForgeDirection.WEST.offsetZ);
+            case WEST: return world.getTileEntity(x + ForgeDirection.EAST.offsetX, y + ForgeDirection.EAST.offsetY, z + ForgeDirection.EAST.offsetZ);
+            case UP: return world.getTileEntity(x + ForgeDirection.DOWN.offsetX, y + ForgeDirection.DOWN.offsetY, z + ForgeDirection.DOWN.offsetZ);
+            case DOWN: return world.getTileEntity(x + ForgeDirection.UP.offsetX, y + ForgeDirection.UP.offsetY, z + ForgeDirection.UP.offsetZ);
+            case SOUTH: return world.getTileEntity(x + ForgeDirection.NORTH.offsetX, y + ForgeDirection.NORTH.offsetY, z + ForgeDirection.NORTH.offsetZ);
+            case NORTH: return world.getTileEntity(x + ForgeDirection.SOUTH.offsetX, y + ForgeDirection.SOUTH.offsetY, z + ForgeDirection.SOUTH.offsetZ);
+        }
+        return null;
+    }
 }

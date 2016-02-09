@@ -45,6 +45,7 @@ public final class Reference {
             public static final ResourceLocation CHEST_BRICK = getResourceLocation(GUI_SHEET_LOCATION + "chest_brick.png");
             public static final ResourceLocation CHEST_THAUMIUM = getResourceLocation(GUI_SHEET_LOCATION + "chest_thaumium.png");
             public static final ResourceLocation CHEST_VOID = getResourceLocation(GUI_SHEET_LOCATION + "chest_voidmetal.png");
+            public static final ResourceLocation PRESSURIZED_WATER_REACTOR = getResourceLocation(GUI_SHEET_LOCATION + "pressurizedWaterReactor.png");
         }
 
         public static final class Models {
@@ -58,7 +59,6 @@ public final class Reference {
             public static final ResourceLocation TUBES  = getResourceLocation(MODEL_LOCATION + "tubes.png");
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
-            public static final ResourceLocation PRESSURIZED_WATER_REACTOR_ASSEMBLY  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor_assembly.png");
             public static final ResourceLocation TELEPORTER  = getResourceLocation(MODEL_LOCATION + "teleporter.png");
 
             //Armor
@@ -91,12 +91,13 @@ public final class Reference {
     }
 
     public static final class Tweaks {
-        public static final double TILE_PACKET_RANGE = 128;
+        public static final double TILE_PACKET_RANGE = 256;
     }
 
     public enum GUIs {
         KEY,
         VAULT,
-        CHEST
+        CHEST,
+        PWR
     }
 }

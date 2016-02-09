@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.core.registry;
 
+import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.chest.TEChestThaumium;
 import com.zerren.chainreaction.tile.chest.TEChestVoid;
@@ -19,6 +20,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public final class TileEntities {
     public static void init() {
+        GameRegistry.registerTileEntityWithAlternatives(TEMultiBlockBase.class, "multiblock", "tile.multiblock");
+
         GameRegistry.registerTileEntityWithAlternatives(TEVaultBase.class, Names.Blocks.VAULT, "tile." + Names.Blocks.VAULT);
         GameRegistry.registerTileEntityWithAlternatives(TEVaultLock.class, Names.Blocks.VAULT + "Lock", "tile." + Names.Blocks.VAULT + "Lock");
         GameRegistry.registerTileEntityWithAlternatives(TEVaultController.class, Names.Blocks.VAULT + "Controller", "tile." + Names.Blocks.VAULT + "Controller");

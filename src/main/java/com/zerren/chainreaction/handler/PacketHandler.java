@@ -18,7 +18,6 @@ public class PacketHandler {
 
     public static void init() {
         //gui to tile
-        int i = 0;
         INSTANCE.registerMessage(MessageVaultCycle.class, MessageVaultCycle.class, 0, Side.SERVER);
         //gui to player
         INSTANCE.registerMessage(MessageKeyCut.class, MessageKeyCut.class, 1, Side.SERVER);
@@ -30,6 +29,5 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, 6, Side.CLIENT);
         INSTANCE.registerMessage(MessageHotkey.class, MessageHotkey.class, 7, Side.SERVER);
         //server to player
-        //INSTANCE.registerMessage(MessageShader.class, MessageShader.class, i++, Side.CLIENT);
     }
 }

@@ -38,6 +38,8 @@ public class Recipes {
         shapelessRecipes();
         smeltingRecipes();
         fluidExchanger();
+
+
     }
 
     private static void assignOreDict() {

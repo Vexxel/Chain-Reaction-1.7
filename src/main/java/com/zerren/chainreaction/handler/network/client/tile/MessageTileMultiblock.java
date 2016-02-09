@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.handler.network.client.tile;
 
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -19,13 +20,14 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
-    public boolean isMaster, hasMaster;
+    public boolean isMaster, hasMaster, shouldRender;
+    public short multiblockPartNumber;
 
     public MessageTileMultiblock() {
 
     }
 
-    public MessageTileMultiblock(TEMultiBlockBase tile, boolean isMaster, boolean hasMaster) {
+    public MessageTileMultiblock(TEMultiBlockBase tile, boolean isMaster, boolean hasMaster, boolean shouldRender) {
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
@@ -37,6 +39,8 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
         this.ownerUUID = tile.getOwnerUUID();
         this.isMaster = isMaster;
         this.hasMaster = hasMaster;
+        this.shouldRender = shouldRender;
+        this.multiblockPartNumber = tile.getMultiblockPartNumber();
     }
 
     @Override
@@ -60,6 +64,8 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
 
         this.isMaster = buf.readBoolean();
         this.hasMaster = buf.readBoolean();
+        this.shouldRender = buf.readBoolean();
+        this.multiblockPartNumber = buf.readShort();
     }
 
     @Override
@@ -85,6 +91,8 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
 
         buf.writeBoolean(isMaster);
         buf.writeBoolean(hasMaster);
+        buf.writeBoolean(shouldRender);
+        buf.writeShort(multiblockPartNumber);
     }
 
     @Override
@@ -95,12 +103,18 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
         if (tile instanceof TEMultiBlockBase) {
 
             ((TEMultiBlockBase) tile).setOrientation(message.orientation);
+
             ((TEMultiBlockBase) tile).setState(message.state);
             ((TEMultiBlockBase) tile).setCustomName(message.customName);
             ((TEMultiBlockBase) tile).setOwnerUUID(message.ownerUUID);
             ((TEMultiBlockBase) tile).hasMaster = message.hasMaster;
-
             ((TEMultiBlockBase) tile).setAsMaster(message.isMaster);
+            ((TEMultiBlockBase) tile).setMultiblockPartNumber(message.multiblockPartNumber);
+
+            if (message.shouldRender) {
+                ChainReaction.proxy.updateTileModel((TEMultiBlockBase) tile);
+                ChainReaction.log.info("Has Master: " + ((TEMultiBlockBase) tile).hasMaster + " Is Master: " + ((TEMultiBlockBase) tile).isMaster());
+            }
         }
 
         return null;

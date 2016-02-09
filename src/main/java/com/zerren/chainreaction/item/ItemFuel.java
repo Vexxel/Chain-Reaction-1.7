@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioactiveMaterial {
 
-    public ItemFuel(String name, String[] subtypes, String folder, CreativeTabs tab) {
-        super(name, subtypes, folder, tab);
+    public ItemFuel(String name, String[] subtypes, int stacksize, String folder, CreativeTabs tab) {
+        super(name, subtypes, stacksize, folder, tab);
     }
 
     @Override
@@ -48,10 +48,7 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
 
     @Override
     public boolean isReactorFuel(ItemStack stack) {
-        switch(stack.getItemDamage()) {
-            case 2: return true;
-        }
-        return false;
+        return getFuelType(stack) != null;
     }
 
     @Override
@@ -118,7 +115,7 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
     @Override
     public ReactorType.FuelType getFuelType(ItemStack stack) {
         switch (stack.getItemDamage()) {
-            case 2: return ReactorType.FuelType.FISSION_ROD;
+            case 0: return ReactorType.FuelType.FISSION_ROD;
         }
         return null;
     }

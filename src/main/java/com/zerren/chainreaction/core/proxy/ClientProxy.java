@@ -13,6 +13,7 @@ import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
@@ -34,6 +35,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -65,6 +67,11 @@ public class ClientProxy extends CommonProxy {
 
     }
 
+    @Override
+    public void updateTileModel(TileEntityCRBase tile) {
+        FMLClientHandler.instance().getClient().renderGlobal.markBlockForRenderUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
+    }
+
     public static EntityPlayer getPlayer() {
         return Minecraft.getMinecraft().thePlayer;
     }
@@ -73,11 +80,14 @@ public class ClientProxy extends CommonProxy {
         return entity == Minecraft.getMinecraft().thePlayer;
     }
 
+    //Gets called in BlockPlumbing.java
     public void registerTexReplacements(IIconRegister registry, String folder) {
         tex_replacements[0] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "pipe_mouth");
         tex_replacements[1] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "distributionChamber_input");
     }
 
+    //Things that update a lot in accordance to their state, or large block models that take up more than a single block. Need an ItemRenderer handler as well, for
+    //items that look just like their block.
     @Override
     public void initTESR() {
         //Vault Chest
@@ -92,6 +102,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TETeleporter.class, new TESRTeleporter());
     }
 
+    //Simple block renderer--things that won't get updated (mostly ever). Good for static held items of blocks as well
     @Override
     public void initISBRH() {
         //Heat Exchanger

@@ -1,9 +1,7 @@
 package com.zerren.chainreaction.client.render.tileentity;
 
-import com.zerren.chainreaction.client.render.model.ModelPWRAssembly;
 import com.zerren.chainreaction.client.render.model.ModelPressurizedWaterReactor;
 import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,7 +17,6 @@ import org.lwjgl.opengl.GL12;
 public class TESRPressurizedWaterReactor extends TileEntitySpecialRenderer {
 
     private final ModelPressurizedWaterReactor modelReactor = new ModelPressurizedWaterReactor();
-    private final ModelPWRAssembly assembly = new ModelPWRAssembly();
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
@@ -38,16 +35,12 @@ public class TESRPressurizedWaterReactor extends TileEntitySpecialRenderer {
             GL11.glPushMatrix();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
+            GL11.glTranslatef((float) x + 0.5F, (float) y + (reactor.isMaster() ? 0.5F : 1.5F), (float) z + 0.5F);
             GL11.glScalef(1.0F, -1.0F, -1.0F);
 
             if (reactor.isMaster()) {
                 this.bindTexture(Reference.Textures.Models.PRESSURIZED_WATER_REACTOR);
                 modelReactor.render();
-            }
-            else  {
-                this.bindTexture(Reference.Textures.Models.PRESSURIZED_WATER_REACTOR_ASSEMBLY);
-                assembly.render();
             }
 
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);

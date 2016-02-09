@@ -29,6 +29,10 @@ public final class CRItems {
     /**
      * Fuel pellets, rods, etc
      */
+    public static Item fuelParts;
+    /**
+     * Actual fuel items (assemblies, pebbles)
+     */
     public static Item fuel;
 
     public static Item o2mask;

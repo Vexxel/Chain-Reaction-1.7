@@ -213,7 +213,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         if (!this.isMaster && !this.hasValidMaster())
             if (checkMultiblock(player))  {
                 MultiblockCost.takeMaterials(player, MultiblockCost.LIQUID_HEAT_EXCHANGER, true);
-                PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(this, true, true), NetworkUtility.makeTargetPoint(this));
+                PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(this, true, true, false), NetworkUtility.makeTargetPoint(this));
                 ChainReaction.proxy.playSound(this.worldObj, xCoord, yCoord, zCoord, Reference.Sounds.LOCK_SUCCESS, 1.0F, 1.0F);
             }
     }
@@ -231,7 +231,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                 if (tile != null) {
                     tile.removeController();
                     tile.setMultiblockPartNumber((byte) -1);
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
         }
@@ -241,7 +241,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                 if (tile != null) {
                     tile.removeController();
                     tile.setMultiblockPartNumber((byte) -1);
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false), NetworkUtility.makeTargetPoint(this));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, false, false, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
         }
@@ -256,7 +256,7 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
         if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH) {
             for (int i = 0; i < 5; i++) {
                 TileEntity tile = worldObj.getTileEntity(xCoord - 2 + i, yCoord, zCoord);
-                //tile exists and is a heat plumbing
+                //tile exists and is a heat exchanger
                 if (tile != null && tile instanceof TEHeatExchanger) {
                     //tile has no master
                     if (!((TEHeatExchanger) tile).hasValidMaster() || ((TEHeatExchanger) tile).getMasterUUID().compareTo(this.getControllerUUID()) == 0) {
@@ -287,14 +287,14 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                     TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(xCoord - 2 + i, yCoord, zCoord);
                     tile.setController(controllerID, xCoord, yCoord, zCoord);
                     if (direction == ForgeDirection.SOUTH)
-                        tile.setMultiblockPartNumber((byte) i);
+                        tile.setMultiblockPartNumber((short)i);
                     else
-                        tile.setMultiblockPartNumber((byte) (-i + 4));
-                    tile.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
+                        tile.setMultiblockPartNumber((short) (-i + 4));
+                    tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
                     tile.setOrientation(this.getOrientation());
 
                     setAsMaster(i == 2);
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), NetworkUtility.makeTargetPoint(this));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
             else {
@@ -302,14 +302,14 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
                     TEHeatExchanger tile = (TEHeatExchanger)worldObj.getTileEntity(xCoord, yCoord, zCoord - 2 + i);
                     tile.setController(controllerID, xCoord, yCoord, zCoord);
                     if (direction == ForgeDirection.WEST)
-                        tile.setMultiblockPartNumber((byte) i);
+                        tile.setMultiblockPartNumber((short) i);
                     else
-                        tile.setMultiblockPartNumber((byte) (-i + 4));
-                    tile.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
+                        tile.setMultiblockPartNumber((short) (-i + 4));
+                    tile.getWorldObj().markBlockForUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
                     tile.setOrientation(this.getOrientation());
 
                     setAsMaster(i == 2);
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true), NetworkUtility.makeTargetPoint(this));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileMultiblock(tile, i == 2, true, false), NetworkUtility.makeTargetPoint(this));
                 }
             }
         }
@@ -402,48 +402,33 @@ public class TEHeatExchanger extends TEMultiBlockBase implements IFluidHandler, 
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        /*TEHeatExchanger master = (TEHeatExchanger)getCommandingController();
-        ForgeDirection dir = master.getOrientation();
-
-        //coolant outlet
-        if (slaveLocation == 4) {
-
-            if (master.coolantOutputTank.getFluid() != null && master.coolantOutputTank.getFluidAmount() > 0)
-                switch (dir) {
-                    case NORTH: return from == ForgeDirection.WEST;
-                    case EAST: return from == ForgeDirection.NORTH;
-                    case SOUTH: return from == ForgeDirection.EAST;
-                    case WEST: return from == ForgeDirection.SOUTH;
-                }
+        //steam
+        if (this.getMultiblockPartNumber() == 3) {
+            return from == ForgeDirection.UP;
         }
+        //coolant
+        return this.getMultiblockPartNumber() == 4 && from == spinLeft(getOrientation(), false);
 
-        //steam outlet
-        return slaveLocation == 3 && from == ForgeDirection.UP && master.steamTank.getFluid() != null && master.steamTank.getFluidAmount() > 0;*/
-
-        return false;
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        FluidTankInfo[] info = new FluidTankInfo[] {};
-        TEHeatExchanger commander = (TEHeatExchanger)this.getCommandingController();
+        TEHeatExchanger commander = (TEHeatExchanger)getCommandingController();
 
-        if (commander == null) return info;
-
-        if (multiblockPartNumber == 0 && from == spinLeft(getOrientation(), false)) {
-            info = new FluidTankInfo[] {commander.coolantInletTank.getInfo()};
+        if (this.getMultiblockPartNumber() == 0 && from == spinRight(getOrientation(), false)) {
+            return new FluidTankInfo[] {(commander != null) ? commander.coolantInletTank.getInfo() : coolantInletTank.getInfo()};
         }
-        else if (multiblockPartNumber == 1 && from == ForgeDirection.UP) {
-            info = new FluidTankInfo[] {commander.waterTank.getInfo()};
+        else if (this.getMultiblockPartNumber() == 1 && from == ForgeDirection.UP) {
+            return new FluidTankInfo[] {(commander != null) ? commander.waterTank.getInfo() : waterTank.getInfo()};
         }
-        else if (multiblockPartNumber == 3 && from == ForgeDirection.UP) {
-            info = new FluidTankInfo[] {commander.steamTank.getInfo()};
+        else if (this.getMultiblockPartNumber() == 3 && from == ForgeDirection.UP) {
+            return new FluidTankInfo[] {(commander != null) ? commander.steamTank.getInfo() : steamTank.getInfo()};
         }
-        else if (multiblockPartNumber == 4 && from == spinRight(getOrientation(), false)) {
-            info = new FluidTankInfo[] {commander.coolantOutputTank.getInfo()};
+        else if (this.getMultiblockPartNumber() == 4 && from == spinLeft(getOrientation(), false)) {
+            return new FluidTankInfo[] {(commander != null) ? commander.coolantOutputTank.getInfo() : coolantOutputTank.getInfo()};
         }
 
-        return info;
+        return new FluidTankInfo[0];
     }
 
     @Override

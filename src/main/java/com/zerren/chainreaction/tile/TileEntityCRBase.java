@@ -5,7 +5,10 @@ import com.zerren.chainreaction.handler.network.client.tile.MessageTileCR;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.TileCache;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -112,6 +115,42 @@ public class TileEntityCRBase extends TileEntity {
 
     protected String getStringLocale() {
         return "X:" + xCoord + " Y:" + yCoord + " Z:" + zCoord;
+    }
+
+    /**
+     * Quick method for writing tile inventory contents to NBT
+     * @param tag
+     * @param inv
+     */
+    protected void writeNBTItems(NBTTagCompound tag, ItemStack[] inv) {
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < inv.length; ++i) {
+            if (inv[i] != null) {
+                NBTTagCompound itemtag = new NBTTagCompound();
+                itemtag.setShort("Slot", (short) i);
+                inv[i].writeToNBT(itemtag);
+                nbttaglist.appendTag(itemtag);
+            }
+        }
+
+        tag.setTag("Items", nbttaglist);
+    }
+
+    protected ItemStack[] readNBTItems(NBTTagCompound tag, IInventory tile) {
+        ItemStack[] inv = new ItemStack[tile.getSizeInventory()];
+        NBTTagList nbttaglist = tag.getTagList("Items", 10);
+
+        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+            NBTTagCompound itemtag = nbttaglist.getCompoundTagAt(i);
+            int slot = itemtag.getShort("Slot");
+
+            if (slot >= 0 && slot < inv.length) {
+                inv[slot] = ItemStack.loadItemStackFromNBT(itemtag);
+            }
+        }
+
+        return inv;
     }
 
     @Override

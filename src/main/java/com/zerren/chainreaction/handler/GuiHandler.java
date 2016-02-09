@@ -1,6 +1,9 @@
 package com.zerren.chainreaction.handler;
 
+import com.zerren.chainreaction.client.gui.GuiPWR;
 import com.zerren.chainreaction.tile.chest.TEChest;
+import com.zerren.chainreaction.tile.container.ContainerPWR;
+import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.client.gui.GuiChestCR;
 import com.zerren.chainreaction.client.gui.GuiKey;
@@ -32,6 +35,12 @@ public class GuiHandler implements IGuiHandler {
 
             if (chest != null) return new ContainerChestCR(player.inventory, chest);
         }
+        if (id == Reference.GUIs.PWR.ordinal()) {
+
+            TEPressurizedWaterReactor reactor = (TEPressurizedWaterReactor) world.getTileEntity(x, y, z);
+
+            if (reactor != null) return new ContainerPWR(player.inventory, reactor);
+        }
         return null;
     }
 
@@ -52,6 +61,12 @@ public class GuiHandler implements IGuiHandler {
             TEChest chest = (TEChest) world.getTileEntity(x, y, z);
 
             if (chest != null) return new GuiChestCR(player.inventory, chest);
+        }
+        if (id == Reference.GUIs.PWR.ordinal()) {
+
+            TEPressurizedWaterReactor reactor = (TEPressurizedWaterReactor) world.getTileEntity(x, y, z);
+
+            if (reactor != null) return new GuiPWR(reactor, player.inventory);
         }
         return null;
     }

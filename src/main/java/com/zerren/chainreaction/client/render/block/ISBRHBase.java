@@ -40,6 +40,26 @@ public class ISBRHBase implements ISimpleBlockRenderingHandler {
         return false;
     }
 
+    protected void renderInventoryCube(float sizeX, float sizeY, float sizeZ, float x, float y, float z, Block block, int meta, RenderBlocks renderer) {
+        float x2, y2, z2;
+        x2 = (x + sizeX) <= s16 ? x + sizeX : s16;
+        y2 = (y + sizeY) <= s16 ? y + sizeY : s16;
+        z2 = (z + sizeZ) <= s16 ? z + sizeZ : s16;
+
+        renderer.setRenderBounds(x, y, z, x2, y2, z2);
+        renderInvBlock(block, meta, renderer);
+    }
+
+    protected void renderWorldCube(float sizeX, float sizeY, float sizeZ, float x, float y, float z, Block block, int worldX, int worldY, int worldZ, RenderBlocks renderer) {
+        float x2, y2, z2;
+        x2 = (x + sizeX) <= s16 ? x + sizeX : s16;
+        y2 = (y + sizeY) <= s16 ? y + sizeY : s16;
+        z2 = (z + sizeZ) <= s16 ? z + sizeZ : s16;
+
+        renderer.setRenderBounds(x, y, z, x2, y2, z2);
+        renderer.renderStandardBlock(block, worldX, worldY, worldZ);
+    }
+
     public boolean shouldRender3DInInventory(int modelId) {
         return true;
     }

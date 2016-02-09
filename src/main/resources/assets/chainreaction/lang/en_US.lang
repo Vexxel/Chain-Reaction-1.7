@@ -26,7 +26,8 @@ tile.chainreaction:plumbing.distributionChamber.name=Fluid Distribution Chamber
 tile.chainreaction:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
 tile.chainreaction:plumbing.gasTank.name=High Pressure Gas Tank
 
-tile.chainreaction:reactor.pressurizedWaterReactor.name=Pressurized Water Reactor Assembly
+tile.chainreaction:reactor.pwrAssembly.name=Reactor Core Assembly
+tile.chainreaction:reactor.pwrCasing.name=Reactor Hull
 
 tile.chainreaction.fluid.coolantcold.name=Pressurized Water (Cold)
 tile.chainreaction.fluid.coolanthot.name=Pressurized Water (Hot)
@@ -66,6 +67,8 @@ item.chainreaction:key.emerald.name=Emerald Vault Key
 item.chainreaction:key.diamond.name=Diamond Vault Key
 
 item.chainreaction:tool.wrench.name=Nucleus Wrench
+item.chainreaction:tool.scanner.name=Multi-mode Scanner
+item.chainreaction:tool.manual.name=Nuclear Reactor Engineering
 
 item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
 item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
@@ -78,7 +81,7 @@ item.chainreaction:thrustpack.name=Thruster Pack
 
 gui.multiblock.size.name=• Multiblock Size:
 gui.multiblock.wrench.center.name=• Wrench center block to complete
-gui.multiblock.wrench.center_top.name=• Wrench top center block to complete
+gui.multiblock.wrench.center_assembly.name=• Wrench center assembly to complete
 gui.multiblock.requirement.name=• Completion Materials:
 gui.shift.name=<Hold Shift>
 
@@ -94,6 +97,8 @@ gui.item.radioactivity.minimal.name=Minimal
 gui.item.radioactivity.moderate.name=Moderate
 gui.item.radioactivity.dangerous.name=Dangerous
 gui.item.radioactivity.fatal.name=Fatal
+
+gui.item.manual.flavor.name=
 
 gui.info.controller.nokeyhole.name=This vault controller needs a locking mechanism below it.
 
@@ -116,6 +121,7 @@ gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
 
 container.vault.name=Vault
 container.chest.name=Secure Chest
+container.pwr.name=Pressurized Water Reactor
 
 itemGroup.ChainReaction=Chain Reaction
 
@@ -132,4 +138,4 @@ death.attack.thermal_low=%1$s was boiled alive
 death.attack.thermal_high=%1$s was instantly vaporized
 death.attack.rad_low=%1$s died of radiation sickness
 death.attack.rad_high=%1$s was ripped apart by pure energy
-death.attack.annihilation=%1$s was the unfortunate demonstration of the power of E=MC^2
+death.attack.annihilation=%1$s was completely annihilated

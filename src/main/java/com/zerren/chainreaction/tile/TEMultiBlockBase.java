@@ -23,7 +23,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
     /**
      * The byte, from left to right (when facing the complete multiblock), of this block's ID in the multiblock
      */
-    protected byte multiblockPartNumber;
+    protected short multiblockPartNumber;
     public boolean hasMaster;
     /**
      * The UUID of this tile entity that it gives to its slaves
@@ -55,11 +55,15 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         isMaster = b;
     }
 
-    public void setMultiblockPartNumber(byte loc) {
+    /**
+     * Short unique to each member of the multiblock. For 3D multiblocks, format is 000 (xyz). Good for multiblocks up to 9x9x9
+     * @param loc
+     */
+    public void setMultiblockPartNumber(short loc) {
         this.multiblockPartNumber = loc;
     }
 
-    public byte getMultiblockPartNumber() {
+    public short getMultiblockPartNumber() {
         return multiblockPartNumber;
     }
 
@@ -155,6 +159,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         masterY = -1;
         masterZ = 0;
         hasMaster = false;
+        multiblockPartNumber = -1;
 
         this.markDirty();
     }
@@ -193,7 +198,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         masterZ = tag.getInteger("masterZ");
         isMaster = tag.getBoolean("isMaster");
 
-        this.multiblockPartNumber = tag.getByte(Names.NBT.MULTIBLOCK_LOCATION);
+        this.multiblockPartNumber = tag.getShort(Names.NBT.MULTIBLOCK_LOCATION);
 
         if (tag.hasKey(Names.NBT.MASTER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.MASTER_UUID_LEAST_SIG)) {
             this.masterID = new UUID(tag.getLong(Names.NBT.MASTER_UUID_MOST_SIG), tag.getLong(Names.NBT.MASTER_UUID_LEAST_SIG));
@@ -213,7 +218,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         tag.setInteger("masterZ", masterZ);
         tag.setBoolean("isMaster", isMaster);
 
-        tag.setByte(Names.NBT.MULTIBLOCK_LOCATION, multiblockPartNumber);
+        tag.setShort(Names.NBT.MULTIBLOCK_LOCATION, multiblockPartNumber);
 
         if (this.hasValidMaster()) {
             tag.setLong(Names.NBT.MASTER_UUID_MOST_SIG, masterID.getMostSignificantBits());
@@ -228,6 +233,6 @@ public class TEMultiBlockBase extends TileEntityCRBase {
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageTileMultiblock(this, isMaster, hasValidMaster()));
+        return PacketHandler.INSTANCE.getPacketFrom(new MessageTileMultiblock(this, isMaster, hasValidMaster(), false));
     }
 }

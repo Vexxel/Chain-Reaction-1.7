@@ -1,7 +1,9 @@
 package com.zerren.chainreaction.block;
 
 import buildcraft.api.tools.IToolWrench;
+import chainreaction.api.item.IScanner;
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
@@ -10,6 +12,7 @@ import com.zerren.chainreaction.tile.plumbing.TEPressurePipe;
 import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.CoreUtility;
+import com.zerren.chainreaction.utility.NBTHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -62,17 +65,25 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         ItemStack held = player.inventory.getCurrentItem();
 
         if (tile != null && held != null) {
-            if (held.getItem() == Items.ghast_tear){
-                if (!world.isRemote)
-                    CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
-                return true;
+            if (held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+                byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
+
+                switch (mode) {
+                    case 0: {
+                        CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                        return true;
+                    }
+                    case 2: {
+                        if (tile.tank.getFluid() != null)
+                            CoreUtility.addChat("Fluid Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
+                        return true;
+                    }
+                    default:
+                        break;
+                }
             }
-            else if (held.getItem() == Items.arrow) {
-                if (tile.tank.getFluid() != null)
-                    CoreUtility.addChat("Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
-            }
-            else if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z)) {
-                tile.setOrientation(CoreUtility.getLookingDirection(player, true));
+            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z) && !player.isSneaking()) {
+                tile.setOrientation(CoreUtility.getLookingDirection(player, true).getOpposite());
                 world.markBlockForUpdate(x, y, z);
 
                 ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
@@ -94,24 +105,34 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         }
 
         if (tile != null && held != null && !world.isRemote) {
-            if (held.getItem() == Items.ghast_tear){
-                CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
-                CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
-                CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
-                CoreUtility.addChat("Slave Location: " + tile.getMultiblockPartNumber(), player);
-                return true;
-            }
-            if (held.getItem() == Items.arrow) {
-                if (tile.coolantInletTank.getFluid() != null)
-                    CoreUtility.addChat("Inlet tank: " + tile.coolantInletTank.getFluid().getLocalizedName() + " " + tile.coolantInletTank.getFluidAmount(), player);
-                if (tile.waterTank.getFluid() != null)
-                    CoreUtility.addChat("Water tank: " + tile.waterTank.getFluid().getLocalizedName() + " " + tile.waterTank.getFluidAmount(), player);
-                if (tile.steamTank.getFluid() != null)
-                    CoreUtility.addChat("Steam tank: " + tile.steamTank.getFluid().getLocalizedName() + " " + tile.steamTank.getFluidAmount(), player);
-                if (tile.coolantOutputTank.getFluid() != null)
-                    CoreUtility.addChat("Outlet tank: " + tile.coolantOutputTank.getFluid().getLocalizedName() + " " + tile.coolantOutputTank.getFluidAmount(), player);
+            if (held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+                byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
 
-                CoreUtility.addChat("Thermal Units: " + tile.getThermalUnits(), player);
+                switch (mode) {
+                    case 0: {
+                        CoreUtility.addChat("Controlled by: " + tile.getMasterUUID(), player);
+                        CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                        CoreUtility.addChat("Is Master: " + tile.isMaster(), player);
+                        CoreUtility.addChat("Slave Location: " + tile.getMultiblockPartNumber(), player);
+                        return true;
+                    }
+                    case 1: {
+                        CoreUtility.addChat("Thermal Units: " + tile.getThermalUnits(), player);
+                        return true;
+                    }
+                    case 2: {
+                        if (tile.coolantInletTank.getFluid() != null)
+                            CoreUtility.addChat("Inlet tank: " + tile.coolantInletTank.getFluid().getLocalizedName() + " " + tile.coolantInletTank.getFluidAmount(), player);
+                        if (tile.waterTank.getFluid() != null)
+                            CoreUtility.addChat("Water tank: " + tile.waterTank.getFluid().getLocalizedName() + " " + tile.waterTank.getFluidAmount(), player);
+                        if (tile.steamTank.getFluid() != null)
+                            CoreUtility.addChat("Steam tank: " + tile.steamTank.getFluid().getLocalizedName() + " " + tile.steamTank.getFluidAmount(), player);
+                        if (tile.coolantOutputTank.getFluid() != null)
+                            CoreUtility.addChat("Outlet tank: " + tile.coolantOutputTank.getFluid().getLocalizedName() + " " + tile.coolantOutputTank.getFluidAmount(), player);
+                        return true;
+                    }
+                    default: break;
+                }
             }
         }
         return false;
@@ -121,23 +142,29 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         ItemStack held = player.inventory.getCurrentItem();
 
         if (tile != null && held != null) {
-            if (held.getItem() == Items.ghast_tear){
-                if (!world.isRemote)
-                    CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
-                return true;
+            if (held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+                byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
+                switch (mode) {
+                    case 0: {
+                        CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                        return true;
+                    }
+                    case 2: {
+                        if (tile.tank.getFluid() != null)
+                            CoreUtility.addChat("Fluid Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
+                        return true;
+                    }
+                    default:
+                        break;
+                }
             }
-            else if (held.getItem() == Items.arrow) {
-                if (tile.tank.getFluid() != null)
-                    CoreUtility.addChat("Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
-            }
-            else if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z)) {
+            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z)) {
                 if (player.isSneaking())
                     tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ).getOpposite());
                 else {
                     tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ));
                 }
                 world.markBlockForUpdate(x, y, z);
-
                 ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
                 return true;
             }
@@ -177,7 +204,7 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         return icon[metaData];
     }
 
-    @Override
+    /*@Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         TEHeatExchanger exchanger = CoreUtility.get(world, x, y, z, TEHeatExchanger.class);
 
@@ -186,7 +213,7 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         }
 
         super.breakBlock(world, x, y, z, block, meta);
-    }
+    }*/
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {

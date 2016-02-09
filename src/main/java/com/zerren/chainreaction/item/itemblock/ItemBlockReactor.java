@@ -25,7 +25,7 @@ public class ItemBlockReactor extends ItemMultiTexture {
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4) {
         if (stack.getItemDamage() == 0) {
-            TooltipHelper.addSizeInfo(list, "3x7x3", "gui.multiblock.wrench.center_top.name");
+            TooltipHelper.addSizeInfo(list, "3x7x3", "gui.multiblock.wrench.center_assembly.name");
             TooltipHelper.addMaterialCostInfo(list, MultiblockCost.PRESSURIZED_WATER_REACTOR);
         }
     }

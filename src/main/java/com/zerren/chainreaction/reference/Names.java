@@ -52,7 +52,8 @@ public final class Names {
 
         public static final String REACTOR = "reactor";
         public static final String[] REACTOR_SUBTYPES = {
-                "pressurizedWaterReactor"
+                "pwrAssembly",
+                "pwrCasing"
         };
 
         public static final String MECHANISM = "mechanism";
@@ -103,13 +104,19 @@ public final class Names {
 
         public static final String TOOL = "tool";
         public static final String[] TOOL_SUBTYPES = {
-                "wrench"
+                "wrench",
+                "scanner",
+                "manual"
+        };
+
+        public static final String FUEL_PARTS = "fuelParts";
+        public static final String[] FUEL_PART_SUBTYPES = {
+                "fuelPelletUO2",
+                "fuelRodUO2"
         };
 
         public static final String FUEL = "fuel";
         public static final String[] FUEL_SUBTYPES = {
-                "fuelPelletUO2",
-                "fuelRodUO2",
                 "fuelAssemblyUO2"
         };
 
@@ -150,6 +157,7 @@ public final class Names {
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
         public static final String ENERGY_LEVEL = "energyLevel";
+        public static final String SCANNER_MODE = "mode";
 
         public static final String MASTER_UUID_MOST_SIG = "masterUUIDMostSig";
         public static final String MASTER_UUID_LEAST_SIG = "masterUUIDLeastSig";

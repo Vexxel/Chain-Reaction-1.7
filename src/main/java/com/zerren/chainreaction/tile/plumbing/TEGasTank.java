@@ -97,7 +97,8 @@ public class TEGasTank extends TileEntityCRBase implements IFluidHandler {
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return new FluidTankInfo[]{this.tank.getInfo()};
+        if (from.ordinal() <= 1) return new FluidTankInfo[]{this.tank.getInfo()};
+        return new FluidTankInfo[0];
     }
 
     @Override

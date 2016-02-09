@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.block;
 
+import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -98,6 +99,12 @@ public class BlockCR extends Block {
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+        TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
+
+        if (tile != null && tile instanceof TEMultiBlockBase && (((TEMultiBlockBase)tile).hasValidMaster() || ((TEMultiBlockBase)tile).isMaster())) {
+            ((TEMultiBlockBase)tile).getCommandingController().invalidateMultiblock();
+        }
+
         dropInventory(world, x, y, z);
         super.breakBlock(world, x, y, z, block, meta);
     }
