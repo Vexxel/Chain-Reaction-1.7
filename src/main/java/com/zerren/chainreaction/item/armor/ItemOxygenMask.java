@@ -1,8 +1,10 @@
 package com.zerren.chainreaction.item.armor;
 
+import cofh.api.energy.IEnergyContainerItem;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.item.ItemCRArmor;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.utility.NBTHelper;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,8 +15,11 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.List;
@@ -23,9 +28,9 @@ import java.util.List;
  * Created by Zerren on 9/1/2015.
  */
 @Optional.InterfaceList({
-        @Optional.Interface(iface = "ic2.api.item.IElectricItem", modid = "IC2")
+        @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHCore")
 })
-public class ItemOxygenMask extends ItemCRArmor implements IElectricItem {
+public class ItemOxygenMask extends ItemCRArmor implements IEnergyContainerItem {
 
     public double maxEnergy;
 
@@ -35,8 +40,13 @@ public class ItemOxygenMask extends ItemCRArmor implements IElectricItem {
     public ItemOxygenMask(String name, String folder, ArmorMaterial material, int renderslot, int slot, double maxEnergy) {
         super(name, folder, material, renderslot, slot);
         this.maxEnergy = maxEnergy;
-        this.setMaxDamage(27);
         setNoRepair();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean adv) {
+        String stored = this.getEnergyStored(stack)+"/"+this.getMaxEnergyStored(stack);
+        list.add(StatCollector.translateToLocalFormatted("Energy: " + stored));
     }
 
     @Override
@@ -57,40 +67,38 @@ public class ItemOxygenMask extends ItemCRArmor implements IElectricItem {
     }
 
     @Override
-    public boolean canProvideEnergy(ItemStack itemStack) {
-        return false;
+    public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate)
+    {
+        int stored = getEnergyStored(container);
+        int accepted = Math.min(maxReceive, getMaxEnergyStored(container)-stored);
+        if(!simulate)
+        {
+            stored += accepted;
+            NBTHelper.setInt(container, "energy", stored);
+        }
+        return accepted;
+    }
+    @Override
+    public int extractEnergy(ItemStack container, int maxExtract, boolean simulate)
+    {
+        int stored = getEnergyStored(container);
+        int extracted = Math.min(maxExtract, stored);
+        if(!simulate)
+        {
+            stored -= extracted;
+            NBTHelper.setInt(container, "energy", stored);
+        }
+        return extracted;
     }
 
     @Override
-    public Item getChargedItem(ItemStack itemStack) {
-        return this;
+    public int getEnergyStored(ItemStack container)
+    {
+        return NBTHelper.getInt(container, "energy");
     }
-
     @Override
-    public Item getEmptyItem(ItemStack itemStack) {
-        return this;
-    }
-
-    @Override
-    public double getMaxCharge(ItemStack itemStack) {
-        return maxEnergy;
-    }
-
-    @Override
-    public int getTier(ItemStack itemStack) {
-        return 1;
-    }
-
-    @Override
-    public double getTransferLimit(ItemStack itemStack) {
-        return 128;
-    }
-
-    @Override
-    public void getSubItems(Item item, CreativeTabs tabs, List list) {
-        ItemStack full = new ItemStack(this, 1);
-        ElectricItem.manager.charge(full, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-        list.add(full);
-        list.add(new ItemStack(this, 1, this.getMaxDamage()));
+    public int getMaxEnergyStored(ItemStack container)
+    {
+        return 100000;
     }
 }

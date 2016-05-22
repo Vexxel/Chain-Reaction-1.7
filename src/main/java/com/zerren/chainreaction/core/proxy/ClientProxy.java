@@ -15,6 +15,7 @@ import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
+import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
@@ -56,7 +57,7 @@ public class ClientProxy extends CommonProxy {
     public static final Map<Item, ModelBiped> armorModels = new HashMap<Item, ModelBiped>();
 
     @SideOnly(Side.CLIENT)
-    public static final IIcon[] tex_replacements = new IIcon[2];
+    public static final IIcon[] tex_replacements = new IIcon[3];
 
     public ClientProxy getClientProxy() {
         return this;
@@ -68,7 +69,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void updateTileModel(TileEntityCRBase tile) {
+    public void updateTileModel(TileEntity tile) {
         FMLClientHandler.instance().getClient().renderGlobal.markBlockForRenderUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
     }
 
@@ -78,12 +79,6 @@ public class ClientProxy extends CommonProxy {
 
     public boolean isTheClientPlayer(EntityLivingBase entity) {
         return entity == Minecraft.getMinecraft().thePlayer;
-    }
-
-    //Gets called in BlockPlumbing.java
-    public void registerTexReplacements(IIconRegister registry, String folder) {
-        tex_replacements[0] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "pipe_mouth");
-        tex_replacements[1] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "distributionChamber_input");
     }
 
     //Things that update a lot in accordance to their state, or large block models that take up more than a single block. Need an ItemRenderer handler as well, for
@@ -100,6 +95,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEPressurizedWaterReactor.class, new TESRPressurizedWaterReactor());
         //Teleporter
         ClientRegistry.bindTileEntitySpecialRenderer(TETeleporter.class, new TESRTeleporter());
+        //Bloomery
+        ClientRegistry.bindTileEntitySpecialRenderer(TEBloomery.class, new TESRBloomery());
     }
 
     //Simple block renderer--things that won't get updated (mostly ever). Good for static held items of blocks as well

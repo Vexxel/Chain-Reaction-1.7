@@ -56,10 +56,6 @@ public class ItemCRBase extends Item {
         return String.format("item.%s%s.%s", Reference.ModInfo.CR_RESOURCE_PREFIX, itemName, itemSubtypes[MathHelper.clamp_int(itemStack.getItemDamage(), 0, itemSubtypes.length - 1)]);
     }
 
-    protected String unwrapName(String unlocalizedName) {
-        return unlocalizedName.substring(unlocalizedName.indexOf(".") + 1);
-    }
-
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int meta) {

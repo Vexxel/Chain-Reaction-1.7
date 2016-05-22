@@ -37,4 +37,5 @@ public final class CRItems {
 
     public static Item o2mask;
     public static Item thrustPack;
+    public static Item musicDisc;
 }

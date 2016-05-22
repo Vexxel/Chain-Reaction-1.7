@@ -78,7 +78,7 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         return null;
     }
 
-    protected int[] getCoreBlock(int depth) {
+    public int[] getCoreBlock(int depth) {
         ForgeDirection direction = getOrientation();
         int cX = 0, cZ = 0;
 
@@ -132,6 +132,10 @@ public class TEMultiBlockBase extends TileEntityCRBase {
 
         //has a commanding UUID, the commander isn't null, and the commander's UUID matches this tile's UUID
         return getMasterUUID() != null && masterTile.getControllerUUID().compareTo(getMasterUUID()) == 0;
+    }
+
+    public boolean isFormed() {
+        return multiblockPartNumber != -1;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.core.tick;
 
+import cofh.api.energy.IEnergyContainerItem;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
@@ -44,6 +45,17 @@ public class CRTickHandler {
                     if (air <= 150 && charge >= breathEnergy) {
                         player.setAir(300);
                         ElectricItem.manager.discharge(headslot, breathEnergy, 5, true, false, false);
+                        for (int i = 0; i < 4; i++)
+                            ChainReaction.proxy.bubbleFX(event.player, (random.nextFloat() - 0.5), 0, (random.nextFloat() - 0.5));
+                    }
+                }
+                if (Loader.isModLoaded("CoFHCore")) {
+                    int charge = ((IEnergyContainerItem)headslot.getItem()).getEnergyStored(headslot);
+                    int air = player.getAir();
+
+                    if (air <= 150 && charge >= breathEnergy) {
+                        player.setAir(300);
+                        ((IEnergyContainerItem) headslot.getItem()).extractEnergy(headslot, breathEnergy, false);
                         for (int i = 0; i < 4; i++)
                             ChainReaction.proxy.bubbleFX(event.player, (random.nextFloat() - 0.5), 0, (random.nextFloat() - 0.5));
                     }

@@ -1,9 +1,11 @@
 package com.zerren.chainreaction.client.render.block;
 
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
@@ -58,6 +60,12 @@ public class ISBRHBase implements ISimpleBlockRenderingHandler {
 
         renderer.setRenderBounds(x, y, z, x2, y2, z2);
         renderer.renderStandardBlock(block, worldX, worldY, worldZ);
+    }
+
+    protected void renderOverrideWorldCube(float sizeX, float sizeY, float sizeZ, float x, float y, float z, Block block, int worldX, int worldY, int worldZ, RenderBlocks renderer, IIcon tex) {
+        renderer.setOverrideBlockTexture(tex);
+        renderWorldCube(sizeX, sizeY, sizeZ, x, y, z, block, worldX, worldY, worldZ, renderer);
+        renderer.clearOverrideBlockTexture();
     }
 
     public boolean shouldRender3DInInventory(int modelId) {

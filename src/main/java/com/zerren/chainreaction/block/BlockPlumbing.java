@@ -3,6 +3,7 @@ package com.zerren.chainreaction.block;
 import buildcraft.api.tools.IToolWrench;
 import chainreaction.api.item.IScanner;
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
@@ -179,15 +180,17 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister) {
-        super.registerBlockIcons(iconRegister);
+    public void registerBlockIcons(IIconRegister registry) {
+        super.registerBlockIcons(registry);
 
         tubes = new IIcon[2];
 
-        ChainReaction.proxy.registerTexReplacements(iconRegister, folder);
+        ClientProxy.tex_replacements[0] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "pipe_mouth");
+        ClientProxy.tex_replacements[1] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "stainlessPipe");
+        ClientProxy.tex_replacements[2] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "distributionChamber_input");
 
-        tubes[0] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_front");
-        tubes[1] = iconRegister.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_side");
+        tubes[0] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_front");
+        tubes[1] = registry.registerIcon(Reference.ModInfo.CR_RESOURCE_PREFIX + folder + "tubes_side");
     }
 
     @Override
@@ -198,6 +201,12 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
             switch (side) {
                 case 2:case 4: return tubes[0];
                 default: return tubes[1];
+            }
+        }
+        //pipe
+        if (metaData == 2) {
+            switch (side) {
+                case 0:case 1: return ClientProxy.tex_replacements[0];
             }
         }
         metaData = MathHelper.clamp_int(metaData, 0, subtypes.length - 1);

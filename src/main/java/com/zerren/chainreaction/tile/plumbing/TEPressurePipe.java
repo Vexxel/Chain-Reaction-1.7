@@ -8,6 +8,12 @@ import net.minecraftforge.fluids.*;
  * Created by Zerren on 4/9/2015.
  */
 public class TEPressurePipe extends TileEntityCRBase implements IFluidHandler{
+
+    @Override
+    public boolean canUpdate() {
+        return false;
+    }
+
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         return 0;

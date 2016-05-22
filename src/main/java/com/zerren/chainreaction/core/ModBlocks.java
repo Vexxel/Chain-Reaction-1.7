@@ -25,7 +25,7 @@ public class ModBlocks {
         CRBlocks.chest = new BlockCRChest(Names.Blocks.CHEST, Names.Blocks.CHEST_SUBTYPES, Material.rock, 3F, 15F, Block.soundTypeStone, Reference.Textures.Folders.VAULT_FOLDER, ChainReaction.cTabCR);
         CRBlocks.plumbing = new BlockPlumbing(Names.Blocks.PLUMBING, Names.Blocks.PLUMBING_SUBTYPES, Material.iron, 3F, 10F, Block.soundTypeMetal, Reference.Textures.Folders.PLUMBING_FOLDER, ChainReaction.cTabCR);
         CRBlocks.reactor = new BlockReactor(Names.Blocks.REACTOR, Names.Blocks.REACTOR_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.REACTOR_FOLDER, ChainReaction.cTabCR);
-        CRBlocks.mechanism = new BlockMechanism(Names.Blocks.MECHANISM, Names.Blocks.MECHANISM_SUBTYPES, Material.iron, 3F, 15F, Block.soundTypeMetal, Reference.Textures.Folders.MECHANISM_FOLDER, ChainReaction.cTabCR);
+        CRBlocks.mechanism = new BlockMechanism(Names.Blocks.MECHANISM, Names.Blocks.MECHANISM_SUBTYPES, Material.rock, 2F, 10F, Block.soundTypeStone, Reference.Textures.Folders.MECHANISM_FOLDER, ChainReaction.cTabCR);
 
         register();
     }

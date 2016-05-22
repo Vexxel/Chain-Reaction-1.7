@@ -1,35 +1,26 @@
 package com.zerren.chainreaction.tile.reactor;
 
 import chainreaction.api.block.IThermalTile;
+import chainreaction.api.reactor.ReactorType;
 import com.zerren.chainreaction.ChainReaction;
-import com.zerren.chainreaction.core.proxy.ClientProxy;
-import com.zerren.chainreaction.core.proxy.CommonProxy;
-import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultiblock;
 import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.reference.MultiblockShape;
+import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
-import com.zerren.chainreaction.reference.Names;
-import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
-import com.zerren.chainreaction.tile.vault.TEVaultBase;
-import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.NetworkUtility;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
-import chainreaction.api.reactor.ReactorType;
 
 import java.util.UUID;
 
@@ -59,12 +50,15 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
 
     private short updateCounter;
 
+    private short controlRodDepth;
+
     private final ReactorType reactorType;
 
     public TEPressurizedWaterReactor() {
         super();
         thermalUnits = 0;
         this.reactorType = ReactorType.PWR;
+        controlRodDepth = 100;
     }
 
     @Override
@@ -89,6 +83,21 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
                 ChainReaction.proxy.playSound(this.worldObj, xCoord, yCoord, zCoord, Reference.Sounds.LOCK_SUCCESS, 1.0F, 1.0F);
             }
         }
+    }
+
+    public short getControlRodDepth() {
+        return this.controlRodDepth;
+    }
+
+    /**
+     * Depth of control rods. 100 is fully inserted and is effectively "off".
+     * @param depth how far the control rods are inserted. 100 = full, 0 = none
+     */
+    public void setControlRodDepth(short depth)  {
+        if (depth > 100) depth = 100;
+        else if (depth < 0) depth = 0;
+
+        this.controlRodDepth = depth;
     }
 
     private boolean checkMultiblock(EntityPlayer player) {

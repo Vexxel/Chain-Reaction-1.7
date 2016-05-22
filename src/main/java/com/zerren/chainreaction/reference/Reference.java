@@ -46,6 +46,7 @@ public final class Reference {
             public static final ResourceLocation CHEST_THAUMIUM = getResourceLocation(GUI_SHEET_LOCATION + "chest_thaumium.png");
             public static final ResourceLocation CHEST_VOID = getResourceLocation(GUI_SHEET_LOCATION + "chest_voidmetal.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR = getResourceLocation(GUI_SHEET_LOCATION + "pressurizedWaterReactor.png");
+            public static final ResourceLocation BLOOMERY = getResourceLocation(GUI_SHEET_LOCATION + "bloomery.png");
         }
 
         public static final class Models {
@@ -60,6 +61,8 @@ public final class Reference {
             public static final ResourceLocation GAS_TANK  = getResourceLocation(MODEL_LOCATION + "gasTank.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR  = getResourceLocation(MODEL_LOCATION + "pressurizedWaterReactor.png");
             public static final ResourceLocation TELEPORTER  = getResourceLocation(MODEL_LOCATION + "teleporter.png");
+            public static final ResourceLocation BLOOMERY_OFF  = getResourceLocation(MODEL_LOCATION + "bloomery_off.png");
+            public static final ResourceLocation BLOOMERY_ON  = getResourceLocation(MODEL_LOCATION + "bloomery_on.png");
 
             //Armor
             public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");
@@ -71,10 +74,6 @@ public final class Reference {
 
             public static final ResourceLocation PARTICLES = getResourceLocation(MISC_LOCATION + "particles.png");
             public static final ResourceLocation DEFAULT_BLOCK_TEXTURES = TextureMap.locationBlocksTexture;
-        }
-
-        public static ResourceLocation getResourceLocation(String path) {
-            return new ResourceLocation(ModInfo.MOD_ID.toLowerCase(), path);
         }
     }
 
@@ -88,6 +87,12 @@ public final class Reference {
         public static final String LOCK_SUCCESS = ModInfo.CR_RESOURCE_PREFIX + "lock_success";
         public static final String LOCK_FAILURE = ModInfo.CR_RESOURCE_PREFIX + "lock_failure";
         public static final String LOCK_RATTLE = ModInfo.CR_RESOURCE_PREFIX + "lock_rattle";
+
+        public static final String RECORDS = ModInfo.CR_RESOURCE_PREFIX;
+    }
+
+    public static ResourceLocation getResourceLocation(String path) {
+        return new ResourceLocation(ModInfo.MOD_ID.toLowerCase(), path);
     }
 
     public static final class Tweaks {
@@ -98,6 +103,7 @@ public final class Reference {
         KEY,
         VAULT,
         CHEST,
-        PWR
+        PWR,
+        BLOOMERY
     }
 }

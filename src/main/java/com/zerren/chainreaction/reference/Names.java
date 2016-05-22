@@ -58,7 +58,8 @@ public final class Names {
 
         public static final String MECHANISM = "mechanism";
         public static final String[] MECHANISM_SUBTYPES = {
-                "teleporter"
+                "teleporter",
+                "bloomery"
         };
     }
 
@@ -122,6 +123,11 @@ public final class Names {
 
         public static final String O2_MASK = "o2mask";
         public static final String THRUST_PACK = "thrustpack";
+
+        public static final String RECORDS = "record";
+        public static final String[] RECORD_SUBTYPES = {
+                "industrial"
+        };
     }
 
     public static final class Fluids {

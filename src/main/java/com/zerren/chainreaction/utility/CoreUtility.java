@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
@@ -15,6 +16,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zerren on 2/21/2015.
@@ -129,5 +133,13 @@ public final class CoreUtility {
             case NORTH: return world.getTileEntity(x + ForgeDirection.SOUTH.offsetX, y + ForgeDirection.SOUTH.offsetY, z + ForgeDirection.SOUTH.offsetZ);
         }
         return null;
+    }
+
+    public static boolean hasDictionaryMatch(ItemStack stack, String dictionary) {
+        ArrayList<ItemStack> ores = OreDictionary.getOres(dictionary);
+        for (ItemStack ore : ores) {
+            if (stack.getItem() == ore.getItem() && stack.getItemDamage() == ore.getItemDamage()) return true;
+        }
+        return false;
     }
 }

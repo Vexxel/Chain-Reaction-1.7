@@ -1,7 +1,10 @@
 package com.zerren.chainreaction.reference;
 
 import chainreaction.api.block.CRBlocks;
+import com.zerren.chainreaction.block.BlockCR;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -36,6 +39,17 @@ public final class MultiblockShape {
         }
     }
 
+    public static MultiblockShape[][][] bloomery = new MultiblockShape[3][4][3];
+    static {
+        for (int h = 0; h < 4; h++) {
+            for (int l = 0; l < 3; l++) {
+                for (int d = 0; d < 3; d++) {
+                    bloomery[l][h][d] = new MultiblockShape(CRBlocks.mechanism, 1);
+                }
+            }
+        }
+    }
+
     public MultiblockShape(Block block, int meta) {
         this.block = block;
         this.meta = meta;
@@ -46,6 +60,7 @@ public final class MultiblockShape {
     }
 
     public Block getBlock() {
+        if (this.block == null) return Blocks.air;
         return this.block;
     }
 }

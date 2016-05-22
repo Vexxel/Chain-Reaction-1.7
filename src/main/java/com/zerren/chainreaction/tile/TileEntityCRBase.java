@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.tile;
 
+import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileCR;
 import com.zerren.chainreaction.reference.Names;
@@ -199,4 +200,5 @@ public class TileEntityCRBase extends TileEntity {
     public Packet getDescriptionPacket() {
         return PacketHandler.INSTANCE.getPacketFrom(new MessageTileCR(this));
     }
+
 }

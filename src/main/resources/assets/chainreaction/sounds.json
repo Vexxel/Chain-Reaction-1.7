@@ -25,5 +25,14 @@
                     "stream": false
                 }
             ]
-        }
+        },
+    "records.industrial": {
+        "category": "record",
+        "sounds": [
+            {
+                "name": "records/industrial",
+                "stream": "true"
+            }
+        ]
+    }
 }

@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.block;
 
+import chainreaction.api.block.IInventoryCR;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.reference.Reference;
@@ -98,18 +99,6 @@ public class BlockCR extends Block {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-        TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
-
-        if (tile != null && tile instanceof TEMultiBlockBase && (((TEMultiBlockBase)tile).hasValidMaster() || ((TEMultiBlockBase)tile).isMaster())) {
-            ((TEMultiBlockBase)tile).getCommandingController().invalidateMultiblock();
-        }
-
-        dropInventory(world, x, y, z);
-        super.breakBlock(world, x, y, z, block, meta);
-    }
-
-    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
 
         if (world.getTileEntity(x, y, z) instanceof TileEntityCRBase) {
@@ -120,6 +109,53 @@ public class BlockCR extends Block {
 
             ((TileEntityCRBase) world.getTileEntity(x, y, z)).setOrientation(CoreUtility.getLookingDirection(entity, tile.canFaceUpDown()).getOpposite());
         }
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+        TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
+
+        if (tile != null && tile instanceof TEMultiBlockBase && (((TEMultiBlockBase)tile).hasValidMaster() || ((TEMultiBlockBase)tile).isMaster())) {
+            if (((TEMultiBlockBase) tile).getCommandingController() instanceof IInventoryCR) {
+                dropInventoryProxy(world, x, y, z, ((IInventoryCR)((TEMultiBlockBase) tile).getCommandingController()));
+            }
+
+            ((TEMultiBlockBase)tile).getCommandingController().invalidateMultiblock();
+        }
+
+        dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, meta);
+    }
+
+    protected void dropInventoryProxy(World world, int x, int y, int z, IInventoryCR inv) {
+
+        for (int i = 0; i < inv.getSizeInventory(); i++)  {
+            ItemStack itemStack = inv.getStackInSlot(i);
+
+            if (itemStack != null && itemStack.stackSize > 0) {
+                Random rand = new Random();
+
+                float dX = rand.nextFloat() * 0.8F + 0.1F;
+                float dY = rand.nextFloat() * 0.8F + 0.1F;
+                float dZ = rand.nextFloat() * 0.8F + 0.1F;
+
+                EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
+
+                if (itemStack.hasTagCompound()) {
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                }
+
+                float factor = 0.05F;
+                entityItem.motionX = rand.nextGaussian() * factor;
+                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+                entityItem.motionZ = rand.nextGaussian() * factor;
+                world.spawnEntityInWorld(entityItem);
+                itemStack.stackSize = 0;
+            }
+        }
+
+        inv.clearInventory();
+
     }
 
     protected void dropInventory(World world, int x, int y, int z)

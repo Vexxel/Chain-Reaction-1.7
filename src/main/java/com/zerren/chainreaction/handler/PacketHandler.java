@@ -17,17 +17,19 @@ public class PacketHandler {
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.ModInfo.MOD_ID.toLowerCase());
 
     public static void init() {
+        int index = 0;
         //gui to tile
-        INSTANCE.registerMessage(MessageVaultCycle.class, MessageVaultCycle.class, 0, Side.SERVER);
+        INSTANCE.registerMessage(MessageVaultCycle.class, MessageVaultCycle.class, index++, Side.SERVER);
         //gui to player
-        INSTANCE.registerMessage(MessageKeyCut.class, MessageKeyCut.class, 1, Side.SERVER);
+        INSTANCE.registerMessage(MessageKeyCut.class, MessageKeyCut.class, index++, Side.SERVER);
         //client TE updates
-        INSTANCE.registerMessage(MessageTileCR.class, MessageTileCR.class, 2, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileVault.class, MessageTileVault.class, 3, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileChest.class, MessageTileChest.class, 4, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, 5, Side.CLIENT);
-        INSTANCE.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, 6, Side.CLIENT);
-        INSTANCE.registerMessage(MessageHotkey.class, MessageHotkey.class, 7, Side.SERVER);
+        INSTANCE.registerMessage(MessageTileCR.class, MessageTileCR.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileVault.class, MessageTileVault.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileChest.class, MessageTileChest.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileMultiblock.class, MessageTileMultiblock.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageTileGasTank.class, MessageTileGasTank.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageHotkey.class, MessageHotkey.class, index++, Side.SERVER);
+        INSTANCE.registerMessage(MessageTileBloomery.class, MessageTileBloomery.class, index++, Side.CLIENT);
         //server to player
     }
 }

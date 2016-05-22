@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -23,7 +24,7 @@ public class CommonProxy {
 
     public void initArmorRender() { }
 
-    public void updateTileModel(TileEntityCRBase tile) { }
+    public void updateTileModel(TileEntity tile) { }
 
     public void playSoundCentered(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }
     public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }

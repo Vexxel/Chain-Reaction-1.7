@@ -4,6 +4,7 @@ import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.chest.TEChestThaumium;
 import com.zerren.chainreaction.tile.chest.TEChestVoid;
+import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
@@ -36,5 +37,6 @@ public final class TileEntities {
         GameRegistry.registerTileEntityWithAlternatives(TEGasTank.class, Names.Blocks.PLUMBING + "GasTank", "tile." + Names.Blocks.PLUMBING + "GasTank");
 
         GameRegistry.registerTileEntityWithAlternatives(TEPressurizedWaterReactor.class, Names.Blocks.REACTOR, "tile." + Names.Blocks.REACTOR);
+        GameRegistry.registerTileEntityWithAlternatives(TEBloomery.class, Names.Blocks.MECHANISM, "tile." + Names.Blocks.MECHANISM + "Bloomery");
     }
 }

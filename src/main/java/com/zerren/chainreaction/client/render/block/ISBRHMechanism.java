@@ -20,8 +20,10 @@ public class ISBRHMechanism extends ISBRHBase {
         //teleporter
         if (modelId == model) {
             if (meta == 0) {
-                renderer.setRenderBounds(s0, s0, s0, s16, s16, s16);
-                renderInvBlock(block, meta, renderer);
+                renderInventoryCube(s16, s16, s16, s0, s0, s0, block, meta, renderer);
+            }
+            if (meta == 1) {
+                renderInventoryCube(s16, s16, s16, s0, s0, s0, block, meta, renderer);
             }
         }
     }
@@ -40,10 +42,21 @@ public class ISBRHMechanism extends ISBRHBase {
                 renderer.renderStandardBlock(block, x, y, z);
 
             }
+            if (meta == 1 && tile instanceof TEMultiBlockBase) {
+                if (((TEMultiBlockBase) tile).isMaster() || ((TEMultiBlockBase) tile).hasMaster) {
+                    return false;
+                }
+                renderWorldCube(s16, s16, s16, s0, s0, s0, block, x, y, z, renderer);
+                return false;
+            }
         }
 
         return false;
     }
 
+    @Override
+    public int getRenderId() {
+        return model;
+    }
 
 }

@@ -36,6 +36,7 @@ tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
 tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
 
 tile.chainreaction:mechanism.teleporter.name=Teleporter
+tile.chainreaction:mechanism.bloomery.name=Bloomery Brick
 
 
 # Item localizations --------------------------------------------------------------------
@@ -69,6 +70,7 @@ item.chainreaction:key.diamond.name=Diamond Vault Key
 item.chainreaction:tool.wrench.name=Nucleus Wrench
 item.chainreaction:tool.scanner.name=Multi-mode Scanner
 item.chainreaction:tool.manual.name=Nuclear Reactor Engineering
+item.record.industrial.desc=Kevin MacLeod - Industrial Revolution
 
 item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
 item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
@@ -122,6 +124,7 @@ gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
 container.vault.name=Vault
 container.chest.name=Secure Chest
 container.pwr.name=Pressurized Water Reactor
+container.bloomery.name=Bloomery
 
 itemGroup.ChainReaction=Chain Reaction
 

@@ -1,5 +1,8 @@
 package com.zerren.chainreaction.client.render.block;
 
+import chainreaction.api.block.CRBlocks;
+import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.block.BlockPlumbing;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -62,9 +65,9 @@ public class ISBRHPlumbing extends ISBRHBase {
             }
             //pipe
             else if (metadata == 2) {
-
-                renderer.setRenderBounds(s4, s0, s4, s12, s16, s12);
-                renderInvBlock(block, metadata, renderer);
+                renderInventoryCube(s10, s16, s10, s3, s0, s3, block, metadata, renderer);
+                renderInventoryCube(s12, s2, s12, s2, s0, s2, block, metadata, renderer);
+                renderInventoryCube(s12, s2, s12, s2, s14, s2, block, metadata, renderer);
             }
         }
     }
@@ -78,8 +81,8 @@ public class ISBRHPlumbing extends ISBRHBase {
 
             //distribution chamber
             if (meta == 1) {
-                ForgeDirection dir = tile.getOrientation();
-                IIcon newicon = ClientProxy.tex_replacements[1];
+                ForgeDirection dir = tile != null ? tile.getOrientation() : ForgeDirection.UNKNOWN;
+                IIcon newicon = ClientProxy.tex_replacements[2];
 
                 //core
                 renderer.setRenderBounds(s1, s1, s1, s15, s15, s15);
@@ -115,83 +118,44 @@ public class ISBRHPlumbing extends ISBRHBase {
 
             //pipe
             else if (meta == 2) {
-                //if the small 6x6x6 core should render (a standalone pipe)
-                byte renderCore = 0;
-                //-x, x, -y, y, -z, z
-                byte[] config = {0, 0, 0, 0, 0, 0};
+                renderer.setOverrideBlockTexture(ClientProxy.tex_replacements[1]);
 
-                renderer.setOverrideBlockTexture(ClientProxy.tex_replacements[0]);
+                //core
+                renderWorldCube(s10, s10, s10, s3, s3, s3, block, x, y, z, renderer);
+
+                IIcon tex = ClientProxy.tex_replacements[0];
 
                 //x axis
                 if (world.getTileEntity(x - 1, y, z) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s0, s4, s4, s4, s12, s12);
-                    renderer.renderStandardBlock(block, x, y, z);
-
-                    config[0] = 1;
-                    renderCore++;
+                    renderWorldCube(s1, s10, s10, s2, s3, s3, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s2, s12, s12, s0, s2, s2, block, x, y, z, renderer, tex);
                 }
-                if (world.getTileEntity(x + 1, y, z) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s12, s4, s4, s16, s12, s12);
-                    renderer.renderStandardBlock(block, x, y, z);
 
-                    config[1] = 1;
-                    renderCore++;
+                if (world.getTileEntity(x + 1, y, z) instanceof IFluidHandler) {
+                    renderWorldCube(s1, s10, s10, s13, s3, s3, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s2, s12, s12, s14, s2, s2, block, x, y, z, renderer, tex);
                 }
 
                 //y axis
                 if (world.getTileEntity(x, y - 1, z) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s4, s0, s4, s12, s4, s12);
-                    renderer.renderStandardBlock(block, x, y, z);
-
-                    config[2] = 1;
-                    renderCore++;
+                    renderWorldCube(s10, s1, s10, s3, s2, s3, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s12, s2, s12, s2, s0, s2, block, x, y, z, renderer, tex);
                 }
                 if (world.getTileEntity(x, y + 1, z) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s4, s12, s4, s12, s16, s12);
-                    renderer.renderStandardBlock(block, x, y, z);
-
-                    config[3] = 1;
-                    renderCore++;
+                    renderWorldCube(s10, s1, s10, s3, s13, s3, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s12, s2, s12, s2, s14, s2, block, x, y, z, renderer, tex);
                 }
 
                 //z axis
                 if (world.getTileEntity(x, y, z - 1) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s4, s4, s0, s12, s12, s4);
-                    renderer.renderStandardBlock(block, x, y, z);
-
-                    config[4] = 1;
-                    renderCore++;
+                    renderWorldCube(s10, s10, s1, s3, s3, s2, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s12, s12, s2, s2, s2, s0, block, x, y, z, renderer, tex);
                 }
                 if (world.getTileEntity(x, y, z + 1) instanceof IFluidHandler) {
-                    renderer.setRenderBounds(s4, s4, s12, s12, s12, s16);
-                    renderer.renderStandardBlock(block, x, y, z);
-
-                    config[5] = 1;
-                    renderCore++;
+                    renderWorldCube(s10, s10, s1, s3, s3, s13, block, x, y, z, renderer);
+                    renderOverrideWorldCube(s12, s12, s2, s2, s2, s14, block, x, y, z, renderer, tex);
                 }
-
                 renderer.clearOverrideBlockTexture();
-
-                //if there aren't connectables on all 6 sides
-                if (renderCore < 6) {
-                    renderer.setRenderBounds(s4, s4, s4, s12, s12, s12);
-                    renderer.renderStandardBlock(block, x, y, z);
-                }
-
-                byte[] empty = {0, 0, 0, 0, 0, 0};
-                byte[] full = {1, 1, 1, 1, 1, 1};
-
-                byte[] xOnly = {1, 1, 0, 0, 0, 0};
-                byte[] yOnly = {1, 0, 1, 1, 0, 0};
-                byte[] zOnly = {1, 1, 0, 0, 0, 0};
-
-                //straight pipe or no connections
-                if (Arrays.equals(config, xOnly) || Arrays.equals(config, yOnly) || Arrays.equals(config, zOnly) || Arrays.equals(config, empty)) {
-                    return false;
-                }
-                else {
-
-                }
 
                 return false;
             }

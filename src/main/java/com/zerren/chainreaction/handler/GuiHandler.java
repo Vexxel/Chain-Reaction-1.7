@@ -1,13 +1,12 @@
 package com.zerren.chainreaction.handler;
 
-import com.zerren.chainreaction.client.gui.GuiPWR;
+import com.zerren.chainreaction.client.gui.*;
 import com.zerren.chainreaction.tile.chest.TEChest;
+import com.zerren.chainreaction.tile.container.ContainerBloomery;
 import com.zerren.chainreaction.tile.container.ContainerPWR;
+import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
-import com.zerren.chainreaction.client.gui.GuiChestCR;
-import com.zerren.chainreaction.client.gui.GuiKey;
-import com.zerren.chainreaction.client.gui.GuiVault;
 import com.zerren.chainreaction.tile.container.ContainerChestCR;
 import com.zerren.chainreaction.tile.container.ContainerVault;
 import com.zerren.chainreaction.reference.Reference;
@@ -41,6 +40,12 @@ public class GuiHandler implements IGuiHandler {
 
             if (reactor != null) return new ContainerPWR(player.inventory, reactor);
         }
+        if (id == Reference.GUIs.BLOOMERY.ordinal()) {
+
+            TEBloomery bloomery = (TEBloomery) world.getTileEntity(x, y, z);
+
+            if (bloomery != null) return new ContainerBloomery(player.inventory, bloomery);
+        }
         return null;
     }
 
@@ -67,6 +72,12 @@ public class GuiHandler implements IGuiHandler {
             TEPressurizedWaterReactor reactor = (TEPressurizedWaterReactor) world.getTileEntity(x, y, z);
 
             if (reactor != null) return new GuiPWR(reactor, player.inventory);
+        }
+        if (id == Reference.GUIs.BLOOMERY.ordinal()) {
+
+            TEBloomery bloomery = (TEBloomery) world.getTileEntity(x, y, z);
+
+            if (bloomery != null) return new GuiBloomery(bloomery, player.inventory);
         }
         return null;
     }

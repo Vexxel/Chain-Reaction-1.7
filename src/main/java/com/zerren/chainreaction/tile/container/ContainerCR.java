@@ -19,19 +19,23 @@ public class ContainerCR extends Container {
         return false;
     }
 
-    protected void bindPlayerInventory(InventoryPlayer playerInventory, int xStart, int yStart) {
+    protected void bindPlayerInventory(InventoryPlayer inv, int xStart, int yStart) {
         int slotplayer = 0;
 
         // Hotbar
         for(int x = 0; x < 9; x++) {
-            addSlotToContainer(new Slot(playerInventory, slotplayer, xStart + x * 18, yStart + 58));
+            addSlotToContainer(new Slot(inv, slotplayer, xStart + x * 18, yStart + 58));
             slotplayer++;
         }
         // Inventory
         for(int j = 0; j < 3; j++)
             for(int k = 0; k < 9; k++) {
-                addSlotToContainer(new Slot(playerInventory, slotplayer, xStart + k * 18, yStart + j * 18));
+                addSlotToContainer(new Slot(inv, slotplayer, xStart + k * 18, yStart + j * 18));
                 slotplayer++;
             }
+    }
+
+    protected void bindPlayerInventory(InventoryPlayer inv) {
+        bindPlayerInventory(inv, 8, 84);
     }
 }

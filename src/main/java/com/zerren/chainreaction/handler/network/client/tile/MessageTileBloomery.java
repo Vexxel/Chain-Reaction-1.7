@@ -2,6 +2,7 @@ package com.zerren.chainreaction.handler.network.client.tile;
 
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
+import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -12,22 +13,22 @@ import net.minecraft.tileentity.TileEntity;
 import java.util.UUID;
 
 /**
- * Created by Zerren on 2/28/2015.
+ * Created by Zerren on 5/21/2016.
  */
-public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageTileMultiblock, IMessage> {
+public class MessageTileBloomery implements IMessage, IMessageHandler<MessageTileBloomery, IMessage> {
 
     public int x, y, z, dim;
     public byte orientation, state;
     public String customName;
     public UUID ownerUUID;
-    public boolean isMaster, hasMaster, shouldRender;
+    public boolean isMaster, hasMaster, shouldRender, isActive;
     public short multiblockPartNumber;
 
-    public MessageTileMultiblock() {
+    public MessageTileBloomery() {
 
     }
 
-    public MessageTileMultiblock(TEMultiBlockBase tile, boolean isMaster, boolean hasMaster, boolean shouldRender) {
+    public MessageTileBloomery(TEBloomery tile, boolean isMaster, boolean hasMaster, boolean shouldRender, boolean isActive) {
         x = tile.xCoord;
         y = tile.yCoord;
         z = tile.zCoord;
@@ -40,6 +41,7 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
         this.isMaster = isMaster;
         this.hasMaster = hasMaster;
         this.shouldRender = shouldRender;
+        this.isActive = isActive;
         this.multiblockPartNumber = tile.getMultiblockPartNumber();
     }
 
@@ -65,6 +67,7 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
         this.isMaster = buf.readBoolean();
         this.hasMaster = buf.readBoolean();
         this.shouldRender = buf.readBoolean();
+        this.isActive = buf.readBoolean();
         this.multiblockPartNumber = buf.readShort();
     }
 
@@ -92,27 +95,29 @@ public class MessageTileMultiblock implements IMessage, IMessageHandler<MessageT
         buf.writeBoolean(isMaster);
         buf.writeBoolean(hasMaster);
         buf.writeBoolean(shouldRender);
+        buf.writeBoolean(isActive);
         buf.writeShort(multiblockPartNumber);
     }
 
     @Override
-    public IMessage onMessage(MessageTileMultiblock message, MessageContext ctx)
+    public IMessage onMessage(MessageTileBloomery message, MessageContext ctx)
     {
         TileEntity tile = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-        if (tile instanceof TEMultiBlockBase) {
+        if (tile instanceof TEBloomery) {
 
-            ((TEMultiBlockBase) tile).setOrientation(message.orientation);
+            ((TEBloomery) tile).setOrientation(message.orientation);
 
-            ((TEMultiBlockBase) tile).setState(message.state);
-            ((TEMultiBlockBase) tile).setCustomName(message.customName);
-            ((TEMultiBlockBase) tile).setOwnerUUID(message.ownerUUID);
-            ((TEMultiBlockBase) tile).hasMaster = message.hasMaster;
-            ((TEMultiBlockBase) tile).setAsMaster(message.isMaster);
-            ((TEMultiBlockBase) tile).setMultiblockPartNumber(message.multiblockPartNumber);
+            ((TEBloomery) tile).setState(message.state);
+            ((TEBloomery) tile).setCustomName(message.customName);
+            ((TEBloomery) tile).setOwnerUUID(message.ownerUUID);
+            ((TEBloomery) tile).hasMaster = message.hasMaster;
+            ((TEBloomery) tile).setAsMaster(message.isMaster);
+            ((TEBloomery) tile).setMultiblockPartNumber(message.multiblockPartNumber);
+            ((TEBloomery) tile).isActive = message.isActive;
 
             if (message.shouldRender) {
-                ChainReaction.proxy.updateTileModel((TEMultiBlockBase) tile);
+                ChainReaction.proxy.updateTileModel(tile);
             }
         }
 

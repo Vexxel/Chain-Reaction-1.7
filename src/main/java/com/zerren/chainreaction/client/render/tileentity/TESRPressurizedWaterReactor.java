@@ -20,31 +20,25 @@ public class TESRPressurizedWaterReactor extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
-        renderReactor(tile, x, y, z);
+        if (tile != null && tile instanceof TEPressurizedWaterReactor)
+            renderReactor((TEPressurizedWaterReactor)tile, x, y, z);
     }
 
-    private void renderReactor(TileEntity tile, double x, double y, double z) {
-        if (tile instanceof TEPressurizedWaterReactor) {
+    private void renderReactor(TEPressurizedWaterReactor reactor, double x, double y, double z) {
+        if (!reactor.isMaster()) return;
 
-            if (!((TEPressurizedWaterReactor) tile).isMaster() && ((TEPressurizedWaterReactor) tile).hasMaster) {
-                return;
-            }
+        GL11.glPushMatrix();
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
+        GL11.glScalef(1.0F, -1.0F, -1.0F);
 
-            TEPressurizedWaterReactor reactor = (TEPressurizedWaterReactor) tile;
+        this.bindTexture(Reference.Textures.Models.PRESSURIZED_WATER_REACTOR);
 
-            GL11.glPushMatrix();
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glTranslatef((float) x + 0.5F, (float) y + (reactor.isMaster() ? 0.5F : 1.5F), (float) z + 0.5F);
-            GL11.glScalef(1.0F, -1.0F, -1.0F);
+        modelReactor.CRodBundle.offsetY = reactor.getControlRodDepth() * 0.017F;
+        modelReactor.render();
 
-            if (reactor.isMaster()) {
-                this.bindTexture(Reference.Textures.Models.PRESSURIZED_WATER_REACTOR);
-                modelReactor.render();
-            }
-
-            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-            GL11.glPopMatrix();
-        }
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        GL11.glPopMatrix();
     }
 }

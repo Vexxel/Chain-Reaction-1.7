@@ -65,9 +65,9 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
 
         if (tile != null) {
 
-            if (world.isRemote && !tile.hasValidMaster()) return true;
+            if (world.isRemote && tile.isFormed()) return true;
 
-            if (held != null && held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+            if (held != null && held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z) && !world.isRemote) {
                 byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
                 switch (mode) {
                     case 0: {
@@ -95,7 +95,7 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
 
         if (tile == null) return false;
 
-        if (world.isRemote && !tile.hasValidMaster()) return true;
+        if (world.isRemote && tile.isFormed()) return true;
 
         if (held != null && held.getItem() instanceof IToolWrench) {
             TileEntity coretile = CoreUtility.getTileOnOppositeFace(world, x, y, z, CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ));
