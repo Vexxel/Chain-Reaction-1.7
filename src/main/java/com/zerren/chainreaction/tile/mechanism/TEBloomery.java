@@ -2,9 +2,11 @@ package com.zerren.chainreaction.tile.mechanism;
 
 import chainreaction.api.block.CRBlocks;
 import chainreaction.api.block.IInventoryCR;
+import chainreaction.api.item.CRItems;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileBloomery;
+import com.zerren.chainreaction.item.ItemOres;
 import com.zerren.chainreaction.reference.MultiblockShape;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
@@ -21,6 +23,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -28,8 +31,14 @@ import java.util.UUID;
  */
 public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
 
-    public boolean isActive = false;
+
     protected ItemStack[] inventory = new ItemStack[10];
+    public int bloomeryCookTime = 0;
+    public int bloomeryBurnTime = 0;
+    private int burnCheck = 0;
+
+    private static final int COOK_TIME = 20;
+    private static final int BURN_TIME = 20;
 
     public TEBloomery() {
         super();
@@ -38,11 +47,153 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
     @Override
     public void updateEntity() {
 
-        if (!worldObj.isRemote && isMaster()) {
-            //if ()
-            this.isActive = true;
-            //PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(this, isMaster(), hasMaster, true, isActive), NetworkUtility.makeTargetPoint(this));
+        boolean dirty = false;
+
+        //decrement fuel burn time
+        if (this.bloomeryBurnTime > 0) {
+            --this.bloomeryBurnTime;
+
+            //stop burning
+            if (bloomeryBurnTime <= 0) {
+                PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(this, this.isMaster(), true, true, isBurning()), NetworkUtility.makeTargetPoint(this));
+            }
         }
+
+
+        if (!worldObj.isRemote && isMaster()) {
+
+            burnCheck++;
+            if (burnCheck >= 20) {
+                //not burning and has work
+                if (!isBurning() && hasWork(getBloomSize())) {
+                    //set burning
+                    if (consumeFuel()) {
+                        bloomeryBurnTime = BURN_TIME;
+                        PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(this, this.isMaster(), true, true, isBurning()), NetworkUtility.makeTargetPoint(this));
+                    }
+                }
+                burnCheck = 0;
+            }
+            //burning
+            if (bloomeryBurnTime != 0) {
+                if (hasWork(getBloomSize())) {
+                    bloomeryCookTime++;
+
+                    if (bloomeryCookTime >= COOK_TIME) {
+                        reduceIron();
+                        bloomeryCookTime = 0;
+                        dirty = true;
+                    }
+                }
+            }
+        }
+
+        if (dirty) {
+            this.markDirty();
+        }
+    }
+
+    private void reduceIron() {
+        boolean[] ores = getSlotsWithOres();
+        int oreCount = 0;
+        for (int i = 0; i < ores.length; i++) {
+            if (ores[i]) {
+                oreCount++;
+                if (inventory[i + 4].stackSize <= 1) inventory[i + 4] = null;
+                else inventory[i + 4].stackSize--;
+            }
+        }
+        if (inventory[8] == null) {
+            inventory[8] = new ItemStack(CRItems.ores, 1, 0);
+        }
+        ItemOres.setBloomSize(inventory[8], oreCount + getBloomSize());
+
+        float slag = getSlagPercent(oreCount);
+        Random rand = new Random();
+        if (rand.nextFloat() < slag) {
+            if(inventory[9] == null) {
+                inventory[9] = new ItemStack(CRItems.ores, 1, 1);
+            }
+            else {
+                inventory[9].stackSize++;
+            }
+        }
+
+        this.markDirty();
+    }
+
+    private int getBloomSize() {
+        return ItemOres.getBloomSize(inventory[8]);
+    }
+
+    private boolean consumeFuel() {
+        if (hasFuel()){
+            for (int i = 0; i < 4; i++) {
+                if (inventory[i] != null && inventory[i].getItem() == Items.coal && inventory[i].getItemDamage() == 1) {
+                    if (inventory[i].stackSize <= 1) inventory[i] = null;
+                    else inventory[i].stackSize--;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hasWork(int bloomSize) {
+        boolean[] slots = getSlotsWithOres();
+        //ores in ore slots
+        if (slots[0] || slots[1] || slots[2] || slots[3]) {
+            //bloom isn't (and wont be) max size or doesn't exist
+            if (inventory[8] == null || bloomSize + getAmountSlotsWithOres() <= ItemOres.BLOOM_MAX) {
+                //slag output isn't full
+                if (inventory[9] == null || inventory[9].stackSize < 64) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private float getSlagPercent(int ores) {
+        switch (ores) {
+            case 1: return 0.1F;
+            case 2: return 0.2F;
+            case 3: return 0.4F;
+            case 4: return 0.9F;
+        }
+        return 0.0F;
+    }
+
+    private boolean[] getSlotsWithOres() {
+        boolean[] ores = {false, false, false, false};
+        if (hasOres()) {
+            for (int i = 0; i < 4; i++) {
+                if (CoreUtility.hasDictionaryMatch(inventory[i + 4], "oreIron") && inventory[i + 4].stackSize > 0) ores[i] = true;
+            }
+        }
+        return ores;
+    }
+
+    private int getAmountSlotsWithOres() {
+        int ores = 0;
+        for (boolean ore : getSlotsWithOres()) {
+            if (ore) ores++;
+        }
+        return ores;
+    }
+
+    private boolean hasFuel() {
+        for (int i = 0; i < 4; i++) {
+            if (inventory[i] != null && inventory[i].getItem() == Items.coal && inventory[i].getItemDamage() == 1) return true;
+        }
+        return false;
+    }
+
+    private boolean hasOres() {
+        for (int i = 0; i < 4; i++) {
+            if (inventory[i + 4] != null && CoreUtility.hasDictionaryMatch(inventory[i + 4], "oreIron")) return true;
+        }
+        return false;
     }
 
     public void initiateController(UUID id, EntityPlayer player) {
@@ -104,7 +255,7 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
 
                     tile.setMultiblockPartNumber((short) ((x * 100) + (y * 10) + (z)));
                     tile.setOrientation(this.getOrientation());
-                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(tile, tile.isMaster(), true, true, isActive), NetworkUtility.makeTargetPoint(this));
+                    PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(tile, tile.isMaster(), true, true, isBurning()), NetworkUtility.makeTargetPoint(this));
                 }
     }
 
@@ -126,7 +277,7 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
                     if (tile != null) {
                         tile.removeController();
                         tile.setMultiblockPartNumber((short) -1);
-                        PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(tile, false, false, true, isActive), NetworkUtility.makeTargetPoint(this));
+                        PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(tile, false, false, true, isBurning()), NetworkUtility.makeTargetPoint(this));
                         ChainReaction.proxy.updateTileModel(tile);
                     }
                 }
@@ -139,6 +290,8 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
         if (multiblockPartNumber != -1 && isMaster) {
 
             this.inventory = readNBTItems(tag, this);
+            this.bloomeryCookTime = tag.getShort("bloomeryCookTime");
+            this.bloomeryBurnTime = tag.getShort("bloomeryBurnTime");
         }
     }
 
@@ -149,7 +302,18 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
         if (multiblockPartNumber != -1 && isMaster) {
 
             writeNBTItems(tag, inventory);
+            tag.setShort("bloomeryCookTime", (short)bloomeryCookTime);
+            tag.setShort("bloomeryBurnTime", (short)bloomeryBurnTime);
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getCookProgressScaled(int p_145953_1_) {
+        return this.bloomeryCookTime * p_145953_1_ / 200;
+    }
+
+    public boolean isBurning() {
+        return this.bloomeryBurnTime > 0;
     }
 
     @Override
@@ -273,6 +437,6 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageTileBloomery(this, isMaster, hasValidMaster(), false, isActive));
+        return PacketHandler.INSTANCE.getPacketFrom(new MessageTileBloomery(this, isMaster, hasValidMaster(), false, isBurning()));
     }
 }

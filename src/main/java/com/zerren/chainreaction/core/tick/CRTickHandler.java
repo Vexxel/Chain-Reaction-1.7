@@ -2,9 +2,9 @@ package com.zerren.chainreaction.core.tick;
 
 import cofh.api.energy.IEnergyContainerItem;
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.PacketHandler;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
-import com.zerren.chainreaction.handler.network.server.player.MessageKeyCut;
 import com.zerren.chainreaction.item.armor.ItemOxygenMask;
 import com.zerren.chainreaction.item.armor.ItemThrustPack;
 import com.zerren.chainreaction.utility.CRHotkey;
@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 
 import java.util.Random;
 
@@ -79,4 +79,12 @@ public class CRTickHandler {
             }
         }
     }
+
+    @SubscribeEvent
+    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
+        if (event.entity instanceof EntityPlayer && PlayerSetBonus.get((EntityPlayer)event.entity) == null) {
+            PlayerSetBonus.register((EntityPlayer) event.entity);
+        }
+    }
+
 }

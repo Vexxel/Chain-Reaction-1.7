@@ -128,6 +128,29 @@ public final class Names {
         public static final String[] RECORD_SUBTYPES = {
                 "industrial"
         };
+
+        public static final String ORES = "oreItem";
+        public static final String[] ORE_SUBTYPES = {
+                "bloom",
+                "iron",
+                "gold",
+                "tin",
+                "lead",
+                "silver",
+                "nickel"
+        };
+
+        public static final String BAUBLES = "bauble";
+        public static final String[] BAUBLE_SUBTYPES = {
+                "fallDamageAmulet",
+                "hasteRing",
+                "unbreakingRing",
+                "fireResistanceAmulet",
+                "witherAmulet",
+                "waterBreathingRing",
+                "powerRing",
+                "healthAmulet"
+        };
     }
 
     public static final class Fluids {
@@ -178,5 +201,11 @@ public final class Names {
         public static final String FUEL_TEMPERATURE = "temperature";
         public static final String FUEL_REMAINING = "fuelRemaining";
         public static final String RADIOACTIVITY = "radioactivity";
+
+        public static final String BLOOM = "bloomSize";
+
+        public static final String BAUBLE_COOLDOWN = "cooldown";
+
+        public static final String SET_SKULLFIRE = "skullfire";
     }
 }

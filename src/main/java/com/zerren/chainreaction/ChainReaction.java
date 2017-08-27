@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
  * Created by Zerren on 2/19/2015.
  */
 
-@Mod(modid= Reference.ModInfo.MOD_ID, name=Reference.ModInfo.MOD_NAME, version=Reference.ModInfo.VERSION, guiFactory = Reference.ModInfo.GUIFACTORY_CLASS)
+@Mod(modid= Reference.ModInfo.MOD_ID, name=Reference.ModInfo.MOD_NAME, version=Reference.ModInfo.VERSION, guiFactory = Reference.ModInfo.GUIFACTORY_CLASS, dependencies = "required-after:Baubles;")
 public class ChainReaction {
 
     @Mod.Instance(Reference.ModInfo.MOD_ID)

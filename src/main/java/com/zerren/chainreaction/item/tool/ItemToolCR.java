@@ -16,8 +16,8 @@ import net.minecraftforge.common.util.ForgeDirection;
  * Created by Zerren on 4/1/2015.
  */
 public class ItemToolCR extends ItemCRBase implements IToolWrench, IScanner {
-    public ItemToolCR(String name, String[] subtypes, int stacksize, String folder, CreativeTabs tab) {
-        super(name, subtypes, stacksize, folder, tab);
+    public ItemToolCR(String name, String[] subtypes, String folder, CreativeTabs tab) {
+        super(name, subtypes, 1, folder, tab);
         setFull3D();
 
         setHarvestLevel("wrench", 0);

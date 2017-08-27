@@ -79,6 +79,16 @@ item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
 item.chainreaction:o2mask.name=O2 Mask
 item.chainreaction:thrustpack.name=Thruster Pack
 
+item.chainreaction:bauble.fallDamageAmulet.name=Amulet of Graceful Descent
+item.chainreaction:bauble.hasteRing.name=Ring of Deft Hands
+item.chainreaction:bauble.unbreakingRing.name=Ring of Durability
+item.chainreaction:bauble.fireResistanceAmulet.name=Amulet of Contained Heat
+item.chainreaction:bauble.witherAmulet.name=Amulet of Halted Corruption
+item.chainreaction:bauble.waterBreathingRing.name=Ring of Condensed Air
+item.chainreaction:bauble.powerRing.name=Ring of Fury
+item.chainreaction:bauble.healthAmulet.name=Amulet of Vitality
+
+
 # GUI localizations ---------------------------------------------------------------------
 
 gui.multiblock.size.name=• Multiblock Size:
@@ -86,11 +96,24 @@ gui.multiblock.wrench.center.name=• Wrench center block to complete
 gui.multiblock.wrench.center_assembly.name=• Wrench center assembly to complete
 gui.multiblock.requirement.name=• Completion Materials:
 gui.shift.name=<Hold Shift>
+gui.setInfo.name=Set Bonus:
 
 gui.item.key.bedrock.name=Absolute Vaultcracker
 gui.item.key.nocode.name=This key is blank..
 gui.item.key.remember.name=But I remember what I set this lock to! It was..
 gui.item.key.trespass.name=I can only remember codes that I issued.
+
+gui.item.bauble.null.name=No effect.
+gui.item.bauble.fallDamageAmulet.name=Fall Damage Immunity
+gui.item.bauble.hasteRing.name=Haste +20%
+gui.item.bauble.unbreakingRing.name=Unbreaking +30%
+gui.item.bauble.fireResistanceAmulet.name=Fire Damage Immunity
+gui.item.bauble.witherAmulet.name=Withering Immunity
+gui.item.bauble.waterBreathingRing.name=Water Breathing
+gui.item.bauble.powerRing.name=Strength +20%
+gui.item.bauble.healthAmulet.name=Hearts +3
+
+gui.item.bauble.setBonus.SKULLFIRE.name=Wither skull drop rate +50%
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:

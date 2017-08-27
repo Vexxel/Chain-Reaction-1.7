@@ -59,7 +59,7 @@ public class TESRBloomery extends TileEntitySpecialRenderer {
         GL11.glScalef(1.0F, -1.0F, -1.0F);
         GL11.glRotatef(angle, 0.0F, 1.0F, 0.0F);
 
-        if (tile.isActive)
+        if (tile.isBurning())
             this.bindTexture(Reference.Textures.Models.BLOOMERY_ON);
         else
             this.bindTexture(Reference.Textures.Models.BLOOMERY_OFF);

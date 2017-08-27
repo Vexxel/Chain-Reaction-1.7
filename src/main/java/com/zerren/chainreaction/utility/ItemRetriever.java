@@ -45,6 +45,10 @@ public final class ItemRetriever {
         public static ItemStack dust(int count, String name) {
             return new ItemStack(CRItems.dusts, count, Arrays.asList(Names.Items.DUST_SUBTYPES).indexOf(name));
         }
+
+        public static ItemStack bauble(String name) {
+            return new ItemStack(CRItems.baubles, 1, Arrays.asList(Names.Items.BAUBLE_SUBTYPES).indexOf(name));
+        }
     }
 
     public ItemStack getOredictItem(String oredict) {

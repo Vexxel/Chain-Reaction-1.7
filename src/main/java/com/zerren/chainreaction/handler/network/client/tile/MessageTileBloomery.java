@@ -114,7 +114,7 @@ public class MessageTileBloomery implements IMessage, IMessageHandler<MessageTil
             ((TEBloomery) tile).hasMaster = message.hasMaster;
             ((TEBloomery) tile).setAsMaster(message.isMaster);
             ((TEBloomery) tile).setMultiblockPartNumber(message.multiblockPartNumber);
-            ((TEBloomery) tile).isActive = message.isActive;
+            //((TEBloomery) tile).isActive = message.isActive;
 
             if (message.shouldRender) {
                 ChainReaction.proxy.updateTileModel(tile);

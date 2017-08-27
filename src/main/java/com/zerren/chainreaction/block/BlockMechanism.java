@@ -123,7 +123,7 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         TileEntityCRBase tile = (TileEntityCRBase)world.getTileEntity(x, y, z);
-        if (tile != null && tile instanceof TEBloomery && ((TEBloomery) tile).isMaster()) {
+        if (tile != null && tile instanceof TEBloomery && ((TEBloomery) tile).isBurning()) {
             for (int i = 0; i < 3; i++) {
                 float f = (x - 0.2F) + 1.5F*rand.nextFloat();
                 float f1 = (float)y + 4;

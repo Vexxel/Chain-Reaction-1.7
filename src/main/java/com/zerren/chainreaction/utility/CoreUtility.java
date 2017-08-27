@@ -138,7 +138,7 @@ public final class CoreUtility {
     public static boolean hasDictionaryMatch(ItemStack stack, String dictionary) {
         ArrayList<ItemStack> ores = OreDictionary.getOres(dictionary);
         for (ItemStack ore : ores) {
-            if (stack.getItem() == ore.getItem() && stack.getItemDamage() == ore.getItemDamage()) return true;
+            if (stack != null && stack.getItem() == ore.getItem() && stack.getItemDamage() == ore.getItemDamage()) return true;
         }
         return false;
     }

@@ -1,7 +1,10 @@
 package com.zerren.chainreaction.utility;
 
+import baubles.api.BaubleType;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
@@ -87,5 +90,29 @@ public final class TooltipHelper {
         String s1 = EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.fuel.name");
         String s2 = " " + Math.round((fuelLevel * 100)) + "%";
         list.add(s1 + s2);
+    }
+
+    public static void addBaubleInfo(List<String> list, String bauble) {
+        String s1 = EnumChatFormatting.BLUE + CoreUtility.translate("gui.item.bauble." + bauble + ".name");
+        list.add(s1);
+    }
+
+    public static void addSetBonusInfo(ItemStack stack, SetBonus set, EntityPlayer player, List<String> list, String bauble) {
+        //shows the set bonus is either green or gray if it is activated or not
+        EnumChatFormatting isActive = getSetActivity(BaubleHelper.hasSetBonusEquipped(player, set));
+        list.add(isActive + CoreUtility.translate("gui.setInfo.name"));
+        list.add(isActive + CoreUtility.translate("gui.item.bauble.setBonus." + set + ".name"));
+
+        if (showShiftInformation()) {
+
+        }
+        else {
+            list.add(EnumChatFormatting.DARK_PURPLE + CoreUtility.translate("gui.shift.name"));
+        }
+    }
+
+    private static EnumChatFormatting getSetActivity(boolean active) {
+        //System.out.println(active);
+        return active ? EnumChatFormatting.GREEN : EnumChatFormatting.GRAY;
     }
 }
