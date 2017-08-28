@@ -3,7 +3,8 @@ package com.zerren.chainreaction.core.tick;
 import cofh.api.energy.IEnergyContainerItem;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.core.PlayerSetBonus;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
+import com.zerren.chainreaction.handler.network.client.player.MessageSetBonus;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.item.armor.ItemOxygenMask;
 import com.zerren.chainreaction.item.armor.ItemThrustPack;
@@ -12,13 +13,16 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.item.ElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 import java.util.Random;
 
@@ -87,4 +91,10 @@ public class CRTickHandler {
         }
     }
 
+    @SubscribeEvent
+    public void joinWorld(EntityJoinWorldEvent event) {
+        if (event.entity instanceof EntityPlayerMP) {
+            PacketHandler.INSTANCE.sendTo(new MessageSetBonus((EntityPlayer)event.entity), (EntityPlayerMP)event.entity);
+        }
+    }
 }

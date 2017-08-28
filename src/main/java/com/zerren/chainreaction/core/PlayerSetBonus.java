@@ -42,7 +42,7 @@ public class PlayerSetBonus implements IExtendedEntityProperties {
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
         this.skullfire = properties.getBoolean(Names.NBT.SET_SKULLFIRE);
 
-        System.out.println("[CR] Skullfire set: " + skullfire);
+        //System.out.println("[CR] Skullfire set: " + skullfire);
     }
 
     public void setSkullfire(boolean equipped) {

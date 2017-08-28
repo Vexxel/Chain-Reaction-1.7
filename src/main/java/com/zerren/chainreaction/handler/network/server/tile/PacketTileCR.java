@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.handler.network.server.tile;
 
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -106,7 +107,7 @@ public abstract class PacketTileCR<T extends TileEntityCRBase> implements IMessa
     public IMessage onMessage(PacketTileCR message, MessageContext ctx) {
         MinecraftServer server = CoreUtility.server();
         if (ctx.side.isClient())
-            message.player = ClientProxy.getPlayer();
+            message.player = ChainReaction.proxy.getPlayerEntity(ctx);
         else {
             message.player = ctx.getServerHandler().playerEntity;
         }

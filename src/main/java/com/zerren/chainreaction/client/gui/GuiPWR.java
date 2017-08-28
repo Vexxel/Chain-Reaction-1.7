@@ -1,13 +1,7 @@
 package com.zerren.chainreaction.client.gui;
 
-import com.zerren.chainreaction.handler.network.server.tile.MessageVaultCycle;
 import com.zerren.chainreaction.tile.container.ContainerPWR;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
-import com.zerren.chainreaction.tile.vault.TEVaultController;
-import com.zerren.chainreaction.client.gui.button.GUIButtonWidgets;
-import com.zerren.chainreaction.client.gui.button.GuiButtonVaultCycle;
-import com.zerren.chainreaction.handler.PacketHandler;
-import com.zerren.chainreaction.tile.container.ContainerVault;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

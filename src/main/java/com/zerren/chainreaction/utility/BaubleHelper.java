@@ -12,49 +12,47 @@ import net.minecraft.item.ItemStack;
  */
 public class BaubleHelper {
 
+    public static boolean hasCorrectAmulet(EntityPlayer player, ItemStack bauble) {
+        ItemStack amulet = BaublesApi.getBaubles(player).getStackInSlot(0);
+
+        return amulet != null && amulet.isItemEqual(bauble);
+    }
+
     public static boolean hasCorrectRing(EntityPlayer player, ItemStack bauble) {
         ItemStack ring1 = BaublesApi.getBaubles(player).getStackInSlot(1);
         ItemStack ring2 = BaublesApi.getBaubles(player).getStackInSlot(2);
 
-        if (ring1 != null && ring1.getItem() == bauble.getItem() && ring1.getItemDamage() == bauble.getItemDamage() || ring2 != null && ring2.getItem() == bauble.getItem() && ring2.getItemDamage() == bauble.getItemDamage()) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean hasCorrectAmulet(EntityPlayer player, ItemStack bauble) {
-        ItemStack amulet = BaublesApi.getBaubles(player).getStackInSlot(0);
-
-        if (amulet.getItem() == bauble.getItem() && amulet.getItemDamage() == bauble.getItemDamage()) {
-            return true;
-        }
-        return false;
+        return ring1 != null && ring1.isItemEqual(bauble) || ring2 != null && ring2.isItemEqual(bauble);
     }
 
     public static boolean hasCorrectBelt(EntityPlayer player, ItemStack bauble) {
         ItemStack belt = BaublesApi.getBaubles(player).getStackInSlot(3);
 
-        if (belt.getItem() == bauble.getItem() && belt.getItemDamage() == bauble.getItemDamage()) {
-            return true;
+        return belt != null && belt.isItemEqual(bauble);
+    }
+
+    public static boolean hasCorrectBauble(EntityPlayer player, ItemStack bauble, int index) {
+        switch (index) {
+            case 0: {
+                return hasCorrectAmulet(player, bauble);
+            }
+            case 1: {
+                return hasCorrectRing(player, bauble);
+            }
+            case 2: {
+                return hasCorrectBelt(player, bauble);
+            }
         }
         return false;
     }
 
-    public static boolean hasSetBonusEquipped(EntityPlayer player, SetBonus set) {
-        boolean match1 = false;
-        boolean match2 = false;
-
-        /*for (int i = 0; i < 3; i++) {
-            ItemStack currentBaubleForSlot = BaublesApi.getBaubles(player).getStackInSlot(i);
-            if (currentBaubleForSlot.isItemEqual(set.getBauble1())) {
-                match1 = true;
-                System.out.println("Found first");
-            }
-            else if (currentBaubleForSlot.isItemEqual(set.getBauble2())) {
-                match2 = true;
-                System.out.println("Found second");
-            }
-        }*/
-        return match1 && match2;
+    public static ItemStack getAmulet(EntityPlayer player) {
+        return BaublesApi.getBaubles(player).getStackInSlot(0);
+    }
+    public static ItemStack[] getRings(EntityPlayer player) {
+        return new ItemStack[] {BaublesApi.getBaubles(player).getStackInSlot(1), BaublesApi.getBaubles(player).getStackInSlot(2)};
+    }
+    public static ItemStack getBelt(EntityPlayer player) {
+        return BaublesApi.getBaubles(player).getStackInSlot(3);
     }
 }

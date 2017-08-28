@@ -2,7 +2,7 @@ package com.zerren.chainreaction.client.gui;
 
 import com.zerren.chainreaction.client.gui.button.GUIButtonWidgets;
 import com.zerren.chainreaction.client.gui.button.GuiButtonKeyCycle;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.server.player.MessageKeyCut;
 import com.zerren.chainreaction.reference.Reference;
 import net.minecraft.client.Minecraft;

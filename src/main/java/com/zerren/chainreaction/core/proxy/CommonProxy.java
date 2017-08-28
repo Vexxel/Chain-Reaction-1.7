@@ -1,7 +1,9 @@
 package com.zerren.chainreaction.core.proxy;
 
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,4 +48,9 @@ public class CommonProxy {
     public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) { }
 
     public void bubbleFX(Entity entity, double velX, double velY, double velZ) { }
+
+    public EntityPlayer getPlayerEntity(MessageContext ctx) {
+        ChainReaction.log.info("Retrieving player from CommonProxy for message on side " + ctx.side);
+        return ctx.getServerHandler().playerEntity;
+    }
 }

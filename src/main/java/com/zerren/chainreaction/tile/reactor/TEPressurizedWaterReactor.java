@@ -3,7 +3,7 @@ package com.zerren.chainreaction.tile.reactor;
 import chainreaction.api.block.IThermalTile;
 import chainreaction.api.reactor.ReactorType;
 import com.zerren.chainreaction.ChainReaction;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultiblock;
 import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.reference.MultiblockShape;

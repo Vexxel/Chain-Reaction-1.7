@@ -2,6 +2,7 @@ package com.zerren.chainreaction.core.proxy;
 
 import chainreaction.api.block.CRBlocks;
 import chainreaction.api.item.CRItems;
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.client.fx.EntityRadiationFX;
 import com.zerren.chainreaction.client.fx.EntitySteamFX;
 import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
@@ -24,6 +25,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -53,6 +55,7 @@ import java.util.Random;
 public class ClientProxy extends CommonProxy {
 
     public static Random rand = new Random();
+    private final Minecraft mc = Minecraft.getMinecraft();
 
     public static final Map<Item, ModelBiped> armorModels = new HashMap<Item, ModelBiped>();
 
@@ -73,8 +76,16 @@ public class ClientProxy extends CommonProxy {
         FMLClientHandler.instance().getClient().renderGlobal.markBlockForRenderUpdate(tile.xCoord, tile.yCoord, tile.zCoord);
     }
 
-    public static EntityPlayer getPlayer() {
-        return Minecraft.getMinecraft().thePlayer;
+    @Override
+    public EntityPlayer getPlayerEntity(MessageContext ctx) {
+        // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
+        // your packets will not work as expected because you will be getting a
+        // client player even when you are on the server!
+        // Sounds absurd, but it's true.
+
+        // Solution is to double-check side before returning the player:
+        ChainReaction.log.info("Retrieving player from ClientProxy for message on side " + ctx.side);
+        return (ctx.side.isClient() ? mc.thePlayer : super.getPlayerEntity(ctx));
     }
 
     public boolean isTheClientPlayer(EntityLivingBase entity) {

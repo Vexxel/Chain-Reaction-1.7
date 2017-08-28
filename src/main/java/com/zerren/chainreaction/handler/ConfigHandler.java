@@ -28,8 +28,19 @@ public class ConfigHandler {
 
     public static int[] potionIDs = {66, 67, 68, 69, 70};
     public static String fluidNameSteam;
+    public static float unbreakingChance;
+    public static float powerModifier;
+    public static float hasteModifier;
+    public static int healthAmulet;
+    public static float speedModifier;
+    public static float deflectionChance;
+
+    public static float skullfireChance;
 
     private static final ConfigCategory CATEGORY_IDS = new ConfigCategory("ids").setRequiresMcRestart(true).setShowInGui(true);
+    private static final ConfigCategory CATEGORY_BAUBLES = new ConfigCategory("baubles").setShowInGui(true);
+    private static final ConfigCategory CATEGORY_BAUBLESETS = new ConfigCategory("setbonus").setShowInGui(true);
+
 
 
     public static void init(File configFile){
@@ -61,6 +72,19 @@ public class ConfigHandler {
         steamFactor = config.getFloat("steamFactor", "general", 1F, 0.1F, 5F, "Multiplier on steam produced--(this is always a 1:160 water:steam ratio though)--best if used with 'uniSteam'");
 
         gasTankVolume = config.getInt("gasTankVolume", "general", 32, 16, 128, "Number of buckets of gas that the Gas Tank can hold");
+
+        //baubles
+        unbreakingChance = config.getFloat("unbreakingChance", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 0.5F, "Chance that the unbreaking ring will protect a used tool");
+        powerModifier = config.getFloat("powerModifier", CATEGORY_BAUBLES.getName(), 0.2F, 0.1F, 1F, "Ring of Fury percent damage increase");
+        hasteModifier = config.getFloat("hasteModifier", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 1F, "Ring of Deft Hands percent haste increase");
+        healthAmulet = config.getInt("healthModifier", CATEGORY_BAUBLES.getName(), 3, 1, 10, "Number of extra hearts that the Amulet of Vitality gives");
+        speedModifier = config.getFloat("speedModifier", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 1F, "Belt of Swiftness speed increase");
+        deflectionChance = config.getFloat("deflectionChance", CATEGORY_BAUBLES.getName(), 0.4F, 0.1F, 1F, "Amulet of Deflection chance to deflect a projectile");
+
+
+        //set bonus
+        skullfireChance = config.getFloat("skullfire", CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set bonus wither skull drop chance");
+
     }
 
     @SubscribeEvent

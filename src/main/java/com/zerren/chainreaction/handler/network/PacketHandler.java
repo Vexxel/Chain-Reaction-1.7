@@ -1,5 +1,6 @@
-package com.zerren.chainreaction.handler;
+package com.zerren.chainreaction.handler.network;
 
+import com.zerren.chainreaction.handler.network.client.player.MessageSetBonus;
 import com.zerren.chainreaction.handler.network.client.player.MessageToolDamage;
 import com.zerren.chainreaction.handler.network.client.tile.*;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
@@ -33,5 +34,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageTileBloomery.class, MessageTileBloomery.class, index++, Side.CLIENT);
         //server to player
         INSTANCE.registerMessage(MessageToolDamage.class, MessageToolDamage.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSetBonus.class, MessageSetBonus.class, index++, Side.CLIENT);
+
     }
 }

@@ -1,11 +1,14 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.ring;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.player.MessageToolDamage;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.BaubleHelper;
+import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -14,8 +17,11 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
+
+import java.util.List;
 
 /**
  * Created by Zerren on 8/25/2017.
@@ -26,6 +32,7 @@ public class UnbreakingRing extends BaubleCore {
         rarity = EnumRarity.uncommon;
         type = BaubleType.RING;
         name = "unbreakingRing";
+        extraTooltipValue = " +" + Math.round(ConfigHandler.unbreakingChance * 100) + "%";
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -52,7 +59,7 @@ public class UnbreakingRing extends BaubleCore {
             if (NBTHelper.getShort(ring1, Names.NBT.BAUBLE_COOLDOWN) == 0) {
                 int damage = item.getItemDamage();
                 NBTHelper.setShort(ring1, Names.NBT.BAUBLE_COOLDOWN, (short)2);
-                if (player.worldObj.rand.nextFloat() < 0.33F) {
+                if (player.worldObj.rand.nextFloat() <= ConfigHandler.unbreakingChance) {
                     item.setItemDamage(damage - 1);
                     PacketHandler.INSTANCE.sendTo(new MessageToolDamage(item.getItemDamage()), (EntityPlayerMP)player);
                 }
@@ -62,7 +69,7 @@ public class UnbreakingRing extends BaubleCore {
             if (NBTHelper.getShort(ring2, Names.NBT.BAUBLE_COOLDOWN) == 0) {
                 int damage = item.getItemDamage();
                 NBTHelper.setShort(ring2, Names.NBT.BAUBLE_COOLDOWN, (short)2);
-                if (player.worldObj.rand.nextFloat() < 0.33F) {
+                if (player.worldObj.rand.nextFloat() <= ConfigHandler.unbreakingChance) {
                     item.setItemDamage(damage - 1);
                 }
             }

@@ -4,7 +4,7 @@ import chainreaction.api.block.CRBlocks;
 import chainreaction.api.block.IInventoryCR;
 import chainreaction.api.item.CRItems;
 import com.zerren.chainreaction.ChainReaction;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileBloomery;
 import com.zerren.chainreaction.item.ItemOres;
 import com.zerren.chainreaction.reference.MultiblockShape;

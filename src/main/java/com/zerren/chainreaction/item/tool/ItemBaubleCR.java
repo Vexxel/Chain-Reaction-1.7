@@ -4,6 +4,12 @@ import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import com.zerren.chainreaction.item.ItemCRBase;
 import com.zerren.chainreaction.item.baubles.*;
+import com.zerren.chainreaction.item.baubles.amulet.*;
+import com.zerren.chainreaction.item.baubles.belt.SpeedBelt;
+import com.zerren.chainreaction.item.baubles.ring.HasteRing;
+import com.zerren.chainreaction.item.baubles.ring.PowerRing;
+import com.zerren.chainreaction.item.baubles.ring.UnbreakingRing;
+import com.zerren.chainreaction.item.baubles.ring.WaterBreathingRing;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,7 +30,7 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
 
     }
 
-    private BaubleCore getBauble(ItemStack stack) {
+    public static BaubleCore getBauble(ItemStack stack) {
         if (stack != null) {
             switch (stack.getItemDamage()) {
                 case 0: return new FallDamageAmulet();
@@ -35,6 +41,8 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
                 case 5: return new WaterBreathingRing();
                 case 6: return new PowerRing();
                 case 7: return new HealthAmulet();
+                case 8: return new SpeedBelt();
+                case 9: return new DeflectionAmulet();
 
                 default: return new BaubleCore();
             }

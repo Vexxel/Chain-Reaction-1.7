@@ -1,7 +1,6 @@
 package com.zerren.chainreaction.tile;
 
-import com.zerren.chainreaction.core.proxy.ClientProxy;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileCR;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.TileCache;

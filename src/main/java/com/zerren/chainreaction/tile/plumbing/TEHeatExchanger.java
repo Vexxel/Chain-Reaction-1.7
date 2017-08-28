@@ -5,7 +5,7 @@ import chainreaction.api.recipe.HeatingFluid;
 import chainreaction.api.recipe.WorkingFluid;
 import chainreaction.api.block.IThermalTile;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultiblock;
 import com.zerren.chainreaction.reference.MultiblockCost;
 import com.zerren.chainreaction.reference.Names;

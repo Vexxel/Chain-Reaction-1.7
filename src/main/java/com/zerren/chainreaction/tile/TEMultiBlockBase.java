@@ -1,6 +1,6 @@
 package com.zerren.chainreaction.tile;
 
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileMultiblock;
 import com.zerren.chainreaction.reference.Names;
 import net.minecraft.nbt.NBTTagCompound;

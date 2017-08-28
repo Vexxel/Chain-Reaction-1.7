@@ -2,7 +2,7 @@ package com.zerren.chainreaction.tile.chest;
 
 import chainreaction.api.block.CRBlocks;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileChest;
 import com.zerren.chainreaction.tile.container.ContainerChestCR;
 import com.zerren.chainreaction.reference.Names;

@@ -1,6 +1,8 @@
 package com.zerren.chainreaction.utility;
 
 import baubles.api.BaubleType;
+import baubles.api.IBauble;
+import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.item.baubles.SetBonus;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -92,19 +94,30 @@ public final class TooltipHelper {
         list.add(s1 + s2);
     }
 
-    public static void addBaubleInfo(List<String> list, String bauble) {
+    public static void addBaubleInfo(List<String> list, String bauble, String extraValue) {
         String s1 = EnumChatFormatting.BLUE + CoreUtility.translate("gui.item.bauble." + bauble + ".name");
+        if (extraValue != null) {
+            s1 = s1.concat(extraValue);
+        }
         list.add(s1);
     }
 
-    public static void addSetBonusInfo(ItemStack stack, SetBonus set, EntityPlayer player, List<String> list, String bauble) {
+    public static void addSetBonusInfo(ItemStack stack, SetBonus set, EntityPlayer player, List<String> list) {
         //shows the set bonus is either green or gray if it is activated or not
-        EnumChatFormatting isActive = getSetActivity(BaubleHelper.hasSetBonusEquipped(player, set));
+        EnumChatFormatting isActive = getSetActivity(PlayerSetBonus.get(player).getSkullfire());
+        EnumChatFormatting isFirstEquipped = getSetActivity(hasFirstSetItemEquipped(set, player));
+        EnumChatFormatting isSecondEquipped = getSetActivity(hasSecondSetItemEquipped(set, player));
+
         list.add(isActive + CoreUtility.translate("gui.setInfo.name"));
         list.add(isActive + CoreUtility.translate("gui.item.bauble.setBonus." + set + ".name"));
 
         if (showShiftInformation()) {
-
+            //if set is active, set bonus name is green
+            list.add(" ");
+            list.add(isActive + set.getBonusName() + ":");
+            //first item name
+            list.add(isFirstEquipped + "- " + set.getBauble1().getDisplayName());
+            list.add(isSecondEquipped + "- " + set.getBauble2().getDisplayName());
         }
         else {
             list.add(EnumChatFormatting.DARK_PURPLE + CoreUtility.translate("gui.shift.name"));
@@ -114,5 +127,12 @@ public final class TooltipHelper {
     private static EnumChatFormatting getSetActivity(boolean active) {
         //System.out.println(active);
         return active ? EnumChatFormatting.GREEN : EnumChatFormatting.GRAY;
+    }
+
+    private static boolean hasFirstSetItemEquipped(SetBonus set, EntityPlayer player) {
+        return BaubleHelper.hasCorrectBauble(player, set.getBauble1(), set.getBauble1Slot());
+    }
+    private static boolean hasSecondSetItemEquipped(SetBonus set, EntityPlayer player) {
+        return BaubleHelper.hasCorrectBauble(player, set.getBauble2(), set.getBauble2Slot());
     }
 }

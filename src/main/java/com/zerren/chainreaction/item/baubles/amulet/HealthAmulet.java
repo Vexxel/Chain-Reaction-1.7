@@ -1,11 +1,17 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.amulet;
 
 import baubles.api.BaubleType;
+import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.utility.CoreUtility;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 /**
  * Created by Zerren on 8/24/2017.
@@ -16,6 +22,7 @@ public class HealthAmulet extends BaubleCore {
         rarity = EnumRarity.uncommon;
         type = BaubleType.AMULET;
         name = "healthAmulet";
+        extraTooltipValue = " +" + ConfigHandler.healthAmulet;
     }
 
     public void tick(ItemStack stack, EntityLivingBase entity) {
@@ -25,7 +32,7 @@ public class HealthAmulet extends BaubleCore {
             EntityPlayer player = (EntityPlayer) entity;
 
             if (player.getMaxHealth() <= 20)
-                player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(player.getMaxHealth() + 6);
+                player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(player.getMaxHealth() + (ConfigHandler.healthAmulet * 2));
         }
     }
 
@@ -35,7 +42,7 @@ public class HealthAmulet extends BaubleCore {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
 
-            player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(26);
+            player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20 + (ConfigHandler.healthAmulet * 2));
         }
     }
 

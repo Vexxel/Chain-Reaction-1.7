@@ -87,6 +87,8 @@ item.chainreaction:bauble.witherAmulet.name=Amulet of Halted Corruption
 item.chainreaction:bauble.waterBreathingRing.name=Ring of Condensed Air
 item.chainreaction:bauble.powerRing.name=Ring of Fury
 item.chainreaction:bauble.healthAmulet.name=Amulet of Vitality
+item.chainreaction:bauble.speedBelt.name=Belt of Swiftness
+item.chainreaction:bauble.deflectionAmulet.name=Amulet of Deflection
 
 
 # GUI localizations ---------------------------------------------------------------------
@@ -105,15 +107,19 @@ gui.item.key.trespass.name=I can only remember codes that I issued.
 
 gui.item.bauble.null.name=No effect.
 gui.item.bauble.fallDamageAmulet.name=Fall Damage Immunity
-gui.item.bauble.hasteRing.name=Haste +20%
-gui.item.bauble.unbreakingRing.name=Unbreaking +30%
+gui.item.bauble.hasteRing.name=Haste
+gui.item.bauble.unbreakingRing.name=Unbreaking
 gui.item.bauble.fireResistanceAmulet.name=Fire Damage Immunity
 gui.item.bauble.witherAmulet.name=Withering Immunity
 gui.item.bauble.waterBreathingRing.name=Water Breathing
-gui.item.bauble.powerRing.name=Strength +20%
-gui.item.bauble.healthAmulet.name=Hearts +3
+gui.item.bauble.powerRing.name=Strength
+gui.item.bauble.healthAmulet.name=Hearts
+gui.item.bauble.speedBelt.name=Speed
+gui.item.bauble.deflectionAmulet.name=Deflection
 
-gui.item.bauble.setBonus.SKULLFIRE.name=Wither skull drop rate +50%
+
+gui.setBonus.skullfire.name=Curse of Skullfire
+gui.item.bauble.setBonus.SKULLFIRE.name=+20% Wither skull drop rate
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:

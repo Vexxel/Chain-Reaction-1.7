@@ -1,20 +1,20 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.ring;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
-import com.zerren.chainreaction.handler.PacketHandler;
-import com.zerren.chainreaction.handler.network.client.player.MessageToolDamage;
+import com.zerren.chainreaction.core.PlayerSetBonus;
+import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
-import com.zerren.chainreaction.utility.BaubleHelper;
-import com.zerren.chainreaction.utility.ItemRetriever;
-import com.zerren.chainreaction.utility.NBTHelper;
-import com.zerren.chainreaction.utility.TooltipHelper;
+import com.zerren.chainreaction.utility.*;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -30,6 +30,7 @@ public class PowerRing extends BaubleCore {
         type = BaubleType.RING;
         name = "powerRing";
         setBonus = SetBonus.SKULLFIRE;
+        extraTooltipValue = " +" + Math.round(ConfigHandler.powerModifier * 100) + "%";
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -39,9 +40,8 @@ public class PowerRing extends BaubleCore {
     public void onHurt(LivingHurtEvent event) {
         if (event.source.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.source.getEntity();
-            //System.out.println("Attacked");
 
-            if (isRingEquipped(player)) {
+            if (BaubleHelper.hasCorrectRing(player, ItemRetriever.Items.bauble("powerRing"))) {
                 //System.out.println("Equipped");
                 amplifyDamageOnce(event, player);
             }
@@ -49,11 +49,10 @@ public class PowerRing extends BaubleCore {
     }
 
 
-    private static void amplifyDamageOnce(LivingHurtEvent event, EntityPlayer player) {
+    private void amplifyDamageOnce(LivingHurtEvent event, EntityPlayer player) {
         ItemStack ring1 = BaublesApi.getBaubles(player).getStackInSlot(1);
         ItemStack ring2 = BaublesApi.getBaubles(player).getStackInSlot(2);
 
-        float amplify = 0.2F;
         int ringsEquipped = 0;
         float original = event.ammount;
 
@@ -71,8 +70,33 @@ public class PowerRing extends BaubleCore {
             }
         }
         if (ringsEquipped > 0) {
-            event.ammount = original * (1 + (amplify * ringsEquipped));
+            event.ammount = original * (1 + (ConfigHandler.powerModifier * ringsEquipped));
         }
     }
 
+    public void onEquipped(ItemStack stack, EntityLivingBase entity) {
+        super.onEquipped(stack, entity);
+
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)entity;
+
+            if (BaubleHelper.hasCorrectAmulet(player, ItemRetriever.Items.bauble("witherAmulet"))) {
+                PlayerSetBonus bonus = PlayerSetBonus.get(player);
+                bonus.setSkullfire(true);
+                //System.out.println("Skullfire: " + bonus.getSkullfire());
+            }
+        }
+
+    }
+
+    public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
+        super.onUnequipped(stack, entity);
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)entity;
+
+            PlayerSetBonus bonus = PlayerSetBonus.get(player);
+            bonus.setSkullfire(false);
+            //System.out.println("Skullfire: " + bonus.getSkullfire());
+        }
+    }
 }

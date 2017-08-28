@@ -1,6 +1,11 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.amulet;
 
 import baubles.api.BaubleType;
+import com.zerren.chainreaction.core.PlayerSetBonus;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.item.baubles.SetBonus;
+import com.zerren.chainreaction.utility.BaubleHelper;
+import com.zerren.chainreaction.utility.ItemRetriever;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,6 +42,25 @@ public class WitherAmulet extends BaubleCore {
     public void onEquipped(ItemStack stack, EntityLivingBase entity) {
         super.onEquipped(stack, entity);
 
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)entity;
+
+            if (BaubleHelper.hasCorrectRing(player, ItemRetriever.Items.bauble("powerRing"))) {
+                PlayerSetBonus bonus = PlayerSetBonus.get(player);
+                bonus.setSkullfire(true);
+            }
+        }
+
+    }
+
+    public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
+        super.onUnequipped(stack, entity);
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)entity;
+
+            PlayerSetBonus bonus = PlayerSetBonus.get(player);
+            bonus.setSkullfire(false);
+        }
     }
 
 }

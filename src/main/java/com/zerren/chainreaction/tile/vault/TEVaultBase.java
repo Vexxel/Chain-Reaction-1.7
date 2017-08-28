@@ -1,7 +1,7 @@
 package com.zerren.chainreaction.tile.vault;
 
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
-import com.zerren.chainreaction.handler.PacketHandler;
+import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileVault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

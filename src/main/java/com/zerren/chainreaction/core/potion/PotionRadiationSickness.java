@@ -1,7 +1,5 @@
 package com.zerren.chainreaction.core.potion;
 
-import com.zerren.chainreaction.handler.PacketHandler;
-import com.zerren.chainreaction.handler.network.client.player.MessageShader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;

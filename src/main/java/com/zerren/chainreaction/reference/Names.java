@@ -149,7 +149,9 @@ public final class Names {
                 "witherAmulet",
                 "waterBreathingRing",
                 "powerRing",
-                "healthAmulet"
+                "healthAmulet",
+                "speedBelt",
+                "deflectionAmulet"
         };
     }
 

@@ -1,6 +1,7 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.ring;
 
 import baubles.api.BaubleType;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,6 +1,7 @@
-package com.zerren.chainreaction.item.baubles;
+package com.zerren.chainreaction.item.baubles.amulet;
 
 import baubles.api.BaubleType;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

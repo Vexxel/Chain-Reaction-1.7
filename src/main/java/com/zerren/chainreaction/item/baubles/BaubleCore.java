@@ -2,16 +2,12 @@ package com.zerren.chainreaction.item.baubles;
 
 import baubles.api.BaubleType;
 import com.zerren.chainreaction.reference.Names;
-import com.zerren.chainreaction.utility.BaubleHelper;
-import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
 import com.zerren.chainreaction.utility.TooltipHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
@@ -22,14 +18,16 @@ public class BaubleCore {
 
     public static EnumRarity rarity;
     public static BaubleType type;
-    public static String name;
+    protected static String name;
     public static SetBonus setBonus;
+    protected static String extraTooltipValue;
 
     public BaubleCore() {
         rarity = EnumRarity.common;
         type = null;
         name = "null";
         setBonus = SetBonus.NONE;
+        extraTooltipValue = null;
     }
 
     public void tick(ItemStack stack, EntityLivingBase entity) {
@@ -40,27 +38,11 @@ public class BaubleCore {
         }
     }
 
-    public boolean isRingEquipped(EntityPlayer player) {
-        return BaubleHelper.hasCorrectRing(player, ItemRetriever.Items.bauble(getName()));
-    }
-
-    public boolean isAmuletEquipped(EntityPlayer player) {
-        return BaubleHelper.hasCorrectAmulet(player, ItemRetriever.Items.bauble(getName()));
-    }
-
-    public boolean isBeltEquipped(EntityPlayer player) {
-        return BaubleHelper.hasCorrectBelt(player, ItemRetriever.Items.bauble(getName()));
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void addTooltip(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-        TooltipHelper.addBaubleInfo(list, name);
+        TooltipHelper.addBaubleInfo(list, name, extraTooltipValue);
 
         if (isPartOfSet()) {
-            TooltipHelper.addSetBonusInfo(stack, getSetBonus(), player, list, name);
+            TooltipHelper.addSetBonusInfo(stack, getSetBonus(), player, list);
         }
     }
 

@@ -12,7 +12,7 @@ public final class Reference {
     public static final class ModInfo {
         public static final String MOD_ID = "ChainReaction";
         public static final String MOD_NAME = "Chain Reaction";
-        public static final String VERSION = "1.7.10-1.0.0";
+        public static final String VERSION = "1.7.10-1.0.1";
         public static final String CLIENTPROXY_CLASS = "com.zerren.chainreaction.core.proxy.ClientProxy";
         public static final String COMMONPROXY_CLASS = "com.zerren.chainreaction.core.proxy.CommonProxy";
         public static final String GUIFACTORY_CLASS = "com.zerren.chainreaction.client.gui.GuiFactory";
