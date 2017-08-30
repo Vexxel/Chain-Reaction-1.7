@@ -1,5 +1,7 @@
 package com.zerren.chainreaction.utility;
 
+import com.zerren.chainreaction.handler.ConfigHandler;
+
 /**
  * Created by Zerren on 3/9/2015.
  */
@@ -35,5 +37,12 @@ public final class CRMath {
 
     public static boolean isWithin(int var, int lower, int upper) {
         return var > lower && var <= upper;
+    }
+
+    public static double reducedByPercent(double number, double percent) {
+        return number - (number * percent);
+    }
+    public static double increasedByPercent(double original, double percent) {
+        return original * (1 + (percent));
     }
 }

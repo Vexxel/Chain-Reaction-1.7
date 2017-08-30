@@ -3,6 +3,7 @@ package com.zerren.chainreaction.item.baubles.belt;
 import baubles.api.BaubleType;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.reference.Names;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -21,8 +22,7 @@ import java.util.UUID;
  */
 public class SpeedBelt extends BaubleCore {
 
-    private static final UUID speedBeltBonusUUID = UUID.fromString("36A0FC05-50EB-460B-8961-615633A6D856");
-    private static final AttributeModifier speedBeltBonus = (new AttributeModifier(speedBeltBonusUUID, "Speed Belt Bonus", ConfigHandler.speedModifier, 2)).setSaved(false);
+    private static final AttributeModifier speedBeltBonus = (new AttributeModifier(Names.UUIDs.SPEED_BELT_BONUS_UUID, Names.UUIDs.SPEED_BELT_BONUS_NAME, ConfigHandler.speedModifier, 2)).setSaved(false);
 
     public SpeedBelt() {
         rarity = EnumRarity.uncommon;
@@ -38,7 +38,7 @@ public class SpeedBelt extends BaubleCore {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)entity;
 
-            if (player.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(speedBeltBonusUUID) == null) {
+            if (player.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(Names.UUIDs.SPEED_BELT_BONUS_UUID) == null) {
                 setSpeed(player, true);
             }
         }

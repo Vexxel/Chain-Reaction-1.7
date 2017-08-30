@@ -3,6 +3,7 @@ package com.zerren.chainreaction.item.baubles;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
+import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.tool.ItemBaubleCR;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.ItemRetriever;
@@ -12,8 +13,8 @@ import net.minecraft.item.ItemStack;
  * Created by Zerren on 8/26/2017.
  */
 public enum SetBonus {
-    SKULLFIRE("gui.setBonus.skullfire.name", "witherAmulet", "powerRing"),
-    NONE;
+    SKULLFIRE("skullfire", "witherAmulet", "powerRing"),
+    GUARDIAN("guardian", "deflectionAmulet", "knockbackBelt");
 
     private final String bonusName;
     private final String piece1;
@@ -25,14 +26,12 @@ public enum SetBonus {
         this.piece2 = p2;
     }
 
-    SetBonus() {
-        this.bonusName = null;
-        this.piece1 = null;
-        this.piece2 = null;
+    public String getBonusName() {
+        return this.bonusName;
     }
 
-    public String getBonusName() {
-        return CoreUtility.translate(this.bonusName);
+    public String getBonusNameTranslated() {
+        return CoreUtility.translate("gui.setBonus." + this.bonusName + ".name");
     }
 
     public ItemStack getBauble1() {
@@ -65,5 +64,21 @@ public enum SetBonus {
             }
         }
         return -1;
+    }
+
+    public ItemStack getOtherSetPiece(String currentItemName) {
+        return currentItemName.equals(piece1) ? getBauble2() : getBauble1();
+    }
+
+    public int getOtherSetPieceSlot(String currentItemName) {
+        return currentItemName.equals(piece1) ? getBauble2Slot() : getBauble1Slot();
+    }
+
+    public String getExtraValue() {
+        switch (this.ordinal()) {
+            case 0: return " +" + Math.round(ConfigHandler.skullfireChance * 100) + "%";
+            case 1: return " +" + Math.round(ConfigHandler.guardianKnockbackResistChance * 100) + "%";
+        }
+        return null;
     }
 }

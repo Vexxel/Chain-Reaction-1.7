@@ -2,6 +2,8 @@ package com.zerren.chainreaction.reference;
 
 import com.zerren.chainreaction.handler.ConfigHandler;
 
+import java.util.UUID;
+
 /**
  * Created by Zerren on 2/19/2015.
  */
@@ -151,7 +153,10 @@ public final class Names {
                 "powerRing",
                 "healthAmulet",
                 "speedBelt",
-                "deflectionAmulet"
+                "deflectionAmulet",
+                "knockbackBelt",
+                "protectionRing",
+                "jumpBelt"
         };
     }
 
@@ -208,6 +213,14 @@ public final class Names {
 
         public static final String BAUBLE_COOLDOWN = "cooldown";
 
-        public static final String SET_SKULLFIRE = "skullfire";
+    }
+
+    public static final class UUIDs {
+
+        public static final UUID SPEED_BELT_BONUS_UUID = UUID.fromString("65a4e9c4-8968-419b-81f8-6c8af9715222");
+        public static final String SPEED_BELT_BONUS_NAME = "CRSpeedBeltBonus";
+
+        public static final UUID KNOCKBACK_BELT_BONUS_UUID = UUID.fromString("c29cecf3-6060-445f-a94d-0be3cbeb3893");
+        public static final String KNOCKBACK_BELT_BONUS_NAME = "CRKnockbackBeltBonus";
     }
 }

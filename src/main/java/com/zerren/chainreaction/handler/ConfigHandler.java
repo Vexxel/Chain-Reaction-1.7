@@ -34,8 +34,12 @@ public class ConfigHandler {
     public static int healthAmulet;
     public static float speedModifier;
     public static float deflectionChance;
+    public static float knockbackResistChance;
+    public static float protectionModifier;
+
 
     public static float skullfireChance;
+    public static float guardianKnockbackResistChance;
 
     private static final ConfigCategory CATEGORY_IDS = new ConfigCategory("ids").setRequiresMcRestart(true).setShowInGui(true);
     private static final ConfigCategory CATEGORY_BAUBLES = new ConfigCategory("baubles").setShowInGui(true);
@@ -80,10 +84,13 @@ public class ConfigHandler {
         healthAmulet = config.getInt("healthModifier", CATEGORY_BAUBLES.getName(), 3, 1, 10, "Number of extra hearts that the Amulet of Vitality gives");
         speedModifier = config.getFloat("speedModifier", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 1F, "Belt of Swiftness speed increase");
         deflectionChance = config.getFloat("deflectionChance", CATEGORY_BAUBLES.getName(), 0.4F, 0.1F, 1F, "Amulet of Deflection chance to deflect a projectile");
-
+        knockbackResistChance = config.getFloat("knockbackResistChance", CATEGORY_BAUBLES.getName(), 0.5F, 0.1F, 1F, "Belt of the Mountain knockback resistance bonus");
+        protectionModifier = config.getFloat("protectionModifier", CATEGORY_BAUBLES.getName(), 0.2F, 0.1F, 0.33F, "Ring of Protection percent damage reduction");
 
         //set bonus
-        skullfireChance = config.getFloat("skullfire", CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set bonus wither skull drop chance");
+        skullfireChance = config.getFloat("skullfire", CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set effect wither skull drop chance");
+        guardianKnockbackResistChance = config.getFloat("guardian", CATEGORY_BAUBLESETS.getName(), 0.5F, 0.1F, 1F, "Guardian set effect knockback resistance bonus");
+
 
     }
 

@@ -38,29 +38,4 @@ public class WitherAmulet extends BaubleCore {
             player.removePotionEffect(20);
         }
     }
-
-    public void onEquipped(ItemStack stack, EntityLivingBase entity) {
-        super.onEquipped(stack, entity);
-
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer)entity;
-
-            if (BaubleHelper.hasCorrectRing(player, ItemRetriever.Items.bauble("powerRing"))) {
-                PlayerSetBonus bonus = PlayerSetBonus.get(player);
-                bonus.setSkullfire(true);
-            }
-        }
-
-    }
-
-    public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
-        super.onUnequipped(stack, entity);
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer)entity;
-
-            PlayerSetBonus bonus = PlayerSetBonus.get(player);
-            bonus.setSkullfire(false);
-        }
-    }
-
 }

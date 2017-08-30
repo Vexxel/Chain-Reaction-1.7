@@ -4,6 +4,7 @@ import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.ItemRetriever;
@@ -33,6 +34,7 @@ public class DeflectionAmulet extends BaubleCore {
         rarity = EnumRarity.uncommon;
         type = BaubleType.AMULET;
         name = "deflectionAmulet";
+        setBonus = SetBonus.GUARDIAN;
         extraTooltipValue = " +" + Math.round(ConfigHandler.deflectionChance * 100) + "%";
 
 

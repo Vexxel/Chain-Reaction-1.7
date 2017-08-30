@@ -10,6 +10,7 @@ import com.zerren.chainreaction.core.registry.CRDictionary;
 import com.zerren.chainreaction.core.registry.Recipes;
 import com.zerren.chainreaction.core.registry.TileEntities;
 import com.zerren.chainreaction.core.tick.CRTickHandler;
+import com.zerren.chainreaction.core.tick.SetBonusHandler;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.handler.GuiHandler;
 import com.zerren.chainreaction.handler.network.PacketHandler;
@@ -94,6 +95,7 @@ public class ChainReaction {
         FMLCommonHandler.instance().bus().register(new CRTickHandler());
 
         MinecraftForge.EVENT_BUS.register(new CRTickHandler());
+        MinecraftForge.EVENT_BUS.register(new SetBonusHandler());
 
         if(event.getSide() == Side.CLIENT) {
             CRHotkey.init();

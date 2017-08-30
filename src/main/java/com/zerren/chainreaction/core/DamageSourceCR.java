@@ -30,4 +30,8 @@ public final class DamageSourceCR extends DamageSource {
     public boolean isAnnihilationDamage() {
         return this.annihilationDamage;
     }
+
+    public static boolean canResist(DamageSource source) {
+        return !source.isDamageAbsolute() && !source.canHarmInCreative();
+    }
 }

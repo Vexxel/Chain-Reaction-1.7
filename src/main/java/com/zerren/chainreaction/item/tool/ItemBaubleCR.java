@@ -5,11 +5,9 @@ import baubles.api.IBauble;
 import com.zerren.chainreaction.item.ItemCRBase;
 import com.zerren.chainreaction.item.baubles.*;
 import com.zerren.chainreaction.item.baubles.amulet.*;
+import com.zerren.chainreaction.item.baubles.belt.KnockbackBelt;
 import com.zerren.chainreaction.item.baubles.belt.SpeedBelt;
-import com.zerren.chainreaction.item.baubles.ring.HasteRing;
-import com.zerren.chainreaction.item.baubles.ring.PowerRing;
-import com.zerren.chainreaction.item.baubles.ring.UnbreakingRing;
-import com.zerren.chainreaction.item.baubles.ring.WaterBreathingRing;
+import com.zerren.chainreaction.item.baubles.ring.*;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -43,6 +41,8 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
                 case 7: return new HealthAmulet();
                 case 8: return new SpeedBelt();
                 case 9: return new DeflectionAmulet();
+                case 10: return new KnockbackBelt();
+                case 11: return new ProtectionRing();
 
                 default: return new BaubleCore();
             }
@@ -54,51 +54,51 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4) {
         if (stack != null) {
-            getBauble(stack).addTooltip(stack, player, list, par4);
+            getBauble(stack).addTooltip(player, list, par4);
         }
     }
 
     @Override
     public BaubleType getBaubleType(ItemStack stack) {
         if (stack != null) {
-            getBauble(stack).getType();
+            return getBauble(stack).getType();
         }
-        return BaubleCore.type;
+        return null;
     }
 
     @Override
     public void onWornTick(ItemStack stack, EntityLivingBase player) {
-        if (stack != null && player != null && getBauble(stack) != null)
+        if (stack != null && player != null)
             getBauble(stack).tick(stack, player);
     }
 
     @Override
     public void onEquipped(ItemStack stack, EntityLivingBase player) {
-        if (stack != null && player != null && getBauble(stack) != null)
+        if (stack != null && player != null)
             getBauble(stack).onEquipped(stack, player);
     }
 
     @Override
     public void onUnequipped(ItemStack stack, EntityLivingBase player) {
-        if (stack != null && player != null && getBauble(stack) != null)
+        if (stack != null && player != null)
             getBauble(stack).onUnequipped(stack, player);
     }
 
     @Override
     public boolean canEquip(ItemStack stack, EntityLivingBase player) {
-        return stack != null && player != null && getBauble(stack) != null && getBauble(stack).canEquip(stack, player);
+        return stack != null && player != null && getBauble(stack).canEquip(stack, player);
     }
 
     @Override
     public boolean canUnequip(ItemStack stack, EntityLivingBase player) {
-        return stack != null && player != null && getBauble(stack) != null && getBauble(stack).canUnequip(stack, player);
+        return stack != null && player != null && getBauble(stack).canUnequip(stack, player);
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         if (stack != null) {
-            getBauble(stack).getRarity();
+            return getBauble(stack).getRarity();
         }
-        return BaubleCore.rarity;
+        return EnumRarity.common;
     }
 }

@@ -1,9 +1,8 @@
 package com.zerren.chainreaction.utility;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import com.zerren.chainreaction.core.PlayerSetBonus;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
 import com.zerren.chainreaction.item.baubles.SetBonus;
+import com.zerren.chainreaction.item.tool.ItemBaubleCR;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
@@ -102,37 +101,48 @@ public final class TooltipHelper {
         list.add(s1);
     }
 
-    public static void addSetBonusInfo(ItemStack stack, SetBonus set, EntityPlayer player, List<String> list) {
+    public static void addSetBonusInfo(SetBonus set, EntityPlayer player, List<String> list) {
         //shows the set bonus is either green or gray if it is activated or not
-        EnumChatFormatting isActive = getSetActivity(PlayerSetBonus.get(player).getSkullfire());
+        boolean hasSet = CoreUtility.isSetActivated(player, set);
+        EnumChatFormatting isActive = getSetActivity(hasSet);
         EnumChatFormatting isFirstEquipped = getSetActivity(hasFirstSetItemEquipped(set, player));
         EnumChatFormatting isSecondEquipped = getSetActivity(hasSecondSetItemEquipped(set, player));
 
         list.add(isActive + CoreUtility.translate("gui.setInfo.name"));
-        list.add(isActive + CoreUtility.translate("gui.item.bauble.setBonus." + set + ".name"));
+        String s1 = isActive + CoreUtility.translate("gui.item.bauble.setBonus." + set.getBonusName() + ".name");
+        if (set.getExtraValue() != null) {
+            s1 = s1.concat(set.getExtraValue());
+        }
+        list.add(s1);
+
 
         if (showShiftInformation()) {
             //if set is active, set bonus name is green
             list.add(" ");
-            list.add(isActive + set.getBonusName() + ":");
+            list.add(isActive + set.getBonusNameTranslated() + ":");
             //first item name
             list.add(isFirstEquipped + "- " + set.getBauble1().getDisplayName());
             list.add(isSecondEquipped + "- " + set.getBauble2().getDisplayName());
+            //flavor text
+            if (hasSet) {
+                list.add(" ");
+                list.add(EnumChatFormatting.GOLD + "" + EnumChatFormatting.ITALIC + "'" + CoreUtility.translate("gui.setBonusFlavorText." + set.getBonusName() + ".name") + "'");
+            }
         }
         else {
             list.add(EnumChatFormatting.DARK_PURPLE + CoreUtility.translate("gui.shift.name"));
         }
     }
 
-    private static EnumChatFormatting getSetActivity(boolean active) {
+    public static EnumChatFormatting getSetActivity(boolean active) {
         //System.out.println(active);
         return active ? EnumChatFormatting.GREEN : EnumChatFormatting.GRAY;
     }
 
-    private static boolean hasFirstSetItemEquipped(SetBonus set, EntityPlayer player) {
+    public static boolean hasFirstSetItemEquipped(SetBonus set, EntityPlayer player) {
         return BaubleHelper.hasCorrectBauble(player, set.getBauble1(), set.getBauble1Slot());
     }
-    private static boolean hasSecondSetItemEquipped(SetBonus set, EntityPlayer player) {
+    public static boolean hasSecondSetItemEquipped(SetBonus set, EntityPlayer player) {
         return BaubleHelper.hasCorrectBauble(player, set.getBauble2(), set.getBauble2Slot());
     }
 }

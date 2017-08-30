@@ -2,6 +2,7 @@ package com.zerren.chainreaction.core.tick;
 
 import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -19,7 +20,7 @@ public class SetBonusHandler {
     public void onLivingDrops(LivingDropsEvent event) {
         if(event.recentlyHit && event.entityLiving instanceof EntitySkeleton && event.source.getEntity() instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer)event.source.getEntity();
-            if(PlayerSetBonus.get(player).getSkullfire()){
+            if(PlayerSetBonus.get(player).getSetStatus(SetBonus.SKULLFIRE)){
                 // ok, we need to drop a skull then.
                 if (player.worldObj.rand.nextFloat() <= ConfigHandler.skullfireChance) {
                     if (event.drops.isEmpty()) {

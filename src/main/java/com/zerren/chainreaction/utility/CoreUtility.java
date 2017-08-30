@@ -1,7 +1,9 @@
 package com.zerren.chainreaction.utility;
 
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
@@ -141,5 +143,9 @@ public final class CoreUtility {
             if (stack != null && stack.getItem() == ore.getItem() && stack.getItemDamage() == ore.getItemDamage()) return true;
         }
         return false;
+    }
+
+    public static boolean isSetActivated(EntityPlayer player, SetBonus set) {
+        return PlayerSetBonus.get(player).getSetStatus(set);
     }
 }

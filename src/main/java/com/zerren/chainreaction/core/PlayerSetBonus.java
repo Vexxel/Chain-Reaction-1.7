@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.core;
 
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,18 +8,26 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
+import java.util.Arrays;
+
 /**
  * Created by Zerren on 8/26/2017.
  */
 public class PlayerSetBonus implements IExtendedEntityProperties {
 
     public final static String EXT_PROP_NAME = "CRBaublesPlayer";
+    public final static SetBonus[] BONUSES = SetBonus.values();
+
     private final EntityPlayer player;
-    private boolean skullfire;
+    private boolean[] sets;
 
     public PlayerSetBonus(EntityPlayer player) {
         this.player = player;
-        this.skullfire = false;
+        this.sets = new boolean[BONUSES.length];
+
+        for (int i = 0; i < sets.length; i++) {
+            this.sets[i] = false;
+        }
     }
 
     public static PlayerSetBonus get(EntityPlayer player) {
@@ -33,24 +42,29 @@ public class PlayerSetBonus implements IExtendedEntityProperties {
     public void saveNBTData(NBTTagCompound compound) {
         NBTTagCompound properties = new NBTTagCompound();
 
-        properties.setBoolean(Names.NBT.SET_SKULLFIRE, this.skullfire);
+        for (int i = 0; i < BONUSES.length; i++) {
+            properties.setBoolean(BONUSES[i].getBonusName(), sets[i]);
+        }
         compound.setTag(EXT_PROP_NAME, properties);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound compound) {
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
-        this.skullfire = properties.getBoolean(Names.NBT.SET_SKULLFIRE);
 
-        //System.out.println("[CR] Skullfire set: " + skullfire);
+        for (int i = 0; i < BONUSES.length; i++) {
+            sets[i] = properties.getBoolean(BONUSES[i].getBonusName());
+            //System.out.println(BONUSES[i].getBonusName() + " = " + sets[i]);
+        }
     }
 
-    public void setSkullfire(boolean equipped) {
-        this.skullfire = equipped;
+    public void toggleSetStatus(SetBonus set, boolean equipped) {
+        System.out.println(set + "=" + equipped);
+        this.sets[set.ordinal()] = equipped;
     }
 
-    public boolean getSkullfire() {
-        return skullfire;
+    public boolean getSetStatus(SetBonus set) {
+        return this.sets[set.ordinal()];
     }
 
     @Override

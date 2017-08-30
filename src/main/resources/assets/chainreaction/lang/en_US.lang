@@ -89,6 +89,9 @@ item.chainreaction:bauble.powerRing.name=Ring of Fury
 item.chainreaction:bauble.healthAmulet.name=Amulet of Vitality
 item.chainreaction:bauble.speedBelt.name=Belt of Swiftness
 item.chainreaction:bauble.deflectionAmulet.name=Amulet of Deflection
+item.chainreaction:bauble.knockbackBelt.name=Belt of the Mountain
+item.chainreaction:bauble.protectionRing.name=Ring of Protection
+
 
 
 # GUI localizations ---------------------------------------------------------------------
@@ -116,10 +119,17 @@ gui.item.bauble.powerRing.name=Strength
 gui.item.bauble.healthAmulet.name=Hearts
 gui.item.bauble.speedBelt.name=Speed
 gui.item.bauble.deflectionAmulet.name=Deflection
+gui.item.bauble.knockbackBelt.name=Knockback Resistance
+gui.item.bauble.protectionRing.name=Resistance
 
 
 gui.setBonus.skullfire.name=Curse of Skullfire
-gui.item.bauble.setBonus.SKULLFIRE.name=+20% Wither skull drop rate
+gui.item.bauble.setBonus.skullfire.name=Wither skull drop rate
+gui.setBonusFlavorText.skullfire.name=An amalgamation of fury and fire.
+
+gui.setBonus.guardian.name=Stalwart Guardian
+gui.item.bauble.setBonus.guardian.name=Knockback Resistance
+gui.setBonusFlavorText.guardian.name=As immovable as a mountain.
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:
