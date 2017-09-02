@@ -158,6 +158,42 @@ public final class Names {
                 "protectionRing",
                 "jumpBelt"
         };
+
+        public static final String BAUBLE_MATERIALS = "baubleMats";
+        public static final String[] BAUBLE_MATERIAL_SUBTYPES = {
+                "ringIron",
+                "ringGold",
+                "ringSilver",
+                "ringCopper",
+                "ringBronze",
+                "ringPlatinum",
+                "ringThaumium",
+                "ringTitanium",
+                "ringElectrum",
+                "ringMithril",
+                "ringTungstenCarbide",
+                "ringNickel",
+                "ringVoidMetal",
+                "amuletIron",
+                "amuletGold",
+                "amuletSilver",
+                "amuletCopper",
+                "amuletBronze",
+                "amuletPlatinum",
+                "amuletThaumium",
+                "amuletTitanium",
+                "amuletElectrum",
+                "amuletMithril",
+                "amuletTungstenCarbide",
+                "amuletNickel",
+                "amuletVoidMetal",
+                "beltLeather",
+                "beltIron",
+                "beltGold",
+                "beltSilver",
+                "beltThaumium",
+                "beltVoidMetal"
+        };
     }
 
     public static final class Fluids {

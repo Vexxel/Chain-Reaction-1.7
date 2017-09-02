@@ -48,7 +48,7 @@ public class DeflectionAmulet extends BaubleCore {
 
             EntityPlayer playerHit = (EntityPlayer) event.entityLiving;
 
-            if (BaubleHelper.hasCorrectAmulet(playerHit, ItemRetriever.Items.bauble("deflectionAmulet"))) {
+            if (BaubleHelper.hasCorrectAmulet(playerHit, ItemRetriever.Items.bauble(name))) {
                 if (playerHit.worldObj.rand.nextFloat() <= ConfigHandler.deflectionChance) {
                     tryNegateProjectileOnce(event, playerHit, true);
                 }

@@ -40,4 +40,5 @@ public final class CRItems {
     public static Item musicDisc;
     public static Item ores;
     public static Item baubles;
+    public static Item baubleMats;
 }

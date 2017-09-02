@@ -91,7 +91,43 @@ item.chainreaction:bauble.speedBelt.name=Belt of Swiftness
 item.chainreaction:bauble.deflectionAmulet.name=Amulet of Deflection
 item.chainreaction:bauble.knockbackBelt.name=Belt of the Mountain
 item.chainreaction:bauble.protectionRing.name=Ring of Protection
+item.chainreaction:bauble.jumpBelt.name=Belt of Leaping
 
+
+item.chainreaction:baubleMats.ringIron.name=Iron Ring
+item.chainreaction:baubleMats.ringGold.name=Gold Ring
+item.chainreaction:baubleMats.ringSilver.name=Silver Ring
+item.chainreaction:baubleMats.ringCopper.name=Copper Ring
+item.chainreaction:baubleMats.ringBronze.name=Bronze Ring
+item.chainreaction:baubleMats.ringPlatinum.name=Platinum Ring
+item.chainreaction:baubleMats.ringThaumium.name=Thaumium Ring
+item.chainreaction:baubleMats.ringTitanium.name=Titanium Ring
+item.chainreaction:baubleMats.ringElectrum.name=Electrum Ring
+item.chainreaction:baubleMats.ringMithril.name=Mithril Ring
+item.chainreaction:baubleMats.ringTungstenCarbide.name=Tungsten Carbide Ring
+item.chainreaction:baubleMats.ringNickel.name=Nickel Ring
+item.chainreaction:baubleMats.ringVoidMetal.name=Void Metal Ring
+
+item.chainreaction:baubleMats.amuletIron.name=Iron Amulet
+item.chainreaction:baubleMats.amuletGold.name=Gold Amulet
+item.chainreaction:baubleMats.amuletSilver.name=Silver Amulet
+item.chainreaction:baubleMats.amuletCopper.name=Copper Amulet
+item.chainreaction:baubleMats.amuletBronze.name=Bronze Amulet
+item.chainreaction:baubleMats.amuletPlatinum.name=Platinum Amulet
+item.chainreaction:baubleMats.amuletThaumium.name=Thaumium Amulet
+item.chainreaction:baubleMats.amuletTitanium.name=Titanium Amulet
+item.chainreaction:baubleMats.amuletElectrum.name=Electrum Amulet
+item.chainreaction:baubleMats.amuletMithril.name=Mithril Amulet
+item.chainreaction:baubleMats.amuletTungstenCarbide.name=Tungsten Carbide Amulet
+item.chainreaction:baubleMats.amuletNickel.name=Nickel Amulet
+item.chainreaction:baubleMats.amuletVoidMetal.name=Void Metal Amulet
+
+item.chainreaction:baubleMats.beltLeather.name=Leather Belt
+item.chainreaction:baubleMats.beltIron.name=Iron Studded Leather Belt
+item.chainreaction:baubleMats.beltGold.name=Gold Studded Leather Belt
+item.chainreaction:baubleMats.beltSilver.name=Silver Studded Leather Belt
+item.chainreaction:baubleMats.beltThaumium.name=Thaumium Studded Leather Belt
+item.chainreaction:baubleMats.beltVoidMetal.name=Void Metal Studded Leather Belt
 
 
 # GUI localizations ---------------------------------------------------------------------
@@ -121,6 +157,8 @@ gui.item.bauble.speedBelt.name=Speed
 gui.item.bauble.deflectionAmulet.name=Deflection
 gui.item.bauble.knockbackBelt.name=Knockback Resistance
 gui.item.bauble.protectionRing.name=Resistance
+gui.item.bauble.jumpBelt.name=Jump Height
+
 
 
 gui.setBonus.skullfire.name=Curse of Skullfire

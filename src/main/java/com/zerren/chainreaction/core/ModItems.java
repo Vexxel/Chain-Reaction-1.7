@@ -30,6 +30,8 @@ public class ModItems {
         register(CRItems.musicDisc = new ItemCRMusic(Names.Items.RECORDS, Reference.Textures.Folders.TOOL_FOLDER, "industrial"), Names.Items.RECORDS);
         register(CRItems.ores = new ItemOres(Names.Items.ORES, Names.Items.ORE_SUBTYPES, Reference.Textures.Folders.ORE_FOLDER, ChainReaction.cTabCR), Names.Items.ORES);
         register(CRItems.baubles = new ItemBaubleCR(Names.Items.BAUBLES, Names.Items.BAUBLE_SUBTYPES, Reference.Textures.Folders.BAUBLE_FOLDER, ChainReaction.cTabCR), Names.Items.BAUBLES);
+        register(CRItems.baubleMats = new ItemCRBase(Names.Items.BAUBLE_MATERIALS, Names.Items.BAUBLE_MATERIAL_SUBTYPES, Reference.Textures.Folders.BAUBLE_MATERIAL_FOLDER, ChainReaction.cTabCR), Names.Items.BAUBLE_MATERIALS);
+
     }
 
     private static void register(Item item, String name) {

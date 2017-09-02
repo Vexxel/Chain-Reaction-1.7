@@ -36,6 +36,7 @@ public class ConfigHandler {
     public static float deflectionChance;
     public static float knockbackResistChance;
     public static float protectionModifier;
+    public static float jumpModifier;
 
 
     public static float skullfireChance;
@@ -86,6 +87,7 @@ public class ConfigHandler {
         deflectionChance = config.getFloat("deflectionChance", CATEGORY_BAUBLES.getName(), 0.4F, 0.1F, 1F, "Amulet of Deflection chance to deflect a projectile");
         knockbackResistChance = config.getFloat("knockbackResistChance", CATEGORY_BAUBLES.getName(), 0.5F, 0.1F, 1F, "Belt of the Mountain knockback resistance bonus");
         protectionModifier = config.getFloat("protectionModifier", CATEGORY_BAUBLES.getName(), 0.2F, 0.1F, 0.33F, "Ring of Protection percent damage reduction");
+        jumpModifier = config.getFloat("jumpModifier", CATEGORY_BAUBLES.getName(), 1F, 0.5F, 2F, "Belt of Leaping jump height increase (in blocks)");
 
         //set bonus
         skullfireChance = config.getFloat("skullfire", CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set effect wither skull drop chance");

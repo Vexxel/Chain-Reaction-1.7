@@ -5,6 +5,7 @@ import baubles.api.IBauble;
 import com.zerren.chainreaction.item.ItemCRBase;
 import com.zerren.chainreaction.item.baubles.*;
 import com.zerren.chainreaction.item.baubles.amulet.*;
+import com.zerren.chainreaction.item.baubles.belt.JumpBelt;
 import com.zerren.chainreaction.item.baubles.belt.KnockbackBelt;
 import com.zerren.chainreaction.item.baubles.belt.SpeedBelt;
 import com.zerren.chainreaction.item.baubles.ring.*;
@@ -43,6 +44,7 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
                 case 9: return new DeflectionAmulet();
                 case 10: return new KnockbackBelt();
                 case 11: return new ProtectionRing();
+                case 12: return new JumpBelt();
 
                 default: return new BaubleCore();
             }
