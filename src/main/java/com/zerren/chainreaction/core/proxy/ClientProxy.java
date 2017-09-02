@@ -13,8 +13,6 @@ import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
 import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
-import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
@@ -24,16 +22,14 @@ import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.particle.EntityBubbleFX;
+import net.minecraft.client.particle.EntityCritFX;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +38,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,6 +141,11 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
+    public void playSoundAtEntity(World world, Entity entity, String soundName, float volume, float pitch) {
+        world.playSoundAtEntity(entity, soundName, volume, pitch);
+    }
+
+    @Override
     public void setShader(String shader) {
         while(!FMLClientHandler.instance().getClient().entityRenderer.isShaderActive() || !(FMLClientHandler.instance().getClient().entityRenderer.getShaderGroup().getShaderGroupName().equals("minecraft:shaders/post/" + shader + ".json")))
             FMLClientHandler.instance().getClient().entityRenderer.activateNextShader();
@@ -166,6 +166,15 @@ public class ClientProxy extends CommonProxy {
 
         if (shouldSpawnParticle()) {
             EntityRadiationFX fx = new EntityRadiationFX(world, x, y, z, velX, velY, velZ, power);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+        }
+    }
+
+    @Override
+    public void magicCritFX(Entity entity, double velX, double velY, double velZ) {
+
+        if (shouldSpawnParticle()) {
+            EntityFX fx = new EntityCritFX(entity.worldObj, entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ, velX, velY, velZ);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
         }
     }
@@ -198,11 +207,5 @@ public class ClientProxy extends CommonProxy {
         }
 
         return particleSetting <= 1;
-    }
-
-    @SubscribeEvent
-    public void onPostRender(RenderPlayerEvent.Specials.Post event) {
-        AbstractClientPlayer player = (AbstractClientPlayer) event.entityPlayer;
-        boolean flag = (event.entityPlayer.getCommandSenderName().equals("Zerren"));
     }
 }

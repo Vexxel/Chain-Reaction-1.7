@@ -4,6 +4,8 @@ import com.zerren.chainreaction.handler.ConfigHandler;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.UUID;
+
 /**
  * Created by Zerren on 2/19/2015.
  */
@@ -18,6 +20,8 @@ public final class Reference {
         public static final String GUIFACTORY_CLASS = "com.zerren.chainreaction.client.gui.GuiFactory";
 
         public static final String CR_RESOURCE_PREFIX = Reference.ModInfo.MOD_ID.toLowerCase() + ":";
+
+        public static final UUID VEXXEL_UUID = UUID.fromString("8c273eda-96f6-4d98-8369-9aa161d61fb8");
     }
 
     public static final class Textures {
@@ -90,6 +94,7 @@ public final class Reference {
         public static final String LOCK_SUCCESS = ModInfo.CR_RESOURCE_PREFIX + "lock_success";
         public static final String LOCK_FAILURE = ModInfo.CR_RESOURCE_PREFIX + "lock_failure";
         public static final String LOCK_RATTLE = ModInfo.CR_RESOURCE_PREFIX + "lock_rattle";
+        public static final String SHIELD_DISSIPATE = ModInfo.CR_RESOURCE_PREFIX + "shield_dissipate";
 
         public static final String RECORDS = ModInfo.CR_RESOURCE_PREFIX;
     }

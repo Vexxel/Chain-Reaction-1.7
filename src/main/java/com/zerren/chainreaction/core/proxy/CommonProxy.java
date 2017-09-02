@@ -30,6 +30,7 @@ public class CommonProxy {
 
     public void playSoundCentered(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }
     public void playSound(World world, float xCoord, float yCoord, float zCoord, String soundName, float volume, float pitch) { }
+    public void playSoundAtEntity(World world, Entity entity, String soundName, float volume, float pitch) { }
 
     public boolean isTheClientPlayer(EntityLivingBase entity) { return false; }
 
@@ -48,6 +49,8 @@ public class CommonProxy {
     public void steamFX(World world, double x, double y, double z, double velX, double velY, double velZ, float scale) { }
 
     public void bubbleFX(Entity entity, double velX, double velY, double velZ) { }
+
+    public void magicCritFX(Entity entity, double velX, double velY, double velZ) { }
 
     public EntityPlayer getPlayerEntity(MessageContext ctx) {
         ChainReaction.log.info("Retrieving player from CommonProxy for message on side " + ctx.side);

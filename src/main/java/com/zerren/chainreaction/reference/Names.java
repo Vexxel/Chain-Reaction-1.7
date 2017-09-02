@@ -156,7 +156,9 @@ public final class Names {
                 "deflectionAmulet",
                 "knockbackBelt",
                 "protectionRing",
-                "jumpBelt"
+                "jumpBelt",
+                "regenRing",
+                "shieldAmulet"
         };
 
         public static final String BAUBLE_MATERIALS = "baubleMats";
@@ -258,5 +260,8 @@ public final class Names {
 
         public static final UUID KNOCKBACK_BELT_BONUS_UUID = UUID.fromString("c29cecf3-6060-445f-a94d-0be3cbeb3893");
         public static final String KNOCKBACK_BELT_BONUS_NAME = "CRKnockbackBeltBonus";
+
+        public static final UUID POWER_RING_BONUS_UUID = UUID.fromString("823ec755-2f32-4a69-96f7-e6c310dee20e");
+        public static final String POWER_RING_BONUS_NAME = "CRPowerRingBonus";
     }
 }

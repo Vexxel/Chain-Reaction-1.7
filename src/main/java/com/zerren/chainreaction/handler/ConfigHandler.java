@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.handler;
 
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
@@ -37,6 +38,8 @@ public class ConfigHandler {
     public static float knockbackResistChance;
     public static float protectionModifier;
     public static float jumpModifier;
+    public static int regenFrequency;
+    public static int shieldFrequency;
 
 
     public static float skullfireChance;
@@ -88,10 +91,12 @@ public class ConfigHandler {
         knockbackResistChance = config.getFloat("knockbackResistChance", CATEGORY_BAUBLES.getName(), 0.5F, 0.1F, 1F, "Belt of the Mountain knockback resistance bonus");
         protectionModifier = config.getFloat("protectionModifier", CATEGORY_BAUBLES.getName(), 0.2F, 0.1F, 0.33F, "Ring of Protection percent damage reduction");
         jumpModifier = config.getFloat("jumpModifier", CATEGORY_BAUBLES.getName(), 1F, 0.5F, 2F, "Belt of Leaping jump height increase (in blocks)");
+        regenFrequency = config.getInt("regenFrequency", CATEGORY_BAUBLES.getName(), 3, 1, 5, "Ring of Regeneration healing frequency (in seconds)");
+        shieldFrequency = config.getInt("shieldFrequency", CATEGORY_BAUBLES.getName(), 8, 4, 20, "Amulet of Shielding cooldown (in seconds)");
 
         //set bonus
-        skullfireChance = config.getFloat("skullfire", CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set effect wither skull drop chance");
-        guardianKnockbackResistChance = config.getFloat("guardian", CATEGORY_BAUBLESETS.getName(), 0.5F, 0.1F, 1F, "Guardian set effect knockback resistance bonus");
+        skullfireChance = config.getFloat(SetBonus.SKULLFIRE.getBonusName(), CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set effect wither skull drop chance");
+        guardianKnockbackResistChance = config.getFloat(SetBonus.GUARDIAN.getBonusName(), CATEGORY_BAUBLESETS.getName(), 0.5F, 0.1F, 1F, "Guardian set effect knockback resistance bonus");
 
 
     }

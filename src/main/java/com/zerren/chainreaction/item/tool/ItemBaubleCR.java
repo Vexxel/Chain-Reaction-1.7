@@ -45,6 +45,8 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
                 case 10: return new KnockbackBelt();
                 case 11: return new ProtectionRing();
                 case 12: return new JumpBelt();
+                case 13: return new RegenRing();
+                case 14: return new ShieldAmulet();
 
                 default: return new BaubleCore();
             }

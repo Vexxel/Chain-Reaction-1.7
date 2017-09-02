@@ -1,12 +1,16 @@
 package com.zerren.chainreaction.item.baubles;
 
 import baubles.api.BaubleType;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.BaubleHelper;
+import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
 import com.zerren.chainreaction.utility.TooltipHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -48,12 +52,32 @@ public class BaubleCore {
         }
     }
 
+    public static void setCooldown(ItemStack stack, int cooldown) {
+        short cd = (short)cooldown;
+
+        if (cooldown < 0) cd = 0;
+
+        NBTHelper.setShort(stack, Names.NBT.BAUBLE_COOLDOWN, cd);
+    }
+
+    public static void setCooldown(ItemStack stack) {
+        setCooldown(stack, 0);
+    }
+
+    public static short getCooldown(ItemStack stack) {
+        return NBTHelper.getShort(stack, Names.NBT.BAUBLE_COOLDOWN);
+    }
+
     public boolean isPartOfSet() {
         return setBonus != null;
     }
 
     public SetBonus getSetBonus() {
         return setBonus;
+    }
+
+    public ItemStack getStack() {
+        return ItemRetriever.Items.bauble(name);
     }
 
     public void onEquipped(ItemStack stack, EntityLivingBase entity) {

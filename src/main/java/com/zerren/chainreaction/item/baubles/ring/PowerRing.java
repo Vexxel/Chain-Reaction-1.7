@@ -2,6 +2,8 @@ package com.zerren.chainreaction.item.baubles.ring;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
@@ -28,6 +30,10 @@ import java.util.List;
  */
 public class PowerRing extends BaubleCore {
 
+    private Multimap<String, AttributeModifier> attributes = HashMultimap.create();
+    //private static final AttributeModifier powerBonus = (new AttributeModifier(Names.UUIDs.POWER_RING_BONUS_UUID, Names.UUIDs.POWER_RING_BONUS_NAME, 1.2, 1));
+
+
     public PowerRing() {
         rarity = EnumRarity.uncommon;
         type = BaubleType.RING;
@@ -35,7 +41,20 @@ public class PowerRing extends BaubleCore {
         setBonus = SetBonus.SKULLFIRE;
         extraTooltipValue = " +" + Math.round(ConfigHandler.powerModifier * 100) + "%";
 
+        //attributes.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), powerBonus);
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public void onEquipped(ItemStack stack, EntityLivingBase entity) {
+        super.onEquipped(stack, entity);
+
+        //entity.getAttributeMap().applyAttributeModifiers(attributes);
+    }
+
+    public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
+        super.onUnequipped(stack, entity);
+
+        //entity.getAttributeMap().removeAttributeModifiers(attributes);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -58,8 +77,8 @@ public class PowerRing extends BaubleCore {
 
         for (ItemStack ring : rings) {
             if (ring != null && ring.isItemEqual(ItemRetriever.Items.bauble(name))) {
-                if (NBTHelper.getShort(ring, Names.NBT.BAUBLE_COOLDOWN) == 0) {
-                    NBTHelper.setShort(ring, Names.NBT.BAUBLE_COOLDOWN, (short)5);
+                if (getCooldown(ring) == 0) {
+                    setCooldown(ring, 5);
                     ringsEquipped++;
                 }
             }

@@ -26,6 +26,15 @@
                 }
             ]
         },
+    "shield_dissipate": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "shield_dissipate",
+                "stream": false
+            }
+        ]
+    },
     "records.industrial": {
         "category": "record",
         "sounds": [

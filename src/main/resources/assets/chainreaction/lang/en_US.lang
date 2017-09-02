@@ -92,6 +92,9 @@ item.chainreaction:bauble.deflectionAmulet.name=Amulet of Deflection
 item.chainreaction:bauble.knockbackBelt.name=Belt of the Mountain
 item.chainreaction:bauble.protectionRing.name=Ring of Protection
 item.chainreaction:bauble.jumpBelt.name=Belt of Leaping
+item.chainreaction:bauble.regenRing.name=Ring of Regeneration
+item.chainreaction:bauble.shieldAmulet.name=Amulet of Shielding
+
 
 
 item.chainreaction:baubleMats.ringIron.name=Iron Ring
@@ -157,9 +160,9 @@ gui.item.bauble.speedBelt.name=Speed
 gui.item.bauble.deflectionAmulet.name=Deflection
 gui.item.bauble.knockbackBelt.name=Knockback Resistance
 gui.item.bauble.protectionRing.name=Resistance
-gui.item.bauble.jumpBelt.name=Jump Height
-
-
+gui.item.bauble.jumpBelt.name=Double Jump
+gui.item.bauble.regenRing.name=Regeneration
+gui.item.bauble.shieldAmulet.name=Shield
 
 gui.setBonus.skullfire.name=Curse of Skullfire
 gui.item.bauble.setBonus.skullfire.name=Wither skull drop rate

@@ -4,11 +4,18 @@ import cofh.api.energy.IEnergyContainerItem;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.network.PacketHandler;
+import com.zerren.chainreaction.handler.network.client.player.MessageDoubleJump;
 import com.zerren.chainreaction.handler.network.client.player.MessageSetBonus;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.item.armor.ItemOxygenMask;
 import com.zerren.chainreaction.item.armor.ItemThrustPack;
+import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.item.baubles.belt.JumpBelt;
+import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.CRHotkey;
+import com.zerren.chainreaction.utility.CRMath;
+import com.zerren.chainreaction.utility.ItemRetriever;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -18,11 +25,14 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.api.item.ElectricItem;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.util.Random;
 
@@ -82,6 +92,21 @@ public class CRTickHandler {
                 PacketHandler.INSTANCE.sendToServer(new MessageHotkey(MessageHotkey.Key.BOOST));
             }
         }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+            //ChainReaction.log.info("pressed");
+            EntityPlayer player = FMLClientHandler.instance().getClient().thePlayer;
+            if (BaubleHelper.hasCorrectBelt(player, ItemRetriever.Items.bauble("jumpBelt"))) {
+                ItemStack belt = BaubleHelper.getBelt(player);
+
+                if (CRMath.isWithin(BaubleCore.getCooldown(belt), 1, 495)) {
+                    if (player.isAirBorne) {
+                        PacketHandler.INSTANCE.sendToServer(new MessageDoubleJump());
+                        JumpBelt.doubleJump(player);
+                    }
+                }
+            }
+        }
     }
 
     @SubscribeEvent
@@ -97,4 +122,11 @@ public class CRTickHandler {
             PacketHandler.INSTANCE.sendTo(new MessageSetBonus((EntityPlayer)event.entity), (EntityPlayerMP)event.entity);
         }
     }
+
+    /*@SubscribeEvent
+    public void onPostRender(RenderPlayerEvent.Specials.Post event) {
+        AbstractClientPlayer player = (AbstractClientPlayer) event.entityPlayer;
+        boolean flag = (event.entityPlayer.getUniqueID().equals(Reference.ModInfo.VEXXEL_UUID));
+        //System.out.println(flag);
+    }*/
 }

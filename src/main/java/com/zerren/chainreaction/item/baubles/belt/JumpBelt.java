@@ -1,14 +1,17 @@
 package com.zerren.chainreaction.item.baubles.belt;
 
 import baubles.api.BaubleType;
-import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.handler.network.PacketHandler;
+import com.zerren.chainreaction.handler.network.client.player.MessageDoubleJump;
+import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
-import com.zerren.chainreaction.reference.Names;
-import com.zerren.chainreaction.utility.BaubleHelper;
-import com.zerren.chainreaction.utility.CRMath;
-import com.zerren.chainreaction.utility.ItemRetriever;
-import com.zerren.chainreaction.utility.NBTHelper;
+import com.zerren.chainreaction.utility.*;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +30,6 @@ public class JumpBelt extends BaubleCore {
         rarity = EnumRarity.uncommon;
         type = BaubleType.BELT;
         name = "jumpBelt";
-        extraTooltipValue = " +" + ConfigHandler.jumpModifier;
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -38,16 +40,29 @@ public class JumpBelt extends BaubleCore {
 
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)entity;
-
-            if (CRMath.isWithin(NBTHelper.getShort(stack, Names.NBT.BAUBLE_COOLDOWN), 1, 490)) {
-
-                if (player.isAirBorne && Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-                    System.out.println("Double Jump");
-                    player.jump();
-                    player.fallDistance = 0;
-                    NBTHelper.setShort(stack, Names.NBT.BAUBLE_COOLDOWN, (short)0);
-                }
+            if (player.onGround) {
+                setCooldown(stack);
             }
+        }
+    }
+
+    public static void doubleJump(EntityPlayer player) {
+        ItemStack belt = BaubleHelper.getBelt(player);
+
+        player.jump();
+        setCooldown(belt);
+        player.fallDistance = 0;
+
+        double px = player.posX + player.worldObj.rand.nextFloat() / 5;
+        double py = player.posY - 0.5F;
+        double pz = player.posZ + player.worldObj.rand.nextFloat() / 5;
+
+        for (int i = 0; i < 8; i++) {
+            double vx = (player.worldObj.rand.nextFloat() - 0.5) * 5;
+            double vy = (player.worldObj.rand.nextFloat() - 0.5) * 2;
+            double vz = (player.worldObj.rand.nextFloat() - 0.5) * 5;
+
+            ChainReaction.proxy.steamFX(player.getEntityWorld(), px, py, pz, vx, vy, vz, 4);
         }
     }
 
@@ -57,9 +72,11 @@ public class JumpBelt extends BaubleCore {
             EntityPlayer player = (EntityPlayer) event.entity;
             ItemStack belt = BaubleHelper.getBelt(player);
 
-            if (belt != null && belt.isItemEqual(ItemRetriever.Items.bauble(name)) && player.onGround) {
-                if (NBTHelper.getShort(belt, Names.NBT.BAUBLE_COOLDOWN) == 0) {
-                    NBTHelper.setShort(belt, Names.NBT.BAUBLE_COOLDOWN, (short)500);
+            if (belt != null && belt.isItemEqual(getStack())) {
+
+                if (getCooldown(belt) == 0) {
+                    if (player.onGround)
+                        setCooldown(belt, 500);
                 }
             }
         }

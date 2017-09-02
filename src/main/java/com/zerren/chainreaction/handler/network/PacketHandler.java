@@ -3,6 +3,7 @@ package com.zerren.chainreaction.handler.network;
 import com.zerren.chainreaction.handler.network.client.player.MessageSetBonus;
 import com.zerren.chainreaction.handler.network.client.player.MessageToolDamage;
 import com.zerren.chainreaction.handler.network.client.tile.*;
+import com.zerren.chainreaction.handler.network.client.player.MessageDoubleJump;
 import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.handler.network.server.player.MessageKeyCut;
 import com.zerren.chainreaction.handler.network.server.tile.MessageVaultCycle;
@@ -35,6 +36,7 @@ public class PacketHandler {
         //server to player
         INSTANCE.registerMessage(MessageToolDamage.class, MessageToolDamage.class, index++, Side.CLIENT);
         INSTANCE.registerMessage(MessageSetBonus.class, MessageSetBonus.class, index++, Side.CLIENT);
+        INSTANCE.registerMessage(MessageDoubleJump.class, MessageDoubleJump.class, index++, Side.SERVER);
 
     }
 }
