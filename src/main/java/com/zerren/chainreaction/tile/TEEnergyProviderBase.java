@@ -3,7 +3,6 @@ package com.zerren.chainreaction.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
-import com.zerren.chainreaction.handler.ConfigHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -22,6 +21,7 @@ public class TEEnergyProviderBase extends TileEntityCRBase implements IEnergyPro
         RF_GEN_PER_TICK = rfGenPerTick;
 
         energyStorage = new EnergyStorage(eStorage, RF_GEN_PER_TICK * 2);
+        shouldTileTick = true;
 
         if (directions != null)
             sidesConnectingEnergy = directions;
@@ -49,10 +49,17 @@ public class TEEnergyProviderBase extends TileEntityCRBase implements IEnergyPro
 
     @Override
     public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
-        if (from == ForgeDirection.UP || from == ForgeDirection.DOWN) {
+        if (isFromValidDirection(from)) {
             return energyStorage.extractEnergy(RF_GEN_PER_TICK * 2, simulate);
         }
         return 0;
+    }
+
+    protected boolean isFromValidDirection(ForgeDirection from) {
+        for (ForgeDirection side : sidesConnectingEnergy) {
+            if (from == side) return true;
+        }
+        return false;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class TEEnergyProviderBase extends TileEntityCRBase implements IEnergyPro
 
     @Override
     public boolean canConnectEnergy(ForgeDirection from) {
-        return from == ForgeDirection.DOWN || from == ForgeDirection.UP;
+        return isFromValidDirection(from);
     }
 
     @Override
@@ -82,10 +89,5 @@ public class TEEnergyProviderBase extends TileEntityCRBase implements IEnergyPro
         super.writeToNBT(tag);
 
         energyStorage.writeToNBT(tag);
-    }
-
-    @Override
-    public boolean canUpdate() {
-        return false;
     }
 }
