@@ -1,16 +1,15 @@
 package com.zerren.chainreaction.item.baubles;
 
 import baubles.api.BaubleType;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import com.zerren.chainreaction.core.PlayerSetBonus;
+import com.zerren.chainreaction.core.tick.SetBonusHandler;
+import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
 import com.zerren.chainreaction.utility.TooltipHelper;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +26,7 @@ public class BaubleCore {
     protected String name;
     public SetBonus setBonus;
     protected String extraTooltipValue;
+    protected String cooldownValue;
 
     public BaubleCore() {
         rarity = EnumRarity.common;
@@ -34,6 +34,8 @@ public class BaubleCore {
         name = "null";
         setBonus = null;
         extraTooltipValue = null;
+        cooldownValue = null;
+
     }
 
     public void tick(ItemStack stack, EntityLivingBase entity) {
@@ -45,7 +47,7 @@ public class BaubleCore {
 
 
     public void addTooltip(EntityPlayer player, List list, boolean par4) {
-        TooltipHelper.addBaubleInfo(list, name, extraTooltipValue);
+        TooltipHelper.addBaubleInfo(list, name, extraTooltipValue, cooldownValue);
 
         if (isPartOfSet()) {
             TooltipHelper.addSetBonusInfo(getSetBonus(), player, list);
@@ -88,10 +90,11 @@ public class BaubleCore {
                 if (BaubleHelper.hasCorrectBauble(player, getSetBonus().getOtherSetPiece(name), getSetBonus().getOtherSetPieceSlot(name))) {
                     PlayerSetBonus bonus = PlayerSetBonus.get(player);
                     bonus.toggleSetStatus(getSetBonus(), true);
-
                 }
             }
         }
+
+        if (ConfigHandler.devDebug) System.out.println("Load running");
     }
 
     public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
@@ -121,5 +124,9 @@ public class BaubleCore {
 
     public BaubleType getType() {
         return type;
+    }
+
+    protected void addCooldownValueInSeconds(Object value) {
+        cooldownValue = ": " + value + " " + TooltipHelper.getSecondsTranslated();
     }
 }

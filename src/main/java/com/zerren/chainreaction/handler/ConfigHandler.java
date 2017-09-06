@@ -24,11 +24,12 @@ public class ConfigHandler {
     public static float steamFactor;
     public static boolean harderStainless;
     public static int gasTankVolume;
+    public static int rtgPower;
 
     public static int temperature;
 
     public static int[] potionIDs = {66, 67, 68, 69, 70};
-    public static String fluidNameSteam;
+    public static boolean uniSteam;
     public static float unbreakingChance;
     public static float powerModifier;
     public static float hasteModifier;
@@ -40,10 +41,14 @@ public class ConfigHandler {
     public static float jumpModifier;
     public static int regenFrequency;
     public static int shieldFrequency;
+    public static float vampireModifier;
+    public static float thornsModifier;
 
 
     public static float skullfireChance;
     public static float guardianKnockbackResistChance;
+    public static float druidSpeedBonus;
+
 
     private static final ConfigCategory CATEGORY_IDS = new ConfigCategory("ids").setRequiresMcRestart(true).setShowInGui(true);
     private static final ConfigCategory CATEGORY_BAUBLES = new ConfigCategory("baubles").setShowInGui(true);
@@ -65,7 +70,7 @@ public class ConfigHandler {
         //IDs
         config.addCustomCategoryComment(CATEGORY_IDS.getName(), "Below is used for changing the internal IDs that this mod uses: if you have potion ID conflicts, change them below.");
         potionIDs = config.get(CATEGORY_IDS.getName(), "potionIDs", potionIDs, "Potion ID array in descending order (A, B, G, N, Rad S.)", 33, 127).getIntList();
-        fluidNameSteam = config.getString("fluidNameSteam", CATEGORY_IDS.getName(), "saturatedsteam", "The fluid registry name of Steam--set to 'steam' to use this mod's steam with other mods");
+        uniSteam = config.getBoolean("uniSteam", CATEGORY_IDS.getName(), false, "If this mod should produce steam compatible with most mods. (Changes registry name from 'saturatedsteam' to 'steam'.");
         //commit these values to the name registry
         Names.Fluids.initConfigValues();
 
@@ -80,6 +85,7 @@ public class ConfigHandler {
         steamFactor = config.getFloat("steamFactor", "general", 1F, 0.1F, 5F, "Multiplier on steam produced--(this is always a 1:160 water:steam ratio though)--best if used with 'uniSteam'");
 
         gasTankVolume = config.getInt("gasTankVolume", "general", 32, 16, 128, "Number of buckets of gas that the Gas Tank can hold");
+        rtgPower = config.getInt("rtgPower", "general", 32, 16, 128, "RF/t the RTG generates constantly");
 
         //baubles
         unbreakingChance = config.getFloat("unbreakingChance", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 0.5F, "Chance that the unbreaking ring will protect a used tool");
@@ -93,10 +99,13 @@ public class ConfigHandler {
         jumpModifier = config.getFloat("jumpModifier", CATEGORY_BAUBLES.getName(), 1F, 0.5F, 2F, "Belt of Leaping jump height increase (in blocks)");
         regenFrequency = config.getInt("regenFrequency", CATEGORY_BAUBLES.getName(), 3, 1, 5, "Ring of Regeneration healing frequency (in seconds)");
         shieldFrequency = config.getInt("shieldFrequency", CATEGORY_BAUBLES.getName(), 8, 4, 20, "Amulet of Shielding cooldown (in seconds)");
+        vampireModifier = config.getFloat("vampireModifier", CATEGORY_BAUBLES.getName(), 0.2F, 0.1F, 0.5F, "Ring of Vampirism life steal percentage on attack");
+        thornsModifier = config.getFloat("thornsModifier", CATEGORY_BAUBLES.getName(), 0.3F, 0.2F, 0.5F, "Ring of Jagged Thorns damage reflection percentage upon being attacked");
 
         //set bonus
         skullfireChance = config.getFloat(SetBonus.SKULLFIRE.getBonusName(), CATEGORY_BAUBLESETS.getName(), 0.2F, 0.05F, 1F, "Skullfire set effect wither skull drop chance");
         guardianKnockbackResistChance = config.getFloat(SetBonus.GUARDIAN.getBonusName(), CATEGORY_BAUBLESETS.getName(), 0.5F, 0.1F, 1F, "Guardian set effect knockback resistance bonus");
+        druidSpeedBonus = config.getFloat(SetBonus.DRUID.getBonusName(), CATEGORY_BAUBLESETS.getName(), 0.2F, 0.1F, 0.6F, "Druidic set effect speed bonus");
 
 
     }

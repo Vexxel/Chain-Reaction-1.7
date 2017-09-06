@@ -37,6 +37,7 @@ tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
 
 tile.chainreaction:mechanism.teleporter.name=Teleporter
 tile.chainreaction:mechanism.bloomery.name=Bloomery Brick
+tile.chainreaction:mechanism.rtg.name=Radioisotope Thermoelectric Generator
 
 
 # Item localizations --------------------------------------------------------------------
@@ -94,8 +95,10 @@ item.chainreaction:bauble.protectionRing.name=Ring of Protection
 item.chainreaction:bauble.jumpBelt.name=Belt of Leaping
 item.chainreaction:bauble.regenRing.name=Ring of Regeneration
 item.chainreaction:bauble.shieldAmulet.name=Amulet of Shielding
-
-
+item.chainreaction:bauble.flightRing.name=Ring of Flight
+item.chainreaction:bauble.vampireRing.name=Ring of Vampirism
+item.chainreaction:bauble.thornsRing.name=Ring of Jagged Thorns
+item.chainreaction:bauble.sunAmulet.name=Amulet of Photosynthetic Simulacrum
 
 item.chainreaction:baubleMats.ringIron.name=Iron Ring
 item.chainreaction:baubleMats.ringGold.name=Gold Ring
@@ -148,6 +151,9 @@ gui.item.key.remember.name=But I remember what I set this lock to! It was..
 gui.item.key.trespass.name=I can only remember codes that I issued.
 
 gui.item.bauble.null.name=No effect.
+gui.item.bauble.cooldown.name=Cooldown
+gui.item.bauble.seconds.name=Seconds
+
 gui.item.bauble.fallDamageAmulet.name=Fall Damage Immunity
 gui.item.bauble.hasteRing.name=Haste
 gui.item.bauble.unbreakingRing.name=Unbreaking
@@ -163,6 +169,10 @@ gui.item.bauble.protectionRing.name=Resistance
 gui.item.bauble.jumpBelt.name=Double Jump
 gui.item.bauble.regenRing.name=Regeneration
 gui.item.bauble.shieldAmulet.name=Shield
+gui.item.bauble.flightRing.name=Flight
+gui.item.bauble.vampireRing.name=Lifesteal
+gui.item.bauble.thornsRing.name=Thorns
+gui.item.bauble.sunAmulet.name=Photosynthesis
 
 gui.setBonus.skullfire.name=Curse of Skullfire
 gui.item.bauble.setBonus.skullfire.name=Wither skull drop rate
@@ -171,6 +181,10 @@ gui.setBonusFlavorText.skullfire.name=An amalgamation of fury and fire.
 gui.setBonus.guardian.name=Stalwart Guardian
 gui.item.bauble.setBonus.guardian.name=Knockback Resistance
 gui.setBonusFlavorText.guardian.name=As immovable as a mountain.
+
+gui.setBonus.druid.name=Symbiotic Druid
+gui.item.bauble.setBonus.druid.name=Speed
+gui.setBonusFlavorText.druid.name=Bonded with nature.
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:
@@ -221,4 +235,5 @@ death.attack.thermal_low=%1$s was boiled alive
 death.attack.thermal_high=%1$s was instantly vaporized
 death.attack.rad_low=%1$s died of radiation sickness
 death.attack.rad_high=%1$s was ripped apart by pure energy
-death.attack.annihilation=%1$s was completely annihilated
+death.attack.annihilation=%1$s was atomically annihilated
+death.attack.thorns=%1$s learned what 'eye for an eye' means

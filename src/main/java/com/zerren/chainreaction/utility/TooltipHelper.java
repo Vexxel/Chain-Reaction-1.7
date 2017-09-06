@@ -93,12 +93,17 @@ public final class TooltipHelper {
         list.add(s1 + s2);
     }
 
-    public static void addBaubleInfo(List<String> list, String bauble, String extraValue) {
+    public static void addBaubleInfo(List<String> list, String bauble, String extraValue, String cooldownValue) {
         String s1 = EnumChatFormatting.BLUE + CoreUtility.translate("gui.item.bauble." + bauble + ".name");
         if (extraValue != null) {
             s1 = s1.concat(extraValue);
         }
         list.add(s1);
+
+        if (cooldownValue != null) {
+            String s2 = EnumChatFormatting.DARK_AQUA + CoreUtility.translate("gui.item.bauble.cooldown.name").concat(cooldownValue);
+            list.add(s2);
+        }
     }
 
     public static void addSetBonusInfo(SetBonus set, EntityPlayer player, List<String> list) {
@@ -144,5 +149,9 @@ public final class TooltipHelper {
     }
     public static boolean hasSecondSetItemEquipped(SetBonus set, EntityPlayer player) {
         return BaubleHelper.hasCorrectBauble(player, set.getBauble2(), set.getBauble2Slot());
+    }
+
+    public static String getSecondsTranslated() {
+        return CoreUtility.translate("gui.item.bauble.seconds.name");
     }
 }

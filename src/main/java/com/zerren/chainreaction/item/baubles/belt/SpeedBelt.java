@@ -32,18 +32,6 @@ public class SpeedBelt extends BaubleCore {
 
     }
 
-    public void tick(ItemStack stack, EntityLivingBase entity) {
-        super.tick(stack, entity);
-
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer)entity;
-
-            if (player.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(Names.UUIDs.SPEED_BELT_BONUS_UUID) == null) {
-                setSpeed(player, true);
-            }
-        }
-    }
-
     public void onEquipped(ItemStack stack, EntityLivingBase entity) {
         super.onEquipped(stack, entity);
 
@@ -66,7 +54,7 @@ public class SpeedBelt extends BaubleCore {
 
     private void setSpeed(EntityPlayer player, boolean activate) {
         IAttributeInstance speed = player.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-        if (activate) {
+        if (activate && player.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(Names.UUIDs.SPEED_BELT_BONUS_UUID) == null) {
             speed.applyModifier(speedBeltBonus);
         }
         else {

@@ -10,6 +10,7 @@ import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
+import com.zerren.chainreaction.tile.mechanism.TERTG;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -49,6 +50,8 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
                 return new TETeleporter();
             case 1:
                 return new TEBloomery();
+            case 2:
+                return new TERTG();
             default:
                 return null;
         }

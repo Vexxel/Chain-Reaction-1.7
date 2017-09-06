@@ -92,10 +92,11 @@ public class ChainReaction {
         Recipes.init();
         MultiblockCost.init();
 
+        MinecraftForge.EVENT_BUS.register(new CRTickHandler());
         FMLCommonHandler.instance().bus().register(new CRTickHandler());
 
-        MinecraftForge.EVENT_BUS.register(new CRTickHandler());
         MinecraftForge.EVENT_BUS.register(new SetBonusHandler());
+        FMLCommonHandler.instance().bus().register(new SetBonusHandler());
 
         if(event.getSide() == Side.CLIENT) {
             CRHotkey.init();

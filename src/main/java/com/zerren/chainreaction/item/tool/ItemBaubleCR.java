@@ -47,6 +47,10 @@ public class ItemBaubleCR extends ItemCRBase implements IBauble {
                 case 12: return new JumpBelt();
                 case 13: return new RegenRing();
                 case 14: return new ShieldAmulet();
+                case 15: return new FlightRing();
+                case 16: return new VampireRing();
+                case 17: return new ThornsRing();
+                case 18: return new PhotosynthesisAmulet();
 
                 default: return new BaubleCore();
             }

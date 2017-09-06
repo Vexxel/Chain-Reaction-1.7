@@ -65,7 +65,8 @@ public class EntitySteamFX extends EntityFX {
 
         this.setParticleTextureIndex(7 - this.particleAge * 8 / this.particleMaxAge);
         this.motionY += 0.004D;
-        this.moveEntity(this.motionX, this.motionY, this.motionZ);
+        if (this != null)
+            this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
         if (this.posY == this.prevPosY)
         {

@@ -3,6 +3,7 @@ package com.zerren.chainreaction.handler.network.client.player;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.core.PlayerSetBonus;
 import com.zerren.chainreaction.handler.network.AbstractMessage;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

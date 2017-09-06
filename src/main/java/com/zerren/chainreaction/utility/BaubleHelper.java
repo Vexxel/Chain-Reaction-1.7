@@ -55,4 +55,8 @@ public class BaubleHelper {
     public static ItemStack getBelt(EntityPlayer player) {
         return BaublesApi.getBaubles(player).getStackInSlot(3);
     }
+
+    public static ItemStack[] getBaubles(EntityPlayer player) {
+        return new ItemStack[] {BaublesApi.getBaubles(player).getStackInSlot(0), BaublesApi.getBaubles(player).getStackInSlot(1), BaublesApi.getBaubles(player).getStackInSlot(2), BaublesApi.getBaubles(player).getStackInSlot(3)};
+    }
 }

@@ -35,10 +35,9 @@ public class PowerRing extends BaubleCore {
 
 
     public PowerRing() {
-        rarity = EnumRarity.uncommon;
+        rarity = EnumRarity.rare;
         type = BaubleType.RING;
         name = "powerRing";
-        setBonus = SetBonus.SKULLFIRE;
         extraTooltipValue = " +" + Math.round(ConfigHandler.powerModifier * 100) + "%";
 
         //attributes.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), powerBonus);

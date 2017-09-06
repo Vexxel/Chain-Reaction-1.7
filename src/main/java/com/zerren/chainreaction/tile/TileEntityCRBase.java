@@ -26,6 +26,7 @@ public class TileEntityCRBase extends TileEntity {
     protected UUID ownerUUID;
     protected TileCache[] tileCache;
     protected boolean canFaceUpDown;
+    protected boolean shouldTileTick;
 
     public TileEntityCRBase() {
         orientation = ForgeDirection.SOUTH;
@@ -34,6 +35,7 @@ public class TileEntityCRBase extends TileEntity {
         ownerUUID = null;
         tileCache = null;
         canFaceUpDown = false;
+        shouldTileTick = false;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class TileEntityCRBase extends TileEntity {
 
     @Override
     public boolean canUpdate() {
-        return false;
+        return shouldTileTick;
     }
 
     public void updateCache() {

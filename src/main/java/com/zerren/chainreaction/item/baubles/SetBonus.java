@@ -1,20 +1,20 @@
 package com.zerren.chainreaction.item.baubles;
 
-import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
-import baubles.api.IBauble;
+import com.zerren.chainreaction.core.tick.SetBonusHandler;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.tool.ItemBaubleCR;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.ItemRetriever;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
  * Created by Zerren on 8/26/2017.
  */
 public enum SetBonus {
-    SKULLFIRE("skullfire", "witherAmulet", "powerRing"),
-    GUARDIAN("guardian", "deflectionAmulet", "knockbackBelt");
+    SKULLFIRE("skullfire", "witherAmulet", "vampireRing"),
+    GUARDIAN("guardian", "deflectionAmulet", "knockbackBelt"),
+    DRUID("druid", "sunAmulet", "thornsRing");
 
     private final String bonusName;
     private final String piece1;
@@ -78,7 +78,16 @@ public enum SetBonus {
         switch (this.ordinal()) {
             case 0: return " +" + Math.round(ConfigHandler.skullfireChance * 100) + "%";
             case 1: return " +" + Math.round(ConfigHandler.guardianKnockbackResistChance * 100) + "%";
+            case 2: return " +" + Math.round(ConfigHandler.druidSpeedBonus * 100) + "%";
         }
         return null;
+    }
+
+    public static void activateEffect(EntityPlayer player, SetBonus set) {
+        switch (set) {
+            case DRUID:
+                SetBonusHandler.setDruidSpeed(player);
+                return;
+        }
     }
 }

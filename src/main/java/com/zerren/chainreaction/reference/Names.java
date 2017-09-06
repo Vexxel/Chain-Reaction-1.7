@@ -61,7 +61,8 @@ public final class Names {
         public static final String MECHANISM = "mechanism";
         public static final String[] MECHANISM_SUBTYPES = {
                 "teleporter",
-                "bloomery"
+                "bloomery",
+                "rtg"
         };
     }
 
@@ -158,7 +159,11 @@ public final class Names {
                 "protectionRing",
                 "jumpBelt",
                 "regenRing",
-                "shieldAmulet"
+                "shieldAmulet",
+                "flightRing",
+                "vampireRing",
+                "thornsRing",
+                "sunAmulet"
         };
 
         public static final String BAUBLE_MATERIALS = "baubleMats";
@@ -206,7 +211,7 @@ public final class Names {
         public static String STEAM;
 
         public static void initConfigValues() {
-            STEAM = ConfigHandler.fluidNameSteam;
+            STEAM = ConfigHandler.uniSteam ? "steam" : "saturatedsteam";
         }
     }
 
@@ -257,6 +262,9 @@ public final class Names {
 
         public static final UUID SPEED_BELT_BONUS_UUID = UUID.fromString("65a4e9c4-8968-419b-81f8-6c8af9715222");
         public static final String SPEED_BELT_BONUS_NAME = "CRSpeedBeltBonus";
+
+        public static final UUID DRUID_SET_SPEED_BONUS_UUID = UUID.fromString("7b459a4e-67e0-4f1a-ba95-159f51ea4704");
+        public static final String DRUID_SET_SPEED_BONUS_NAME = "CRDruidSpeedBonus";
 
         public static final UUID KNOCKBACK_BELT_BONUS_UUID = UUID.fromString("c29cecf3-6060-445f-a94d-0be3cbeb3893");
         public static final String KNOCKBACK_BELT_BONUS_NAME = "CRKnockbackBeltBonus";

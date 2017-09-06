@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.core;
 
+import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
 import net.minecraft.entity.Entity;
@@ -54,12 +55,14 @@ public class PlayerSetBonus implements IExtendedEntityProperties {
 
         for (int i = 0; i < BONUSES.length; i++) {
             sets[i] = properties.getBoolean(BONUSES[i].getBonusName());
-            //System.out.println(BONUSES[i].getBonusName() + " = " + sets[i]);
+
+            if (ConfigHandler.devDebug) System.out.println(BONUSES[i].getBonusName() + " = " + sets[i]);
         }
     }
 
     public void toggleSetStatus(SetBonus set, boolean equipped) {
-        System.out.println(set + "=" + equipped);
+        if (ConfigHandler.devDebug) System.out.println(set + "=" + equipped);
+
         this.sets[set.ordinal()] = equipped;
     }
 

@@ -70,6 +70,8 @@ public final class Reference {
             public static final ResourceLocation TELEPORTER  = getResourceLocation(MODEL_LOCATION + "teleporter.png");
             public static final ResourceLocation BLOOMERY_OFF  = getResourceLocation(MODEL_LOCATION + "bloomery_off.png");
             public static final ResourceLocation BLOOMERY_ON  = getResourceLocation(MODEL_LOCATION + "bloomery_on.png");
+            public static final ResourceLocation RTG  = getResourceLocation(MODEL_LOCATION + "rtg.png");
+
 
             //Armor
             public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");

@@ -34,19 +34,16 @@ public class RegenRing extends BaubleCore {
     public void tick(ItemStack ring, EntityLivingBase entity) {
         super.tick(ring, entity);
 
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer)entity;
-            if (getCooldown(ring) == 0) {
-                if (player.getHealth() < player.getMaxHealth())
-                    player.heal(1F);
-                    setCooldown(ring, ConfigHandler.regenFrequency * 20);
-            }
+        if (getCooldown(ring) <= 0) {
+            entity.heal(1F);
+            setCooldown(ring, ConfigHandler.regenFrequency * 20);
         }
+        //System.out.println(getCooldown(ring));
     }
 
     public void onEquipped(ItemStack stack, EntityLivingBase entity) {
         super.onEquipped(stack, entity);
 
-        setCooldown(stack, 60);
+        tick(stack, entity);
     }
 }

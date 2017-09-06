@@ -9,6 +9,7 @@ import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
+import com.zerren.chainreaction.utility.TooltipHelper;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -29,9 +30,12 @@ import java.util.Random;
 public class ShieldAmulet extends BaubleCore {
 
     public ShieldAmulet() {
-        rarity = EnumRarity.uncommon;
+        rarity = EnumRarity.rare;
         type = BaubleType.AMULET;
         name = "shieldAmulet";
+        addCooldownValueInSeconds(ConfigHandler.shieldFrequency);
+
+        //cooldownValue = " " + Math.round(ConfigHandler.shieldFrequency * 20) + " " + TooltipHelper.getSecondsTranslated();
 
         MinecraftForge.EVENT_BUS.register(this);
 

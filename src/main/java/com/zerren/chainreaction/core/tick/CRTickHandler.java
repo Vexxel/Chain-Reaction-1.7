@@ -10,7 +10,9 @@ import com.zerren.chainreaction.handler.network.server.player.MessageHotkey;
 import com.zerren.chainreaction.item.armor.ItemOxygenMask;
 import com.zerren.chainreaction.item.armor.ItemThrustPack;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
+import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.item.baubles.belt.JumpBelt;
+import com.zerren.chainreaction.item.tool.ItemBaubleCR;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.CRHotkey;
@@ -120,6 +122,29 @@ public class CRTickHandler {
     public void joinWorld(EntityJoinWorldEvent event) {
         if (event.entity instanceof EntityPlayerMP) {
             PacketHandler.INSTANCE.sendTo(new MessageSetBonus((EntityPlayer)event.entity), (EntityPlayerMP)event.entity);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.player != null) {
+
+            if (!event.player.worldObj.isRemote) {
+                EntityPlayer player = event.player;
+                ItemStack[] baubles = BaubleHelper.getBaubles(player);
+
+                for (ItemStack bauble : baubles) {
+                    if (bauble != null && bauble.getItem() instanceof ItemBaubleCR) {
+                        ItemBaubleCR.getBauble(bauble).onEquipped(bauble, player);
+                    }
+                }
+            }
+            for (SetBonus set : SetBonus.values()) {
+                if (PlayerSetBonus.get(event.player).getSetStatus(set)) {
+                    SetBonus.activateEffect(event.player, set);
+                    //System.out.println("Active now: " + set);
+                }
+            }
         }
     }
 

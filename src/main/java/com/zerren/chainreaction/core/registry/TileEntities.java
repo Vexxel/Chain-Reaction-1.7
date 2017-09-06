@@ -5,6 +5,7 @@ import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.chest.TEChestThaumium;
 import com.zerren.chainreaction.tile.chest.TEChestVoid;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
+import com.zerren.chainreaction.tile.mechanism.TERTG;
 import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
@@ -31,12 +32,14 @@ public final class TileEntities {
         GameRegistry.registerTileEntityWithAlternatives(TEChestThaumium.class, Names.Blocks.CHEST + "Thaumium", "tile." + Names.Blocks.CHEST + "Thaumium");
         GameRegistry.registerTileEntityWithAlternatives(TEChestVoid.class, Names.Blocks.CHEST + "Void", "tile." + Names.Blocks.CHEST + "Void");
 
-        GameRegistry.registerTileEntityWithAlternatives(TEHeatExchanger.class, Names.Blocks.PLUMBING, "tile." + Names.Blocks.PLUMBING);
+        GameRegistry.registerTileEntityWithAlternatives(TEHeatExchanger.class, Names.Blocks.PLUMBING + "HeatExchanger", "tile." + Names.Blocks.PLUMBING + "HeatExchanger");
         GameRegistry.registerTileEntityWithAlternatives(TEDistroChamber.class, Names.Blocks.PLUMBING + "DistroChamber", "tile." + Names.Blocks.PLUMBING + "DistroChamber");
         GameRegistry.registerTileEntityWithAlternatives(TEPressurePipe.class, Names.Blocks.PLUMBING + "PressurePipe", "tile." + Names.Blocks.PLUMBING + "PressurePipe");
         GameRegistry.registerTileEntityWithAlternatives(TEGasTank.class, Names.Blocks.PLUMBING + "GasTank", "tile." + Names.Blocks.PLUMBING + "GasTank");
 
-        GameRegistry.registerTileEntityWithAlternatives(TEPressurizedWaterReactor.class, Names.Blocks.REACTOR, "tile." + Names.Blocks.REACTOR);
-        GameRegistry.registerTileEntityWithAlternatives(TEBloomery.class, Names.Blocks.MECHANISM, "tile." + Names.Blocks.MECHANISM + "Bloomery");
+        GameRegistry.registerTileEntityWithAlternatives(TEPressurizedWaterReactor.class, Names.Blocks.REACTOR + "PWR", "tile." + Names.Blocks.REACTOR + "PWR");
+        GameRegistry.registerTileEntityWithAlternatives(TEBloomery.class, Names.Blocks.MECHANISM + "Bloomery", "tile." + Names.Blocks.MECHANISM + "Bloomery");
+        GameRegistry.registerTileEntityWithAlternatives(TERTG.class, Names.Blocks.MECHANISM + "RTG", "tile." + Names.Blocks.MECHANISM + "RTG");
+
     }
 }

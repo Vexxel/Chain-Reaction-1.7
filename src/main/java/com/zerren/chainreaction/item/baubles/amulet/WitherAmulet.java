@@ -23,7 +23,7 @@ public class WitherAmulet extends BaubleCore {
 
 
     public WitherAmulet() {
-        rarity = EnumRarity.uncommon;
+        rarity = EnumRarity.rare;
         type = BaubleType.AMULET;
         name = "witherAmulet";
         setBonus = SetBonus.SKULLFIRE;

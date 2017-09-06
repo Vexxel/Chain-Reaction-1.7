@@ -9,12 +9,14 @@ import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
 import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
 import com.zerren.chainreaction.client.render.block.ISBRHReactor;
 import com.zerren.chainreaction.client.render.item.ItemRendererExchanger;
+import com.zerren.chainreaction.client.render.item.ItemRendererMechanism;
 import com.zerren.chainreaction.client.render.item.ItemRendererVaultChest;
 import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
+import com.zerren.chainreaction.tile.mechanism.TERTG;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
@@ -103,6 +105,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TETeleporter.class, new TESRTeleporter());
         //Bloomery
         ClientRegistry.bindTileEntitySpecialRenderer(TEBloomery.class, new TESRBloomery());
+        //RTG
+        ClientRegistry.bindTileEntitySpecialRenderer(TERTG.class, new TESRRTG());
+
     }
 
     //Simple block renderer--things that won't get updated (mostly ever). Good for static held items of blocks as well
@@ -122,6 +127,9 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CRBlocks.chest), new ItemRendererVaultChest());
         //Plumbing
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CRBlocks.plumbing), new ItemRendererExchanger());
+        //Mechanism
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(CRBlocks.mechanism), new ItemRendererMechanism());
+
     }
 
     @Override

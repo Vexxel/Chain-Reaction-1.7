@@ -44,9 +44,4 @@ public class HasteRing extends BaubleCore {
             }
         }
     }
-
-    public void addTooltip(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-        String s1 = EnumChatFormatting.BLUE + CoreUtility.translate("gui.item.bauble." + name + ".name") + " +" + (Math.round(ConfigHandler.hasteModifier * 100))+ "%";
-        list.add(s1);
-    }
 }

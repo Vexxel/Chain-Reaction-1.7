@@ -27,7 +27,7 @@ public class JumpBelt extends BaubleCore {
 
 
     public JumpBelt() {
-        rarity = EnumRarity.uncommon;
+        rarity = EnumRarity.rare;
         type = BaubleType.BELT;
         name = "jumpBelt";
 
@@ -49,7 +49,8 @@ public class JumpBelt extends BaubleCore {
     public static void doubleJump(EntityPlayer player) {
         ItemStack belt = BaubleHelper.getBelt(player);
 
-        player.jump();
+        //player.jump();
+        player.motionY = 0.41999998688697815D;
         setCooldown(belt);
         player.fallDistance = 0;
 

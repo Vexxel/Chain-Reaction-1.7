@@ -2,10 +2,12 @@ package com.zerren.chainreaction.item.baubles.amulet;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.baubles.BaubleCore;
 import com.zerren.chainreaction.item.baubles.SetBonus;
 import com.zerren.chainreaction.reference.Names;
+import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.BaubleHelper;
 import com.zerren.chainreaction.utility.ItemRetriever;
 import com.zerren.chainreaction.utility.NBTHelper;
@@ -69,6 +71,13 @@ public class DeflectionAmulet extends BaubleCore {
 
                 //System.out.println(negate ? "Arrow deflected!" : "Failed to deflect!");
                 event.setCanceled(negate);
+
+                if (negate) {
+                    ChainReaction.proxy.playSoundAtEntity(player.getEntityWorld(), player, Reference.Sounds.SHIELD_DISSIPATE, 0.4F, 2F);
+                    for (int i = 0; i < 10; i++) {
+                        ChainReaction.proxy.magicCritFX(player, (player.worldObj.rand.nextFloat() - 0.5), 0, (player.worldObj.rand.nextFloat() - 0.5));
+                    }
+                }
             }
         }
     }
