@@ -2,6 +2,7 @@ package com.zerren.chainreaction.core.registry;
 
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
+import com.zerren.chainreaction.tile.chest.TEChestBrick;
 import com.zerren.chainreaction.tile.chest.TEChestThaumium;
 import com.zerren.chainreaction.tile.chest.TEChestVoid;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
@@ -28,7 +29,7 @@ public final class TileEntities {
         GameRegistry.registerTileEntityWithAlternatives(TEVaultLock.class, Names.Blocks.VAULT + "Lock", "tile." + Names.Blocks.VAULT + "Lock");
         GameRegistry.registerTileEntityWithAlternatives(TEVaultController.class, Names.Blocks.VAULT + "Controller", "tile." + Names.Blocks.VAULT + "Controller");
 
-        GameRegistry.registerTileEntityWithAlternatives(TEChest.class, Names.Blocks.CHEST + "Brick", "tile." + Names.Blocks.CHEST + "Brick");
+        GameRegistry.registerTileEntityWithAlternatives(TEChestBrick.class, Names.Blocks.CHEST + "Brick", "tile." + Names.Blocks.CHEST + "Brick");
         GameRegistry.registerTileEntityWithAlternatives(TEChestThaumium.class, Names.Blocks.CHEST + "Thaumium", "tile." + Names.Blocks.CHEST + "Thaumium");
         GameRegistry.registerTileEntityWithAlternatives(TEChestVoid.class, Names.Blocks.CHEST + "Void", "tile." + Names.Blocks.CHEST + "Void");
 

@@ -121,7 +121,9 @@ public final class Names {
 
         public static final String FUEL = "fuel";
         public static final String[] FUEL_SUBTYPES = {
-                "fuelAssemblyUO2"
+                "fuelAssemblyUO2",
+                "rtgFuelPu238",
+                "rtgFuelPo210"
         };
 
         public static final String O2_MASK = "o2mask";

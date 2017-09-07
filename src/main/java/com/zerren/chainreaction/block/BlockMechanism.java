@@ -62,9 +62,23 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
         TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
 
         if (tile == null) return false;
+        if (player.isSneaking()) return false;
+
         if (tile instanceof TEBloomery) return activateBloomery(world, x, y, z, player, (TEBloomery) tile, sideX, sideY, sideZ);
+        if (tile instanceof TERTG) return activateRTG(world, x, y, z, player, (TERTG) tile, sideX, sideY, sideZ);
 
         return false;
+    }
+
+    private boolean activateRTG(World world, int x, int y, int z, EntityPlayer player, TERTG tile, float sideX, float sideY, float sideZ) {
+
+        if (tile == null) return false;
+
+        if (!world.isRemote) {
+            player.openGui(ChainReaction.instance, Reference.GUIs.RTG.ordinal(), world, x, y, z);
+            return true;
+        }
+        return true;
     }
 
     private boolean activateBloomery(World world, int x, int y, int z, EntityPlayer player, TEBloomery tile, float sideX, float sideY, float sideZ) {

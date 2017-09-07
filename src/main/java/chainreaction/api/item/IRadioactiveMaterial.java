@@ -4,7 +4,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
- * Created by Zerren on 4/24/2015.
+ * Created by Zerren on 4/15/2015.
+ *
+ * This interface is to be used with items that emit radiation and thermal energy.
  */
 public interface IRadioactiveMaterial {
 
@@ -23,7 +25,7 @@ public interface IRadioactiveMaterial {
     /**
      * Sets this ItemStack to have a certain amount of radioactivity--this slowly reduces over time, and faster if put into certain chambers
      * @param stack the ItemStack to set
-     * @param radioactivity the float to set--0.1-1.0 for low level radiation, 100.0 for instant death beam
+     * @param radioactivity the float to set--0.1-1.0 for low level radiation, 100.0 for instant mega death laser
      */
     void setRadioactivity(ItemStack stack, float radioactivity);
 
@@ -40,4 +42,19 @@ public interface IRadioactiveMaterial {
      * @param stack the ItemStack that will get pulsed
      */
     void pulseMaterial(ItemStack stack);
+
+    /**
+     * Returns the float value of this fuel item's temperature. NBT string is checked as "temperature". Reactor heat is calculated by adding fuel item heat to the
+     * reactor core fluid, or directly into the reactor vessel if there is no fluid.
+     * @param stack The ItemStack to check
+     * @return temperature
+     */
+    float getTemperature(ItemStack stack);
+
+    /**
+     * Sets the float value of this fuel item's temperature. NBT string is checked as "temperature"
+     * @param stack The ItemStack to set the temperature of
+     * @param temp The temperature to set
+     */
+    void setTemperature(ItemStack stack, float temp);
 }

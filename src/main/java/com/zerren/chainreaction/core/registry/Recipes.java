@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.core.registry;
 
 import chainreaction.api.recipe.HeatingFluid;
+import chainreaction.api.recipe.RTGFuels;
 import chainreaction.api.recipe.WorkingFluid;
 import com.zerren.chainreaction.core.ModFluids;
 import com.zerren.chainreaction.handler.ConfigHandler;
@@ -38,7 +39,7 @@ public class Recipes {
         shapelessRecipes();
         smeltingRecipes();
         fluidExchanger();
-
+        RTGFuels();
 
     }
 
@@ -185,5 +186,10 @@ public class Recipes {
             HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 62.5F);
             WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.getFluid("ic2distilledwater"), 1), new FluidStack(ModFluids.steam, 160));
         }
+    }
+
+    private static void RTGFuels() {
+        RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelPu238"), ConfigHandler.rtgPowerPu238, 32011);
+        RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelPo210"), ConfigHandler.rtgPowerPo210, 138);
     }
 }

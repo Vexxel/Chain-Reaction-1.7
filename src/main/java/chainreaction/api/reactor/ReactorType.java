@@ -1,5 +1,7 @@
 package chainreaction.api.reactor;
 
+import scala.swing.Reactor;
+
 /**
  * Created by Zerren on 4/23/2015.
  */
@@ -10,9 +12,11 @@ public enum ReactorType {
     MOLTEN_SALT(FuelType.FISSION_LIQUID),
     TOROIDAL_FUSION(FuelType.FUSION_FLUID),
     LASER_FUSION(FuelType.FUSION_PELLET),
-    ANTIMATTER(FuelType.ANTIMATTER);
+    ANTIMATTER(FuelType.ANTIMATTER),
+    RTG(FuelType.RTG_FUEL);
 
     private final FuelType type;
+
     ReactorType(FuelType type) {
         this.type = type;
     }
@@ -24,10 +28,12 @@ public enum ReactorType {
         FISSION_GAS,
         FUSION_FLUID,
         FUSION_PELLET,
-        ANTIMATTER
+        ANTIMATTER,
+        RTG_FUEL
     }
 
     public FuelType getFuelType(ReactorType reactor) {
         return reactor.type;
     }
+
 }

@@ -258,7 +258,7 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
 
     @Override
     public int getSizeInventory() {
-        return 19;
+        return inventory.length;
     }
 
     @Override

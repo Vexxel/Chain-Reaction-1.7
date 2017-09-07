@@ -93,6 +93,12 @@ public final class TooltipHelper {
         list.add(s1 + s2);
     }
 
+    public static void addRTGPowerInfo(List<String> list, int power) {
+        String s1 = EnumChatFormatting.RED + CoreUtility.translate("gui.item.rtgPower.name");
+        String s2 = " " + power + " RF/t";
+        list.add(s1 + s2);
+    }
+
     public static void addBaubleInfo(List<String> list, String bauble, String extraValue, String cooldownValue) {
         String s1 = EnumChatFormatting.BLUE + CoreUtility.translate("gui.item.bauble." + bauble + ".name");
         if (extraValue != null) {

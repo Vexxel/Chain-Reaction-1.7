@@ -78,4 +78,14 @@ public class ItemFuelParts extends ItemCRBase implements IRadioactiveMaterial {
         if (getRadioactivity(stack) > 0)
             setRadioactivity(stack, getRadioactivity(stack) * 0.9994F);
     }
+
+    @Override
+    public float getTemperature(ItemStack stack) {
+        return 0;
+    }
+
+    @Override
+    public void setTemperature(ItemStack stack, float temp) {
+
+    }
 }

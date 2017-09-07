@@ -76,6 +76,8 @@ item.record.industrial.desc=Kevin MacLeod - Industrial Revolution
 item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
 item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
 item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
+item.chainreaction:fuel.rtgFuelPu238.name=RTG Fuel (Plutonium-238)
+item.chainreaction:fuel.rtgFuelPo210.name=RTG Fuel (Polonium-210)
 
 item.chainreaction:o2mask.name=O2 Mask
 item.chainreaction:thrustpack.name=Thruster Pack
@@ -188,6 +190,7 @@ gui.setBonusFlavorText.druid.name=Bonded with nature.
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:
+gui.item.rtgPower.name=Base Power Output:
 gui.item.radioactivity.name=Radioactivity:
 gui.item.radioactivity.minimal.name=Minimal
 gui.item.radioactivity.moderate.name=Moderate
@@ -219,6 +222,7 @@ container.vault.name=Vault
 container.chest.name=Secure Chest
 container.pwr.name=Pressurized Water Reactor
 container.bloomery.name=Bloomery
+container.rtg.name=RTG
 
 itemGroup.ChainReaction=Chain Reaction
 

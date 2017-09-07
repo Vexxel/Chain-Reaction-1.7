@@ -54,6 +54,8 @@ public final class Reference {
             public static final ResourceLocation CHEST_VOID = getResourceLocation(GUI_SHEET_LOCATION + "chest_voidmetal.png");
             public static final ResourceLocation PRESSURIZED_WATER_REACTOR = getResourceLocation(GUI_SHEET_LOCATION + "pressurizedWaterReactor.png");
             public static final ResourceLocation BLOOMERY = getResourceLocation(GUI_SHEET_LOCATION + "bloomery.png");
+            public static final ResourceLocation RTG = getResourceLocation(GUI_SHEET_LOCATION + "rtg.png");
+
         }
 
         public static final class Models {
@@ -114,6 +116,7 @@ public final class Reference {
         VAULT,
         CHEST,
         PWR,
-        BLOOMERY
+        BLOOMERY,
+        RTG
     }
 }

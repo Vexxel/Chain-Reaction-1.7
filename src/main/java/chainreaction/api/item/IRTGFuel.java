@@ -6,25 +6,16 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Zerren on 4/15/2015.
  *
- * This interface is to be used with items that should act as fuel in a respective reactor.
+ * This interface is to be used with items that should act as a heat source in an RTG.
  */
-public interface ISolidReactorFuel extends IRadioactiveMaterial {
+public interface IRTGFuel extends IRadioactiveMaterial {
 
     /**
      * If this ItemStack is fissionable inside of a reactor
      * @param stack The ItemStack to check
      * @return if this stack is a valid fuel
      */
-    boolean isReactorFuel(ItemStack stack);
-
-    /**
-     * Method that the reactor will call on this fuel for every neutron that bombards this item to do things such as damage the fuel, add temperature, etc.
-     * Add extra code here if you want some special effects. (Not REALLY every neutron, but for simplicities sake, each neutron flux 'event').
-     * This method is called roughly every 5 seconds if the reactor is active (for server friendliness)
-     * @param stack The ItemStack to pulse
-     * @param neutronPulse How many times this will be pulsed in this event--e.g. a fuel pebble surrounded by 4 more will be pulsed 5 times
-     */
-    void pulseFuel(ItemStack stack, int neutronPulse);
+    boolean isRTGFuel(ItemStack stack);
 
     /**
      * Sets the fuel remaining in this ItemStack. Valid values are between 0.0 and 1.0
@@ -46,5 +37,12 @@ public interface ISolidReactorFuel extends IRadioactiveMaterial {
      * @return the FuelType that this ItemStack is
      */
     ReactorType.FuelType getFuelType(ItemStack stack);
+
+    /**
+     * Returns an int value in rf/t that determines the base power output of this fuel
+     * @param stack The ItemStack to check
+     * @return the base power output in rf/t
+     */
+    int getBasePowerOutput(ItemStack stack);
 
 }

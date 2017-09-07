@@ -1,14 +1,14 @@
 package com.zerren.chainreaction.handler;
 
+import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.client.gui.*;
+import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
-import com.zerren.chainreaction.tile.container.ContainerBloomery;
-import com.zerren.chainreaction.tile.container.ContainerPWR;
+import com.zerren.chainreaction.tile.container.*;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
+import com.zerren.chainreaction.tile.mechanism.TERTG;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
-import com.zerren.chainreaction.tile.container.ContainerChestCR;
-import com.zerren.chainreaction.tile.container.ContainerVault;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,6 +46,12 @@ public class GuiHandler implements IGuiHandler {
 
             if (bloomery != null) return new ContainerBloomery(player.inventory, bloomery);
         }
+        if (id == Reference.GUIs.RTG.ordinal()) {
+
+            TERTG rtg = (TERTG) world.getTileEntity(x, y, z);
+
+            if (rtg != null) return new ContainerRTG(player.inventory, rtg);
+        }
         return null;
     }
 
@@ -79,6 +85,19 @@ public class GuiHandler implements IGuiHandler {
 
             if (bloomery != null) return new GuiBloomery(bloomery, player.inventory);
         }
+        if (id == Reference.GUIs.RTG.ordinal()) {
+
+            TERTG rtg = (TERTG) world.getTileEntity(x, y, z);
+
+            if (rtg != null) return new GuiRTG(rtg, player.inventory);
+        }
         return null;
+    }
+
+    public static void openGui(EntityPlayer player, Reference.GUIs gui, World world, int[] masterPosition) {
+        player.openGui(ChainReaction.instance, gui.ordinal(), world, masterPosition[0], masterPosition[1], masterPosition[2]);
+    }
+    public static void openGui(EntityPlayer player, Reference.GUIs gui, World world, TileEntityCRBase tile) {
+        player.openGui(ChainReaction.instance, gui.ordinal(), world, tile.xCoord, tile.yCoord, tile.zCoord);
     }
 }

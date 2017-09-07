@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.item;
 
+import chainreaction.api.item.IRTGFuel;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.utility.TooltipHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -7,7 +8,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import chainreaction.api.item.IRadioactiveMaterial;
 import chainreaction.api.item.ISolidReactorFuel;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.utility.NBTHelper;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Zerren on 4/15/2015.
  */
-public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioactiveMaterial {
+public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRTGFuel {
 
     public ItemFuel(String name, String[] subtypes, int stacksize, String folder, CreativeTabs tab) {
         super(name, subtypes, stacksize, folder, tab);
@@ -47,11 +47,6 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
     }
 
     @Override
-    public boolean isReactorFuel(ItemStack stack) {
-        return getFuelType(stack) != null;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, EntityPlayer player, List list, boolean par4) {
         if (isReactorFuel(stack)) {
@@ -70,6 +65,13 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
 
             TooltipHelper.addFuelLevelInfo(list, fuel);
             TooltipHelper.addRadiationInfo(list, (int)rad);
+        }
+        if (isRTGFuel(stack)) {
+            int power = getBasePowerOutput(stack);
+            float fuel = getFuelRemaining(stack);
+
+            TooltipHelper.addFuelLevelInfo(list, fuel);
+            TooltipHelper.addRTGPowerInfo(list, power);
         }
     }
 
@@ -93,14 +95,25 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
     }
 
     @Override
+    public int getBasePowerOutput(ItemStack stack) {
+        if (isRTGFuel(stack)) {
+            switch (stack.getItemDamage()) {
+                case 1: return ConfigHandler.rtgPowerPu238;
+                case 2: return ConfigHandler.rtgPowerPo210;
+            }
+        }
+        return 0;
+    }
+
+    @Override
     public void setFuelRemaining(ItemStack stack, float fuel) {
-        if (isReactorFuel(stack))
+        if (isReactorFuel(stack) || isRTGFuel(stack))
             NBTHelper.setFloat(stack, Names.NBT.FUEL_REMAINING, fuel);
     }
 
     @Override
     public float getFuelRemaining(ItemStack stack) {
-        if (isReactorFuel(stack)) {
+        if (isReactorFuel(stack) || isRTGFuel(stack)) {
             if (NBTHelper.hasTag(stack, Names.NBT.FUEL_REMAINING)) {
                 return NBTHelper.getFloat(stack, Names.NBT.FUEL_REMAINING);
             }
@@ -116,6 +129,7 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
     public ReactorType.FuelType getFuelType(ItemStack stack) {
         switch (stack.getItemDamage()) {
             case 0: return ReactorType.FuelType.FISSION_ROD;
+            case 1:case 2: return ReactorType.FuelType.RTG_FUEL;
         }
         return null;
     }
@@ -155,5 +169,15 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRadioact
     public void pulseMaterial(ItemStack stack) {
         if (getRadioactivity(stack) > 0)
             setRadioactivity(stack, getRadioactivity(stack) * 0.9994F);
+    }
+
+    @Override
+    public boolean isRTGFuel(ItemStack stack) {
+        return getFuelType(stack) != null && getFuelType(stack).equals(ReactorType.FuelType.RTG_FUEL);
+    }
+
+    @Override
+    public boolean isReactorFuel(ItemStack stack) {
+        return getFuelType(stack) != null && getFuelType(stack) != ReactorType.FuelType.RTG_FUEL;
     }
 }

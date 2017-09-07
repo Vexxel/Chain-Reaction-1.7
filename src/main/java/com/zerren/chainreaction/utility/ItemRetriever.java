@@ -46,6 +46,14 @@ public final class ItemRetriever {
             return new ItemStack(CRItems.dusts, count, Arrays.asList(Names.Items.DUST_SUBTYPES).indexOf(name));
         }
 
+        public static ItemStack fuelParts(String name) {
+            return new ItemStack(CRItems.fuelParts, 1, Arrays.asList(Names.Items.FUEL_PART_SUBTYPES).indexOf(name));
+        }
+
+        public static ItemStack fuel(String name) {
+            return new ItemStack(CRItems.fuel, 1, Arrays.asList(Names.Items.FUEL_SUBTYPES).indexOf(name));
+        }
+
         public static ItemStack bauble(String name) {
             return new ItemStack(CRItems.baubles, 1, Arrays.asList(Names.Items.BAUBLE_SUBTYPES).indexOf(name));
         }

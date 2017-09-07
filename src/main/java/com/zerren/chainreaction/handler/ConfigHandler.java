@@ -24,7 +24,8 @@ public class ConfigHandler {
     public static float steamFactor;
     public static boolean harderStainless;
     public static int gasTankVolume;
-    public static int rtgPower;
+    public static int rtgPowerPu238;
+    public static int rtgPowerPo210;
 
     public static int temperature;
 
@@ -85,7 +86,9 @@ public class ConfigHandler {
         steamFactor = config.getFloat("steamFactor", "general", 1F, 0.1F, 5F, "Multiplier on steam produced--(this is always a 1:160 water:steam ratio though)--best if used with 'uniSteam'");
 
         gasTankVolume = config.getInt("gasTankVolume", "general", 32, 16, 128, "Number of buckets of gas that the Gas Tank can hold");
-        rtgPower = config.getInt("rtgPower", "general", 32, 16, 128, "RF/t the RTG generates constantly");
+
+        rtgPowerPu238 = config.getInt("rtgPowerPu238", "general", 32, 16, 128, "RF/t the RTG generates with Pu-238 in the overworld (more for colder dimensions, less for hotter ones)");
+        rtgPowerPo210 = config.getInt("rtgPowerPo210", "general", 256, 64, 1024, "RF/t the RTG generates with Po-210 in the overworld (more for colder dimensions, less for hotter ones)");
 
         //baubles
         unbreakingChance = config.getFloat("unbreakingChance", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 0.5F, "Chance that the unbreaking ring will protect a used tool");
