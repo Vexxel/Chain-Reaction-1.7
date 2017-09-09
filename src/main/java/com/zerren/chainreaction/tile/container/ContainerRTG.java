@@ -3,8 +3,7 @@ package com.zerren.chainreaction.tile.container;
 import chainreaction.api.item.ISolidReactorFuel;
 import chainreaction.api.reactor.ReactorType;
 import com.zerren.chainreaction.tile.container.slot.SlotSolidReactorFuel;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
-import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -82,16 +81,16 @@ public class ContainerRTG extends ContainerCR {
             itemstack = itemstack1.copy();
 
             //PWR to player inventory
-            if (slotPos < 19) {
+            if (slotPos < 1) {
                 //can't move
-                if (!this.mergeItemStack(itemstack1, 19, this.inventorySlots.size(), true))
+                if (!this.mergeItemStack(itemstack1, 1, this.inventorySlots.size(), true))
                     return null;
             }
             //from player inventory
             else {
                 //correct item
                 if (itemstack1.getItem() instanceof ISolidReactorFuel && ((ISolidReactorFuel) itemstack1.getItem()).getFuelType(itemstack1) == ReactorType.FuelType.RTG_FUEL) {
-                    if (!this.mergeItemStack(itemstack1, 0, 19, false)) return null;
+                    if (!this.mergeItemStack(itemstack1, 0, 1, false)) return null;
                 }
                 //not correct item
                 else return null;

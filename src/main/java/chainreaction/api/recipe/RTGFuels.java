@@ -1,6 +1,7 @@
 package chainreaction.api.recipe;
 
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.utility.CoreUtility;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 
@@ -32,20 +33,20 @@ public class RTGFuels {
 
     public static int getRFPerTickBase(ItemStack input){
         for(RTGFuels fuels : rtgFuels) {
-            if (input == fuels.getInput()) {
+            if (CoreUtility.softCompareItem(input, fuels.getInput())) {
                 return fuels.rfPerTickBase;
             }
         }
         return 0;
     }
 
-    public static float getHalfLifeInDays(ItemStack input) {
+    public static int getHalfLifeInDays(ItemStack input) {
         for(RTGFuels fuels : rtgFuels) {
-            if (input == fuels.getInput()) {
+            if (CoreUtility.softCompareItem(input, fuels.getInput())) {
                 return fuels.halfLifeInDays;
             }
         }
-        return 0F;
+        return 0;
     }
 
     public static boolean isValidRTGFuel(ItemStack input) {
@@ -53,7 +54,7 @@ public class RTGFuels {
     }
 
     /**
-     * Adds an ItemStack to the RTF fuel registry along with how much RF/t energy it generates baseline, and how long it's half life is.
+     * Adds an ItemStack to the RTF fuel registry along with how much RF/t heat it generates baseline, and how long it's half life is.
      * The liquid heat plumbing can process up to 100mb/t of this liquid--no more.
      * @param input Input ItemStack
      * @param rfPerTickBase RF/t generated when the fuel is completely fresh

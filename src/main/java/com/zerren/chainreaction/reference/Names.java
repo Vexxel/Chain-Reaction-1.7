@@ -49,7 +49,8 @@ public final class Names {
                 "liquidHeatExchanger",
                 "distributionChamber",
                 "stainlessPipe",
-                "gasTank"
+                "gasTank",
+                "exchangerSmall"
         };
 
         public static final String REACTOR = "reactor";
@@ -62,7 +63,9 @@ public final class Names {
         public static final String[] MECHANISM_SUBTYPES = {
                 "teleporter",
                 "bloomery",
-                "rtg"
+                "rtg",
+                "engineStirling",
+                "heaterElectric"
         };
     }
 
@@ -110,7 +113,8 @@ public final class Names {
         public static final String[] TOOL_SUBTYPES = {
                 "wrench",
                 "scanner",
-                "manual"
+                "manual",
+                "thermometer"
         };
 
         public static final String FUEL_PARTS = "fuelParts";
@@ -123,7 +127,10 @@ public final class Names {
         public static final String[] FUEL_SUBTYPES = {
                 "fuelAssemblyUO2",
                 "rtgFuelPu238",
-                "rtgFuelPo210"
+                "rtgFuelPo210",
+                "rtgFuelSr90",
+                "rtgFuelAm241"
+
         };
 
         public static final String O2_MASK = "o2mask";

@@ -1,10 +1,10 @@
 package ic2.api.energy.tile;
 
 /**
- * Tile entities which conduct energy pulses without buffering (mostly cables) have to implement this
+ * Tile entities which conduct heat pulses without buffering (mostly cables) have to implement this
  * interface.
  * 
- * See ic2/api/energy/usage.txt for an overall description of the energy net api.
+ * See ic2/api/heat/usage.txt for an overall description of the heat net api.
  */
 public interface IEnergyConductor extends IEnergyAcceptor, IEnergyEmitter {
 	/**
@@ -15,36 +15,36 @@ public interface IEnergyConductor extends IEnergyAcceptor, IEnergyEmitter {
 	double getConductionLoss();
 
 	/**
-	 * Amount of energy the insulation will handle before shocking nearby players and mobs.
+	 * Amount of heat the insulation will handle before shocking nearby players and mobs.
 	 * 
-	 * @return Insulation energy absorption in EU
+	 * @return Insulation heat absorption in EU
 	 */
 	double getInsulationEnergyAbsorption();
 
 	/**
-	 * Amount of energy the insulation will handle before it is destroyed.
-	 * Ensure that this value is greater than the insulation energy absorption + 64.
+	 * Amount of heat the insulation will handle before it is destroyed.
+	 * Ensure that this value is greater than the insulation heat absorption + 64.
 	 *
-	 * @return Insulation-destroying energy in EU
+	 * @return Insulation-destroying heat in EU
 	 */
 	double getInsulationBreakdownEnergy();
 
 	/**
-	 * Amount of energy the conductor will handle before it melts.
+	 * Amount of heat the conductor will handle before it melts.
 	 * 
-	 * @return Conductor-destroying energy in EU
+	 * @return Conductor-destroying heat in EU
 	 */
 	double getConductorBreakdownEnergy();
 
 	/**
-	 * Remove the conductor's insulation if the insulation breakdown energy was exceeded.
+	 * Remove the conductor's insulation if the insulation breakdown heat was exceeded.
 	 * 
 	 * @see #getInsulationBreakdownEnergy()
 	 */
 	void removeInsulation();
 
 	/**
-	 * Remove the conductor if the conductor breakdown energy was exceeded.
+	 * Remove the conductor if the conductor breakdown heat was exceeded.
 	 * 
 	 * @see #getConductorBreakdownEnergy()
 	 */

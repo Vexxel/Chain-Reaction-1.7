@@ -87,21 +87,21 @@ public interface IReactor {
 	public void setHeatEffectModifier(float newHEM);
 
 	/**
-	 * Get the reactor's energy output.
+	 * Get the reactor's heat output.
 	 * 
 	 * @return Energy output, not multiplied by the base EU/t value
 	 */
 	public float getReactorEnergyOutput();
 
 	/**
-	 * Get the reactor's energy output.
+	 * Get the reactor's heat output.
 	 * 
-	 * @return Energy output, multiplied with base EU/t value and MainConfig.get().getFloat("balance/energy/generator/nuclear")
+	 * @return Energy output, multiplied with base EU/t value and MainConfig.get().getFloat("balance/heat/generator/nuclear")
 	 */
 	public double getReactorEUEnergyOutput();
 
 	/**
-	 * Add's the given amount of energy to the Reactor's output.
+	 * Add's the given amount of heat to the Reactor's output.
 	 * 
 	 * @return Energy output after adding the value, not multiplied by the base EU/t value
 	 */
@@ -138,7 +138,7 @@ public interface IReactor {
 	public int getTickRate();
 
 	/**
-	 * Get whether the reactor is active and supposed to produce energy
+	 * Get whether the reactor is active and supposed to produce heat
 	 * @return Whether the reactor is active
 	 */
 	public boolean produceEnergy();

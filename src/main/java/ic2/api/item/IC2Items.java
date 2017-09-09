@@ -114,7 +114,7 @@ public final class IC2Items {
 	  semifluidGenerator;      //  Semifluid Generator block, meta sensitive
 
 
-	// energy storages (TE implements IEnergySource and IEnergyConductor)
+	// heat storages (TE implements IEnergySource and IEnergyConductor)
 
 	  batBox; 			// BatBox block, meta sensitive
 	  cesuUnit;           // CESU Unit block, meta sensitive
@@ -541,7 +541,7 @@ public final class IC2Items {
 	// upgrade modules
 	  overclockerUpgrade;		// overclocker upgrade item, meta sensitive
 	  transformerUpgrade;		// transformer upgrade item, meta sensitive
-	  energyStorageUpgrade;	// energy storage upgrade item, meta sensitive
+	  energyStorageUpgrade;	// heat storage upgrade item, meta sensitive
 	  ejectorUpgrade;			// ejector upgrade item, meta sensitive
 
 	// misc

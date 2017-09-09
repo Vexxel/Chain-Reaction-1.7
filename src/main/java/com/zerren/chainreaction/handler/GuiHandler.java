@@ -6,7 +6,7 @@ import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.container.*;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.reference.Reference;

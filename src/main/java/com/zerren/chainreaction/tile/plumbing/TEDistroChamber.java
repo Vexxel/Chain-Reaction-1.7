@@ -19,6 +19,7 @@ public class TEDistroChamber extends TileEntityCRBase implements IFluidHandler {
         super();
         updateCounter = 0;
         canFaceUpDown = true;
+        setCanTick();
     }
 
     @Override
@@ -45,11 +46,6 @@ public class TEDistroChamber extends TileEntityCRBase implements IFluidHandler {
         if (tileCache == null) updateCache();
 
         TransferUtility.splitFluidToConsumers(tank, toPush, tileCache, getOrientation());
-    }
-
-    @Override
-    public boolean canUpdate() {
-        return true;
     }
 
     @Override

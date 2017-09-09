@@ -6,10 +6,7 @@ import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.core.proxy.ClientProxy;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
-import com.zerren.chainreaction.tile.plumbing.TEDistroChamber;
-import com.zerren.chainreaction.tile.plumbing.TEGasTank;
-import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
-import com.zerren.chainreaction.tile.plumbing.TEPressurePipe;
+import com.zerren.chainreaction.tile.plumbing.*;
 import com.zerren.chainreaction.client.render.block.ISBRHPlumbing;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -30,6 +27,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.UUID;
 
@@ -58,6 +56,8 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         if (tile instanceof TEHeatExchanger) return activateExchanger(world, x, y, z, player, (TEHeatExchanger)tile);
         if (tile instanceof TEDistroChamber) return activateDistroChamber(world, x, y, z, player, (TEDistroChamber) tile, sideX, sideY, sideZ);
         if (tile instanceof TEGasTank) return activateGasTank(world, x, y, z, player, (TEGasTank) tile);
+        if (tile instanceof TEHeatExchangerSmall) return activateExchangerSmall(world, x, y, z, player, (TEHeatExchangerSmall) tile);
+
 
         return false;
     }
@@ -77,6 +77,44 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                     case 2: {
                         if (tile.tank.getFluid() != null)
                             CoreUtility.addChat("Fluid Tank: " + tile.tank.getFluid().getLocalizedName() + " " + tile.tank.getFluidAmount(), player);
+                        return true;
+                    }
+                    default:
+                        break;
+                }
+            }
+            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z) && !player.isSneaking()) {
+                tile.setOrientation(CoreUtility.getLookingDirection(player, true).getOpposite());
+                world.markBlockForUpdate(x, y, z);
+
+                ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean activateExchangerSmall(World world, int x, int y, int z, EntityPlayer player, TEHeatExchangerSmall tile) {
+        ItemStack held = player.inventory.getCurrentItem();
+
+        if (tile != null && held != null && !world.isRemote) {
+            if (held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+                byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
+
+                switch (mode) {
+                    case 0: {
+                        CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                        return true;
+                    }
+                    case 1: {
+                        CoreUtility.addChat("Thermal Units: " + tile.getHeatStored(ForgeDirection.UNKNOWN), player);
+                        return true;
+                    }
+                    case 2: {
+                        if (tile.inputTank.getFluid() != null)
+                            CoreUtility.addChat("Fluid Tank: " + tile.inputTank.getFluid().getLocalizedName() + " " + tile.inputTank.getFluidAmount(), player);
+                        if (tile.outputTank.getFluid() != null)
+                            CoreUtility.addChat("Fluid Tank: " + tile.outputTank.getFluid().getLocalizedName() + " " + tile.outputTank.getFluidAmount(), player);
                         return true;
                     }
                     default:
@@ -224,17 +262,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         super.breakBlock(world, x, y, z, block, meta);
     }*/
 
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-        super.onBlockPlacedBy(world, x, y, z, entity, stack);
-
-        TileEntity tile = world.getTileEntity(x, y, z);
-
-        if (tile != null && tile instanceof TEHeatExchanger && entity instanceof EntityPlayer) {
-            //((TEHeatExchanger) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
-            ((TEHeatExchanger) tile).setOwnerUUID(entity.getPersistentID());
-        }
-    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
@@ -247,6 +274,8 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                 return new TEPressurePipe();
             case 3:
                 return new TEGasTank();
+            case 4:
+                return new TEHeatExchangerSmall();
             default:
                 return null;
         }

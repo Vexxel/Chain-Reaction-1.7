@@ -93,53 +93,54 @@ public class BlockVault extends BlockCR implements ITileEntityProvider {
             if (held.getItem() instanceof IKey) {
                 if (vault instanceof TEVaultLock && !world.isRemote) {
                     TEVaultLock lock = CoreUtility.get(world, x, y, z, TEVaultLock.class);
-
-                    //bedrock key always wins
-                    if (held.getItemDamage() == 0) {
-                        lock.tryCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player, true);
-                        return true;
-                    }
-                    //has key in hand and it does have a code
-                    if (held.stackTagCompound != null && held.stackTagCompound.hasKey("code")) {
-                        //if the lock doesn't have a code
-                        if (!lock.hasCode()) {
-                            //lock has no ownerName because it isn't a part of a multiblock
-                            if (!lock.hasOwner()) return false;
-                            //if the lock's ownerName equals the key holder
-                            if (lock.getOwnerUUID().equals(player.getPersistentID())) {
-                                lock.setCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player);
+                    if (lock != null) {
+                        //bedrock key always wins
+                        if (held.getItemDamage() == 0) {
+                            lock.tryCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player, true);
+                            return true;
+                        }
+                        //has key in hand and it does have a code
+                        if (held.stackTagCompound != null && held.stackTagCompound.hasKey("code")) {
+                            //if the lock doesn't have a code
+                            if (!lock.hasCode()) {
+                                //lock has no ownerName because it isn't a part of a multiblock
+                                if (!lock.hasOwner()) return false;
+                                //if the lock's ownerName equals the key holder
+                                if (lock.getOwnerUUID().equals(player.getPersistentID())) {
+                                    lock.setCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player);
+                                }
+                                //lock's ownerName isn't the key holder
+                                else {
+                                    CoreUtility.addColoredChat("gui.info.keyhole.trespass.name", EnumChatFormatting.YELLOW, player);
+                                }
                             }
-                            //lock's ownerName isn't the key holder
+                            //try the key's code on the lock
                             else {
-                                CoreUtility.addColoredChat("gui.info.keyhole.trespass.name", EnumChatFormatting.YELLOW, player);
+                                lock.tryCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player, false);
+                                return true;
                             }
                         }
-                        //try the key's code on the lock
+                        //has key in hand but it doesn't have a code
                         else {
-                            lock.tryCode(NBTHelper.getString(player.inventory.getCurrentItem(), "code"), player, false);
-                            return true;
-                        }
-                    }
-                    //has key in hand but it doesn't have a code
-                    else {
-                        //lock doesn't have a code
-                        if (!lock.hasCode()) {
-                            CoreUtility.addColoredChat("gui.info.keyhole.null.name", EnumChatFormatting.YELLOW, player);
-                            return true;
-                        }
-                        //lock does have a code
-                        CoreUtility.addColoredChat("gui.item.key.nocode.name", EnumChatFormatting.YELLOW, player);
-                        //lock's ownerName matches the key's holder
-                        if (lock.getOwnerUUID().equals(player.getPersistentID())) {
-                            System.out.println("Lock ownerName matches player");
-                            CoreUtility.addColoredChat("gui.item.key.remember.name", EnumChatFormatting.YELLOW, player);
+                            //lock doesn't have a code
+                            if (!lock.hasCode()) {
+                                CoreUtility.addColoredChat("gui.info.keyhole.null.name", EnumChatFormatting.YELLOW, player);
+                                return true;
+                            }
+                            //lock does have a code
+                            CoreUtility.addColoredChat("gui.item.key.nocode.name", EnumChatFormatting.YELLOW, player);
+                            //lock's ownerName matches the key's holder
+                            if (lock.getOwnerUUID().equals(player.getPersistentID())) {
+                                System.out.println("Lock ownerName matches player");
+                                CoreUtility.addColoredChat("gui.item.key.remember.name", EnumChatFormatting.YELLOW, player);
 
-                            ChatComponentText comp = new ChatComponentText(EnumChatFormatting.GOLD + ("..." + lock.getCode() + "!"));
-                            player.addChatComponentMessage(comp);
-                        }
-                        //lock's ownerName doesn't match the key's holder
-                        else {
-                            CoreUtility.addColoredChat("gui.item.key.trespass.name", EnumChatFormatting.YELLOW, player);
+                                ChatComponentText comp = new ChatComponentText(EnumChatFormatting.GOLD + ("..." + lock.getCode() + "!"));
+                                player.addChatComponentMessage(comp);
+                            }
+                            //lock's ownerName doesn't match the key's holder
+                            else {
+                                CoreUtility.addColoredChat("gui.item.key.trespass.name", EnumChatFormatting.YELLOW, player);
+                            }
                         }
                     }
                 }
@@ -176,7 +177,6 @@ public class BlockVault extends BlockCR implements ITileEntityProvider {
 
         if (tile instanceof TEVaultController && entity instanceof EntityPlayer) {
             ((TEVaultController) tile).initiateController(UUID.randomUUID(), (EntityPlayer)entity);
-            ((TEVaultController) tile).setOwnerUUID(entity.getPersistentID());
         }
     }
 

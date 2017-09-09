@@ -42,6 +42,7 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
 
     public TEBloomery() {
         super();
+        setCanTick();
     }
 
     @Override
@@ -257,11 +258,6 @@ public class TEBloomery extends TEMultiBlockBase implements IInventoryCR {
                     tile.setOrientation(this.getOrientation());
                     PacketHandler.INSTANCE.sendToAllAround(new MessageTileBloomery(tile, tile.isMaster(), true, true, isBurning()), NetworkUtility.makeTargetPoint(this));
                 }
-    }
-
-    @Override
-    public boolean canUpdate() {
-        return true;
     }
 
     @Override

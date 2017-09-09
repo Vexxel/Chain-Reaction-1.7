@@ -1,10 +1,8 @@
 package com.zerren.chainreaction.client.gui;
 
 import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.container.ContainerPWR;
 import com.zerren.chainreaction.tile.container.ContainerRTG;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
-import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;

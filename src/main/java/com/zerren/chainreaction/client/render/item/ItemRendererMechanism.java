@@ -1,7 +1,9 @@
 package com.zerren.chainreaction.client.render.item;
 
+import com.zerren.chainreaction.client.render.model.ModelElectricHeater;
 import com.zerren.chainreaction.client.render.model.ModelGasTank;
 import com.zerren.chainreaction.client.render.model.ModelRTG;
+import com.zerren.chainreaction.client.render.model.ModelStirlingEngine;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -17,6 +19,8 @@ import org.lwjgl.opengl.GL11;
 public class ItemRendererMechanism implements IItemRenderer {
 
     private final ModelRTG rtg = new ModelRTG();
+    private final ModelStirlingEngine stirlingEngine = new ModelStirlingEngine();
+    private final ModelElectricHeater electricHeater = new ModelElectricHeater();
 
     public ItemRendererMechanism() { }
 
@@ -25,7 +29,7 @@ public class ItemRendererMechanism implements IItemRenderer {
         int meta = itemStack.getItemDamage();
 
         switch(meta) {
-            case 2: return true;
+            case 2:case 3:case 4:return true;
         }
         return false;
     }
@@ -34,7 +38,7 @@ public class ItemRendererMechanism implements IItemRenderer {
     public boolean shouldUseRenderHelper(ItemRenderType itemRenderType, ItemStack itemStack, ItemRendererHelper itemRendererHelper) {
         int meta = itemStack.getItemDamage();
         switch(meta) {
-            case 2: return true;
+            case 2:case 3:case 4:return true;
         }
         return false;
     }
@@ -44,19 +48,19 @@ public class ItemRendererMechanism implements IItemRenderer {
         int meta = itemStack.getItemDamage();
         switch (itemRenderType) {
             case ENTITY: {
-                render(0F, 1F, 0F, meta);
+                render(0F, 1F, 0F, meta, false);
                 break;
             }
             case EQUIPPED: {
-                render(0.5F, 1.5F, 0.5F, meta);
+                render(0.5F, 1.5F, 0.5F, meta, false);
                 break;
             }
             case EQUIPPED_FIRST_PERSON: {
-                render(0.5F, 1.5F, 0.5F, meta);
+                render(0.5F, 1.5F, 0.5F, meta, true);
                 break;
             }
             case INVENTORY: {
-                render(0.0F, 1F, 0.0F, meta);
+                render(0.0F, 1F, 0.0F, meta, false);
                 break;
             }
             default:
@@ -64,7 +68,7 @@ public class ItemRendererMechanism implements IItemRenderer {
         }
     }
 
-    private void render(float x, float y, float z, int metaData) {
+    private void render(float x, float y, float z, int metaData, boolean firstPerson) {
         //rtg
         if (metaData == 2) {
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.RTG);
@@ -72,8 +76,30 @@ public class ItemRendererMechanism implements IItemRenderer {
             GL11.glPushMatrix(); //start
             GL11.glTranslatef(x, y, z); //size
             GL11.glRotatef(180, 1, 0, 0);
-            GL11.glRotatef(-90, 0, 1, 0);
+            GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
             rtg.render();
+            GL11.glPopMatrix(); //end
+        }
+        //stirling engine
+        if (metaData == 3) {
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.STIRLING_ENGINE);
+
+            GL11.glPushMatrix(); //start
+            GL11.glTranslatef(x, y, z); //size
+            GL11.glRotatef(180, 1, 0, 0);
+            GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
+            stirlingEngine.render();
+            GL11.glPopMatrix(); //end
+        }
+        //Electric Heater
+        if (metaData == 4) {
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.ELECTRIC_HEATER);
+
+            GL11.glPushMatrix(); //start
+            GL11.glTranslatef(x, y, z); //size
+            GL11.glRotatef(180, 1, 0, 0);
+            GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
+            electricHeater.render();
             GL11.glPopMatrix(); //end
         }
     }

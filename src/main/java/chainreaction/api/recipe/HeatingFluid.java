@@ -15,9 +15,9 @@ public class HeatingFluid {
 
     public final Fluid input;
     public final Fluid output;
-    public final float heat;
+    public final int heat;
 
-    private HeatingFluid(Fluid input, Fluid output, float heat){
+    private HeatingFluid(Fluid input, Fluid output, int heat){
         this.input = input;
         this.output = output;
         this.heat = heat;
@@ -37,13 +37,13 @@ public class HeatingFluid {
         return null;
     }
 
-    public static float getHeat(Fluid input) {
+    public static int getHeat(Fluid input) {
         for(HeatingFluid fluid : heatingFluid) {
             if (input == fluid.getInput()) {
                 return fluid.heat;
             }
         }
-        return 0F;
+        return 0;
     }
 
     public static boolean validHeatingFluid(Fluid input) {
@@ -51,13 +51,12 @@ public class HeatingFluid {
     }
 
     /**
-     * Adds a fluid to the heating registry and its output, as well as how many TUs each 100mb will generate (IC2 Hot->Cold coolant is 62).
-     * The liquid heat plumbing can process up to 100mb/t of this liquid--no more.
+     * Adds a fluid to the heating registry and its output, as well as how many TUs each bucket will generate (IC2 Hot->Cold coolant is 620).
      * @param input Input fluid
      * @param output Output fluid
-     * @param heat TUs per 100mb input fluid (1/10 of a bucket)
+     * @param heat TUs per 1000mb input fluid
      */
-    public static void addHeatingFluid(Fluid input, Fluid output, float heat) {
+    public static void addHeatingFluid(Fluid input, Fluid output, int heat) {
         heatingFluid.add(new HeatingFluid(input, output, heat));
     }
 }

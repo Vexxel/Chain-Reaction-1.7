@@ -1,6 +1,5 @@
 package com.zerren.chainreaction.tile.reactor;
 
-import chainreaction.api.block.IThermalTile;
 import chainreaction.api.reactor.ReactorType;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.network.PacketHandler;
@@ -27,7 +26,7 @@ import java.util.UUID;
 /**
  * Created by Zerren on 4/23/2015.
  */
-public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInventory, IThermalTile, IFluidHandler {
+public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInventory, IFluidHandler {
 
     private final int tankCapacity = 32000;
     public final FluidTank coolantInletTank = new FluidTank(this.tankCapacity);
@@ -43,8 +42,8 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
     private float thermalUnits;
 
     /**
-     * Arbitrary thermal waste heat storage that is the 'leftover' of a energy conversion--this tile entity does not have a loss in efficiency, because it deals in
-     * entirely thermal units. Loss of efficiency occurs when energy is transformed between two different types (eg. Heat <-> electricity, light <-> heat)
+     * Arbitrary thermal waste heat storage that is the 'leftover' of a heat conversion--this tile entity does not have a loss in efficiency, because it deals in
+     * entirely thermal units. Loss of efficiency occurs when heat is transformed between two different types (eg. Heat <-> electricity, light <-> heat)
      */
     private int wasteHeatUnits;
 
@@ -59,6 +58,11 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
         thermalUnits = 0;
         this.reactorType = ReactorType.PWR;
         controlRodDepth = 100;
+        setCanTick();
+    }
+
+    public float getThermalUnits() {
+        return thermalUnits;
     }
 
     @Override
@@ -156,30 +160,8 @@ public class TEPressurizedWaterReactor extends TEMultiBlockBase implements IInve
         //MultiblockCost.refundMaterials(MultiblockCost.PRESSURIZED_WATER_REACTOR, worldObj, xCoord, yCoord, zCoord);
     }
 
-    @Override
-    public boolean canUpdate() {
-        return true;
-    }
-
     public ReactorType getReactorType() {
         return this.reactorType;
-    }
-
-    @Override
-    public float getThermalUnits() {
-        return thermalUnits;
-    }
-    @Override
-    public void setThermalUnits(float units) {
-        this.thermalUnits = units;
-    }
-    @Override
-    public int getWasteHeat() {
-        return wasteHeatUnits;
-    }
-    @Override
-    public void setWasteHeat(int units) {
-        this.wasteHeatUnits = units;
     }
 
     @Override

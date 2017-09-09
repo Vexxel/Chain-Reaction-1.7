@@ -1,7 +1,5 @@
 package com.zerren.chainreaction.utility;
 
-import com.zerren.chainreaction.handler.ConfigHandler;
-
 /**
  * Created by Zerren on 3/9/2015.
  */
@@ -42,7 +40,13 @@ public final class CRMath {
     public static double reducedByPercent(double number, double percent) {
         return number - (number * percent);
     }
+
     public static double increasedByPercent(double original, double percent) {
         return original * (1 + (percent));
+    }
+
+    public static double getFuelLevelAfterOneDayDecay(double fuelLevel, int halfLifeInDays) {
+        double halfLifeMod = (double)1 / halfLifeInDays;
+        return fuelLevel * (Math.pow(0.5, halfLifeMod));
     }
 }

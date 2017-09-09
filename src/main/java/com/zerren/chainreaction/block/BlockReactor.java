@@ -145,17 +145,6 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-        super.onBlockPlacedBy(world, x, y, z, entity, stack);
-
-        TileEntity tile = world.getTileEntity(x, y, z);
-
-        if (tile != null && tile instanceof TEPressurizedWaterReactor && entity instanceof EntityPlayer) {
-            ((TEPressurizedWaterReactor) tile).setOwnerUUID(entity.getPersistentID());
-        }
-    }
-
-    @Override
     public boolean renderAsNormalBlock() {
         return false;
     }

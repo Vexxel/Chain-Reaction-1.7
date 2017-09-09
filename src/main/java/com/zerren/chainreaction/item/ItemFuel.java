@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.item;
 
 import chainreaction.api.item.IRTGFuel;
+import chainreaction.api.recipe.RTGFuels;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.utility.TooltipHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -67,11 +68,9 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRTGFuel 
             TooltipHelper.addRadiationInfo(list, (int)rad);
         }
         if (isRTGFuel(stack)) {
-            int power = getBasePowerOutput(stack);
-            float fuel = getFuelRemaining(stack);
-
-            TooltipHelper.addFuelLevelInfo(list, fuel);
-            TooltipHelper.addRTGPowerInfo(list, power);
+            TooltipHelper.addFuelLevelInfo(list, getRTGFuelRemaining(stack));
+            TooltipHelper.addRTGPowerInfo(list, RTGFuels.getRFPerTickBase(stack));
+            TooltipHelper.addHalfLifeInfo(list, RTGFuels.getHalfLifeInDays(stack));
         }
     }
 
@@ -81,7 +80,31 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRTGFuel 
             if (emitsRadiation(stack) && world.getTotalWorldTime() % 100 == 0) {
                 pulseMaterial(stack);
             }
+            /*if (isRTGFuel(stack)) {
+                getRTGFuelDaysRemaining(stack);
+            }*/
         }
+    }
+
+    @Override
+    public void setRTGFuelRemaining(ItemStack stack, double fuel) {
+        if (isRTGFuel(stack)) {
+            NBTHelper.setDouble(stack, Names.NBT.FUEL_REMAINING, fuel);
+        }
+    }
+
+    @Override
+    public double getRTGFuelRemaining(ItemStack stack) {
+        if (isRTGFuel(stack)) {
+            if (NBTHelper.hasTag(stack, Names.NBT.FUEL_REMAINING)) {
+                return NBTHelper.getDouble(stack, Names.NBT.FUEL_REMAINING);
+            }
+            else {
+                NBTHelper.setDouble(stack, Names.NBT.FUEL_REMAINING, 1D);
+                return NBTHelper.getDouble(stack, Names.NBT.FUEL_REMAINING);
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -95,41 +118,30 @@ public class ItemFuel extends ItemCRBase implements ISolidReactorFuel, IRTGFuel 
     }
 
     @Override
-    public int getBasePowerOutput(ItemStack stack) {
-        if (isRTGFuel(stack)) {
-            switch (stack.getItemDamage()) {
-                case 1: return ConfigHandler.rtgPowerPu238;
-                case 2: return ConfigHandler.rtgPowerPo210;
+    public void setFuelRemaining(ItemStack stack, int fuel) {
+        if (isReactorFuel(stack))
+            NBTHelper.setInt(stack, Names.NBT.FUEL_REMAINING, fuel);
+    }
+
+    @Override
+    public int getFuelRemaining(ItemStack stack) {
+        if (isReactorFuel(stack)) {
+            if (NBTHelper.hasTag(stack, Names.NBT.FUEL_REMAINING)) {
+                return NBTHelper.getInt(stack, Names.NBT.FUEL_REMAINING);
+            }
+            else {
+                NBTHelper.setFloat(stack, Names.NBT.FUEL_REMAINING, 1F);
+                return NBTHelper.getInt(stack, Names.NBT.FUEL_REMAINING);
             }
         }
         return 0;
     }
 
     @Override
-    public void setFuelRemaining(ItemStack stack, float fuel) {
-        if (isReactorFuel(stack) || isRTGFuel(stack))
-            NBTHelper.setFloat(stack, Names.NBT.FUEL_REMAINING, fuel);
-    }
-
-    @Override
-    public float getFuelRemaining(ItemStack stack) {
-        if (isReactorFuel(stack) || isRTGFuel(stack)) {
-            if (NBTHelper.hasTag(stack, Names.NBT.FUEL_REMAINING)) {
-                return NBTHelper.getFloat(stack, Names.NBT.FUEL_REMAINING);
-            }
-            else {
-                NBTHelper.setFloat(stack, Names.NBT.FUEL_REMAINING, 1F);
-                return NBTHelper.getFloat(stack, Names.NBT.FUEL_REMAINING);
-            }
-        }
-        return 0F;
-    }
-
-    @Override
     public ReactorType.FuelType getFuelType(ItemStack stack) {
         switch (stack.getItemDamage()) {
             case 0: return ReactorType.FuelType.FISSION_ROD;
-            case 1:case 2: return ReactorType.FuelType.RTG_FUEL;
+            case 1: case 2: case 3: case 4: return ReactorType.FuelType.RTG_FUEL;
         }
         return null;
     }

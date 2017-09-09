@@ -27,18 +27,18 @@ public interface ISolidReactorFuel extends IRadioactiveMaterial {
     void pulseFuel(ItemStack stack, int neutronPulse);
 
     /**
-     * Sets the fuel remaining in this ItemStack. Valid values are between 0.0 and 1.0
+     * Sets the fuel remaining in this ItemStack. For reactor fuel, this is in pulses.
      * @param stack The ItemStack to set the remaining fuel with
-     * @param fuel the fuel amount (from 0.0 to 1.0) to set
+     * @param fuel the fuel amount to set
      */
-    void setFuelRemaining(ItemStack stack, float fuel);
+    void setFuelRemaining(ItemStack stack, int fuel);
 
     /**
      * Returns a float value from 0.0 to 1.0 that determines the amount of fuel remaining in this ItemStack
      * @param stack The ItemStack to check
      * @return the remaining 'burnable' fuel in the stack
      */
-    float getFuelRemaining(ItemStack stack);
+    int getFuelRemaining(ItemStack stack);
 
     /**
      * Returns the FuelType that this ItemStack is associated with--a FuelType of FISSION_ROD for example can only go into a reactor that accepts that type

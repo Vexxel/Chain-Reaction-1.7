@@ -58,8 +58,4 @@ public final class ItemRetriever {
             return new ItemStack(CRItems.baubles, 1, Arrays.asList(Names.Items.BAUBLE_SUBTYPES).indexOf(name));
         }
     }
-
-    public ItemStack getOredictItem(String oredict) {
-        return null;
-    }
 }

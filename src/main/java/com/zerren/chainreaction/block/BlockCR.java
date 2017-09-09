@@ -4,6 +4,7 @@ import chainreaction.api.block.IInventoryCR;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.reference.Reference;
+import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
 import com.zerren.chainreaction.utility.CoreUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -104,10 +105,11 @@ public class BlockCR extends Block {
         if (world.getTileEntity(x, y, z) instanceof TileEntityCRBase) {
             TileEntityCRBase tile = (TileEntityCRBase)world.getTileEntity(x, y, z);
             if (itemStack.hasDisplayName()) {
-                ((TileEntityCRBase) world.getTileEntity(x, y, z)).setCustomName(itemStack.getDisplayName());
+                tile.setCustomName(itemStack.getDisplayName());
             }
 
-            ((TileEntityCRBase) world.getTileEntity(x, y, z)).setOrientation(CoreUtility.getLookingDirection(entity, tile.canFaceUpDown()).getOpposite());
+            tile.setOrientation(CoreUtility.getLookingDirection(entity, tile.canFaceUpDown()).getOpposite());
+            tile.setOwnerUUID(entity.getPersistentID());
         }
     }
 

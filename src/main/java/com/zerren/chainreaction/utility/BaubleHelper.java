@@ -13,20 +13,19 @@ import net.minecraft.item.ItemStack;
 public class BaubleHelper {
 
     public static boolean hasCorrectAmulet(EntityPlayer player, ItemStack bauble) {
-        ItemStack amulet = BaublesApi.getBaubles(player).getStackInSlot(0);
+        ItemStack amulet = getAmulet(player);
 
         return amulet != null && amulet.isItemEqual(bauble);
     }
 
     public static boolean hasCorrectRing(EntityPlayer player, ItemStack bauble) {
-        ItemStack ring1 = BaublesApi.getBaubles(player).getStackInSlot(1);
-        ItemStack ring2 = BaublesApi.getBaubles(player).getStackInSlot(2);
+        ItemStack[] rings = getRings(player);
 
-        return ring1 != null && ring1.isItemEqual(bauble) || ring2 != null && ring2.isItemEqual(bauble);
+        return rings[0] != null && rings[0].isItemEqual(bauble) || rings[1] != null && rings[1].isItemEqual(bauble);
     }
 
     public static boolean hasCorrectBelt(EntityPlayer player, ItemStack bauble) {
-        ItemStack belt = BaublesApi.getBaubles(player).getStackInSlot(3);
+        ItemStack belt = getBelt(player);
 
         return belt != null && belt.isItemEqual(bauble);
     }

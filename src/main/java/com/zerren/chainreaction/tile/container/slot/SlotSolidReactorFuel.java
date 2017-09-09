@@ -2,6 +2,7 @@ package com.zerren.chainreaction.tile.container.slot;
 
 import chainreaction.api.item.ISolidReactorFuel;
 import chainreaction.api.reactor.ReactorType;
+import chainreaction.api.recipe.RTGFuels;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
@@ -23,6 +24,10 @@ public class SlotSolidReactorFuel extends Slot {
     public boolean isItemValid(ItemStack stack) {
 
         Item item = stack.getItem();
+
+        if (RTGFuels.isValidRTGFuel(stack) && this.fuelType == ReactorType.FuelType.RTG_FUEL) {
+            return true;
+        }
 
         return item instanceof ISolidReactorFuel && ((ISolidReactorFuel) item).getFuelType(stack) == this.fuelType;
     }

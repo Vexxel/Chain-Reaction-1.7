@@ -4,31 +4,24 @@ import buildcraft.api.tools.IToolWrench;
 import chainreaction.api.item.IScanner;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.client.render.block.ISBRHMechanism;
-import com.zerren.chainreaction.client.render.block.ISBRHReactor;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
+import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
+import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
-import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.NBTHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -52,6 +45,10 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
                 return new TEBloomery();
             case 2:
                 return new TERTG();
+            case 3:
+                return new TEStirlingEngine();
+            case 4:
+                return new TEElectricHeater();
             default:
                 return null;
         }

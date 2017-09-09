@@ -25,6 +25,7 @@ tile.chainreaction:plumbing.liquidHeatExchanger.name=Heat Exchanger Tube Assembl
 tile.chainreaction:plumbing.distributionChamber.name=Fluid Distribution Chamber
 tile.chainreaction:plumbing.stainlessPipe.name=High Pressure Stainless Steel Pipe
 tile.chainreaction:plumbing.gasTank.name=High Pressure Gas Tank
+tile.chainreaction:plumbing.exchangerSmall.name=Small Liquid Heat Exchanger
 
 tile.chainreaction:reactor.pwrAssembly.name=Reactor Core Assembly
 tile.chainreaction:reactor.pwrCasing.name=Reactor Hull
@@ -38,6 +39,8 @@ tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
 tile.chainreaction:mechanism.teleporter.name=Teleporter
 tile.chainreaction:mechanism.bloomery.name=Bloomery Brick
 tile.chainreaction:mechanism.rtg.name=Radioisotope Thermoelectric Generator
+tile.chainreaction:mechanism.engineStirling.name=Stirling Heat Engine
+tile.chainreaction:mechanism.heaterElectric.name=Electric Heat Generator
 
 
 # Item localizations --------------------------------------------------------------------
@@ -71,6 +74,7 @@ item.chainreaction:key.diamond.name=Diamond Vault Key
 item.chainreaction:tool.wrench.name=Nucleus Wrench
 item.chainreaction:tool.scanner.name=Multi-mode Scanner
 item.chainreaction:tool.manual.name=Nuclear Reactor Engineering
+item.chainreaction:tool.thermometer.name=Thermometer
 item.record.industrial.desc=Kevin MacLeod - Industrial Revolution
 
 item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
@@ -78,6 +82,8 @@ item.chainreaction:fuel.fuelRodUO2.name=Fuel Rod (Uranium Dioxide)
 item.chainreaction:fuel.fuelAssemblyUO2.name=Fuel Assembly (Uranium Dioxide)
 item.chainreaction:fuel.rtgFuelPu238.name=RTG Fuel (Plutonium-238)
 item.chainreaction:fuel.rtgFuelPo210.name=RTG Fuel (Polonium-210)
+item.chainreaction:fuel.rtgFuelSr90.name=RTG Fuel (Strontium-90)
+item.chainreaction:fuel.rtgFuelAm241.name=RTG Fuel (Americium-241)
 
 item.chainreaction:o2mask.name=O2 Mask
 item.chainreaction:thrustpack.name=Thruster Pack
@@ -190,6 +196,7 @@ gui.setBonusFlavorText.druid.name=Bonded with nature.
 
 gui.item.temperature.name=Temperature:
 gui.item.fuel.name=Fuel Status:
+gui.item.halflife.name=Half Life:
 gui.item.rtgPower.name=Base Power Output:
 gui.item.radioactivity.name=Radioactivity:
 gui.item.radioactivity.minimal.name=Minimal

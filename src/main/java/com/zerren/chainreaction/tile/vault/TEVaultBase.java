@@ -17,6 +17,7 @@ public class TEVaultBase extends TEMultiBlockBase {
     public TEVaultBase() {
         super();
         masterID = null;
+        breakable = true;
     }
 
     public boolean isBreakable() {

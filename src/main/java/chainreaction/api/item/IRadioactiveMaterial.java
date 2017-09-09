@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Zerren on 4/15/2015.
  *
- * This interface is to be used with items that emit radiation and thermal energy.
+ * This interface is to be used with items that emit radiation and thermal heat.
  */
 public interface IRadioactiveMaterial {
 

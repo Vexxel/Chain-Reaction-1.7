@@ -2,7 +2,9 @@ package com.zerren.chainreaction.client.render.block;
 
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
+import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
+import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.utility.CoreUtility;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
@@ -54,6 +56,14 @@ public class ISBRHMechanism extends ISBRHBase {
                 return false;
             }
             if (meta == 2 && tile instanceof TERTG) {
+                //renderWorldCube(s16, s10, s16, s0, s0, s0, block, x, y, z, renderer);
+                return false;
+            }
+            if (meta == 3 && tile instanceof TEStirlingEngine) {
+                //renderWorldCube(s16, s10, s16, s0, s0, s0, block, x, y, z, renderer);
+                return false;
+            }
+            if (meta == 4 && tile instanceof TEElectricHeater) {
                 //renderWorldCube(s16, s10, s16, s0, s0, s0, block, x, y, z, renderer);
                 return false;
             }

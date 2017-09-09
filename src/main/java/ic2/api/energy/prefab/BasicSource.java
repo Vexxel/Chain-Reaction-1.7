@@ -17,15 +17,15 @@ import ic2.api.info.Info;
 import ic2.api.item.ElectricItem;
 
 /**
- * BasicSource is a simple adapter to provide an ic2 energy source.
+ * BasicSource is a simple adapter to provide an ic2 heat source.
  * 
  * It's designed to be attached to a tile entity as a delegate. Functionally BasicSource acts as a
- * one-time configurable output energy buffer, thus providing a common use case for generators.
+ * one-time configurable output heat buffer, thus providing a common use case for generators.
  * 
  * Sub-classing BasicSource instead of using it as a delegate works as well, but isn't recommended.
  * The delegate can be extended with additional functionality through a sub class though.
  * 
- * The constraints set by BasicSource like the strict tank-like energy buffering should provide a
+ * The constraints set by BasicSource like the strict tank-like heat buffering should provide a
  * more easy to use and stable interface than using IEnergySource directly while aiming for
  * optimal performance.
  * 
@@ -38,24 +38,24 @@ import ic2.api.item.ElectricItem;
  * - call addEnergy whenever appropriate, using getFreeCapacity may determine if e.g. the generator
  *   should run
  * - optionally use getEnergyStored to display the output buffer charge level
- * - optionally use setEnergyStored to sync the stored energy to the client (e.g. in the Container)
+ * - optionally use setEnergyStored to sync the stored heat to the client (e.g. in the Container)
  *
  * Example implementation code:
  * @code{.java}
  * public class SomeTileEntity extends TileEntity {
- *     // new basic energy source, 1000 EU buffer, tier 1 (32 EU/t, LV)
+ *     // new basic heat source, 1000 EU buffer, tier 1 (32 EU/t, LV)
  *     private BasicSource ic2EnergySource = new BasicSource(this, 1000, 1);
  * 
  *     @Override
  *     public void invalidate() {
- *         ic2EnergySource.invalidate(); // notify the energy source
+ *         ic2EnergySource.invalidate(); // notify the heat source
  *         ...
  *         super.invalidate(); // this is important for mc!
  *     }
  * 
  *     @Override
  *     public void onChunkUnload() {
- *         ic2EnergySource.onChunkUnload(); // notify the energy source
+ *         ic2EnergySource.onChunkUnload(); // notify the heat source
  *         ...
  *     }
  * 
@@ -77,7 +77,7 @@ import ic2.api.item.ElectricItem;
  * 
  *     @Override
  *     public void updateEntity() {
- *         ic2EnergySource.updateEntity(); // notify the energy source
+ *         ic2EnergySource.updateEntity(); // notify the heat source
  *         ...
  *         ic2EnergySource.addEnergy(5); // add 5 eu to the source's buffer this tick
  *         ...
@@ -95,7 +95,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	/**
 	 * Constructor for a new BasicSource delegate.
 	 * 
-	 * @param parent1 Base TileEntity represented by this energy source.
+	 * @param parent1 Base TileEntity represented by this heat source.
 	 * @param capacity1 Maximum amount of eu to store.
 	 * @param tier1 IC2 tier, 1 = LV, 2 = MV, ...
 	 */
@@ -111,7 +111,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	// in-world te forwards	>>
 
 	/**
-	 * Forward for the base TileEntity's updateEntity(), used for creating the energy net link.
+	 * Forward for the base TileEntity's updateEntity(), used for creating the heat net link.
 	 * Either updateEntity or onLoaded have to be used.
 	 */
 	@Override
@@ -139,7 +139,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Forward for the base TileEntity's invalidate(), used for destroying the energy net link.
+	 * Forward for the base TileEntity's invalidate(), used for destroying the heat net link.
 	 * Both invalidate and onChunkUnload have to be used.
 	 */
 	@Override
@@ -150,7 +150,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Forward for the base TileEntity's onChunkUnload(), used for destroying the energy net link.
+	 * Forward for the base TileEntity's onChunkUnload(), used for destroying the heat net link.
 	 * Both invalidate and onChunkUnload have to be used.
 	 */
 	@Override
@@ -174,7 +174,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 
 		NBTTagCompound data = tag.getCompoundTag("IC2BasicSource");
 
-		energyStored = data.getDouble("energy");
+		energyStored = data.getDouble("heat");
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 
 		NBTTagCompound data = new NBTTagCompound();
 
-		data.setDouble("energy", energyStored);
+		data.setDouble("heat", energyStored);
 
 		tag.setTag("IC2BasicSource", data);
 	}
@@ -201,7 +201,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	// methods for using this adapter >>
 
 	/**
-	 * Get the maximum amount of energy this source can hold in its buffer.
+	 * Get the maximum amount of heat this source can hold in its buffer.
 	 * 
 	 * @return Capacity in EU.
 	 */
@@ -210,7 +210,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Set the maximum amount of energy this source can hold in its buffer.
+	 * Set the maximum amount of heat this source can hold in its buffer.
 	 * 
 	 * @param capacity1 Capacity in EU.
 	 */
@@ -221,7 +221,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Get the IC2 energy tier for this source.
+	 * Get the IC2 heat tier for this source.
 	 * 
 	 * @return IC2 Tier.
 	 */
@@ -230,7 +230,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Set the IC2 energy tier for this source.
+	 * Set the IC2 heat tier for this source.
 	 * 
 	 * @param tier1 IC2 Tier.
 	 */
@@ -245,7 +245,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 
 
 	/**
-	 * Determine the energy stored in the source's output buffer.
+	 * Determine the heat stored in the source's output buffer.
 	 * 
 	 * @return amount in EU
 	 */
@@ -254,9 +254,9 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Set the stored energy to the specified amount.
+	 * Set the stored heat to the specified amount.
 	 * 
-	 * This is intended for server -> client synchronization, e.g. to display the stored energy in
+	 * This is intended for server -> client synchronization, e.g. to display the stored heat in
 	 * a GUI through getEnergyStored().
 	 * 
 	 * @param amount
@@ -275,9 +275,9 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Add some energy to the output buffer.
+	 * Add some heat to the output buffer.
 	 * 
-	 * @param amount maximum amount of energy to add
+	 * @param amount maximum amount of heat to add
 	 * @return amount added/used, NOT remaining
 	 */
 	public double addEnergy(double amount) {
@@ -290,10 +290,10 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	}
 
 	/**
-	 * Charge the supplied ItemStack from this source's energy buffer.
+	 * Charge the supplied ItemStack from this source's heat buffer.
 	 * 
 	 * @param stack ItemStack to charge (null is ignored)
-	 * @return true if energy was transferred
+	 * @return true if heat was transferred
 	 */
 	public boolean charge(ItemStack stack) {
 		if (stack == null || !Info.isIc2Available()) return false;
@@ -340,7 +340,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 	// *** Methods for use by ic2 ***
 	// ******************************
 
-	// energy net interface >>
+	// heat net interface >>
 
 	@Override
 	public boolean emitsEnergyTo(TileEntity receiver, ForgeDirection direction) {
@@ -362,7 +362,7 @@ public class BasicSource extends TileEntity implements IEnergySource {
 		return tier;
 	}
 
-	// << energy net interface
+	// << heat net interface
 
 
 	public final TileEntity parent;

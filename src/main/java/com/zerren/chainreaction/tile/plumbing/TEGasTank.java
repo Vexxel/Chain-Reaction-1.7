@@ -26,6 +26,7 @@ public class TEGasTank extends TileEntityCRBase implements IFluidHandler {
         fluidAmount = 0;
         updateCounter = 0;
         tankDirty = false;
+        setCanTick();
     }
 
     @Override
@@ -42,11 +43,6 @@ public class TEGasTank extends TileEntityCRBase implements IFluidHandler {
 
             updateCounter = 0;
         }
-    }
-
-    @Override
-    public boolean canUpdate() {
-        return true;
     }
 
     @Override

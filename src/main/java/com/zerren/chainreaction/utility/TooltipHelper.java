@@ -87,7 +87,7 @@ public final class TooltipHelper {
         list.add(EnumChatFormatting.AQUA + rad + " " + safety);
     }
 
-    public static void addFuelLevelInfo(List<String> list, float fuelLevel) {
+    public static void addFuelLevelInfo(List<String> list, double fuelLevel) {
         String s1 = EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.fuel.name");
         String s2 = " " + Math.round((fuelLevel * 100)) + "%";
         list.add(s1 + s2);
@@ -96,6 +96,12 @@ public final class TooltipHelper {
     public static void addRTGPowerInfo(List<String> list, int power) {
         String s1 = EnumChatFormatting.RED + CoreUtility.translate("gui.item.rtgPower.name");
         String s2 = " " + power + " RF/t";
+        list.add(s1 + s2);
+    }
+
+    public static void addHalfLifeInfo(List<String> list, int halflife) {
+        String s1 = EnumChatFormatting.GOLD + CoreUtility.translate("gui.item.halflife.name");
+        String s2 = " " + Math.round(halflife > 1460 ? halflife / 365.24 : halflife) + (halflife > 1460 ? " Years" : " Days");
         list.add(s1 + s2);
     }
 

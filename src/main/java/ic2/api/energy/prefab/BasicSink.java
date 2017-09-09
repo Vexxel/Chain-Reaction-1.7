@@ -16,15 +16,15 @@ import ic2.api.info.Info;
 import ic2.api.item.ElectricItem;
 
 /**
- * BasicSink is a simple adapter to provide an ic2 energy sink.
+ * BasicSink is a simple adapter to provide an ic2 heat sink.
  * 
  * It's designed to be attached to a tile entity as a delegate. Functionally BasicSink acts as a
- * one-time configurable input energy buffer, thus providing a common use case for machines.
+ * one-time configurable input heat buffer, thus providing a common use case for machines.
  * 
  * Sub-classing BasicSink instead of using it as a delegate works as well, but isn't recommended.
  * The delegate can be extended with additional functionality through a sub class though.
  * 
- * The constraints set by BasicSink like the strict tank-like energy buffering should provide a
+ * The constraints set by BasicSink like the strict tank-like heat buffering should provide a
  * more easy to use and stable interface than using IEnergySink directly while aiming for
  * optimal performance.
  * 
@@ -34,27 +34,27 @@ import ic2.api.item.ElectricItem;
  *   instance.
  *   If you have other means of determining when the tile entity is fully loaded, notify onLoaded
  *   that way instead of forwarding updateEntity.
- * - call useEnergy whenever appropriate. canUseEnergy determines if enough energy is available
- *   without consuming the energy.
+ * - call useEnergy whenever appropriate. canUseEnergy determines if enough heat is available
+ *   without consuming the heat.
  * - optionally use getEnergyStored to display the output buffer charge level
- * - optionally use setEnergyStored to sync the stored energy to the client (e.g. in the Container)
+ * - optionally use setEnergyStored to sync the stored heat to the client (e.g. in the Container)
  *
  * Example implementation code:
  * @code{.java}
  * public class SomeTileEntity extends TileEntity {
- *     // new basic energy sink, 1000 EU buffer, tier 1 (32 EU/t, LV)
+ *     // new basic heat sink, 1000 EU buffer, tier 1 (32 EU/t, LV)
  *     private BasicSink ic2EnergySink = new BasicSink(this, 1000, 1);
  * 
  *     @Override
  *     public void invalidate() {
- *         ic2EnergySink.invalidate(); // notify the energy sink
+ *         ic2EnergySink.invalidate(); // notify the heat sink
  *         ...
  *         super.invalidate(); // this is important for mc!
  *     }
  * 
  *     @Override
  *     public void onChunkUnload() {
- *         ic2EnergySink.onChunkUnload(); // notify the energy sink
+ *         ic2EnergySink.onChunkUnload(); // notify the heat sink
  *         ...
  *     }
  * 
@@ -76,10 +76,10 @@ import ic2.api.item.ElectricItem;
  * 
  *     @Override
  *     public void updateEntity() {
- *         ic2EnergySink.updateEntity(); // notify the energy sink
+ *         ic2EnergySink.updateEntity(); // notify the heat sink
  *         ...
  *         if (ic2EnergySink.useEnergy(5)) { // use 5 eu from the sink's buffer this tick
- *             ... // do something with the energy
+ *             ... // do something with the heat
  *         }
  *         ...
  *     }
@@ -96,7 +96,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	/**
 	 * Constructor for a new BasicSink delegate.
 	 * 
-	 * @param parent1 TileEntity represented by this energy sink.
+	 * @param parent1 TileEntity represented by this heat sink.
 	 * @param capacity1 Maximum amount of eu to store.
 	 * @param tier1 IC2 tier, 1 = LV, 2 = MV, ...
 	 */
@@ -109,7 +109,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	// in-world te forwards	>>
 
 	/**
-	 * Forward for the base TileEntity's updateEntity(), used for creating the energy net link.
+	 * Forward for the base TileEntity's updateEntity(), used for creating the heat net link.
 	 * Either updateEntity or onLoaded have to be used.
 	 */
 	@Override
@@ -137,7 +137,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Forward for the base TileEntity's invalidate(), used for destroying the energy net link.
+	 * Forward for the base TileEntity's invalidate(), used for destroying the heat net link.
 	 * Both invalidate and onChunkUnload have to be used.
 	 */
 	@Override
@@ -148,7 +148,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Forward for the base TileEntity's onChunkUnload(), used for destroying the energy net link.
+	 * Forward for the base TileEntity's onChunkUnload(), used for destroying the heat net link.
 	 * Both invalidate and onChunkUnload have to be used.
 	 */
 	@Override
@@ -172,7 +172,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 
 		NBTTagCompound data = tag.getCompoundTag("IC2BasicSink");
 
-		energyStored = data.getDouble("energy");
+		energyStored = data.getDouble("heat");
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 
 		NBTTagCompound data = new NBTTagCompound();
 
-		data.setDouble("energy", energyStored);
+		data.setDouble("heat", energyStored);
 
 		tag.setTag("IC2BasicSink", data);
 	}
@@ -199,7 +199,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	// methods for using this adapter >>
 
 	/**
-	 * Get the maximum amount of energy this sink can hold in its buffer.
+	 * Get the maximum amount of heat this sink can hold in its buffer.
 	 * 
 	 * @return Capacity in EU.
 	 */
@@ -208,7 +208,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Set the maximum amount of energy this sink can hold in its buffer.
+	 * Set the maximum amount of heat this sink can hold in its buffer.
 	 * 
 	 * @param capacity1 Capacity in EU.
 	 */
@@ -217,7 +217,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Get the IC2 energy tier for this sink.
+	 * Get the IC2 heat tier for this sink.
 	 * 
 	 * @return IC2 Tier.
 	 */
@@ -226,7 +226,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Set the IC2 energy tier for this sink.
+	 * Set the IC2 heat tier for this sink.
 	 * 
 	 * @param tier1 IC2 Tier.
 	 */
@@ -235,7 +235,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Determine the energy stored in the sink's input buffer.
+	 * Determine the heat stored in the sink's input buffer.
 	 * 
 	 * @return amount in EU, may be above capacity
 	 */
@@ -244,9 +244,9 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Set the stored energy to the specified amount.
+	 * Set the stored heat to the specified amount.
 	 * 
-	 * This is intended for server -> client synchronization, e.g. to display the stored energy in
+	 * This is intended for server -> client synchronization, e.g. to display the stored heat in
 	 * a GUI through getEnergyStored().
 	 * 
 	 * @param amount
@@ -256,7 +256,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Determine if the specified amount of energy is available.
+	 * Determine if the specified amount of heat is available.
 	 * 
 	 * @param amount in EU
 	 * @return true if the amount is available
@@ -266,7 +266,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Use the specified amount of energy, if available.
+	 * Use the specified amount of heat, if available.
 	 * 
 	 * @param amount amount to use
 	 * @return true if the amount was available
@@ -281,11 +281,11 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	}
 
 	/**
-	 * Discharge the supplied ItemStack into this sink's energy buffer.
+	 * Discharge the supplied ItemStack into this sink's heat buffer.
 	 * 
 	 * @param stack ItemStack to discharge (null is ignored)
 	 * @param limit Transfer limit, values <= 0 will use the battery's limit
-	 * @return true if energy was transferred
+	 * @return true if heat was transferred
 	 */
 	public boolean discharge(ItemStack stack, int limit) {
 		if (stack == null || !Info.isIc2Available()) return false;
@@ -337,7 +337,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 	// *** Methods for use by ic2 ***
 	// ******************************
 
-	// energy net interface >>
+	// heat net interface >>
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction) {
@@ -361,7 +361,7 @@ public class BasicSink extends TileEntity implements IEnergySink {
 		return tier;
 	}
 
-	// << energy net interface
+	// << heat net interface
 
 
 	public final TileEntity parent;

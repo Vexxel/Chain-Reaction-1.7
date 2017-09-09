@@ -16,7 +16,10 @@ import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
+import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
+import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
+import com.zerren.chainreaction.tile.plumbing.TEHeatExchangerSmall;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
@@ -99,6 +102,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchanger.class, new TESRHeatExchanger());
         //Gas Tank
         ClientRegistry.bindTileEntitySpecialRenderer(TEGasTank.class, new TESRGasTank());
+        //Small Heat Exchanger
+        ClientRegistry.bindTileEntitySpecialRenderer(TEHeatExchangerSmall.class, new TESRExchangerSmall());
+
         //PWR
         ClientRegistry.bindTileEntitySpecialRenderer(TEPressurizedWaterReactor.class, new TESRPressurizedWaterReactor());
         //Teleporter
@@ -107,7 +113,10 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEBloomery.class, new TESRBloomery());
         //RTG
         ClientRegistry.bindTileEntitySpecialRenderer(TERTG.class, new TESRRTG());
-
+        //Stirling Engine
+        ClientRegistry.bindTileEntitySpecialRenderer(TEStirlingEngine.class, new TESRStirlingEngine());
+        //Electric Heater
+        ClientRegistry.bindTileEntitySpecialRenderer(TEElectricHeater.class, new TESRElectricHeater());
     }
 
     //Simple block renderer--things that won't get updated (mostly ever). Good for static held items of blocks as well

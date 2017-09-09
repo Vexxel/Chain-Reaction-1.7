@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Zerren on 9/1/2015.
  */
 @Optional.InterfaceList({
-        @Optional.Interface(iface = "cofh.api.energy.IEnergyContainerItem", modid = "CoFHCore")
+        @Optional.Interface(iface = "cofh.api.heat.IEnergyContainerItem", modid = "CoFHCore")
 })
 public class ItemOxygenMask extends ItemCRArmor implements IEnergyContainerItem {
 
@@ -74,7 +74,7 @@ public class ItemOxygenMask extends ItemCRArmor implements IEnergyContainerItem 
         if(!simulate)
         {
             stored += accepted;
-            NBTHelper.setInt(container, "energy", stored);
+            NBTHelper.setInt(container, "heat", stored);
         }
         return accepted;
     }
@@ -86,7 +86,7 @@ public class ItemOxygenMask extends ItemCRArmor implements IEnergyContainerItem 
         if(!simulate)
         {
             stored -= extracted;
-            NBTHelper.setInt(container, "energy", stored);
+            NBTHelper.setInt(container, "heat", stored);
         }
         return extracted;
     }
@@ -94,7 +94,7 @@ public class ItemOxygenMask extends ItemCRArmor implements IEnergyContainerItem 
     @Override
     public int getEnergyStored(ItemStack container)
     {
-        return NBTHelper.getInt(container, "energy");
+        return NBTHelper.getInt(container, "heat");
     }
     @Override
     public int getMaxEnergyStored(ItemStack container)

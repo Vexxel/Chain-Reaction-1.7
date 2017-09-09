@@ -24,7 +24,7 @@ public interface IReactorComponent {
 	public void processChamber(IReactor reactor, ItemStack yourStack, int x, int y, boolean heatrun);
 
 	/**
-	 * Can be called by Uranium-Components who attempt to generate energy by pulsing to other components.
+	 * Can be called by Uranium-Components who attempt to generate heat by pulsing to other components.
 	 * Uranium-Uranium interaction (f.e.) uses this method.
 	 * @param reactor Reference to the Reactor
 	 * @param yourStack Reference to the specific instance of called ItemStack

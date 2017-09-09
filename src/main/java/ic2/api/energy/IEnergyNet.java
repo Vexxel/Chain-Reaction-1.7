@@ -8,14 +8,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Interface representing the methods provided by the global EnergyNet class.
  * 
- * See ic2/api/energy/usage.txt for an overall description of the energy net api.
+ * See ic2/api/heat/usage.txt for an overall description of the heat net api.
  */
 public interface IEnergyNet {
 	/**
 	 * Get the EnergyNet-registered tile entity at the specified position.
 	 * 
 	 * This is not the same as World.getTileEntity(), it's possible to register delegate tile
-	 * entities with the energy net which are different from what's actually in the world. Those
+	 * entities with the heat net which are different from what's actually in the world. Those
 	 * delegates allow to use separate TileEntity objects just for the EnergyNet interfaces,
 	 * simplifying cross-mod dependencies and multi-blocks.
 	 * 
@@ -23,7 +23,7 @@ public interface IEnergyNet {
 	 * @param x x-coordinate
 	 * @param y y-coordinate
 	 * @param z z-coordinate
-	 * @return tile entity registered to the energy net or null if none is registered
+	 * @return tile entity registered to the heat net or null if none is registered
 	 */
 	TileEntity getTileEntity(World world, int x, int y, int z);
 
@@ -32,27 +32,27 @@ public interface IEnergyNet {
 	 * 
 	 * @param te TileEntity indicating the world and position to search from
 	 * @param dir direction the neighbor is to be found
-	 * @return neighbor tile entity registered to the energy net or null if none is registered
+	 * @return neighbor tile entity registered to the heat net or null if none is registered
 	 */
 	TileEntity getNeighbor(TileEntity te, ForgeDirection dir);
 
 	/**
-	 * determine how much energy has been emitted by the EnergyEmitter specified
+	 * determine how much heat has been emitted by the EnergyEmitter specified
 	 *
 	 * @note call this twice with x ticks delay to get the avg. emitted power p = (call2 - call1) / x EU/tick
 	 *
-	 * @param tileEntity energy emitter
+	 * @param tileEntity heat emitter
 	 * @deprecated Discontinued, use getNodeStats instead.
 	 */
 	@Deprecated
 	double getTotalEnergyEmitted(TileEntity tileEntity);
 
 	/**
-	 * determine how much energy has been sunken by the EnergySink specified
+	 * determine how much heat has been sunken by the EnergySink specified
 	 *
 	 * @note call this twice with x ticks delay to get the avg. sunken power p = (call2 - call1) / x EU/tick
 	 *
-	 * @param tileEntity energy emitter
+	 * @param tileEntity heat emitter
 	 * @deprecated Discontinued, use getNodeStats instead.
 	 */
 	@Deprecated

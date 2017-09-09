@@ -7,7 +7,7 @@ import net.minecraft.world.World;
  */
 public interface ITerraformingBP {
 	/**
-	 * Get the energy consumption per operation of the blueprint.
+	 * Get the heat consumption per operation of the blueprint.
 	 * 
 	 * @return Energy consumption in EU
 	 */
@@ -28,7 +28,7 @@ public interface ITerraformingBP {
 	 * @param x X position to terraform
 	 * @param z Z position to terraform
 	 * @param yCoord Y position of the terraformer
-	 * @return Whether the operation was successful and the terraformer should consume energy.
+	 * @return Whether the operation was successful and the terraformer should consume heat.
 	 */
 	public abstract boolean terraform(World world, int x, int z, int yCoord);
 }

@@ -26,6 +26,9 @@ public class ConfigHandler {
     public static int gasTankVolume;
     public static int rtgPowerPu238;
     public static int rtgPowerPo210;
+    public static int rtgPowerSr90;
+    public static int rtgPowerAm241;
+    public static int rtgPowerIC2;
 
     public static int temperature;
 
@@ -85,10 +88,13 @@ public class ConfigHandler {
         harderStainless = config.getBoolean("harderStainless", "general", false, "If true, the recipe for stainless steel dust requires steel dust in place of iron dust. For use with mods that add steel dust");
         steamFactor = config.getFloat("steamFactor", "general", 1F, 0.1F, 5F, "Multiplier on steam produced--(this is always a 1:160 water:steam ratio though)--best if used with 'uniSteam'");
 
-        gasTankVolume = config.getInt("gasTankVolume", "general", 32, 16, 128, "Number of buckets of gas that the Gas Tank can hold");
+        gasTankVolume = config.getInt("gasTankVolume", "general", 128, 32, 512, "Number of buckets of gas that the Gas Tank can hold");
 
-        rtgPowerPu238 = config.getInt("rtgPowerPu238", "general", 32, 16, 128, "RF/t the RTG generates with Pu-238 in the overworld (more for colder dimensions, less for hotter ones)");
-        rtgPowerPo210 = config.getInt("rtgPowerPo210", "general", 256, 64, 1024, "RF/t the RTG generates with Po-210 in the overworld (more for colder dimensions, less for hotter ones)");
+        rtgPowerPu238 = config.getInt("rtgPowerPu238", "general", 64, 16, 128, "RF/t the RTG generates with Plutonium 238");
+        rtgPowerPo210 = config.getInt("rtgPowerPo210", "general", 512, 64, 1024, "RF/t the RTG generates with Polonium 210");
+        rtgPowerSr90 = config.getInt("rtgPowerSr90", "general", 32, 8, 64, "RF/t the RTG generates with Strontium 90");
+        rtgPowerAm241 = config.getInt("rtgPowerAm241", "general", 16, 4, 64, "RF/t the RTG generates with Americium 241");
+        rtgPowerIC2 = config.getInt("rtgPowerIC2", "general", 64, 16, 128, "RF/t the RTG generates with IC2's RTG Pebbles");
 
         //baubles
         unbreakingChance = config.getFloat("unbreakingChance", CATEGORY_BAUBLES.getName(), 0.3F, 0.1F, 0.5F, "Chance that the unbreaking ring will protect a used tool");

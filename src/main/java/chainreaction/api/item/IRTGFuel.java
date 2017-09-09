@@ -22,14 +22,14 @@ public interface IRTGFuel extends IRadioactiveMaterial {
      * @param stack The ItemStack to set the remaining fuel with
      * @param fuel the fuel amount (from 0.0 to 1.0) to set
      */
-    void setFuelRemaining(ItemStack stack, float fuel);
+    void setRTGFuelRemaining(ItemStack stack, double fuel);
 
     /**
      * Returns a float value from 0.0 to 1.0 that determines the amount of fuel remaining in this ItemStack
      * @param stack The ItemStack to check
      * @return the remaining 'burnable' fuel in the stack
      */
-    float getFuelRemaining(ItemStack stack);
+    double getRTGFuelRemaining(ItemStack stack);
 
     /**
      * Returns the FuelType that this ItemStack is associated with--a FuelType of FISSION_ROD for example can only go into a reactor that accepts that type
@@ -37,12 +37,5 @@ public interface IRTGFuel extends IRadioactiveMaterial {
      * @return the FuelType that this ItemStack is
      */
     ReactorType.FuelType getFuelType(ItemStack stack);
-
-    /**
-     * Returns an int value in rf/t that determines the base power output of this fuel
-     * @param stack The ItemStack to check
-     * @return the base power output in rf/t
-     */
-    int getBasePowerOutput(ItemStack stack);
 
 }

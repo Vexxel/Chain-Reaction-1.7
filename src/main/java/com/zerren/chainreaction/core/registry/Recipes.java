@@ -10,6 +10,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -30,6 +31,9 @@ public class Recipes {
     private static ItemStack ingotInconel;
     private static ItemStack ingotGraphite;
     private static ItemStack ingotDepletedUranium;
+
+    @GameRegistry.ObjectHolder("IC2:itemRTGPellet")
+    public static final Item rtg = null;
 
 
     public static void init() {
@@ -177,13 +181,13 @@ public class Recipes {
     }
 
     private static void fluidExchanger() {
-        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 62.5F);
+        HeatingFluid.addHeatingFluid(ModFluids.coolantHotFluid, ModFluids.coolantColdFluid, 620);
 
         WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.WATER, 1), new FluidStack(ModFluids.steam, 160));
         WorkingFluid.addWorkingFluid(new FluidStack(ModFluids.distilledWater, 1), new FluidStack(ModFluids.steam, 160));
 
         if (Loader.isModLoaded("IC2")) {
-            HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 62.5F);
+            HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 620);
             WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.getFluid("ic2distilledwater"), 1), new FluidStack(ModFluids.steam, 160));
         }
     }
@@ -191,5 +195,11 @@ public class Recipes {
     private static void RTGFuels() {
         RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelPu238"), ConfigHandler.rtgPowerPu238, 32011);
         RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelPo210"), ConfigHandler.rtgPowerPo210, 138);
+        RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelSr90"), ConfigHandler.rtgPowerSr90, 10512);
+        RTGFuels.addRTGFuel(ItemRetriever.Items.fuel("rtgFuelAm241"), ConfigHandler.rtgPowerAm241, 157680);
+
+        if (Loader.isModLoaded("IC2")) {
+            RTGFuels.addRTGFuel(new ItemStack(rtg, 1, 0), ConfigHandler.rtgPowerIC2, -1);
+        }
     }
 }

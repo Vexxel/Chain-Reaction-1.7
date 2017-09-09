@@ -140,12 +140,16 @@ public final class CoreUtility {
     public static boolean hasDictionaryMatch(ItemStack stack, String dictionary) {
         ArrayList<ItemStack> ores = OreDictionary.getOres(dictionary);
         for (ItemStack ore : ores) {
-            if (stack != null && stack.getItem() == ore.getItem() && stack.getItemDamage() == ore.getItemDamage()) return true;
+            if (stack != null && softCompareItem(stack, ore)) return true;
         }
         return false;
     }
 
     public static boolean isSetActivated(EntityPlayer player, SetBonus set) {
         return PlayerSetBonus.get(player).getSetStatus(set);
+    }
+
+    public static boolean softCompareItem(ItemStack item1, ItemStack item2) {
+        return item1.getItem() == item2.getItem() && item1.getItemDamage() == item2.getItemDamage();
     }
 }

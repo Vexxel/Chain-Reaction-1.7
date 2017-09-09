@@ -98,4 +98,17 @@ public final class TransferUtility {
             }
         }
     }
+
+    public static TileEntity getTileAdjacentFromDirection(TileEntity tile, ForgeDirection dir) {
+        return tile.getWorldObj().getTileEntity(tile.xCoord + dir.offsetX, tile.yCoord + dir.offsetY, tile.zCoord + dir.offsetZ);
+    }
+
+    public static ForgeDirection[] getAllSideDirections() {
+        return new ForgeDirection[] {ForgeDirection.NORTH, ForgeDirection.EAST, ForgeDirection.SOUTH, ForgeDirection.WEST};
+    }
+
+    public static ForgeDirection[] getAllElevationDirections() {
+        return new ForgeDirection[] {ForgeDirection.UP, ForgeDirection.DOWN};
+    }
+
 }

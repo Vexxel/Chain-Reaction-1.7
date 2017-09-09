@@ -1,31 +1,35 @@
-package com.zerren.chainreaction.tile.mechanism;
+package com.zerren.chainreaction.tile.reactor;
 
 import chainreaction.api.item.IRTGFuel;
+import chainreaction.api.recipe.RTGFuels;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.tile.TEEnergyProviderBase;
+import com.zerren.chainreaction.tile.TEHeatHandlerBase;
+import com.zerren.chainreaction.utility.CRMath;
 import com.zerren.chainreaction.utility.CoreUtility;
+import com.zerren.chainreaction.utility.TransferUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TERTG extends TEEnergyProviderBase implements IInventory {
+public class TERHG extends TEHeatHandlerBase implements IInventory {
 
+    private static final String DECAY_TIME = "decayTime";
     private float tempMod;
     private boolean hasCheckedTemperature;
     private ItemStack[] inventory;
     private int checkTime;
     private int decayTime;
 
-    public TERTG() {
-        super(0, 12800, ForgeDirection.UP, ForgeDirection.DOWN);
+    public TERHG() {
+        super(0, TransferUtility.getAllElevationDirections());
         hasCheckedTemperature = false;
         inventory = new ItemStack[1];
         checkTime = 0;
@@ -37,24 +41,29 @@ public class TERTG extends TEEnergyProviderBase implements IInventory {
             if (!hasCheckedTemperature) {
                 setTemp(worldObj.getWorldChunkManager().getBiomeGenAt(xCoord, zCoord));
                 hasCheckedTemperature = true;
-                ChainReaction.log.info("RTG temperature modifier @ X:" + xCoord + ", Z:" + zCoord + " = " + tempMod);
+                //ChainReaction.log.info("RTG temperature modifier @ X:" + xCoord + ", Z:" + zCoord + " = " + tempMod);
             }
 
             if (checkTime >= 40) {
-                rfGenPerTick = getEnergyValue();
-                energyStorage.setMaxExtract(rfGenPerTick * 2);
+                heatGenPerTick = getEnergyValue();
+                heatStorage.setMaxExtract(heatGenPerTick * 2);
                 if (ConfigHandler.devDebug) {
-                    ChainReaction.log.info("RTG Power Generation @ X:" + xCoord + ", Z:" + zCoord + " = " + rfGenPerTick + "RF/t");
-                    ChainReaction.log.info("RTG Max Output Rate @ X:" + xCoord + ", Z:" + zCoord + " = " + energyStorage.getMaxExtract() + "RF/t");
+                    ChainReaction.log.info("RHG Heat Generation @ X:" + xCoord + ", Z:" + zCoord + " = " + heatGenPerTick + "RF/t");
+                    ChainReaction.log.info("RHG Max Output Rate @ X:" + xCoord + ", Z:" + zCoord + " = " + heatStorage.getMaxExtract() + "RF/t");
                 }
                 checkTime = 0;
             }
             checkTime++;
 
-            energyStorage.modifyEnergyStored(Math.round(rfGenPerTick * tempMod));
-            transferEnergy();
+            heatStorage.modifyHeatStored(Math.round(heatGenPerTick * tempMod));
+            transferHeatToConnectingSides();
             decayTime++;
-            //if (decayTime >=)
+            //a full minecraft day
+            if (decayTime >= 24000) {
+                decayTime = 0;
+
+                decayFuelByOneDay();
+            }
         }
     }
 
@@ -62,16 +71,41 @@ public class TERTG extends TEEnergyProviderBase implements IInventory {
         ItemStack stack = inventory[0];
         if (stack == null) return 0;
 
-        if (stack.getItem() instanceof IRTGFuel) {
-            IRTGFuel fuel = (IRTGFuel) stack.getItem();
-            float fuelRemaining = fuel.getFuelRemaining(stack);
+        if (RTGFuels.isValidRTGFuel(stack)) {
+            if (stack.getItem() instanceof IRTGFuel) {
+                IRTGFuel fuel = (IRTGFuel) stack.getItem();
 
-            return (int)(fuel.getBasePowerOutput(stack) * fuelRemaining);
+                return (int)Math.round(fuel.getRTGFuelRemaining(stack) * RTGFuels.getRFPerTickBase(stack));
+            }
+            //for the IC2 rtg pebbles
+            else {
+                return RTGFuels.getRFPerTickBase(stack);
+            }
         }
         return 0;
     }
 
-    //sets a modifier on power generated based on the ambient temperature of the current biome
+    private void decayFuelByOneDay() {
+        ItemStack stack = inventory[0];
+        if (stack == null) return;
+
+        if (stack.getItem() instanceof IRTGFuel) {
+            IRTGFuel fuel = (IRTGFuel) stack.getItem();
+
+            if (RTGFuels.getHalfLifeInDays(stack) > 0) {
+                double decayed = CRMath.getFuelLevelAfterOneDayDecay(fuel.getRTGFuelRemaining(stack), RTGFuels.getHalfLifeInDays(stack));
+                //ChainReaction.log.info(decayed);
+
+                //essentially gone but it keeps it from going literally forever
+                if (decayed > 0.0049D)
+                    fuel.setRTGFuelRemaining(stack, decayed);
+                else
+                    fuel.setRTGFuelRemaining(stack, 0F);
+            }
+        }
+    }
+
+    //sets a modifier on power generated based on the ambient temperature of the current biome. Colder biomes get a bonus, hell biome is basically unusable
     private void setTemp(BiomeGenBase biome) {
         //gets the biometypes from the biome this block is loaded in
         BiomeDictionary.Type[] biomeTypes = BiomeDictionary.getTypesForBiome(biome);
@@ -82,10 +116,6 @@ public class TERTG extends TEEnergyProviderBase implements IInventory {
             }
             else if (type.equals(BiomeDictionary.Type.COLD)) {
                 this.tempMod = 1.3F;
-                return;
-            }
-            else if (type.equals(BiomeDictionary.Type.HOT)) {
-                this.tempMod = 0.8F;
                 return;
             }
         }
@@ -148,6 +178,7 @@ public class TERTG extends TEEnergyProviderBase implements IInventory {
         super.readFromNBT(tag);
 
         this.inventory = readNBTItems(tag, this);
+        this.decayTime = tag.getInteger(DECAY_TIME);
     }
 
     @Override
@@ -155,11 +186,12 @@ public class TERTG extends TEEnergyProviderBase implements IInventory {
         super.writeToNBT(tag);
 
         writeNBTItems(tag, inventory);
+        tag.setInteger(DECAY_TIME, decayTime);
     }
 
     @Override
     public String getInventoryName() {
-        return this.hasCustomName() ? this.getCustomName() : CoreUtility.translate("container.rtg.name");
+        return this.hasCustomName() ? this.getCustomName() : CoreUtility.translate("container.rhg.name");
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.zerren.chainreaction.client.render.tileentity;
 
-import com.zerren.chainreaction.client.render.model.ModelGasTank;
 import com.zerren.chainreaction.client.render.model.ModelRTG;
 import com.zerren.chainreaction.reference.Reference;
-import com.zerren.chainreaction.tile.mechanism.TERTG;
-import com.zerren.chainreaction.tile.plumbing.TEGasTank;
+import com.zerren.chainreaction.tile.reactor.TERTG;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
