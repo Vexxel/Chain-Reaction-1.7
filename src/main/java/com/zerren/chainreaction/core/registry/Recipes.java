@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.core.registry;
 
+import chainreaction.api.recipe.ElectrolyzingFluid;
 import chainreaction.api.recipe.HeatingFluid;
 import chainreaction.api.recipe.RTGFuels;
 import chainreaction.api.recipe.WorkingFluid;
@@ -43,6 +44,7 @@ public class Recipes {
         shapelessRecipes();
         smeltingRecipes();
         fluidExchanger();
+        electrolyzer();
         RTGFuels();
 
     }
@@ -190,6 +192,12 @@ public class Recipes {
             HeatingFluid.addHeatingFluid(FluidRegistry.getFluid("ic2hotcoolant"), FluidRegistry.getFluid("ic2coolant"), 620);
             WorkingFluid.addWorkingFluid(new FluidStack(FluidRegistry.getFluid("ic2distilledwater"), 1), new FluidStack(ModFluids.steam, 160));
         }
+    }
+
+    private static void electrolyzer() {
+        ElectrolyzingFluid.addElectrolyzingFluid(new FluidStack(FluidRegistry.WATER, 200), new FluidStack(ModFluids.hydrogenGas, 1000), new FluidStack(ModFluids.oxygenGas, 500));
+        ElectrolyzingFluid.addElectrolyzingFluid(new FluidStack(ModFluids.distilledWater, 200), new FluidStack(ModFluids.hydrogenGas, 1000), new FluidStack(ModFluids.oxygenGas, 500));
+
     }
 
     private static void RTGFuels() {

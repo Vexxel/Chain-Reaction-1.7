@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TEEnergyHandlerBase extends TileEntityCRBase implements IEnergyHandler {
+public abstract class TEEnergyHandlerBase extends TileEntityCRBase implements IEnergyHandler {
 
     protected EnergyStorage energyStorage = new EnergyStorage(0);
     protected int rfGenPerTick;

@@ -50,6 +50,9 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float sideX, float sideY, float sideZ) {
+        super.onBlockActivated(world, x, y, z, player, meta, sideX, sideY, sideZ);
+        if (super.onBlockActivated(world, x, y, z, player, meta, sideX, sideY, sideZ)) return true;
+
         TileEntityCRBase tile = CoreUtility.get(world, x, y, z, TileEntityCRBase.class);
 
         if (tile == null) return false;
@@ -83,13 +86,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                         break;
                 }
             }
-            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z) && !player.isSneaking()) {
-                tile.setOrientation(CoreUtility.getLookingDirection(player, true).getOpposite());
-                world.markBlockForUpdate(x, y, z);
-
-                ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
-                return true;
-            }
         }
         return false;
     }
@@ -120,13 +116,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                     default:
                         break;
                 }
-            }
-            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z) && !player.isSneaking()) {
-                tile.setOrientation(CoreUtility.getLookingDirection(player, true).getOpposite());
-                world.markBlockForUpdate(x, y, z);
-
-                ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
-                return true;
             }
         }
         return false;
@@ -196,16 +185,6 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
                     default:
                         break;
                 }
-            }
-            if (held.getItem() instanceof IToolWrench && ((IToolWrench) held.getItem()).canWrench(player, x, y, z)) {
-                if (player.isSneaking())
-                    tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ).getOpposite());
-                else {
-                    tile.setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ));
-                }
-                world.markBlockForUpdate(x, y, z);
-                ((IToolWrench) held.getItem()).wrenchUsed(player, x, y, z);
-                return true;
             }
         }
         return false;

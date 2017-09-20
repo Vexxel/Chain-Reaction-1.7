@@ -1,9 +1,6 @@
 package com.zerren.chainreaction.client.render.item;
 
-import com.zerren.chainreaction.client.render.model.ModelElectricHeater;
-import com.zerren.chainreaction.client.render.model.ModelGasTank;
-import com.zerren.chainreaction.client.render.model.ModelRTG;
-import com.zerren.chainreaction.client.render.model.ModelStirlingEngine;
+import com.zerren.chainreaction.client.render.model.*;
 import com.zerren.chainreaction.reference.Reference;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -21,6 +18,7 @@ public class ItemRendererMechanism implements IItemRenderer {
     private final ModelRTG rtg = new ModelRTG();
     private final ModelStirlingEngine stirlingEngine = new ModelStirlingEngine();
     private final ModelElectricHeater electricHeater = new ModelElectricHeater();
+    private final ModelElectrolyzer electrolyzer = new ModelElectrolyzer();
 
     public ItemRendererMechanism() { }
 
@@ -29,7 +27,7 @@ public class ItemRendererMechanism implements IItemRenderer {
         int meta = itemStack.getItemDamage();
 
         switch(meta) {
-            case 2:case 3:case 4:return true;
+            case 2:case 3:case 4:case 5:return true;
         }
         return false;
     }
@@ -38,7 +36,7 @@ public class ItemRendererMechanism implements IItemRenderer {
     public boolean shouldUseRenderHelper(ItemRenderType itemRenderType, ItemStack itemStack, ItemRendererHelper itemRendererHelper) {
         int meta = itemStack.getItemDamage();
         switch(meta) {
-            case 2:case 3:case 4:return true;
+            case 2:case 3:case 4:case 5:return true;
         }
         return false;
     }
@@ -100,6 +98,17 @@ public class ItemRendererMechanism implements IItemRenderer {
             GL11.glRotatef(180, 1, 0, 0);
             GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
             electricHeater.render();
+            GL11.glPopMatrix(); //end
+        }
+        //Electrolyzer
+        if (metaData == 5) {
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.ELECTROLYZER);
+
+            GL11.glPushMatrix(); //start
+            GL11.glTranslatef(x, y, z); //size
+            GL11.glRotatef(180, 1, 0, 0);
+            GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
+            electrolyzer.render();
             GL11.glPopMatrix(); //end
         }
     }

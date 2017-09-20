@@ -21,14 +21,11 @@ public class TEHeatExchangerSmall extends TEHeatHandlerBase implements IFluidHan
     public final FluidTank inputTank = new FluidTank(tankCapacity);
     public final FluidTank outputTank = new FluidTank(tankCapacity);
 
-    public int fluidAmount;
     private short updateCounter;
 
 
     public TEHeatExchangerSmall() {
         super(0, TransferUtility.getAllSideDirections());
-        fluidAmount = 0;
-        setCanTick();
     }
 
     @Override
@@ -141,16 +138,21 @@ public class TEHeatExchangerSmall extends TEHeatHandlerBase implements IFluidHan
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        this.inputTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "Input"));
-        this.outputTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "Output"));
+
+        readNBTFluidTank(tag, inputTank, "Input");
+        readNBTFluidTank(tag, outputTank, "Output");
+        //this.inputTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "Input"));
+        //this.outputTank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + "Output"));
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        tag.setTag(Names.NBT.TANK + "Input", inputTank.writeToNBT(new NBTTagCompound()));
-        tag.setTag(Names.NBT.TANK + "Output", outputTank.writeToNBT(new NBTTagCompound()));
+        writeNBTFluidTank(tag, inputTank, "Input");
+        writeNBTFluidTank(tag, outputTank, "Output");
+        //tag.setTag(Names.NBT.TANK + "Input", inputTank.writeToNBT(new NBTTagCompound()));
+        //tag.setTag(Names.NBT.TANK + "Output", outputTank.writeToNBT(new NBTTagCompound()));
     }
 
     @Override

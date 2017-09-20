@@ -88,5 +88,21 @@ public class ModBlocks {
         else {
             CRBlocks.uf6 = ModFluids.uf6.getBlock();
         }
+        if (ModFluids.hydrogenGas.getBlock() == null) {
+            CRBlocks.hydrogenGas = new BlockFluidGasBase(ModFluids.hydrogenGas, new MaterialLiquid(MapColor.pinkColor), Names.Fluids.HYDROGEN, 5, 2, 1F, 1);
+            GameRegistry.registerBlock(CRBlocks.hydrogenGas, Names.Fluids.HYDROGEN);
+            ModFluids.hydrogenGas.setBlock(CRBlocks.hydrogenGas);
+        }
+        else {
+            CRBlocks.hydrogenGas = ModFluids.hydrogenGas.getBlock();
+        }
+        if (ModFluids.oxygenGas.getBlock() == null) {
+            CRBlocks.oxygenGas = new BlockFluidGasBase(ModFluids.oxygenGas, new MaterialLiquid(MapColor.lightBlueColor), Names.Fluids.OXYGEN, 5, 2, 1F, 1);
+            GameRegistry.registerBlock(CRBlocks.oxygenGas, Names.Fluids.OXYGEN);
+            ModFluids.oxygenGas.setBlock(CRBlocks.oxygenGas);
+        }
+        else {
+            CRBlocks.oxygenGas = ModFluids.oxygenGas.getBlock();
+        }
     }
 }

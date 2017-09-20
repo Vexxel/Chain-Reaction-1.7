@@ -20,6 +20,11 @@ public class TEVaultBase extends TEMultiBlockBase {
         breakable = true;
     }
 
+    @Override
+    public void updateEntity() {
+
+    }
+
     public boolean isBreakable() {
         return breakable;
     }

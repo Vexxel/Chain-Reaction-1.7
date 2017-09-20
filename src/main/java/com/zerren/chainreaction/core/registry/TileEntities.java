@@ -6,6 +6,7 @@ import com.zerren.chainreaction.tile.chest.TEChestThaumium;
 import com.zerren.chainreaction.tile.chest.TEChestVoid;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
+import com.zerren.chainreaction.tile.mechanism.TEElectrolyzer;
 import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
 import com.zerren.chainreaction.tile.plumbing.*;
 import com.zerren.chainreaction.tile.reactor.TERTG;
@@ -43,7 +44,7 @@ public final class TileEntities {
         GameRegistry.registerTileEntityWithAlternatives(TERTG.class, Names.Blocks.MECHANISM + "RTG", "tile." + Names.Blocks.MECHANISM + "RTG");
         GameRegistry.registerTileEntityWithAlternatives(TEStirlingEngine.class, Names.Blocks.MECHANISM + "StirlingEngine", "tile." + Names.Blocks.MECHANISM + "StirlingEngine");
         GameRegistry.registerTileEntityWithAlternatives(TEElectricHeater.class, Names.Blocks.MECHANISM + "ElectricHeater", "tile." + Names.Blocks.MECHANISM + "ElectricHeater");
-
+        GameRegistry.registerTileEntityWithAlternatives(TEElectrolyzer.class, Names.Blocks.MECHANISM + "Electrolyzer", "tile." + Names.Blocks.MECHANISM + "Electrolyzer");
 
     }
 }

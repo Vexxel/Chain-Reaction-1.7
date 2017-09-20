@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.block;
 
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.reference.GUIs;
 import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.chest.TEChestBrick;
 import com.zerren.chainreaction.tile.chest.TEChestThaumium;
@@ -61,7 +62,9 @@ public class BlockCRChest extends BlockCR implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float sideX, float sideY, float sideZ) {
+        super.onBlockActivated(world, x, y, z, player, meta, sideX, sideY, sideZ);
+
 
         TEChest chest = CoreUtility.get(world, x, y, z, TEChest.class);
         ItemStack held = player.inventory.getCurrentItem();
@@ -128,7 +131,7 @@ public class BlockCRChest extends BlockCR implements ITileEntityProvider {
         else {
             if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TEChest) {
                 if (!chest.getChestLocked())
-                    player.openGui(ChainReaction.instance, Reference.GUIs.CHEST.ordinal(), world, x, y, z);
+                    player.openGui(ChainReaction.instance, GUIs.CHEST.ordinal(), world, x, y, z);
                 else
                     world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Reference.Sounds.LOCK_RATTLE, 0.7F, 1F);
             }

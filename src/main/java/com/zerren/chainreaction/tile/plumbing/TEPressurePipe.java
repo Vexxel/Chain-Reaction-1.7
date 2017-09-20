@@ -39,4 +39,9 @@ public class TEPressurePipe extends TileEntityCRBase implements IFluidHandler{
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         return new FluidTankInfo[0];
     }
+
+    @Override
+    public void updateEntity() {
+
+    }
 }

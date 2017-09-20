@@ -65,7 +65,8 @@ public final class Names {
                 "bloomery",
                 "rtg",
                 "engineStirling",
-                "heaterElectric"
+                "heaterElectric",
+                "electrolyzer"
         };
     }
 
@@ -217,6 +218,10 @@ public final class Names {
         public static final String COOLANT_HOT = "coolanthot";
         public static final String UF6 = "uraniumhexafluoride";
         public static final String DISTILLED_WATER = "distilledwater";
+        public static final String HYDROGEN = "hydrogen";
+        public static final String OXYGEN = "oxygen";
+
+
         public static String STEAM;
 
         public static void initConfigValues() {
@@ -244,7 +249,6 @@ public final class Names {
         public static final String DIRECTION = "orientation";
         public static final String OWNER_UUID_MOST_SIG = "ownerUUIDMostSig";
         public static final String OWNER_UUID_LEAST_SIG = "ownerUUIDLeastSig";
-        public static final String ENERGY_LEVEL = "energyLevel";
         public static final String SCANNER_MODE = "mode";
 
         public static final String MASTER_UUID_MOST_SIG = "masterUUIDMostSig";
@@ -254,7 +258,6 @@ public final class Names {
         public static final String CONTROLLER_UUID_LEAST_SIG = "controllerUUIDLeastSig";
 
         public static final String THERMAL_UNITS = "thermalUnits";
-        public static final String WASTEHEAT_UNITS = "wasteHeatUnits";
         public static final String MULTIBLOCK_LOCATION = "multiblockLocation";
 
         public static final String FUEL_TEMPERATURE = "temperature";

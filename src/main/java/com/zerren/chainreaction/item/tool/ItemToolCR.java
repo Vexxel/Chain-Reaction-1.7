@@ -3,11 +3,16 @@ package com.zerren.chainreaction.item.tool;
 import buildcraft.api.tools.IToolWrench;
 import chainreaction.api.heat.IHeatHandler;
 import chainreaction.api.item.IScanner;
+import chainreaction.api.recipe.RTGFuels;
+import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.item.ItemCRBase;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.NBTHelper;
+import com.zerren.chainreaction.utility.TooltipHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 /**
  * Created by Zerren on 4/1/2015.
@@ -34,11 +41,12 @@ public class ItemToolCR extends ItemCRBase implements IToolWrench, IScanner {
             return false;
         }
 
+        if (canWrench(player, x, y, z) && block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
+            wrenchUsed(player, x, y, z);
+            return true;
+        }
+
         if (!world.isRemote) {
-            if (canWrench(player, x, y, z) && block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
-                wrenchUsed(player, x, y, z);
-                return true;
-            }
 
             if (player.isSneaking() && canScan(player, x, y, z)) {
                 byte next = (byte)(NBTHelper.getByte(stack, Names.NBT.SCANNER_MODE) + 1);

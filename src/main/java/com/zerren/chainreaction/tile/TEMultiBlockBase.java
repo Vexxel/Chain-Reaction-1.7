@@ -39,6 +39,11 @@ public class TEMultiBlockBase extends TileEntityCRBase {
         hasMaster = false;
     }
 
+    @Override
+    public void updateEntity() {
+
+    }
+
     /**
      * If this tile entity has slave tile entities
      * @return

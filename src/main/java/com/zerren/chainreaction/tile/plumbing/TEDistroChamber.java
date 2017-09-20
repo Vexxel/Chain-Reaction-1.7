@@ -24,7 +24,6 @@ public class TEDistroChamber extends TileEntityCRBase implements IFluidHandler {
 
     @Override
     public void updateEntity() {
-        super.updateEntity();
         if (worldObj.isRemote) {
             return;
         }

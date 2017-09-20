@@ -236,7 +236,6 @@ public class TEChest extends TileEntityCRBase implements IInventory
     @Override
     public void updateEntity()
     {
-        super.updateEntity();
 
         if (++ticksSinceSync % 20 * 4 == 0)
         {

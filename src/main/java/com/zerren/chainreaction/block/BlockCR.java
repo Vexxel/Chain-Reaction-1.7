@@ -1,6 +1,10 @@
 package com.zerren.chainreaction.block;
 
+import buildcraft.api.tools.IToolWrench;
 import chainreaction.api.block.IInventoryCR;
+import chainreaction.api.item.IScanner;
+import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.tile.TEHeatHandlerBase;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.reference.Reference;
@@ -14,6 +18,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,6 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 import java.util.Random;
@@ -50,6 +56,36 @@ public class BlockCR extends Block {
     public BlockCR(String name, String[] subtypes, Material material, float hardness, float resistance, Block.SoundType sound, String folder, CreativeTabs tab) {
         this(name, subtypes, material, hardness, resistance, sound, folder);
         this.setCreativeTab(tab);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float sideX, float sideY, float sideZ) {
+
+        ItemStack held = player.getHeldItem();
+        if (held != null && held.getItem() instanceof IToolWrench) {
+            IToolWrench wrench = (IToolWrench)held.getItem();
+            if (wrench.canWrench(player, x, y, z)) {
+
+                TileEntity tile = CoreUtility.getTileEntity(world, x, y, z);
+                if (tile != null && tile instanceof TileEntityCRBase) {
+                    if (tile instanceof TEMultiBlockBase && ((TEMultiBlockBase) tile).hasValidMaster()) return false;
+
+                    //cant face up or down and the clicked face was one of those return false
+                    if (!((TileEntityCRBase) tile).canFaceUpDown() && (CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ) == ForgeDirection.UP || CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ) == ForgeDirection.DOWN)) {
+                        return false;
+                    }
+                    if (player.isSneaking())
+                        ((TileEntityCRBase) tile).setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ).getOpposite());
+                    else
+                        ((TileEntityCRBase) tile).setOrientation(CoreUtility.getClickedFaceDirection(sideX, sideY, sideZ));
+
+                    wrench.wrenchUsed(player, x, y, z);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override

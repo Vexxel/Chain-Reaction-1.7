@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.block;
 
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.reference.GUIs;
 import com.zerren.chainreaction.tile.vault.TEVaultBase;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
 import com.zerren.chainreaction.tile.vault.TEVaultLock;
@@ -82,7 +83,7 @@ public class BlockVault extends BlockCR implements ITileEntityProvider {
                 //gets an array of this vault's master position
                 if (!world.isRemote) {
                     int[] mPos = vault.getMasterPos();
-                    player.openGui(ChainReaction.instance, Reference.GUIs.VAULT.ordinal(), world, mPos[0], mPos[1], mPos[2]);
+                    player.openGui(ChainReaction.instance, GUIs.VAULT.ordinal(), world, mPos[0], mPos[1], mPos[2]);
                 }
                 return true;
             }

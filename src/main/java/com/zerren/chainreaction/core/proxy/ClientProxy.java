@@ -15,12 +15,9 @@ import com.zerren.chainreaction.client.render.model.armor.ModelO2Mask;
 import com.zerren.chainreaction.client.render.model.armor.ModelThrustPack;
 import com.zerren.chainreaction.client.render.tileentity.*;
 import com.zerren.chainreaction.tile.chest.TEChest;
-import com.zerren.chainreaction.tile.mechanism.TEBloomery;
-import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
-import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
+import com.zerren.chainreaction.tile.mechanism.*;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchangerSmall;
 import com.zerren.chainreaction.tile.reactor.TERTG;
-import com.zerren.chainreaction.tile.mechanism.TETeleporter;
 import com.zerren.chainreaction.tile.plumbing.TEGasTank;
 import com.zerren.chainreaction.tile.plumbing.TEHeatExchanger;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
@@ -117,6 +114,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEStirlingEngine.class, new TESRStirlingEngine());
         //Electric Heater
         ClientRegistry.bindTileEntitySpecialRenderer(TEElectricHeater.class, new TESRElectricHeater());
+        //Electrolyzer
+        ClientRegistry.bindTileEntitySpecialRenderer(TEElectrolyzer.class, new TESRElectrolyzer());
+
     }
 
     //Simple block renderer--things that won't get updated (mostly ever). Good for static held items of blocks as well

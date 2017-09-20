@@ -22,4 +22,7 @@ public final class CRBlocks {
     public static Block distilledWater;
     public static Block steam;
     public static Block uf6;
+    public static Block hydrogenGas;
+    public static Block oxygenGas;
+
 }

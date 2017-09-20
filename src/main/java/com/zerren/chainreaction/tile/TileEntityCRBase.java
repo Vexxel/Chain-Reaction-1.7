@@ -9,16 +9,19 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidTank;
 
 import java.util.UUID;
 
 /**
  * Created by Zerren on 2/20/2015.
  */
-public class TileEntityCRBase extends TileEntity {
+public abstract class TileEntityCRBase extends TileEntity {
 
     protected ForgeDirection orientation;
     protected byte state;
@@ -43,7 +46,7 @@ public class TileEntityCRBase extends TileEntity {
     }
 
     @Override
-    public void updateEntity() {}
+    public abstract void updateEntity();
 
     @Override
     public boolean canUpdate() {
@@ -159,6 +162,14 @@ public class TileEntityCRBase extends TileEntity {
         return inv;
     }
 
+    protected void writeNBTFluidTank(NBTTagCompound tag, FluidTank tank, String name) {
+        tag.setTag(Names.NBT.TANK + name, tank.writeToNBT(new NBTTagCompound()));
+    }
+
+    protected void readNBTFluidTank(NBTTagCompound tag, FluidTank tank, String name) {
+        tank.readFromNBT(tag.getCompoundTag(Names.NBT.TANK + name));
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
@@ -203,7 +214,13 @@ public class TileEntityCRBase extends TileEntity {
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageTileCR(this));
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        this.writeToNBT(nbttagcompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, nbttagcompound);
+    }
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
     }
 
 }

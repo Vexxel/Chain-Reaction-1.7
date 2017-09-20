@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.handler.network.server.tile;
 
 import com.zerren.chainreaction.ChainReaction;
+import com.zerren.chainreaction.reference.GUIs;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -50,7 +51,7 @@ public class MessageVaultCycle extends PacketTileCR<TEVaultController> implement
         //recieves int packet 'page'. If the packet is >=0, (ie not shifted down 100 from previous), then the client will set its page to the packet int and open a new GUI
         if (message.page >= 0 && message.page != message.tile.page) {
             message.tile.setPage(message.page);
-            message.player.openGui(ChainReaction.instance, Reference.GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
+            message.player.openGui(ChainReaction.instance, GUIs.VAULT.ordinal(), message.tile.getWorldObj(), message.tile.xCoord, message.tile.yCoord, message.tile.zCoord);
             message.tile.playSFXatCore(Reference.Sounds.PISTON_OUT, 0.5F, message.tile.getWorldObj().rand.nextFloat() * 0.25F + 0.6F);
         }
         //this re-shifts the packet up 100 if it is below 0

@@ -5,6 +5,7 @@ import chainreaction.api.item.IScanner;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.client.render.block.ISBRHReactor;
 import com.zerren.chainreaction.handler.GuiHandler;
+import com.zerren.chainreaction.reference.GUIs;
 import com.zerren.chainreaction.reference.Names;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.TEMultiBlockBase;
@@ -83,7 +84,7 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
             }
             if (tile.hasValidMaster()) {
                 int[] mPos = tile.getMasterPos();
-                player.openGui(ChainReaction.instance, Reference.GUIs.PWR.ordinal(), world, mPos[0], mPos[1], mPos[2]);
+                player.openGui(ChainReaction.instance, GUIs.PWR.ordinal(), world, mPos[0], mPos[1], mPos[2]);
                 return true;
             }
         }
@@ -138,7 +139,7 @@ public class BlockReactor extends BlockCR implements ITileEntityProvider {
         }
         if (tile.hasValidMaster()) {
             int[] mPos = tile.getMasterPos();
-            GuiHandler.openGui(player, Reference.GUIs.PWR, world, mPos);
+            GuiHandler.openGui(player, GUIs.PWR, world, mPos);
             return true;
         }
         return false;

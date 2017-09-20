@@ -30,18 +30,28 @@ tile.chainreaction:plumbing.exchangerSmall.name=Small Liquid Heat Exchanger
 tile.chainreaction:reactor.pwrAssembly.name=Reactor Core Assembly
 tile.chainreaction:reactor.pwrCasing.name=Reactor Hull
 
-tile.chainreaction.fluid.coolantcold.name=Pressurized Water (Cold)
-tile.chainreaction.fluid.coolanthot.name=Pressurized Water (Hot)
-tile.chainreaction.fluid.distilledwater.name=Distilled Water
-tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
-tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
-
 tile.chainreaction:mechanism.teleporter.name=Teleporter
 tile.chainreaction:mechanism.bloomery.name=Bloomery Brick
 tile.chainreaction:mechanism.rtg.name=Radioisotope Thermoelectric Generator
 tile.chainreaction:mechanism.engineStirling.name=Stirling Heat Engine
 tile.chainreaction:mechanism.heaterElectric.name=Electric Heat Generator
+tile.chainreaction:mechanism.electrolyzer.name=Liquid Electrolyzer
 
+tile.chainreaction.fluid.coolantcold.name=Pressurized Water (Cold)
+tile.chainreaction.fluid.coolanthot.name=Pressurized Water (Hot)
+tile.chainreaction.fluid.distilledwater.name=Distilled Water
+tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
+tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
+tile.chainreaction.fluid.hydrogen.name=Hydrogen
+tile.chainreaction.fluid.oxygen.name=Oxygen
+
+fluid.coolantcold=Pressurized Water (Cold)
+fluid.coolanthot=Pressurized Water (Hot)
+fluid.distilledwater=Distilled Water
+fluid.saturatedsteam=Saturated Steam
+fluid.uraniumhexafluoride=Uranium Hexafluoride
+fluid.hydrogengas=Hydrogen
+fluid.oxygengas=Oxygen
 
 # Item localizations --------------------------------------------------------------------
 item.chainreaction:material.boltStainlessSteel.name=Stainless Steel Bolt
@@ -230,6 +240,7 @@ container.chest.name=Secure Chest
 container.pwr.name=Pressurized Water Reactor
 container.bloomery.name=Bloomery
 container.rtg.name=RTG
+container.electrolyzer.name=Fluid Electrolyzer
 
 itemGroup.ChainReaction=Chain Reaction
 
