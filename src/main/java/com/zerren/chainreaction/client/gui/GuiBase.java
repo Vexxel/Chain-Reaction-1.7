@@ -17,32 +17,39 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by Zerren on 5/21/2016.
  */
-public abstract class GuiBase extends GuiContainer {
+abstract class GuiBase extends GuiContainer {
 
-    protected static final int FONT_LIGHT = 16777215;
-    protected static final int FONT_DEFAULT = 4210752;
+    static final int FONT_LIGHT = 16777215;
+    static final int FONT_DEFAULT = 4210752;
 
-    public GuiBase(Container c) {
+    GuiBase(Container c) {
         super(c);
     }
 
-    protected void drawInventoryName() {
+    void drawInventoryName() {
         drawInventoryName(FONT_DEFAULT);
     }
 
-    protected void drawInventoryName(int color) {
+    void drawInventoryName(int color) {
         fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 95 + 2, color);
     }
 
-    protected void drawContainerName(String container) {
+    void drawContainerName(String container) {
         drawContainerName(container, FONT_DEFAULT);
     }
 
-    protected void drawContainerName(String container, int color) {
+    void drawContainerName(String container, int color) {
         fontRendererObj.drawString(container, 8, 6, color);
     }
 
-    public void drawFluid(FluidStack fluid, int x, int y, int width, int height, int maxCapacity, ResourceLocation oldResource) {
+    void drawEnergyBar(int x, int y, int width, int height, int u, int v, int scaled) {
+        drawTexturedModalRect(x, y + height - scaled, u, v + height - scaled, width, scaled);
+    }
+
+    void drawProgressBarHorizontal(int x, int y, int width, int height, int u, int v, int scaled) {
+        drawTexturedModalRect(x, y, u, v, width + scaled, height);
+    }
+    void drawFluid(FluidStack fluid, int x, int y, int width, int height, int maxCapacity, ResourceLocation oldResource) {
         if (fluid == null || fluid.getFluid() == null) {
             return;
         }
@@ -96,5 +103,10 @@ public abstract class GuiBase extends GuiContainer {
         float blue = (color & 255) / 255.0F;
         GL11.glColor4f(red, green, blue, 1.0F);
     }
-
+    public static void setGLColorFromInt(int color, float alpha) {
+        float red = (color >> 16 & 255) / 255.0F;
+        float green = (color >> 8 & 255) / 255.0F;
+        float blue = (color & 255) / 255.0F;
+        GL11.glColor4f(red, green, blue, alpha);
+    }
 }

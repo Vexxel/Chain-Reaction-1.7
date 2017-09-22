@@ -44,7 +44,7 @@ public class TEDistroChamber extends TileEntityCRBase implements IFluidHandler {
     private void pushFluids(int toPush) {
         if (tileCache == null) updateCache();
 
-        TransferUtility.splitFluidToConsumers(tank, toPush, tileCache, getOrientation());
+        TransferUtility.splitFluidToCachedConsumers(tank, toPush, tileCache, getOrientation());
     }
 
     @Override

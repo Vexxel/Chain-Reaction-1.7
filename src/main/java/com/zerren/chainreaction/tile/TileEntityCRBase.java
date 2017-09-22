@@ -53,7 +53,7 @@ public abstract class TileEntityCRBase extends TileEntity {
         return shouldTileTick;
     }
 
-    public void updateCache() {
+    protected void updateCache() {
         tileCache = TileCache.buildCache(worldObj, xCoord, yCoord, zCoord);
     }
 

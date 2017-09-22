@@ -6,7 +6,6 @@ import chainreaction.api.tile.IGuiTileData;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEEnergyRecieverBase;
 import com.zerren.chainreaction.tile.container.ContainerCR;
-import com.zerren.chainreaction.tile.container.ContainerElectrolyzer;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.TransferUtility;
 import cpw.mods.fml.relauncher.Side;
@@ -21,19 +20,19 @@ import net.minecraftforge.fluids.*;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData {
+public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData {
     private static final int TANK_CAPACITY = 8000;
 
     public final FluidTank inputTank = new FluidTank(TANK_CAPACITY);
     public final FluidTank outputTank1 = new FluidTank(TANK_CAPACITY);
-    public final FluidTank outputTank2 = new FluidTank(TANK_CAPACITY);
+
     private ItemStack[] inventory;
     private int cookTime;
     public boolean hasWork;
     private int energyRequired;
     private int cookTimeRequired;
 
-    public TEElectrolyzer() {
+    public TELiquifier() {
         super(256, 25600, TransferUtility.getAllElevationDirections());
         inventory = new ItemStack[3];
         cookTime = 0;
@@ -58,7 +57,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
 
                 //if enough time has passed to electrolyze
                 if (cookTime >= cookTimeRequired) {
-                    electrolyze(true);
+                    //electrolyze(true);
                     checkForWork();
                     cookTime = 0;
                 }
@@ -66,16 +65,14 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             else cookTime = 0;
 
             if (outputTank1.getFluidAmount() > 0)
-                TransferUtility.pushFluidsToDirection(this, outputTank1, 200, spinRight(getOrientation(), false));
-            if (outputTank2.getFluidAmount() > 0)
-                TransferUtility.pushFluidsToDirection(this, outputTank2, 200, spinLeft(getOrientation(), false));
+                TransferUtility.pushFluidsToDirection(this, outputTank1, 200, spinLeft(getOrientation(), false));
 
         }
     }
 
     @Override
     protected void checkForWork() {
-        hasWork = electrolyze(false);
+        //hasWork = electrolyze(false);
     }
 
     private boolean electrolyze(boolean doWork) {
@@ -99,15 +96,12 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         }
 
         int output1Space = outputTank1.getCapacity() - outputTank1.getFluidAmount();
-        int output2Space = outputTank2.getCapacity() - outputTank2.getFluidAmount();
 
         //no room for either output
         if ((output1Space - output1.amount) < 0) return false;
-        if ((output2Space - output2.amount) < 0) return false;
 
         if (doWork) {
             outputTank1.fill(output1.copy(), true);
-            outputTank2.fill(output2.copy(), true);
             inputTank.drain(amountRequired, true);
 
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -123,17 +117,12 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         return outputTank1.getFluid();
     }
 
-    public FluidStack getOutput2Fluid() {
-        return outputTank2.getFluid();
-    }
-
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
         readNBTFluidTank(tag, inputTank, "Input");
-        readNBTFluidTank(tag, outputTank1, "Output1");
-        readNBTFluidTank(tag, outputTank2, "Output2");
+        readNBTFluidTank(tag, outputTank1, "Output");
 
         cookTime = tag.getInteger("cookTime");
         cookTimeRequired = tag.getInteger("cookTimeRequired");
@@ -147,8 +136,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         super.writeToNBT(tag);
 
         writeNBTFluidTank(tag, inputTank, "Input");
-        writeNBTFluidTank(tag, outputTank1, "Output1");
-        writeNBTFluidTank(tag, outputTank2, "Output2");
+        writeNBTFluidTank(tag, outputTank1, "Output");
 
         tag.setInteger("cookTime", cookTime);
         tag.setInteger("cookTimeRequired", cookTimeRequired);
@@ -159,7 +147,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
 
     @Override
     public boolean canConnectEnergy(ForgeDirection from) {
-        return from == ForgeDirection.UP;
+        return from == getOrientation().getOpposite();
     }
 
     @Override
@@ -187,20 +175,19 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-        //if the fluid is a valid heating fluid and the filling direction is from the back
-        return ElectrolyzingFluid.validElectrolyzingFluid(fluid) && from == getOrientation().getOpposite();
+        //if the fluid is a valid heating fluid and the filling direction is from the right
+        return ElectrolyzingFluid.validElectrolyzingFluid(fluid) && from == spinRight(getOrientation(), false);
     }
 
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid) {
-        return from == spinLeft(getOrientation(), false) || from == spinRight(getOrientation(), false);
+        return from == spinLeft(getOrientation(), false);
     }
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        if (from == getOrientation().getOpposite()) return new FluidTankInfo[]{this.inputTank.getInfo()};
-        else if (from == spinRight(getOrientation(), false)) return new FluidTankInfo[]{this.outputTank1.getInfo()};
-        else if (from == spinLeft(getOrientation(), false)) return new FluidTankInfo[]{this.outputTank2.getInfo()};
+        if (from == spinRight(getOrientation(), false)) return new FluidTankInfo[]{this.inputTank.getInfo()};
+        else if (from == spinLeft(getOrientation(), false)) return new FluidTankInfo[]{this.outputTank1.getInfo()};
 
         return new FluidTankInfo[0];
     }

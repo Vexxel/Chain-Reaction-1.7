@@ -19,16 +19,21 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -230,17 +235,34 @@ public class BlockPlumbing extends BlockCR implements ITileEntityProvider {
         return icon[metaData];
     }
 
-    /*@Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
-        TEHeatExchanger exchanger = CoreUtility.get(world, x, y, z, TEHeatExchanger.class);
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        if(!world.isRemote && !player.capabilities.isCreativeMode) {
+            if(te instanceof TEGasTank) {
+                ItemStack stack = new ItemStack(this, 1, meta);
 
-        if (exchanger != null && (exchanger.hasValidMaster() || exchanger.isMaster())) {
-            exchanger.invalidateMultiblock();
+                //NBTTagCompound tag = new NBTTagCompound();
+                if (((TEGasTank) te).tank.getFluid() != null) {
+                    NBTHelper.setTagCompound(stack, Names.NBT.TANK, ((TEGasTank) te).tank.writeToNBT(new NBTTagCompound()));
+                    //((TEGasTank) te).tank.writeToNBT(tag);
+                    //if(!tag.hasNoTags())
+                      //  NBTHelper.setTagCompound(stack, Names.NBT.TANK, ((TEGasTank) te).tank.writeToNBT(new NBTTagCompound()));
+                }
+                world.spawnEntityInWorld(new EntityItem(world, x+.5, y+.5, z+.5, stack));
+            }
         }
+    }
 
-        super.breakBlock(world, x, y, z, block, meta);
-    }*/
+    @Override
+    public Item getItemDropped(int meta, Random random, int p2) {
 
+        switch (meta) {
+            //so the gas tank doesn't drop duplicate items
+            case 3: return null;
+            default: return Item.getItemFromBlock(this);
+        }
+    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {

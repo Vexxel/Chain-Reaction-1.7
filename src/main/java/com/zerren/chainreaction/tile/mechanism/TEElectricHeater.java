@@ -38,6 +38,11 @@ public class TEElectricHeater extends TEEnergyRecieverBase implements IHeatHandl
         }
     }
 
+    @Override
+    protected void checkForWork() {
+
+    }
+
     private void transferHeatToOneSide(ForgeDirection dir) {
         int targetX = xCoord + dir.offsetX;
         int targetY = yCoord + dir.offsetY;

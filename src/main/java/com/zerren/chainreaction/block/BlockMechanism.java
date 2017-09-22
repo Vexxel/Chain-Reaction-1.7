@@ -50,6 +50,8 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
                 return new TEElectricHeater();
             case 5:
                 return new TEElectrolyzer();
+            case 6:
+                return new TELiquifier();
             default:
                 return null;
         }
@@ -68,6 +70,7 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
         if (tile instanceof TEBloomery) return activateBloomery(world, x, y, z, player, (TEBloomery) tile, sideX, sideY, sideZ);
         if (tile instanceof TERTG) return activateRTG(world, x, y, z, player, (TERTG) tile, sideX, sideY, sideZ);
         if (tile instanceof TEElectrolyzer) return activateElectrolyzer(world, x, y, z, player, (TEElectrolyzer) tile, sideX, sideY, sideZ);
+        if (tile instanceof TELiquifier) return activateLiquifier(world, x, y, z, player, (TELiquifier) tile, sideX, sideY, sideZ);
 
         return false;
     }
@@ -116,6 +119,42 @@ public class BlockMechanism extends BlockCR implements ITileEntityProvider {
 
         if (tile != null && !world.isRemote && !player.isSneaking()) {
             GuiHandler.openGui(player, GUIs.ELECTROLYZER, world, tile);
+            return true;
+        }
+        return true;
+    }
+
+    private boolean activateLiquifier(World world, int x, int y, int z, EntityPlayer player, TELiquifier tile, float sideX, float sideY, float sideZ) {
+        ItemStack held = player.inventory.getCurrentItem();
+
+        if (tile != null && held != null && !world.isRemote) {
+            if (held.getItem() instanceof IScanner && ((IScanner) held.getItem()).canScan(player, x, y, z)) {
+                byte mode = NBTHelper.getByte(held, Names.NBT.SCANNER_MODE);
+
+                switch (mode) {
+                    case 0: {
+                        CoreUtility.addChat("Direction: " + tile.getOrientation(), player);
+                        return true;
+                    }
+                    case 1: {
+                        //CoreUtility.addChat("Thermal Units: " + tile.getHeatStored(ForgeDirection.UNKNOWN), player);
+                        return true;
+                    }
+                    case 2: {
+                        if (tile.inputTank.getFluid() != null)
+                            CoreUtility.addChat("Input Fluid Tank: " + tile.inputTank.getFluid().getLocalizedName() + " " + tile.inputTank.getFluidAmount(), player);
+                        if (tile.outputTank1.getFluid() != null)
+                            CoreUtility.addChat("Output Fluid Tank 1: " + tile.outputTank1.getFluid().getLocalizedName() + " " + tile.outputTank1.getFluidAmount(), player);
+                        return true;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+
+        if (tile != null && !world.isRemote && !player.isSneaking()) {
+            GuiHandler.openGui(player, GUIs.LIQUIFIER, world, tile);
             return true;
         }
         return true;

@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -81,6 +82,12 @@ public class GuiElectrolyzer extends GuiBase {
 
             drawFluid(electrolyzer.getOutput2Fluid(), x + 125, y + 19, 16, 58, electrolyzer.outputTank2.getCapacity(), Reference.Textures.GUIs.ELECTROLYZER);
             drawTexturedModalRect(x + 125, y + 19, 177, 1, 16, 58);
+
+            //energy bar
+            //drawTexturedModalRect(x + 16, y + 24, 198, 0, 8, 48);
+            drawEnergyBar(x + 16, y + 24, 8, 48, 198, 0, electrolyzer.getEnergyPercent(48));
+
+            drawProgressBarHorizontal(x + 79, y + 41, 0, 15, 176, 61, electrolyzer.getProgressPercent(18) );
         }
     }
 

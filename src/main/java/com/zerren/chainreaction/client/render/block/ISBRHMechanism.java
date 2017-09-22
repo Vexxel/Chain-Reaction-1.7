@@ -4,6 +4,7 @@ import com.zerren.chainreaction.tile.TEMultiBlockBase;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
 import com.zerren.chainreaction.tile.mechanism.TEElectricHeater;
 import com.zerren.chainreaction.tile.mechanism.TEElectrolyzer;
+import com.zerren.chainreaction.tile.mechanism.TELiquifier;
 import com.zerren.chainreaction.tile.mechanism.TEStirlingEngine;
 import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.utility.CoreUtility;
@@ -69,6 +70,10 @@ public class ISBRHMechanism extends ISBRHBase {
                 return false;
             }
             if (meta == 5 && tile instanceof TEElectrolyzer) {
+                //renderWorldCube(s16, s10, s16, s0, s0, s0, block, x, y, z, renderer);
+                return false;
+            }
+            if (meta == 6 && tile instanceof TELiquifier) {
                 //renderWorldCube(s16, s10, s16, s0, s0, s0, block, x, y, z, renderer);
                 return false;
             }

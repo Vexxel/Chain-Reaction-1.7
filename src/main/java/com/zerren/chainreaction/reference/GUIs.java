@@ -10,5 +10,6 @@ public enum GUIs {
     PWR,
     BLOOMERY,
     RTG,
-    ELECTROLYZER
+    ELECTROLYZER,
+    LIQUIFIER
 }

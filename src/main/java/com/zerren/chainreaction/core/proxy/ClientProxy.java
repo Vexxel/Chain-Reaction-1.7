@@ -116,6 +116,8 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TEElectricHeater.class, new TESRElectricHeater());
         //Electrolyzer
         ClientRegistry.bindTileEntitySpecialRenderer(TEElectrolyzer.class, new TESRElectrolyzer());
+        //Liquifier
+        ClientRegistry.bindTileEntitySpecialRenderer(TELiquifier.class, new TESRLiquifier());
 
     }
 

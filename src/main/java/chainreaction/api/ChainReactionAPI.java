@@ -14,4 +14,5 @@ public final class ChainReactionAPI {
     public static final String API_ITEMS = "ChainReactionAPI_item";
     public static final String API_BLOCKS = "ChainReactionAPI_block";
     public static final String API_HEAT = "ChainReactionAPI_heat";
+    public static final String API_TILE = "ChainReactionAPI_tile";
 }

@@ -66,7 +66,8 @@ public final class Names {
                 "rtg",
                 "engineStirling",
                 "heaterElectric",
-                "electrolyzer"
+                "electrolyzer",
+                "liquifier"
         };
     }
 

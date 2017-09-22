@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.utility;
 
+import com.zerren.chainreaction.tile.TileEntityCRBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,29 +13,28 @@ import net.minecraftforge.fluids.IFluidTank;
 public final class TransferUtility {
 
     /**
-     * Sends fluids from the given tank to any consumer in a random order, trying to fill the first tank it finds and sending excess to any others.
-     * For even distribution, see {@link TransferUtility#splitFluidToConsumers}. To distribute to potentially all six, set exclude
+     * Sends fluids from the given tank to any consumer in a random order (favoring the first side entry input),
+     * trying to fill the first tank it finds and sending excess to any others.
+     * For even distribution, see {@link TransferUtility#splitFluidToCachedConsumers}. To distribute to potentially all six, set exclude
      * to ForgeDirection.UNKNOWN
      * @param tank the fluid handler to distribute fluid from
      * @param flowCap the max flow rate (in mb/t) of the fluid out of the tank
      * @param cache the {@link TileCache} containing the TileEntities to send fluid to
-     * @param exclude the {@link ForgeDirection} to exclude from sending fluid to (usually the input)
+     * @param sides the {@link ForgeDirection} to send fluid from (e.g. excluding the inputs). Accepts any number of sides
      */
-    public static void pushFluidToConsumers(IFluidTank tank, int flowCap, TileCache[] cache, ForgeDirection exclude) {
+    public static void pushFluidToCachedConsumers(IFluidTank tank, int flowCap, TileCache[] cache, ForgeDirection... sides) {
         int amountToPush = flowCap;
-        for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
-            if (side != exclude) {
-                FluidStack fluidStack = tank.drain(amountToPush, false);
-                if (fluidStack != null && fluidStack.amount > 0) {
-                    TileEntity tile = cache[side.ordinal()].getTile();
-                    if (tile != null && tile instanceof IFluidHandler) {
-                        int used = ((IFluidHandler) tile).fill(side.getOpposite(), fluidStack, true);
-                        if (used > 0) {
-                            amountToPush -= used;
-                            tank.drain(used, true);
-                            if (amountToPush <= 0) {
-                                return;
-                            }
+        for (ForgeDirection side : sides) {
+            FluidStack fluidStack = tank.drain(amountToPush, false);
+            if (fluidStack != null && fluidStack.amount > 0) {
+                TileEntity tile = cache[side.ordinal()].getTile();
+                if (tile != null && tile instanceof IFluidHandler) {
+                    int used = ((IFluidHandler) tile).fill(side.getOpposite(), fluidStack, true);
+                    if (used > 0) {
+                        amountToPush -= used;
+                        tank.drain(used, true);
+                        if (amountToPush <= 0) {
+                            return;
                         }
                     }
                 }
@@ -50,7 +50,7 @@ public final class TransferUtility {
      * @param cache the {@link TileCache} containing the TileEntities to send fluid to
      * @param exclude the {@link ForgeDirection} to exclude from sending fluid to (usually the input)
      */
-    public static void splitFluidToConsumers(IFluidTank tank, int flowCap, TileCache[] cache, ForgeDirection exclude) {
+    public static void splitFluidToCachedConsumers(IFluidTank tank, int flowCap, TileCache[] cache, ForgeDirection exclude) {
         byte validtiles = 0;
 
         //count the valid tiles
@@ -95,6 +95,23 @@ public final class TransferUtility {
                     loc2++;
                     if (loc2 >= flood.length) return;
                 }
+            }
+        }
+    }
+
+    public static void pushFluidsToDirection(IFluidHandler tile, IFluidTank tank, int flowCapPerTickMax, ForgeDirection dir) {
+        TileEntity pusher = (TileEntity)tile;
+        TileEntity receiver = TransferUtility.getTileAdjacentFromDirection(pusher, dir);
+
+        FluidStack fluid = tank.drain(flowCapPerTickMax, false);
+        if (fluid != null && fluid.amount > 0 && receiver instanceof IFluidHandler) {
+            int used = ((IFluidHandler) receiver).fill(dir.getOpposite(), fluid, true);
+
+            if (used > 0) {
+                //amount -= used;
+                tank.drain(used, true);
+                //pusher.getWorldObj().markBlockRangeForRenderUpdate(pusher.xCoord, pusher.yCoord, pusher.zCoord, pusher.xCoord, pusher.yCoord, pusher.zCoord);
+                pusher.getWorldObj().markBlockForUpdate(pusher.xCoord, pusher.yCoord, pusher.zCoord);
             }
         }
     }

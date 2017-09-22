@@ -19,6 +19,7 @@ public class ItemRendererMechanism implements IItemRenderer {
     private final ModelStirlingEngine stirlingEngine = new ModelStirlingEngine();
     private final ModelElectricHeater electricHeater = new ModelElectricHeater();
     private final ModelElectrolyzer electrolyzer = new ModelElectrolyzer();
+    private final ModelLiquifier liquifier = new ModelLiquifier();
 
     public ItemRendererMechanism() { }
 
@@ -27,7 +28,7 @@ public class ItemRendererMechanism implements IItemRenderer {
         int meta = itemStack.getItemDamage();
 
         switch(meta) {
-            case 2:case 3:case 4:case 5:return true;
+            case 2:case 3:case 4:case 5: case 6: return true;
         }
         return false;
     }
@@ -36,7 +37,7 @@ public class ItemRendererMechanism implements IItemRenderer {
     public boolean shouldUseRenderHelper(ItemRenderType itemRenderType, ItemStack itemStack, ItemRendererHelper itemRendererHelper) {
         int meta = itemStack.getItemDamage();
         switch(meta) {
-            case 2:case 3:case 4:case 5:return true;
+            case 2:case 3:case 4:case 5: case 6: return true;
         }
         return false;
     }
@@ -109,6 +110,17 @@ public class ItemRendererMechanism implements IItemRenderer {
             GL11.glRotatef(180, 1, 0, 0);
             GL11.glRotatef(firstPerson ? 90 : -90, 0, 1, 0);
             electrolyzer.render();
+            GL11.glPopMatrix(); //end
+        }
+        //Liquifier
+        if (metaData == 6) {
+            FMLClientHandler.instance().getClient().renderEngine.bindTexture(Reference.Textures.Models.LIQUIFIER);
+
+            GL11.glPushMatrix(); //start
+            GL11.glTranslatef(x, y, z); //size
+            GL11.glRotatef(180, 1, 0, 0);
+            GL11.glRotatef(firstPerson ? 270 : -270, 0, 1, 0);
+            liquifier.render();
             GL11.glPopMatrix(); //end
         }
     }

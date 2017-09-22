@@ -3,6 +3,8 @@ package com.zerren.chainreaction.tile;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -14,6 +16,7 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
 
     protected EnergyStorage energyStorage = new EnergyStorage(0);
     protected int rfGenPerTick;
+    protected int checkTimer, checkTimerMax;
 
     protected final ForgeDirection[] sidesConnectingEnergy;
 
@@ -22,6 +25,10 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
         rfGenPerTick = gen;
 
         energyStorage = new EnergyStorage(eStorage, rfGenPerTick * 2);
+
+        checkTimer = 0;
+        checkTimerMax = 100;
+
         setCanTick();
 
         if (directions != null)
@@ -29,6 +36,17 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
         else
             sidesConnectingEnergy = ForgeDirection.VALID_DIRECTIONS;
     }
+
+    @Override
+    public void updateEntity() {
+        if (checkTimer >= checkTimerMax) {
+            checkForWork();
+            checkTimer = 0;
+        }
+        checkTimer++;
+    }
+
+    protected abstract void checkForWork();
 
     protected void transferEnergyToConnectingSides() {
         for (ForgeDirection dir : sidesConnectingEnergy){
@@ -83,12 +101,25 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
 
     @Override
     public int getEnergyStored(ForgeDirection from) {
+        return canConnectEnergy(from) ? energyStorage.getEnergyStored() : 0;
+    }
+
+    public int getEnergyStored() {
         return energyStorage.getEnergyStored();
     }
 
     @Override
     public int getMaxEnergyStored(ForgeDirection from) {
+        return canConnectEnergy(from) ? energyStorage.getMaxEnergyStored() : 0;
+    }
+
+    public int getMaxEnergyStored() {
         return energyStorage.getMaxEnergyStored();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getEnergyPercent(int height) {
+        return (int)(getEnergyStored() > 0 ? (double)getEnergyStored() / getMaxEnergyStored() * height : 0);
     }
 
     @Override

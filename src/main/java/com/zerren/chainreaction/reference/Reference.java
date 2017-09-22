@@ -56,6 +56,7 @@ public final class Reference {
             public static final ResourceLocation BLOOMERY = getResourceLocation(GUI_SHEET_LOCATION + "bloomery.png");
             public static final ResourceLocation RTG = getResourceLocation(GUI_SHEET_LOCATION + "rtg.png");
             public static final ResourceLocation ELECTROLYZER = getResourceLocation(GUI_SHEET_LOCATION + "electrolyzer.png");
+            public static final ResourceLocation LIQUIFIER = getResourceLocation(GUI_SHEET_LOCATION + "liquifier.png");
 
         }
 
@@ -79,6 +80,7 @@ public final class Reference {
             public static final ResourceLocation STIRLING_ENGINE = getResourceLocation(MODEL_LOCATION + "engineStirling.png");
             public static final ResourceLocation ELECTRIC_HEATER = getResourceLocation(MODEL_LOCATION + "heaterElectric.png");
             public static final ResourceLocation ELECTROLYZER = getResourceLocation(MODEL_LOCATION + "electrolyzer.png");
+            public static final ResourceLocation LIQUIFIER = getResourceLocation(MODEL_LOCATION + "liquifier.png");
 
             //Armor
             public static final ResourceLocation O2_MASK  = getResourceLocation(ARMOR_LOCATION + "o2mask.png");

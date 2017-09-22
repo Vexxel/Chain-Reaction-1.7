@@ -50,8 +50,8 @@ fluid.coolanthot=Pressurized Water (Hot)
 fluid.distilledwater=Distilled Water
 fluid.saturatedsteam=Saturated Steam
 fluid.uraniumhexafluoride=Uranium Hexafluoride
-fluid.hydrogengas=Hydrogen
-fluid.oxygengas=Oxygen
+fluid.hydrogen=Hydrogen
+fluid.oxygen=Oxygen
 
 # Item localizations --------------------------------------------------------------------
 item.chainreaction:material.boltStainlessSteel.name=Stainless Steel Bolt
