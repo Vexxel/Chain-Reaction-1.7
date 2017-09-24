@@ -16,14 +16,14 @@ import org.lwjgl.opengl.GL11;
  * Created by Zerren on 2/24/2015.
  */
 @SideOnly(Side.CLIENT)
-public class GuiPWR extends GuiContainer {
+public class GuiPWR extends GuiContainerCR {
 
     public EntityPlayer player;
     public TEPressurizedWaterReactor reactor;
     public int x, y;
 
     public GuiPWR(TEPressurizedWaterReactor tile, InventoryPlayer inv) {
-        super(new ContainerPWR(inv, tile));
+        super(new ContainerPWR(inv, tile), tile);
         this.player = inv.player;
 
         this.xSize = 176;
@@ -88,6 +88,6 @@ public class GuiPWR extends GuiContainer {
         String invTitle = reactor.getInventoryName();
 
         fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 95 + 2, 16777215);
-        fontRendererObj.drawString(invTitle, 8, 6, 16777215);
+        fontRendererObj.drawString(invTitle, 8, 6, FONT_LIGHT);
     }
 }

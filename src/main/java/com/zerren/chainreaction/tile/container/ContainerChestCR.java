@@ -24,6 +24,7 @@ public class ContainerChestCR extends ContainerCR {
     private int rows, columns;
 
     public ContainerChestCR(InventoryPlayer inv, TEChest tile) {
+        super(tile);
         this.chest = tile;
         chest.openInventory();
 
@@ -63,49 +64,8 @@ public class ContainerChestCR extends ContainerCR {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player) {
-        return chest.isUseableByPlayer(player);
-    }
-
-    @Override
     public void onContainerClosed(EntityPlayer entityPlayer) {
         super.onContainerClosed(entityPlayer);
         chest.closeInventory();
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotPos) {
-
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotPos);
-
-        if (slot != null && slot.getHasStack())
-        {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-
-            if (slotPos < rows * 9)
-            {
-                if (!this.mergeItemStack(itemstack1, rows * 9, this.inventorySlots.size(), true))
-                {
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(itemstack1, 0, rows * 9, false))
-            {
-                return null;
-            }
-
-            if (itemstack1.stackSize == 0)
-            {
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
-        }
-
-        return itemstack;
     }
 }

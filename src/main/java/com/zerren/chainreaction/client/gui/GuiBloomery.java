@@ -14,14 +14,14 @@ import org.lwjgl.opengl.GL11;
  * Created by Zerren on 5/20/2016.
  */
 @SideOnly(Side.CLIENT)
-public class GuiBloomery extends GuiBase {
+public class GuiBloomery extends GuiContainerCR {
 
     public EntityPlayer player;
     public TEBloomery bloomery;
     public int x, y;
 
     public GuiBloomery(TEBloomery tile, InventoryPlayer inv) {
-        super(new ContainerBloomery(inv, tile));
+        super(new ContainerBloomery(inv, tile), tile);
         this.player = inv.player;
 
         this.bloomery = tile;

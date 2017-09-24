@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
  * Created by Zerren on 2/24/2015.
  */
 @SideOnly(Side.CLIENT)
-public class GuiVault extends GuiContainer {
+public class GuiVault extends GuiContainerCR {
 
     public EntityPlayer player;
     public TEVaultController controller;
@@ -28,7 +28,7 @@ public class GuiVault extends GuiContainer {
     private int selection;
 
     public GuiVault(TEVaultController tile, InventoryPlayer inv, int pg) {
-        super(new ContainerVault(inv, tile, pg));
+        super(new ContainerVault(inv, tile, pg), tile);
         this.player = inv.player;
 
         this.xSize = 176;

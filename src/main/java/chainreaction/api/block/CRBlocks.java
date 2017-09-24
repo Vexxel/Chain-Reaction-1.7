@@ -24,5 +24,6 @@ public final class CRBlocks {
     public static Block uf6;
     public static Block hydrogenGas;
     public static Block oxygenGas;
-
+    public static Block hydrogenLiquid;
+    public static Block oxygenLiquid;
 }

@@ -32,7 +32,7 @@ public class ConfigHandler {
 
     public static int temperature;
 
-    public static int[] potionIDs = {66, 67, 68, 69, 70};
+    public static int[] potionIDs = {66, 67, 68, 69, 70, 71};
     public static boolean uniSteam;
     public static float unbreakingChance;
     public static float powerModifier;
@@ -73,7 +73,7 @@ public class ConfigHandler {
     private static void loadConfigValues() {
         //IDs
         config.addCustomCategoryComment(CATEGORY_IDS.getName(), "Below is used for changing the internal IDs that this mod uses: if you have potion ID conflicts, change them below.");
-        potionIDs = config.get(CATEGORY_IDS.getName(), "potionIDs", potionIDs, "Potion ID array in descending order (A, B, G, N, Rad S.)", 33, 127).getIntList();
+        potionIDs = config.get(CATEGORY_IDS.getName(), "potionIDs", potionIDs, "Potion ID array in descending order (Alpha Rad., Beta Rad., Gamma Rad., Neutron Rad., Rad. Sickness, Hypothermia)", 33, 127).getIntList();
         uniSteam = config.getBoolean("uniSteam", CATEGORY_IDS.getName(), false, "If this mod should produce steam compatible with most mods. (Changes registry name from 'saturatedsteam' to 'steam'.");
         //commit these values to the name registry
         Names.Fluids.initConfigValues();

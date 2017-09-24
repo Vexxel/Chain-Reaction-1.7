@@ -1,9 +1,6 @@
 package com.zerren.chainreaction.core.registry;
 
-import chainreaction.api.recipe.ElectrolyzingFluid;
-import chainreaction.api.recipe.HeatingFluid;
-import chainreaction.api.recipe.RTGFuels;
-import chainreaction.api.recipe.WorkingFluid;
+import chainreaction.api.recipe.*;
 import com.zerren.chainreaction.core.ModFluids;
 import com.zerren.chainreaction.handler.ConfigHandler;
 import com.zerren.chainreaction.utility.ItemRetriever;
@@ -46,6 +43,7 @@ public class Recipes {
         fluidExchanger();
         electrolyzer();
         RTGFuels();
+        liquifier();
 
     }
 
@@ -198,6 +196,11 @@ public class Recipes {
         ElectrolyzingFluid.addElectrolyzingFluid(new FluidStack(FluidRegistry.WATER, 200), new FluidStack(ModFluids.hydrogenGas, 1000), new FluidStack(ModFluids.oxygenGas, 500));
         ElectrolyzingFluid.addElectrolyzingFluid(new FluidStack(ModFluids.distilledWater, 200), new FluidStack(ModFluids.hydrogenGas, 1000), new FluidStack(ModFluids.oxygenGas, 500));
 
+    }
+
+    private static void liquifier() {
+        LiquifyingFluid.addLiquifyingFluid(new FluidStack(ModFluids.hydrogenGas, 1000), new FluidStack(ModFluids.hydrogenLiquid, 50));
+        LiquifyingFluid.addLiquifyingFluid(new FluidStack(ModFluids.oxygenGas, 1000), new FluidStack(ModFluids.oxygenLiquid, 50));
     }
 
     private static void RTGFuels() {

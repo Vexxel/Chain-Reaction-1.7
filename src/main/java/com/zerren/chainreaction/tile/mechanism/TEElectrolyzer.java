@@ -1,12 +1,14 @@
 package com.zerren.chainreaction.tile.mechanism;
 
 import chainreaction.api.block.IInventoryCR;
+import chainreaction.api.item.IMachineUpgrade;
 import chainreaction.api.recipe.ElectrolyzingFluid;
 import chainreaction.api.tile.IGuiTileData;
+import chainreaction.api.tile.IUpgradeableTile;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEEnergyRecieverBase;
 import com.zerren.chainreaction.tile.container.ContainerCR;
-import com.zerren.chainreaction.tile.container.ContainerElectrolyzer;
+import com.zerren.chainreaction.utility.CRMath;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.TransferUtility;
 import cpw.mods.fml.relauncher.Side;
@@ -21,7 +23,7 @@ import net.minecraftforge.fluids.*;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData {
+public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData, IUpgradeableTile {
     private static final int TANK_CAPACITY = 8000;
 
     public final FluidTank inputTank = new FluidTank(TANK_CAPACITY);
@@ -32,10 +34,11 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
     public boolean hasWork;
     private int energyRequired;
     private int cookTimeRequired;
+    private boolean upgradesActive;
 
     public TEElectrolyzer() {
         super(256, 25600, TransferUtility.getAllElevationDirections());
-        inventory = new ItemStack[3];
+        inventory = new ItemStack[5];
         cookTime = 0;
         hasWork = false;
         energyRequired = 128;
@@ -110,7 +113,6 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             outputTank2.fill(output2.copy(), true);
             inputTank.drain(amountRequired, true);
 
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
         return true;
     }
@@ -138,6 +140,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         cookTime = tag.getInteger("cookTime");
         cookTimeRequired = tag.getInteger("cookTimeRequired");
         energyRequired = tag.getInteger("energyRequired");
+        upgradesActive = tag.getBoolean("upgradesActive");
 
         this.inventory = readNBTItems(tag, this);
     }
@@ -153,6 +156,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         tag.setInteger("cookTime", cookTime);
         tag.setInteger("cookTimeRequired", cookTimeRequired);
         tag.setInteger("energyRequired", energyRequired);
+        tag.setBoolean("upgradesActive", upgradesActive);
 
         writeNBTItems(tag, inventory);
     }
@@ -171,7 +175,6 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             used += inputTank.fill(filling, doFill);
             filling.amount -= used;
         }
-        if (used > 0 ) worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         return used;
     }
 
@@ -316,6 +319,36 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             case 3:
                 energyStorage.setEnergyStored(v);
                 break;
+            case 4:
+                if (inputTank.getFluid() != null)
+                    inputTank.getFluid().amount = v;
+                break;
+            case 5:
+                if (outputTank1.getFluid() != null)
+                    outputTank1.getFluid().amount = v;
+                break;
+            case 6:
+                if (outputTank2.getFluid() != null)
+                    outputTank2.getFluid().amount = v;
+                break;
+            case 7:
+                if (inputTank.getFluid() == null) {
+                    int[] val = CRMath.unpack2(v);
+                    inputTank.setFluid(new FluidStack(val[0], val[1]));
+                }
+                break;
+            case 8:
+                if (outputTank1.getFluid() == null) {
+                    int[] val = CRMath.unpack2(v);
+                    outputTank1.setFluid(new FluidStack(val[0], val[1]));
+                }
+                break;
+            case 9:
+                if (outputTank2.getFluid() == null) {
+                    int[] val = CRMath.unpack2(v);
+                    outputTank2.setFluid(new FluidStack(val[0], val[1]));
+                }
+                break;
         }
     }
 
@@ -325,10 +358,74 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         iCrafting.sendProgressBarUpdate(container, 1, cookTimeRequired);
         iCrafting.sendProgressBarUpdate(container, 2, energyRequired);
         iCrafting.sendProgressBarUpdate(container, 3, energyStorage.getEnergyStored());
+
+        iCrafting.sendProgressBarUpdate(container, 4, inputTank.getFluidAmount());
+        iCrafting.sendProgressBarUpdate(container, 5, outputTank1.getFluidAmount());
+        iCrafting.sendProgressBarUpdate(container, 6, outputTank2.getFluidAmount());
+
+        if (inputTank.getFluid() != null)
+            iCrafting.sendProgressBarUpdate(container, 7, CRMath.packFluidTank(inputTank));
+        if (outputTank1.getFluid() != null)
+            iCrafting.sendProgressBarUpdate(container, 8, CRMath.packFluidTank(outputTank1));
+        if (outputTank2.getFluid() != null)
+            iCrafting.sendProgressBarUpdate(container, 9, CRMath.packFluidTank(outputTank2));
     }
 
     @SideOnly(Side.CLIENT)
     public int getProgressPercent(int width) {
         return (int)(cookTime > 0 ? (double)cookTime / cookTimeRequired * width : 0);
+    }
+
+    @Override
+    public IMachineUpgrade.MachineUpgrade[] getValidUpgrades() {
+        return new IMachineUpgrade.MachineUpgrade[] {
+                IMachineUpgrade.MachineUpgrade.CAPACITY,
+                IMachineUpgrade.MachineUpgrade.EFFICIENCY,
+                IMachineUpgrade.MachineUpgrade.OVERCLOCKER,
+                IMachineUpgrade.MachineUpgrade.RTG
+        };
+    }
+
+    @Override
+    public ItemStack[] getUpgradesInInventory() {
+        return new ItemStack[] { inventory[2], inventory[3], inventory[4]};
+    }
+
+    @Override
+    public void installUpgrade() {
+        System.out.println("Upgraded");
+        upgradesActive = !upgradesActive;
+
+        if (upgradesActive) {
+            ItemStack[] upgrades = getUpgradesInInventory();
+
+            for (ItemStack item : upgrades) {
+                IMachineUpgrade upgrade = (IMachineUpgrade)item.getItem();
+
+                switch (upgrade.getUpgradeType(item)) {
+                    case CAPACITY : {
+                        this.energyStorage.setCapacity(energyStorage);
+                        break;
+                    }
+                    case EFFICIENCY: {
+
+                        break;
+                    }
+                    case RTG: {
+
+                        break;
+                    }
+                    case OVERCLOCKER: {
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean areUpgradesActive() {
+        return upgradesActive;
     }
 }

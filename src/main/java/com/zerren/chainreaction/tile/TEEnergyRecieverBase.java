@@ -46,6 +46,10 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
         checkTimer++;
     }
 
+    public EnergyStorage getEnergyStorage() {
+        return energyStorage;
+    }
+
     protected abstract void checkForWork();
 
     protected void transferEnergyToConnectingSides() {
@@ -118,8 +122,8 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
     }
 
     @SideOnly(Side.CLIENT)
-    public int getEnergyPercent(int height) {
-        return (int)(getEnergyStored() > 0 ? (double)getEnergyStored() / getMaxEnergyStored() * height : 0);
+    public int getEnergyPercent() {
+        return (int)(getEnergyStored() > 0 ? (double)getEnergyStored() / getMaxEnergyStored() * 48 : 0);
     }
 
     @Override

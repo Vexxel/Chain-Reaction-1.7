@@ -36,22 +36,27 @@ tile.chainreaction:mechanism.rtg.name=Radioisotope Thermoelectric Generator
 tile.chainreaction:mechanism.engineStirling.name=Stirling Heat Engine
 tile.chainreaction:mechanism.heaterElectric.name=Electric Heat Generator
 tile.chainreaction:mechanism.electrolyzer.name=Liquid Electrolyzer
+tile.chainreaction:mechanism.liquifier.name=Gas Liquifier
 
 tile.chainreaction.fluid.coolantcold.name=Pressurized Water (Cold)
 tile.chainreaction.fluid.coolanthot.name=Pressurized Water (Hot)
 tile.chainreaction.fluid.distilledwater.name=Distilled Water
 tile.chainreaction.fluid.saturatedsteam.name=Saturated Steam
 tile.chainreaction.fluid.uraniumhexafluoride.name=Uranium Hexafluoride
-tile.chainreaction.fluid.hydrogen.name=Hydrogen
-tile.chainreaction.fluid.oxygen.name=Oxygen
+tile.chainreaction.fluid.hydrogen.name=Hydrogen Gas
+tile.chainreaction.fluid.oxygen.name=Oxygen Gas
+tile.chainreaction.fluid.liquidhydrogen.name=Liquid Hydrogen
+tile.chainreaction.fluid.liquidoxygen.name=Liquid Oxygen
 
 fluid.coolantcold=Pressurized Water (Cold)
 fluid.coolanthot=Pressurized Water (Hot)
 fluid.distilledwater=Distilled Water
 fluid.saturatedsteam=Saturated Steam
 fluid.uraniumhexafluoride=Uranium Hexafluoride
-fluid.hydrogen=Hydrogen
-fluid.oxygen=Oxygen
+fluid.hydrogen=Hydrogen Gas
+fluid.oxygen=Oxygen Gas
+fluid.liquidhydrogen=Liquid Hydrogen
+fluid.liquidoxygen=Liquid Oxygen
 
 # Item localizations --------------------------------------------------------------------
 item.chainreaction:material.boltStainlessSteel.name=Stainless Steel Bolt
@@ -83,8 +88,10 @@ item.chainreaction:key.diamond.name=Diamond Vault Key
 
 item.chainreaction:tool.wrench.name=Nucleus Wrench
 item.chainreaction:tool.scanner.name=Multi-mode Scanner
-item.chainreaction:tool.manual.name=Nuclear Reactor Engineering
+item.chainreaction:tool.manual.name=Engineer's Manual CR-1
 item.chainreaction:tool.thermometer.name=Thermometer
+item.chainreaction:tool.canister.name=Gas Canister
+
 item.record.industrial.desc=Kevin MacLeod - Industrial Revolution
 
 item.chainreaction:fuel.fuelPelletUO2.name=Fuel Pellet (Uranium Dioxide)
@@ -153,6 +160,21 @@ item.chainreaction:baubleMats.beltSilver.name=Silver Studded Leather Belt
 item.chainreaction:baubleMats.beltThaumium.name=Thaumium Studded Leather Belt
 item.chainreaction:baubleMats.beltVoidMetal.name=Void Metal Studded Leather Belt
 
+item.chainreaction:machineUpgrade.capacity1.name=Additional Battery
+item.chainreaction:machineUpgrade.capacity2.name=Improved Battery Array
+item.chainreaction:machineUpgrade.capacity3.name=Super Capacitor Bank
+
+item.chainreaction:machineUpgrade.efficiency1.name=Circuitry Heat Sink
+item.chainreaction:machineUpgrade.efficiency2.name=Circuitry Cooling Module
+item.chainreaction:machineUpgrade.efficiency3.name=Cryogenic Circuitry Cooler
+
+item.chainreaction:machineUpgrade.overclocker1.name=Redstone Amplifier Circuit
+item.chainreaction:machineUpgrade.overclocker2.name=Advanced Amplifier Module
+item.chainreaction:machineUpgrade.overclocker3.name=Quantum Energy Injector
+
+item.chainreaction:machineUpgrade.rtg1.name=RTG Energy Module
+item.chainreaction:machineUpgrade.rtg2.name=Contained Fusion Cell
+item.chainreaction:machineUpgrade.rtg3.name=Antimatter Reactor Unit
 
 # GUI localizations ---------------------------------------------------------------------
 
@@ -214,6 +236,14 @@ gui.item.radioactivity.moderate.name=Moderate
 gui.item.radioactivity.dangerous.name=Dangerous
 gui.item.radioactivity.fatal.name=Fatal
 
+gui.item.upgrade.capacity.name=Energy Capacity
+gui.item.upgrade.efficiency.name=Efficiency
+gui.item.upgrade.overclocker.name=Overclocking
+gui.item.upgrade.rtg.name=Energy Generation
+
+gui.item.upgrade.install.name=Install Upgrades
+gui.item.upgrade.uninstall.name=Uninstall Upgrades
+
 gui.item.manual.flavor.name=
 
 gui.info.controller.nokeyhole.name=This vault controller needs a locking mechanism below it.
@@ -241,6 +271,7 @@ container.pwr.name=Pressurized Water Reactor
 container.bloomery.name=Bloomery
 container.rtg.name=RTG
 container.electrolyzer.name=Fluid Electrolyzer
+container.liquifier.name=Gas Liquifier
 
 itemGroup.ChainReaction=Chain Reaction
 
@@ -252,6 +283,7 @@ chainreaction.potion.betaRad=Beta Emission
 chainreaction.potion.gammaRad=Gamma Emission
 chainreaction.potion.neutronRad=Neutron Emission
 chainreaction.potion.radSickness=Rad. Sickness
+chainreaction.potion.hypothermia=Hypothermia
 
 death.attack.thermal_low=%1$s was boiled alive
 death.attack.thermal_high=%1$s was instantly vaporized
@@ -259,3 +291,4 @@ death.attack.rad_low=%1$s died of radiation sickness
 death.attack.rad_high=%1$s was ripped apart by pure energy
 death.attack.annihilation=%1$s was atomically annihilated
 death.attack.thorns=%1$s learned what 'eye for an eye' means
+death.attack.cryogenic=%1$s froze to death

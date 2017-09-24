@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * Created by Zerren on 4/15/2015.
  */
-public class ItemFuelParts extends ItemCRBase implements IRadioactiveMaterial {
+public class ItemFuelPart extends ItemCRBase implements IRadioactiveMaterial {
 
-    public ItemFuelParts(String name, String[] subtypes, String folder, CreativeTabs tab) {
+    public ItemFuelPart(String name, String[] subtypes, String folder, CreativeTabs tab) {
         super(name, subtypes, folder, tab);
     }
 

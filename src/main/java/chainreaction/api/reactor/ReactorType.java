@@ -1,7 +1,5 @@
 package chainreaction.api.reactor;
 
-import scala.swing.Reactor;
-
 /**
  * Created by Zerren on 4/23/2015.
  */

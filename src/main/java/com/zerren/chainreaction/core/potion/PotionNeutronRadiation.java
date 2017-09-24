@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 public class PotionNeutronRadiation extends PotionCR {
 
     public PotionNeutronRadiation(int id, String name) {
-        super(id, name, true, 0x000000, 3);
+        super(id, name, true, 5223566, 3);
         MinecraftForge.EVENT_BUS.register(this);
     }
 

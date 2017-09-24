@@ -1,5 +1,7 @@
 package com.zerren.chainreaction.utility;
 
+import net.minecraftforge.fluids.IFluidTank;
+
 /**
  * Created by Zerren on 3/9/2015.
  */
@@ -48,5 +50,27 @@ public final class CRMath {
     public static double getFuelLevelAfterOneDayDecay(double fuelLevel, int halfLifeInDays) {
         double halfLifeMod = (double)1 / halfLifeInDays;
         return fuelLevel * (Math.pow(0.5, halfLifeMod));
+    }
+
+    public static int pack2(int val1, int val2) {
+        return (((val1 & 0xFFFF) << 16) | (val2 & 0xFFFF));
+    }
+
+    public static int packFluidTank(IFluidTank tank) {
+        return (((tank.getFluid().getFluidID() & 0xFFFF) << 16) | (tank.getFluidAmount() & 0xFFFF));
+    }
+
+    public static int[] unpack2(int packed) {
+        int val1 = ((packed >> 16) & 0xFFFF);
+        // restore sign
+        if ((val1 & 0x8000) != 0)
+            val1 |= 0xFFFF0000;
+
+        int val2 = (packed & 0xFFFF);
+        // restore sign
+        if ((val2 & 0x8000) != 0)
+            val2 |= 0xFFFF0000;
+
+        return new int[] { val1, val2 };
     }
 }

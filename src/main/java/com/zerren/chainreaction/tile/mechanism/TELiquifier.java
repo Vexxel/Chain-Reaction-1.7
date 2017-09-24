@@ -2,10 +2,12 @@ package com.zerren.chainreaction.tile.mechanism;
 
 import chainreaction.api.block.IInventoryCR;
 import chainreaction.api.recipe.ElectrolyzingFluid;
+import chainreaction.api.recipe.LiquifyingFluid;
 import chainreaction.api.tile.IGuiTileData;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEEnergyRecieverBase;
 import com.zerren.chainreaction.tile.container.ContainerCR;
+import com.zerren.chainreaction.utility.CRMath;
 import com.zerren.chainreaction.utility.CoreUtility;
 import com.zerren.chainreaction.utility.TransferUtility;
 import cpw.mods.fml.relauncher.Side;
@@ -33,11 +35,11 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
     private int cookTimeRequired;
 
     public TELiquifier() {
-        super(256, 25600, TransferUtility.getAllElevationDirections());
-        inventory = new ItemStack[3];
+        super(256, 25600, TransferUtility.getAllSideDirections());
+        inventory = new ItemStack[4];
         cookTime = 0;
         hasWork = false;
-        energyRequired = 128;
+        energyRequired = 64;
         cookTimeRequired = 40;
     }
 
@@ -55,9 +57,9 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
                 cookTime++;
                 energyStorage.modifyEnergyStored(-energyRequired);
 
-                //if enough time has passed to electrolyze
+                //if enough time has passed to liquify
                 if (cookTime >= cookTimeRequired) {
-                    //electrolyze(true);
+                    liquify(true);
                     checkForWork();
                     cookTime = 0;
                 }
@@ -72,15 +74,14 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
 
     @Override
     protected void checkForWork() {
-        //hasWork = electrolyze(false);
+        hasWork = liquify(false);
     }
 
-    private boolean electrolyze(boolean doWork) {
+    private boolean liquify(boolean doWork) {
         if (getInputFluid() == null) return false;
         int amount = inputTank.getFluid().amount;
-        FluidStack output1 = ElectrolyzingFluid.getOutput1(inputTank.getFluid().getFluid());
-        FluidStack output2 = ElectrolyzingFluid.getOutput2(inputTank.getFluid().getFluid());
-        int amountRequired = ElectrolyzingFluid.getInputRequiredAmount(getInputFluid().getFluid());
+        FluidStack output = LiquifyingFluid.getOutput(inputTank.getFluid().getFluid());
+        int amountRequired = LiquifyingFluid.getInputRequiredAmount(getInputFluid().getFluid());
 
         //not enough in the input tank
         if (amount < amountRequired) return false;
@@ -88,8 +89,8 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
         if (amount <= 0) return false;
 
         //busted shenanigans avoidance
-        if (output1 == null || output2 == null) {
-            ChainReaction.log.warn("Input electrolyzing fluid has no outputs in electrolyzer at " + getStringLocale() + "!");
+        if (output == null) {
+            ChainReaction.log.warn("Input liquifying fluid has no outputs in gas liquifier at " + getStringLocale() + "!");
             ChainReaction.log.warn("How did that fluid get there anyway? I'll purge that tank.");
             inputTank.setFluid(null);
             return false;
@@ -97,14 +98,12 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
 
         int output1Space = outputTank1.getCapacity() - outputTank1.getFluidAmount();
 
-        //no room for either output
-        if ((output1Space - output1.amount) < 0) return false;
+        //no room for output
+        if ((output1Space - output.amount) < 0) return false;
 
         if (doWork) {
-            outputTank1.fill(output1.copy(), true);
+            outputTank1.fill(output.copy(), true);
             inputTank.drain(amountRequired, true);
-
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
         return true;
     }
@@ -159,7 +158,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
             used += inputTank.fill(filling, doFill);
             filling.amount -= used;
         }
-        if (used > 0 ) worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
         return used;
     }
 
@@ -176,7 +175,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         //if the fluid is a valid heating fluid and the filling direction is from the right
-        return ElectrolyzingFluid.validElectrolyzingFluid(fluid) && from == spinRight(getOrientation(), false);
+        return LiquifyingFluid.validLiquifyingFluid(fluid) && from == spinRight(getOrientation(), false);
     }
 
     @Override
@@ -255,7 +254,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
 
     @Override
     public String getInventoryName() {
-        return this.hasCustomName() ? this.getCustomName() : CoreUtility.translate("container.electrolyzer.name");
+        return this.hasCustomName() ? this.getCustomName() : CoreUtility.translate("container.liquifier.name");
     }
 
     @Override
@@ -289,6 +288,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void getGUINetworkData(int id, int v) {
         switch (id) {
             case 0:
@@ -303,15 +303,45 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
             case 3:
                 energyStorage.setEnergyStored(v);
                 break;
+            case 4:
+                if (inputTank.getFluid() != null)
+                    inputTank.getFluid().amount = v;
+                break;
+            case 5:
+                if (outputTank1.getFluid() != null)
+                    outputTank1.getFluid().amount = v;
+                break;
+            case 6:
+                if (inputTank.getFluid() == null) {
+                    int[] val = CRMath.unpack2(v);
+                    inputTank.setFluid(new FluidStack(val[0], val[1]));
+                }
+                break;
+            case 7:
+                if (outputTank1.getFluid() == null) {
+                    int[] val = CRMath.unpack2(v);
+                    outputTank1.setFluid(new FluidStack(val[0], val[1]));
+                }
+                break;
+
         }
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void sendGUINetworkData(ContainerCR container, ICrafting iCrafting) {
         iCrafting.sendProgressBarUpdate(container, 0, cookTime);
         iCrafting.sendProgressBarUpdate(container, 1, cookTimeRequired);
         iCrafting.sendProgressBarUpdate(container, 2, energyRequired);
         iCrafting.sendProgressBarUpdate(container, 3, energyStorage.getEnergyStored());
+
+        iCrafting.sendProgressBarUpdate(container, 4, inputTank.getFluidAmount());
+        iCrafting.sendProgressBarUpdate(container, 5, outputTank1.getFluidAmount());
+
+        if (inputTank.getFluid() != null)
+            iCrafting.sendProgressBarUpdate(container, 6, CRMath.pack2(inputTank.getFluid().getFluidID(), inputTank.getFluidAmount()));
+        if (outputTank1.getFluid() != null)
+            iCrafting.sendProgressBarUpdate(container, 7, CRMath.pack2(outputTank1.getFluid().getFluidID(), outputTank1.getFluidAmount()));
     }
 
     @SideOnly(Side.CLIENT)

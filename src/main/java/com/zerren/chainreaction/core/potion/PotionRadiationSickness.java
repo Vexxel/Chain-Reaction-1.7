@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 public class PotionRadiationSickness extends PotionCR {
 
     public PotionRadiationSickness(int id, String name) {
-        super(id, name, true, 0x000000, 4);
+        super(id, name, true, 7378797, 4);
         MinecraftForge.EVENT_BUS.register(this);
     }
 

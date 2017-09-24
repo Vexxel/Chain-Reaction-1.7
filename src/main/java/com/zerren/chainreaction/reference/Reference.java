@@ -40,6 +40,7 @@ public final class Reference {
             public static final String ORE_FOLDER = "ore/";
             public static final String BAUBLE_FOLDER = "bauble/";
             public static final String BAUBLE_MATERIAL_FOLDER = BAUBLE_FOLDER + "material/";
+            public static final String MACHINE_UPGRADE_FOLDER = "upgrade/";
         }
 
         public static final class GUIs {

@@ -13,6 +13,7 @@ public final class DamageSourceCR extends DamageSource {
     public static final DamageSource RAD_HIGH = (new DamageSourceCR("rad_high")).setMagicDamage().setDamageBypassesArmor();
     public static final DamageSource ANNIHILATION = (new DamageSourceCR("annihilation")).setAnnihilationDamage();
     public static final DamageSource THORNS = (new DamageSourceCR("thorns")).setMagicDamage().setDamageBypassesArmor();
+    public static final DamageSource CRYOGENIC = (new DamageSourceCR("cryogenic")).setMagicDamage();
 
     private boolean annihilationDamage;
 

@@ -14,15 +14,27 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
  */
 public class SlotLiquidContainer extends Slot {
 
-    private boolean filled;
-    public SlotLiquidContainer(IInventory inv, int i, int j, int k, boolean filled) {
-        super(inv, i, j, k);
+    private byte type;
+    /**
+     *  A Slot that can only hold liquid containers.
+     * @param type The type of liquid container. 0 for empty, 1 for filled, 2 for tanks
+     */
+    public SlotLiquidContainer(IInventory inv, int slotIndex, int displayX, int displayY, int type) {
+        super(inv, slotIndex, displayX, displayY);
 
-        this.filled = filled;
+        if (type > 2 || type < 0 ) this.type = 0;
+
+        this.type = (byte)type;
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return filled && FluidContainerRegistry.isFilledContainer(stack) || !filled && FluidContainerRegistry.isEmptyContainer(stack);
+        switch (type) {
+            case 1: return FluidContainerRegistry.isFilledContainer(stack);
+
+            case 2: return FluidContainerRegistry.isContainer(stack);
+
+            default: return FluidContainerRegistry.isEmptyContainer(stack);
+        }
     }
 }

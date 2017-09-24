@@ -28,6 +28,7 @@ public class ModPotions {
         potion[2] = new PotionGammaRadiation(ConfigHandler.potionIDs[2], Names.Potions.EFFECTS[2]);
         potion[3] = new PotionNeutronRadiation(ConfigHandler.potionIDs[3], Names.Potions.EFFECTS[3]);
         potion[4] = new PotionRadiationSickness(ConfigHandler.potionIDs[4], Names.Potions.EFFECTS[4]);
+        potion[5] = new PotionHypothermia(ConfigHandler.potionIDs[5], Names.Potions.EFFECTS[5]);
     }
 
     public static int getEffectID(String name) {

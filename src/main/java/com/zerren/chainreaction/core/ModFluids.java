@@ -16,7 +16,8 @@ public class ModFluids {
     public static Fluid uf6;
     public static Fluid hydrogenGas;
     public static Fluid oxygenGas;
-
+    public static Fluid hydrogenLiquid;
+    public static Fluid oxygenLiquid;
 
     //To make a fluid:
     // Create a new block object in chainreaction.api.block.CRBlocks
@@ -38,7 +39,8 @@ public class ModFluids {
         tryFluidRegister(uf6, Names.Fluids.UF6, 0, 5100, 200, 350, true);
         tryFluidRegister(hydrogenGas, Names.Fluids.HYDROGEN, 0, -1000, 1, 295, true);
         tryFluidRegister(oxygenGas, Names.Fluids.OXYGEN, 0, -400, 2, 295, true);
-
+        tryFluidRegister(hydrogenLiquid, Names.Fluids.HYDROGEN_LIQUID, 0, 20, 500, 80, false);
+        tryFluidRegister(oxygenLiquid, Names.Fluids.OXYGEN_LIQUID, 0, 1141, 750, 80, false);
     }
 
     private static void tryFluidRegister(Fluid fluid, String id, int luminosity, int density, int viscosity, int temperature, boolean gaseous) {
@@ -81,7 +83,12 @@ public class ModFluids {
         else if (id.equals(Names.Fluids.OXYGEN)) {
             oxygenGas = temp;
         }
-
+        else if (id.equals(Names.Fluids.HYDROGEN_LIQUID)) {
+            hydrogenLiquid = temp;
+        }
+        else if (id.equals(Names.Fluids.OXYGEN_LIQUID)) {
+            oxygenLiquid = temp;
+        }
         temp = null;
     }
 }

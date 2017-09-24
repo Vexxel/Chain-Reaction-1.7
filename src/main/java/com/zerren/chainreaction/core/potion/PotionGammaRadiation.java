@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 public class PotionGammaRadiation extends PotionCR {
 
     public PotionGammaRadiation(int id, String name) {
-        super(id, name, true, 0x000000, 2);
+        super(id, name, true, 16774034, 2);
         MinecraftForge.EVENT_BUS.register(this);
     }
 

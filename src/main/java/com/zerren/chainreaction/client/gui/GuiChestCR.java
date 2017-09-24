@@ -12,12 +12,12 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by Zerren on 2/28/2015.
  */
-public class GuiChestCR extends GuiContainer {
+public class GuiChestCR extends GuiContainerCR {
 
     private TEChest chest;
 
     public GuiChestCR(InventoryPlayer inv, TEChest chest) {
-        super(new ContainerChestCR(inv, chest));
+        super(new ContainerChestCR(inv, chest), chest);
         this.chest = chest;
 
         switch (chest.getState()) {

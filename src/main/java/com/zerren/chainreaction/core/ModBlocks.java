@@ -88,6 +88,7 @@ public class ModBlocks {
         else {
             CRBlocks.uf6 = ModFluids.uf6.getBlock();
         }
+
         if (ModFluids.hydrogenGas.getBlock() == null) {
             CRBlocks.hydrogenGas = new BlockFluidGasBase(ModFluids.hydrogenGas, new MaterialLiquid(MapColor.pinkColor), Names.Fluids.HYDROGEN, 5, 2, 1F, 1);
             GameRegistry.registerBlock(CRBlocks.hydrogenGas, Names.Fluids.HYDROGEN);
@@ -96,6 +97,7 @@ public class ModBlocks {
         else {
             CRBlocks.hydrogenGas = ModFluids.hydrogenGas.getBlock();
         }
+
         if (ModFluids.oxygenGas.getBlock() == null) {
             CRBlocks.oxygenGas = new BlockFluidGasBase(ModFluids.oxygenGas, new MaterialLiquid(MapColor.lightBlueColor), Names.Fluids.OXYGEN, 5, 2, 1F, 1);
             GameRegistry.registerBlock(CRBlocks.oxygenGas, Names.Fluids.OXYGEN);
@@ -103,6 +105,24 @@ public class ModBlocks {
         }
         else {
             CRBlocks.oxygenGas = ModFluids.oxygenGas.getBlock();
+        }
+
+        if (ModFluids.hydrogenLiquid.getBlock() == null) {
+            CRBlocks.hydrogenLiquid = new BlockFluidCryogenic(ModFluids.hydrogenLiquid, Material.water, Names.Fluids.HYDROGEN_LIQUID, 7, 4, 1F, 2, 2, 3.0F);
+            GameRegistry.registerBlock(CRBlocks.hydrogenLiquid, Names.Fluids.HYDROGEN_LIQUID);
+            ModFluids.hydrogenLiquid.setBlock(CRBlocks.hydrogenLiquid);
+        }
+        else {
+            CRBlocks.hydrogenLiquid = ModFluids.hydrogenLiquid.getBlock();
+        }
+
+        if (ModFluids.oxygenLiquid.getBlock() == null) {
+            CRBlocks.oxygenLiquid = new BlockFluidCryogenic(ModFluids.oxygenLiquid, Material.water, Names.Fluids.OXYGEN_LIQUID, 7, 4, 1F, 2, 1, 2.0F);
+            GameRegistry.registerBlock(CRBlocks.oxygenLiquid, Names.Fluids.OXYGEN_LIQUID);
+            ModFluids.oxygenLiquid.setBlock(CRBlocks.oxygenLiquid);
+        }
+        else {
+            CRBlocks.oxygenLiquid = ModFluids.oxygenLiquid.getBlock();
         }
     }
 }

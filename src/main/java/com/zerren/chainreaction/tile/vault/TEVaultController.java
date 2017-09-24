@@ -1,8 +1,11 @@
 package com.zerren.chainreaction.tile.vault;
 
+import chainreaction.api.tile.IGuiTileData;
 import com.zerren.chainreaction.handler.ConfigHandler;
+import com.zerren.chainreaction.tile.container.ContainerCR;
 import com.zerren.chainreaction.utility.CoreUtility;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +19,7 @@ import java.util.UUID;
 /**
  * Created by Zerren on 2/20/2015.
  */
-public class TEVaultController extends TEVaultBase implements IInventory {
+public class TEVaultController extends TEVaultBase implements IInventory, IGuiTileData {
 
     private ItemStack[] inventory = new ItemStack[54 * ConfigHandler.vaultPages];
 
@@ -350,5 +353,23 @@ public class TEVaultController extends TEVaultBase implements IInventory {
 
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public void getGUINetworkData(int id, int v) {
+        switch (id) {
+            case 0:
+                this.page = v;
+                break;
+            case 1:
+                this.selection = v;
+                break;
+        }
+    }
+
+    @Override
+    public void sendGUINetworkData(ContainerCR container, ICrafting iCrafting) {
+        iCrafting.sendProgressBarUpdate(container, 0, page);
+        iCrafting.sendProgressBarUpdate(container, 1, selection);
     }
 }

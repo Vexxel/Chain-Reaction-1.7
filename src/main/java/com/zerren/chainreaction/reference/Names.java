@@ -116,7 +116,8 @@ public final class Names {
                 "wrench",
                 "scanner",
                 "manual",
-                "thermometer"
+                "thermometer",
+                "canister"
         };
 
         public static final String FUEL_PARTS = "fuelParts";
@@ -212,6 +213,22 @@ public final class Names {
                 "beltThaumium",
                 "beltVoidMetal"
         };
+
+        public static final String MACHINE_UPRADE = "machineUpgrade";
+        public static final String[] MACHINE_UPRADE_SUBTYPES = {
+                "capacity1",
+                "capacity2",
+                "capacity3",
+                "efficiency1",
+                "efficiency2",
+                "efficiency3",
+                "overclocker1",
+                "overclocker2",
+                "overclocker3",
+                "rtg1",
+                "rtg2",
+                "rtg3"
+        };
     }
 
     public static final class Fluids {
@@ -221,7 +238,8 @@ public final class Names {
         public static final String DISTILLED_WATER = "distilledwater";
         public static final String HYDROGEN = "hydrogen";
         public static final String OXYGEN = "oxygen";
-
+        public static final String HYDROGEN_LIQUID = "liquidhydrogen";
+        public static final String OXYGEN_LIQUID = "liquidoxygen";
 
         public static String STEAM;
 
@@ -236,7 +254,8 @@ public final class Names {
                 "betaRad",
                 "gammaRad",
                 "neutronRad",
-                "radSickness"
+                "radSickness",
+                "hypothermia"
         };
     }
 

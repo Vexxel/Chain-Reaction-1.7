@@ -29,7 +29,6 @@ public class MessageSetBonus extends AbstractMessage.AbstractClientMessage<Messa
 
     }
 
-
     public MessageSetBonus(EntityPlayer player) {
         data = new NBTTagCompound();
         PlayerSetBonus.get(player).saveNBTData(data);

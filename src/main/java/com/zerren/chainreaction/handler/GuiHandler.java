@@ -8,6 +8,7 @@ import com.zerren.chainreaction.tile.chest.TEChest;
 import com.zerren.chainreaction.tile.container.*;
 import com.zerren.chainreaction.tile.mechanism.TEBloomery;
 import com.zerren.chainreaction.tile.mechanism.TEElectrolyzer;
+import com.zerren.chainreaction.tile.mechanism.TELiquifier;
 import com.zerren.chainreaction.tile.reactor.TERTG;
 import com.zerren.chainreaction.tile.reactor.TEPressurizedWaterReactor;
 import com.zerren.chainreaction.tile.vault.TEVaultController;
@@ -60,6 +61,12 @@ public class GuiHandler implements IGuiHandler {
 
             if (electrolyzer != null) return new ContainerElectrolyzer(player.inventory, electrolyzer);
         }
+        if (id == GUIs.LIQUIFIER.ordinal()) {
+
+            TELiquifier tile = (TELiquifier) world.getTileEntity(x, y, z);
+
+            if (tile != null) return new ContainerLiquifier(player.inventory, tile);
+        }
         return null;
     }
 
@@ -104,6 +111,12 @@ public class GuiHandler implements IGuiHandler {
             TEElectrolyzer electrolyzer = (TEElectrolyzer) world.getTileEntity(x, y, z);
 
             if (electrolyzer != null) return new GuiElectrolyzer(electrolyzer, player.inventory);
+        }
+        if (id == GUIs.LIQUIFIER.ordinal()) {
+
+            TELiquifier tile = (TELiquifier) world.getTileEntity(x, y, z);
+
+            if (tile != null) return new GuiLiquifier(tile, player.inventory);
         }
         return null;
     }

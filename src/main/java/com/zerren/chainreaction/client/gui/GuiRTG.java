@@ -16,14 +16,14 @@ import org.lwjgl.opengl.GL11;
  * Created by Zerren on 2/24/2015.
  */
 @SideOnly(Side.CLIENT)
-public class GuiRTG extends GuiContainer {
+public class GuiRTG extends GuiContainerCR {
 
     public EntityPlayer player;
     public TERTG rtg;
     public int x, y;
 
     public GuiRTG(TERTG tile, InventoryPlayer inv) {
-        super(new ContainerRTG(inv, tile));
+        super(new ContainerRTG(inv, tile), tile);
         this.player = inv.player;
 
         this.xSize = 176;
