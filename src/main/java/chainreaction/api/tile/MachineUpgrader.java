@@ -1,6 +1,5 @@
-package chainreaction.api.item;
+package chainreaction.api.tile;
 
-import chainreaction.api.tile.IUpgradeableTile;
 import cofh.api.energy.EnergyStorage;
 
 public class MachineUpgrader {
