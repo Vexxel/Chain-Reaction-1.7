@@ -4,8 +4,10 @@ import chainreaction.api.item.IMachineUpgrade;
 import chainreaction.api.item.ISolidReactorFuel;
 import chainreaction.api.reactor.ReactorType;
 import chainreaction.api.recipe.RTGFuels;
+import chainreaction.api.tile.IUpgradeStorage;
 import chainreaction.api.tile.IUpgradeableTile;
 import com.zerren.chainreaction.tile.TileEntityCRBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
@@ -17,24 +19,21 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
  */
 public class SlotMachineUpgrade extends Slot {
 
-    private TileEntityCRBase tile;
+    private IUpgradeableTile tile;
     private final IMachineUpgrade.MachineUpgrade[] validUpgrades;
 
     public SlotMachineUpgrade(IInventory inv, int i, int j, int k) {
         super(inv, i, j, k);
-        tile = (TileEntityCRBase)inv;
+        tile = (IUpgradeableTile)inv;
 
-        if (tile instanceof IUpgradeableTile) {
-            validUpgrades = ((IUpgradeableTile) tile).getValidUpgrades();
-        }
-        else validUpgrades = new IMachineUpgrade.MachineUpgrade[] { IMachineUpgrade.MachineUpgrade.UNKNOWN };
+        validUpgrades = tile.getValidUpgrades();
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
 
         //The tile is upgradable and the stack is an upgrade item
-        if (tile instanceof IUpgradeableTile && stack.getItem() instanceof IMachineUpgrade) {
+        if (tile != null && stack.getItem() instanceof IMachineUpgrade && !tile.areUpgradesActive()) {
             IMachineUpgrade item = (IMachineUpgrade)stack.getItem();
 
             for (IMachineUpgrade.MachineUpgrade upgrade : validUpgrades) {
@@ -42,5 +41,10 @@ public class SlotMachineUpgrade extends Slot {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean canTakeStack(EntityPlayer player) {
+        return !tile.areUpgradesActive();
     }
 }

@@ -58,7 +58,7 @@ public class MessageUpgradeInstall extends PacketTileCR<TileEntityCRBase> implem
         if (message.tile instanceof IUpgradeableTile) {
             IUpgradeableTile tile = (IUpgradeableTile) message.tile;
 
-            tile.installUpgrade();
+            tile.installUpgrades();
             message.tile.getWorldObj().markBlockForUpdate(message.x, message.y, message.z);
         }
         return null;

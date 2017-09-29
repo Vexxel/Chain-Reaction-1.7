@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.tile;
 
+import chainreaction.api.energy.IEnergyHandlerCR;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
@@ -10,7 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public abstract class TEEnergyHandlerBase extends TileEntityCRBase implements IEnergyHandler {
+public abstract class TEEnergyHandlerBase extends TileEntityCRBase implements IEnergyHandlerCR {
 
     protected EnergyStorage energyStorage = new EnergyStorage(0);
     protected int rfGenPerTick;
@@ -116,5 +117,10 @@ public abstract class TEEnergyHandlerBase extends TileEntityCRBase implements IE
         super.writeToNBT(tag);
 
         energyStorage.writeToNBT(tag);
+    }
+
+    @Override
+    public EnergyStorage getEnergyStorage() {
+        return energyStorage;
     }
 }

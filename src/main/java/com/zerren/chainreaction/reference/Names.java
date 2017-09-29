@@ -262,6 +262,7 @@ public final class Names {
     public static final class NBT {
         public static final String ITEMS = "items";
         public static final String TANK = "tank";
+        public static final String UPGRADE_STORAGE = "upgrades";
         public static final String UUID_MOST_SIG = "UUIDMostSig";
         public static final String UUID_LEAST_SIG = "UUIDLeastSig";
         public static final String STATE = "teState";

@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TEElectricHeater extends TEEnergyRecieverBase implements IHeatHandler{
+public class TEElectricHeater extends TEEnergyRecieverBase implements IHeatHandler {
 
 
     protected HeatStorage heatStorage = new HeatStorage(0);

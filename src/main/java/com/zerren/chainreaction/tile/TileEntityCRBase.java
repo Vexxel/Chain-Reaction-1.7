@@ -1,5 +1,8 @@
 package com.zerren.chainreaction.tile;
 
+import chainreaction.api.block.IInventoryCR;
+import chainreaction.api.tile.IUpgradeableTile;
+import chainreaction.api.tile.UpgradeStorage;
 import com.zerren.chainreaction.handler.network.PacketHandler;
 import com.zerren.chainreaction.handler.network.client.tile.MessageTileCR;
 import com.zerren.chainreaction.reference.Names;
@@ -186,6 +189,10 @@ public abstract class TileEntityCRBase extends TileEntity {
         if (tag.hasKey(Names.NBT.OWNER_UUID_MOST_SIG) && tag.hasKey(Names.NBT.OWNER_UUID_LEAST_SIG)) {
             this.ownerUUID = new UUID(tag.getLong(Names.NBT.OWNER_UUID_MOST_SIG), tag.getLong(Names.NBT.OWNER_UUID_LEAST_SIG));
         }
+
+        if (this instanceof IUpgradeableTile) {
+            ((IUpgradeableTile)this).getUpgradeStorage().readFromNBT(tag.getCompoundTag(Names.NBT.UPGRADE_STORAGE));
+        }
     }
 
     @Override
@@ -201,6 +208,10 @@ public abstract class TileEntityCRBase extends TileEntity {
         if (this.hasOwner()) {
             tag.setLong(Names.NBT.OWNER_UUID_MOST_SIG, ownerUUID.getMostSignificantBits());
             tag.setLong(Names.NBT.OWNER_UUID_LEAST_SIG, ownerUUID.getLeastSignificantBits());
+        }
+
+        if (this instanceof IUpgradeableTile) {
+            tag.setTag(Names.NBT.UPGRADE_STORAGE, ((IUpgradeableTile)this).getUpgradeStorage().writeToNBT(new NBTTagCompound()));
         }
     }
 

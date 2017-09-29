@@ -5,6 +5,7 @@ import chainreaction.api.item.IMachineUpgrade;
 import chainreaction.api.recipe.ElectrolyzingFluid;
 import chainreaction.api.tile.IGuiTileData;
 import chainreaction.api.tile.IUpgradeableTile;
+import chainreaction.api.tile.UpgradeStorage;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEEnergyRecieverBase;
 import com.zerren.chainreaction.tile.container.ContainerCR;
@@ -26,23 +27,39 @@ import net.minecraftforge.fluids.*;
 public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData, IUpgradeableTile {
     private static final int TANK_CAPACITY = 8000;
 
+    private UpgradeStorage upgradeStorage = new UpgradeStorage();
+
     public final FluidTank inputTank = new FluidTank(TANK_CAPACITY);
     public final FluidTank outputTank1 = new FluidTank(TANK_CAPACITY);
     public final FluidTank outputTank2 = new FluidTank(TANK_CAPACITY);
     private ItemStack[] inventory;
     private int cookTime;
     public boolean hasWork;
+
+    private static final int energyCapacityBase = 25600;
+
     private int energyRequired;
+    private final int energyRequiredBase;
+
     private int cookTimeRequired;
+    private final int cookTimeRequiredBase;
+
     private boolean upgradesActive;
 
+
     public TEElectrolyzer() {
-        super(256, 25600, TransferUtility.getAllElevationDirections());
+        super(512, energyCapacityBase, TransferUtility.getAllElevationDirections());
         inventory = new ItemStack[5];
         cookTime = 0;
         hasWork = false;
+
         energyRequired = 128;
-        cookTimeRequired = 40;
+        energyRequiredBase = 128;
+
+        cookTimeRequired = 80;
+        cookTimeRequiredBase = 80;
+
+        upgradeStorage = new UpgradeStorage();
     }
 
     @Override
@@ -57,6 +74,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             if (energy >= energyRequired && hasWork) {
                 //increase the cook time and reduce the energy
                 cookTime++;
+
                 energyStorage.modifyEnergyStored(-energyRequired);
 
                 //if enough time has passed to electrolyze
@@ -143,6 +161,9 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         upgradesActive = tag.getBoolean("upgradesActive");
 
         this.inventory = readNBTItems(tag, this);
+
+        //upgradeStorage.readFromNBT(tag);
+        //readUpgradeStorage(tag, upgradeStorage);
     }
 
     @Override
@@ -159,6 +180,7 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
         tag.setBoolean("upgradesActive", upgradesActive);
 
         writeNBTItems(tag, inventory);
+
     }
 
     @Override
@@ -349,6 +371,9 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
                     outputTank2.setFluid(new FluidStack(val[0], val[1]));
                 }
                 break;
+            case 10:
+                this.energyStorage.setCapacity(v);
+                break;
         }
     }
 
@@ -369,6 +394,8 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
             iCrafting.sendProgressBarUpdate(container, 8, CRMath.packFluidTank(outputTank1));
         if (outputTank2.getFluid() != null)
             iCrafting.sendProgressBarUpdate(container, 9, CRMath.packFluidTank(outputTank2));
+
+        iCrafting.sendProgressBarUpdate(container, 10, energyStorage.getMaxEnergyStored());
     }
 
     @SideOnly(Side.CLIENT)
@@ -392,40 +419,39 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
     }
 
     @Override
-    public void installUpgrade() {
-        System.out.println("Upgraded");
+    public void installUpgrades() {
         upgradesActive = !upgradesActive;
 
         if (upgradesActive) {
-            ItemStack[] upgrades = getUpgradesInInventory();
 
-            for (ItemStack item : upgrades) {
-                IMachineUpgrade upgrade = (IMachineUpgrade)item.getItem();
+            upgradeStorage.upgradeTile(getUpgradesInInventory());
 
-                switch (upgrade.getUpgradeType(item)) {
-                    case CAPACITY : {
-                        this.energyStorage.setCapacity(energyStorage);
-                        break;
-                    }
-                    case EFFICIENCY: {
+            energyStorage.setCapacity(energyStorage.getMaxEnergyStored() + upgradeStorage.getCapacityMod());
+            rfGenPerTickFromRTGMod = upgradeStorage.getRTGMod();
+            energyRequired = (int)(energyRequiredBase * (upgradeStorage.getCostMod() <= 0F ? 1F : upgradeStorage.getCostMod()));
+            cookTimeRequired = (int)(cookTimeRequiredBase / (upgradeStorage.getSpeedMod() <= 0 ? 1 : upgradeStorage.getSpeedMod()));
+        }
+        else  {
+            upgradeStorage.clear();
 
-                        break;
-                    }
-                    case RTG: {
-
-                        break;
-                    }
-                    case OVERCLOCKER: {
-
-                        break;
-                    }
-                }
+            if (energyStorage.getEnergyStored() > energyCapacityBase)  {
+                energyStorage.setEnergyStored(energyCapacityBase);
             }
+
+            energyStorage.setCapacity(energyCapacityBase);
+            rfGenPerTickFromRTGMod = 0;
+            energyRequired = energyRequiredBase;
+            cookTimeRequired = cookTimeRequiredBase;
         }
     }
 
     @Override
     public boolean areUpgradesActive() {
         return upgradesActive;
+    }
+
+    @Override
+    public UpgradeStorage getUpgradeStorage() {
+        return upgradeStorage;
     }
 }

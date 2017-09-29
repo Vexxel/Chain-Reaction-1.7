@@ -1,9 +1,12 @@
 package com.zerren.chainreaction.tile.mechanism;
 
 import chainreaction.api.block.IInventoryCR;
+import chainreaction.api.item.IMachineUpgrade;
 import chainreaction.api.recipe.ElectrolyzingFluid;
 import chainreaction.api.recipe.LiquifyingFluid;
 import chainreaction.api.tile.IGuiTileData;
+import chainreaction.api.tile.IUpgradeableTile;
+import chainreaction.api.tile.UpgradeStorage;
 import com.zerren.chainreaction.ChainReaction;
 import com.zerren.chainreaction.tile.TEEnergyRecieverBase;
 import com.zerren.chainreaction.tile.container.ContainerCR;
@@ -22,8 +25,10 @@ import net.minecraftforge.fluids.*;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData {
+public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData, IUpgradeableTile {
     private static final int TANK_CAPACITY = 8000;
+
+    private UpgradeStorage upgradeStorage = new UpgradeStorage();
 
     public final FluidTank inputTank = new FluidTank(TANK_CAPACITY);
     public final FluidTank outputTank1 = new FluidTank(TANK_CAPACITY);
@@ -31,16 +36,29 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
     private ItemStack[] inventory;
     private int cookTime;
     public boolean hasWork;
+    private static final int energyCapacityBase = 25600;
+
     private int energyRequired;
+    private final int energyRequiredBase;
+
     private int cookTimeRequired;
+    private final int cookTimeRequiredBase;
+
+    private boolean upgradesActive;
 
     public TELiquifier() {
-        super(256, 25600, TransferUtility.getAllSideDirections());
+        super(512, 25600, TransferUtility.getAllSideDirections());
         inventory = new ItemStack[4];
         cookTime = 0;
         hasWork = false;
+
         energyRequired = 64;
-        cookTimeRequired = 40;
+        energyRequiredBase = 64;
+
+        cookTimeRequired = 80;
+        cookTimeRequiredBase = 80;
+
+        upgradeStorage = new UpgradeStorage();
     }
 
     @Override
@@ -126,6 +144,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
         cookTime = tag.getInteger("cookTime");
         cookTimeRequired = tag.getInteger("cookTimeRequired");
         energyRequired = tag.getInteger("energyRequired");
+        upgradesActive = tag.getBoolean("upgradesActive");
 
         this.inventory = readNBTItems(tag, this);
     }
@@ -140,6 +159,7 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
         tag.setInteger("cookTime", cookTime);
         tag.setInteger("cookTimeRequired", cookTimeRequired);
         tag.setInteger("energyRequired", energyRequired);
+        tag.setBoolean("upgradesActive", upgradesActive);
 
         writeNBTItems(tag, inventory);
     }
@@ -323,6 +343,9 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
                     outputTank1.setFluid(new FluidStack(val[0], val[1]));
                 }
                 break;
+            case 8:
+                this.energyStorage.setCapacity(v);
+                break;
 
         }
     }
@@ -342,10 +365,64 @@ public class TELiquifier extends TEEnergyRecieverBase implements IFluidHandler, 
             iCrafting.sendProgressBarUpdate(container, 6, CRMath.pack2(inputTank.getFluid().getFluidID(), inputTank.getFluidAmount()));
         if (outputTank1.getFluid() != null)
             iCrafting.sendProgressBarUpdate(container, 7, CRMath.pack2(outputTank1.getFluid().getFluidID(), outputTank1.getFluidAmount()));
+
+        iCrafting.sendProgressBarUpdate(container, 8, energyStorage.getMaxEnergyStored());
     }
 
     @SideOnly(Side.CLIENT)
     public int getProgressPercent(int width) {
         return (int)(cookTime > 0 ? (double)cookTime / cookTimeRequired * width : 0);
+    }
+
+    @Override
+    public IMachineUpgrade.MachineUpgrade[] getValidUpgrades() {
+        return new IMachineUpgrade.MachineUpgrade[] {
+                IMachineUpgrade.MachineUpgrade.CAPACITY,
+                IMachineUpgrade.MachineUpgrade.EFFICIENCY,
+                IMachineUpgrade.MachineUpgrade.OVERCLOCKER,
+                IMachineUpgrade.MachineUpgrade.RTG
+        };
+    }
+
+    @Override
+    public ItemStack[] getUpgradesInInventory() {
+        return new ItemStack[] { inventory[1], inventory[2], inventory[3] };
+    }
+
+    @Override
+    public void installUpgrades() {
+        upgradesActive = !upgradesActive;
+
+        if (upgradesActive) {
+
+            upgradeStorage.upgradeTile(getUpgradesInInventory());
+
+            energyStorage.setCapacity(energyStorage.getMaxEnergyStored() + upgradeStorage.getCapacityMod());
+            rfGenPerTickFromRTGMod = upgradeStorage.getRTGMod();
+            energyRequired = (int)(energyRequiredBase * (upgradeStorage.getCostMod() <= 0F ? 1F : upgradeStorage.getCostMod()));
+            cookTimeRequired = (int)(cookTimeRequiredBase / (upgradeStorage.getSpeedMod() <= 0 ? 1 : upgradeStorage.getSpeedMod()));
+        }
+        else  {
+            upgradeStorage.clear();
+
+            if (energyStorage.getEnergyStored() > energyCapacityBase)  {
+                energyStorage.setEnergyStored(energyCapacityBase);
+            }
+
+            energyStorage.setCapacity(energyCapacityBase);
+            rfGenPerTickFromRTGMod = 0;
+            energyRequired = energyRequiredBase;
+            cookTimeRequired = cookTimeRequiredBase;
+        }
+    }
+
+    @Override
+    public boolean areUpgradesActive() {
+        return upgradesActive;
+    }
+
+    @Override
+    public UpgradeStorage getUpgradeStorage() {
+        return upgradeStorage;
     }
 }

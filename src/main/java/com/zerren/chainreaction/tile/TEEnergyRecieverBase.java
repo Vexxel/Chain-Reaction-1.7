@@ -1,5 +1,6 @@
 package com.zerren.chainreaction.tile;
 
+import chainreaction.api.energy.IEnergyRecieverCR;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
@@ -12,20 +13,20 @@ import net.minecraftforge.common.util.ForgeDirection;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements IEnergyReceiver {
+public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements IEnergyRecieverCR {
 
     protected EnergyStorage energyStorage = new EnergyStorage(0);
-    protected int rfGenPerTick;
+    protected int rfGenPerTickFromRTGMod;
     protected int checkTimer, checkTimerMax;
 
     protected final ForgeDirection[] sidesConnectingEnergy;
 
-    public TEEnergyRecieverBase(int gen, int eStorage, ForgeDirection[] directions) {
+    public TEEnergyRecieverBase(int transfer, int eStorage, ForgeDirection[] directions) {
         super();
-        rfGenPerTick = gen;
 
-        energyStorage = new EnergyStorage(eStorage, rfGenPerTick * 2);
+        energyStorage = new EnergyStorage(eStorage, transfer);
 
+        rfGenPerTickFromRTGMod = 0;
         checkTimer = 0;
         checkTimerMax = 100;
 
@@ -39,16 +40,17 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
 
     @Override
     public void updateEntity() {
-        if (checkTimer >= checkTimerMax) {
-            checkForWork();
-            checkTimer = 0;
+        if (!worldObj.isRemote) {
+            if (checkTimer >= checkTimerMax) {
+                checkForWork();
+                checkTimer = 0;
+            }
+            checkTimer++;
+
+            energyStorage.modifyEnergyStored(rfGenPerTickFromRTGMod);
         }
-        checkTimer++;
     }
 
-    public EnergyStorage getEnergyStorage() {
-        return energyStorage;
-    }
 
     protected abstract void checkForWork();
 
@@ -135,6 +137,7 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
+        rfGenPerTickFromRTGMod = tag.getInteger("RTGModGenPerTick");
         energyStorage.readFromNBT(tag);
     }
 
@@ -142,6 +145,12 @@ public abstract class TEEnergyRecieverBase extends TileEntityCRBase implements I
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
+        tag.setInteger("RTGModGenPerTick", rfGenPerTickFromRTGMod);
         energyStorage.writeToNBT(tag);
+    }
+
+    @Override
+    public EnergyStorage getEnergyStorage() {
+        return energyStorage;
     }
 }

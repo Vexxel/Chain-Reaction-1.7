@@ -13,7 +13,10 @@ public interface IUpgradeableTile {
 
     ItemStack[] getUpgradesInInventory();
 
-    void installUpgrade();
+    void installUpgrades();
 
     boolean areUpgradesActive();
+
+    UpgradeStorage getUpgradeStorage();
+
 }

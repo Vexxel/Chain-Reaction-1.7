@@ -1,10 +1,14 @@
 package com.zerren.chainreaction.client.gui;
 
+import com.zerren.chainreaction.client.gui.button.GUIButtonWidgets;
+import com.zerren.chainreaction.handler.network.PacketHandler;
+import com.zerren.chainreaction.handler.network.server.tile.MessageUpgradeInstall;
 import com.zerren.chainreaction.reference.Reference;
 import com.zerren.chainreaction.tile.container.ContainerLiquifier;
 import com.zerren.chainreaction.tile.mechanism.TELiquifier;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -39,6 +43,17 @@ public class GuiLiquifier extends GuiContainerCR {
 
         buttonList.clear();
 
+        GuiButton install = new GUIButtonWidgets(0, x + 175, y + 66, 100, 0);
+        buttonList.add(install);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton guibutton) {
+        super.actionPerformed(guibutton);
+
+        if (guibutton.id == 0) {
+            PacketHandler.INSTANCE.sendToServer(new MessageUpgradeInstall(liquifier));
+        }
     }
 
     @Override
@@ -65,6 +80,7 @@ public class GuiLiquifier extends GuiContainerCR {
 
         drawInventoryName();
         drawContainerName(invTitle);
+        drawUpgradeInstallTooltip(liquifier, mouseX, mouseY, 175, 66);
 
         if (liquifier != null) {
             drawEnergyBarTooltip(liquifier.getEnergyStorage(), mouseX, mouseY, 16, 24, 8, 48);

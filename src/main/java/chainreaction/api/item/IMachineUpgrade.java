@@ -30,7 +30,7 @@ public interface IMachineUpgrade {
 
     enum MachineUpgrade {
         CAPACITY(3),
-        EFFICIENCY(2),
+        EFFICIENCY(1),
         RTG(3),
         OVERCLOCKER(3),
         UNKNOWN(0);
