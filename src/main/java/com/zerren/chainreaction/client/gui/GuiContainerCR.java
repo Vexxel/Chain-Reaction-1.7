@@ -1,6 +1,7 @@
 package com.zerren.chainreaction.client.gui;
 
 import chainreaction.api.tile.IUpgradeableTile;
+import chainreaction.api.tile.UpgradeStorage;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import com.zerren.chainreaction.reference.Reference;
@@ -111,18 +112,32 @@ abstract class GuiContainerCR extends GuiContainer {
     }
 
     void drawUpgradeInstallTooltip(IUpgradeableTile tile, int mouseX, int mouseY, int buttonXStart, int buttonYStart) {
-        if (mouseY >= (guiTop + buttonYStart) && mouseY < (guiTop + buttonYStart + 18)) {
-            if (mouseX >= (guiLeft + buttonXStart) && mouseX < (guiLeft + buttonXStart + 18)) {
-                List<String> buttonTip = new ArrayList<String>();
-                if (tile.areUpgradesActive()) {
-                    buttonTip.add(EnumChatFormatting.RED + CoreUtility.translate("gui.item.upgrade.uninstall.name"));
-                }
-                else {
-                    buttonTip.add(EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.upgrade.install.name"));
-                }
-
-                drawHoveringText(buttonTip, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
+        if (isMouseOver(mouseX, mouseY, buttonXStart, buttonYStart, 18, 18)) {
+            List<String> buttonTip = new ArrayList<String>();
+            if (tile.areUpgradesActive()) {
+                buttonTip.add(EnumChatFormatting.RED + CoreUtility.translate("gui.item.upgrade.uninstall.name"));
             }
+            else {
+                buttonTip.add(EnumChatFormatting.GREEN + CoreUtility.translate("gui.item.upgrade.install.name"));
+            }
+
+            drawHoveringText(buttonTip, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
+        }
+    }
+
+    void drawMachineStatsTooltip(IUpgradeableTile tile, int mouseX, int mouseY, int buttonXStart, int buttonYStart) {
+        if (isMouseOver(mouseX, mouseY, buttonXStart, buttonYStart, 16, 16)) {
+            UpgradeStorage storage = tile.getUpgradeStorage();
+
+            List<String> machineStats = new ArrayList<String>();
+            machineStats.add(EnumChatFormatting.GOLD + CoreUtility.translate("gui.info.upgrade.stats.name") + ":");
+
+            machineStats.add(CoreUtility.translate("gui.item.upgrade.capacity.name") + ": +" + storage.getCapacityMod() + " RF");
+            machineStats.add(CoreUtility.translate("gui.item.upgrade.cost.name") + ": " + storage.getCostMod() * 100 + "%");
+            machineStats.add(CoreUtility.translate("gui.item.upgrade.speed.name") + ": " + storage.getSpeedMod() * 100 + "%");
+            machineStats.add(CoreUtility.translate("gui.item.upgrade.generation.name") + ": +" + storage.getRTGMod() + " RF/t");
+
+            drawHoveringText(machineStats, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
         }
     }
 
@@ -193,5 +208,14 @@ abstract class GuiContainerCR extends GuiContainer {
         float green = (color >> 8 & 255) / 255.0F;
         float blue = (color & 255) / 255.0F;
         GL11.glColor4f(red, green, blue, alpha);
+    }
+
+    private boolean isMouseOver(int mouseX, int mouseY, int xMin, int yMin, int xMax, int yMax) {
+        if (mouseY >= (guiTop + yMin) && mouseY < (guiTop + yMin + yMax)) {
+            if (mouseX >= (guiLeft + xMin) && mouseX < (guiLeft + xMin + xMax)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

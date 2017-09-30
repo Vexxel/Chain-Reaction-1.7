@@ -1,5 +1,7 @@
 package com.zerren.chainreaction.core.registry;
 
+import chainreaction.api.item.MachineUpgrade;
+import chainreaction.api.item.MachineUpgradeRegistry;
 import chainreaction.api.recipe.*;
 import com.zerren.chainreaction.core.ModFluids;
 import com.zerren.chainreaction.handler.ConfigHandler;
@@ -44,6 +46,7 @@ public class Recipes {
         electrolyzer();
         RTGFuels();
         liquifier();
+        machineUpgrades();
 
     }
 
@@ -212,5 +215,23 @@ public class Recipes {
         if (Loader.isModLoaded("IC2")) {
             RTGFuels.addRTGFuel(new ItemStack(rtg, 1, 0), ConfigHandler.rtgPowerIC2, -1);
         }
+    }
+
+    private static void machineUpgrades() {
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("capacity1"), 100000, 0, MachineUpgrade.CAPACITY);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("capacity2"), 400000, 0, MachineUpgrade.CAPACITY);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("capacity3"), 1000000, 0, MachineUpgrade.CAPACITY);
+
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("efficiency1"), 0.25D, 0, MachineUpgrade.EFFICIENCY);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("efficiency2"), 0.35D, 0, MachineUpgrade.EFFICIENCY);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("efficiency3"), 0.50D, 0, MachineUpgrade.EFFICIENCY);
+
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("rtg1"), 32, 0, MachineUpgrade.RTG);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("rtg2"), 64, 0, MachineUpgrade.RTG);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("rtg3"), 128, 0, MachineUpgrade.RTG);
+
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("overclocker1"), 0.50D, 0.60D, MachineUpgrade.OVERCLOCKER);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("overclocker2"), 1.00D, 1.33D, MachineUpgrade.OVERCLOCKER);
+        MachineUpgradeRegistry.addMachineUpgrade(ItemRetriever.Items.upgrade("overclocker3"), 2.00D, 3.00D, MachineUpgrade.OVERCLOCKER);
     }
 }

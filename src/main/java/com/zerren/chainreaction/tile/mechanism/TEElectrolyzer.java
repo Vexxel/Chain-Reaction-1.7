@@ -1,7 +1,8 @@
 package com.zerren.chainreaction.tile.mechanism;
 
 import chainreaction.api.block.IInventoryCR;
-import chainreaction.api.item.IMachineUpgrade;
+import chainreaction.api.block.ISidedInventoryCR;
+import chainreaction.api.item.MachineUpgrade;
 import chainreaction.api.recipe.ElectrolyzingFluid;
 import chainreaction.api.tile.IGuiTileData;
 import chainreaction.api.tile.IUpgradeableTile;
@@ -24,7 +25,7 @@ import net.minecraftforge.fluids.*;
 /**
  * Created by Zerren on 9/22/2015.
  */
-public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, IInventoryCR, IGuiTileData, IUpgradeableTile {
+public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandler, ISidedInventoryCR, IGuiTileData, IUpgradeableTile {
     private static final int TANK_CAPACITY = 8000;
 
     private UpgradeStorage upgradeStorage = new UpgradeStorage();
@@ -323,7 +324,31 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
+        switch (slot) {
+            case 0: case 1: return true;
+        }
         return false;
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int side) {
+        return new int[] { 0, 1 };
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack stack, int side) {
+        switch (slot) {
+            case 2: case 3: case 4: return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack stack, int side) {
+        switch (slot) {
+            case 2: case 3: case 4: return false;
+        }
+        return true;
     }
 
     @Override
@@ -404,12 +429,12 @@ public class TEElectrolyzer extends TEEnergyRecieverBase implements IFluidHandle
     }
 
     @Override
-    public IMachineUpgrade.MachineUpgrade[] getValidUpgrades() {
-        return new IMachineUpgrade.MachineUpgrade[] {
-                IMachineUpgrade.MachineUpgrade.CAPACITY,
-                IMachineUpgrade.MachineUpgrade.EFFICIENCY,
-                IMachineUpgrade.MachineUpgrade.OVERCLOCKER,
-                IMachineUpgrade.MachineUpgrade.RTG
+    public MachineUpgrade[] getValidUpgrades() {
+        return new MachineUpgrade[] {
+                MachineUpgrade.CAPACITY,
+                MachineUpgrade.EFFICIENCY,
+                MachineUpgrade.OVERCLOCKER,
+                MachineUpgrade.RTG
         };
     }
 

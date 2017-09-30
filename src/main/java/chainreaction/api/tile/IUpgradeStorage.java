@@ -6,13 +6,13 @@ public interface IUpgradeStorage {
 
     void setCapacityMod(int amount);
 
-    float getCostMod();
+    double getCostMod();
 
-    void setCostMod(float amount);
+    void setCostMod(double amount);
 
-    float getSpeedMod();
+    double getSpeedMod();
 
-    void setSpeedMod(float amount);
+    void setSpeedMod(double amount);
 
     int getRTGMod();
 

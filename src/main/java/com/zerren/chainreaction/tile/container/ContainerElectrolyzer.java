@@ -33,9 +33,9 @@ public class ContainerElectrolyzer extends ContainerCR {
         this.addSlotToContainer(new SlotLiquidContainer(te, slotIndex++, 32, 19, 1));
         this.addSlotToContainer(new SlotLiquidContainer(te, slotIndex++, 32, 61, 0));
 
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 12));
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 30));
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 48));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 6));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 24));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 42));
 
     }
 }

@@ -43,7 +43,7 @@ public class GuiLiquifier extends GuiContainerCR {
 
         buttonList.clear();
 
-        GuiButton install = new GUIButtonWidgets(0, x + 175, y + 66, 100, 0);
+        GuiButton install = new GUIButtonWidgets(0, x + 175, y + 60, 100, 0);
         buttonList.add(install);
     }
 
@@ -80,7 +80,8 @@ public class GuiLiquifier extends GuiContainerCR {
 
         drawInventoryName();
         drawContainerName(invTitle);
-        drawUpgradeInstallTooltip(liquifier, mouseX, mouseY, 175, 66);
+        drawUpgradeInstallTooltip(liquifier, mouseX, mouseY, 175, 60);
+        drawMachineStatsTooltip(liquifier, mouseX, mouseY, 176, 80);
 
         if (liquifier != null) {
             drawEnergyBarTooltip(liquifier.getEnergyStorage(), mouseX, mouseY, 16, 24, 8, 48);

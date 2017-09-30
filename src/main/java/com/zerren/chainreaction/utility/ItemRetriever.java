@@ -57,5 +57,9 @@ public final class ItemRetriever {
         public static ItemStack bauble(String name) {
             return new ItemStack(CRItems.baubles, 1, Arrays.asList(Names.Items.BAUBLE_SUBTYPES).indexOf(name));
         }
+
+        public static ItemStack upgrade(String name) {
+            return new ItemStack(CRItems.machineUpgrades, 1, Arrays.asList(Names.Items.MACHINE_UPRADE_SUBTYPES).indexOf(name));
+        }
     }
 }

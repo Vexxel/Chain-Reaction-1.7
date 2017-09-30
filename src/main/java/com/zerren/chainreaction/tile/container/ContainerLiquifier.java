@@ -30,9 +30,9 @@ public class ContainerLiquifier extends ContainerCR {
 
         this.addSlotToContainer(new SlotLiquidContainer(te, slotIndex++, 130, 19, 2));
 
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 12));
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 30));
-        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 48));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 6));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 24));
+        this.addSlotToContainer(new SlotMachineUpgrade(te, slotIndex++, 176, 42));
 
     }
 }

@@ -45,7 +45,7 @@ public class GuiElectrolyzer extends GuiContainerCR {
 
         buttonList.clear();
 
-        GuiButton install = new GUIButtonWidgets(0, x + 175, y + 66, 100, 0);
+        GuiButton install = new GUIButtonWidgets(0, x + 175, y + 60, 100, 0);
         buttonList.add(install);
 
     }
@@ -84,7 +84,8 @@ public class GuiElectrolyzer extends GuiContainerCR {
 
         drawInventoryName();
         drawContainerName(invTitle);
-        drawUpgradeInstallTooltip(electrolyzer, mouseX, mouseY, 175, 66);
+        drawUpgradeInstallTooltip(electrolyzer, mouseX, mouseY, 175, 60);
+        drawMachineStatsTooltip(electrolyzer, mouseX, mouseY, 176, 80);
 
         if (electrolyzer != null) {
             drawEnergyBarTooltip(electrolyzer.getEnergyStorage(), mouseX, mouseY, 16, 24, 8, 48);

@@ -1,34 +1,22 @@
 package chainreaction.api.tile;
 
-import chainreaction.api.item.IMachineUpgrade;
+import chainreaction.api.item.MachineUpgrade;
+import chainreaction.api.item.MachineUpgradeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class UpgradeStorage implements IUpgradeStorage {
 
-    private static final int CAPACITY_MODS[] = { 100000, 400000, 1000000 };
-    private static final float COST_MODS[] = { 0.20F, 0.35F, 0.50F };
-    private static final int RTG_MODS[] = { 32, 64, 128 };
-    private static final float SPEED_MODS[][] = {
-            //Level 1, 50% speed increase, 50% power increase (~100%)
-            { 0.50F, 0.50F },
-            //Level 2, 100% speed increase, 133% power increase (~75%)
-            { 1.00F, 1.33F },
-            //Level 3, 200% speed increase, 300% power increase (~66%)
-            { 2.00F, 3.00F }
-    };
-
-
     private int capacityMod;
-    private float costMod;
-    private float speedMod;
+    private double costMod;
+    private double speedMod;
     private int rtgMod;
 
     public UpgradeStorage() {
         this(0, 0F, 0F, 0);
     }
 
-    public UpgradeStorage(int capacity, float efficiency, float overclocker, int rtg) {
+    public UpgradeStorage(int capacity, double efficiency, double overclocker, int rtg) {
         this.capacityMod = capacity;
         this.costMod = efficiency;
         this.speedMod = overclocker;
@@ -38,8 +26,8 @@ public class UpgradeStorage implements IUpgradeStorage {
     public UpgradeStorage readFromNBT(NBTTagCompound nbt) {
 
         this.capacityMod = nbt.getInteger("CapacityModifier");
-        this.costMod = nbt.getFloat("CostModifier");
-        this.speedMod = nbt.getFloat("SpeedModifier");
+        this.costMod = nbt.getDouble("CostModifier");
+        this.speedMod = nbt.getDouble("SpeedModifier");
         this.rtgMod = nbt.getInteger("RTGModifier");
 
         return this;
@@ -48,8 +36,8 @@ public class UpgradeStorage implements IUpgradeStorage {
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 
         nbt.setInteger("CapacityModifier", capacityMod);
-        nbt.setFloat("CostModifier", costMod);
-        nbt.setFloat("SpeedModifier", speedMod);
+        nbt.setDouble("CostModifier", costMod);
+        nbt.setDouble("SpeedModifier", speedMod);
         nbt.setInteger("RTGModifier", rtgMod);
 
         return nbt;
@@ -68,24 +56,24 @@ public class UpgradeStorage implements IUpgradeStorage {
     }
 
     @Override
-    public float getCostMod() {
+    public double getCostMod() {
         return costMod;
     }
 
     @Override
-    public void setCostMod(float amount) {
+    public void setCostMod(double amount) {
         if (amount < 0F) costMod = 0F;
 
         costMod = amount;
     }
 
     @Override
-    public float getSpeedMod() {
+    public double getSpeedMod() {
         return speedMod;
     }
 
     @Override
-    public void setSpeedMod(float amount) {
+    public void setSpeedMod(double amount) {
         if (amount < 0F) speedMod = 0F;
 
         speedMod = amount;
@@ -112,28 +100,33 @@ public class UpgradeStorage implements IUpgradeStorage {
 
     public void upgradeTile(ItemStack[] upgrades) {
         int cap = 0;
-        float finalCost = 1F;
-        float speed = 1F;
-        float speedCost = 1F;
+        double finalCost = 1D;
+        double speed = 1D;
+        double speedCost = 1D;
         int rtg = 0;
 
         for (ItemStack upgradeStack : upgrades) {
-            if (upgradeStack != null) {
-                IMachineUpgrade upgrade = (IMachineUpgrade)upgradeStack.getItem();
-                switch (upgrade.getUpgradeType(upgradeStack)) {
+            if (upgradeStack != null && MachineUpgradeRegistry.isValidUpgrade(upgradeStack)) {
+
+                MachineUpgrade upgradeType = MachineUpgradeRegistry.getUpgradeType(upgradeStack);
+                double value1 = MachineUpgradeRegistry.getValue1(upgradeStack);
+                double value2 = MachineUpgradeRegistry.getValue2(upgradeStack);
+
+                switch (upgradeType) {
                     case CAPACITY: {
-                        cap += CAPACITY_MODS[upgrade.getLevel(upgradeStack) - 1];
+                        cap += (int)value1;
                     } break;
                     case EFFICIENCY: {
-                        if (finalCost >= 1F)
-                            finalCost -= COST_MODS[upgrade.getLevel(upgradeStack) - 1];
+                        if (finalCost >= 1F) {
+                            finalCost -= value1;
+                        }
                     } break;
                     case OVERCLOCKER: {
-                        speed += SPEED_MODS[upgrade.getLevel(upgradeStack) - 1][0];
-                        speedCost += SPEED_MODS[upgrade.getLevel(upgradeStack) - 1][1];
+                        speed += value1;
+                        speedCost += value2;
                     } break;
                     case RTG: {
-                        rtg += RTG_MODS[upgrade.getLevel(upgradeStack) - 1];
+                        rtg += (int)value1;
                     } break;
                 }
             }

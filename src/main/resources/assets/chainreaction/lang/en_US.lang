@@ -236,10 +236,11 @@ gui.item.radioactivity.moderate.name=Moderate
 gui.item.radioactivity.dangerous.name=Dangerous
 gui.item.radioactivity.fatal.name=Fatal
 
-gui.item.upgrade.capacity.name=Energy Capacity
-gui.item.upgrade.efficiency.name=Efficiency
-gui.item.upgrade.overclocker.name=Overclocking
-gui.item.upgrade.rtg.name=Energy Generation
+gui.item.upgrade.general.name=Machine Upgrade
+gui.item.upgrade.capacity.name=Maximum RF
+gui.item.upgrade.cost.name=Power Consumption
+gui.item.upgrade.speed.name=Processing Speed
+gui.item.upgrade.generation.name=Energy Generation
 
 gui.item.upgrade.install.name=Install Upgrades
 gui.item.upgrade.uninstall.name=Uninstall Upgrades
@@ -264,6 +265,8 @@ gui.info.keyhole.null.name=This lock has no code. I can set one with a key.
 gui.info.keyhole.trespass.name=This lock isn't mine. I don't know how it was made.
 
 gui.info.chest.locked.name=The lock rattles, but it doesn't budge.
+
+gui.info.upgrade.stats.name=Machine Status
 
 container.vault.name=Vault
 container.chest.name=Secure Chest
